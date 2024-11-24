@@ -73,7 +73,9 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
                 child: Text(
                   d.section ?? '',
                   style: TextStyle(
-                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey300Dark,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey500Dark
+                        : AppThemeData.grey300Dark,
                     fontSize: 14,
                     fontFamily: AppThemeData.regular,
                   ),
@@ -86,56 +88,69 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: (i == (controller.drawerItems.length - 1)) ? 16 : 0),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      SvgPicture.asset(
-                        d.icon,
-                        width: 24,
-                        height: 24,
-                        colorFilter: ColorFilter.mode(
-                          i == (controller.drawerItems.length - 1)
-                              ? AppThemeData.error50
-                              : i == 0
-                                  ? AppThemeData.primary200
-                                  : themeChange.getThem()
-                                      ? AppThemeData.grey900Dark
-                                      : AppThemeData.grey900,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Text(
-                        d.title,
-                        style: TextStyle(
-                          color: i == (controller.drawerItems.length - 1)
-                              ? AppThemeData.error50
-                              : i == 0
-                                  ? AppThemeData.primary200
-                                  : themeChange.getThem()
-                                      ? AppThemeData.grey900Dark
-                                      : AppThemeData.grey900,
-                          fontSize: 16,
-                          fontFamily: AppThemeData.medium,
-                        ),
-                      ),
-                    ]),
+                    padding: EdgeInsets.symmetric(
+                        vertical: (i == (controller.drawerItems.length - 1))
+                            ? 16
+                            : 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            d.icon,
+                            width: 24,
+                            height: 24,
+                            colorFilter: ColorFilter.mode(
+                              i == (controller.drawerItems.length - 1)
+                                  ? AppThemeData.error50
+                                  : i == 0
+                                      ? AppThemeData.primary200
+                                      : themeChange.getThem()
+                                          ? AppThemeData.grey900Dark
+                                          : AppThemeData.grey900,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Text(
+                            d.title,
+                            style: TextStyle(
+                              color: i == (controller.drawerItems.length - 1)
+                                  ? AppThemeData.error50
+                                  : i == 0
+                                      ? AppThemeData.primary200
+                                      : themeChange.getThem()
+                                          ? AppThemeData.grey900Dark
+                                          : AppThemeData.grey900,
+                              fontSize: 16,
+                              fontFamily: AppThemeData.medium,
+                            ),
+                          ),
+                        ]),
                   ),
                   d.isSwitch == true
                       ? SizedBox(
                           height: 25,
                           child: Switch(
-                            trackOutlineColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+                            trackOutlineColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                                    (Set<WidgetState> states) {
                               return Colors.transparent;
                             }),
-                            inactiveTrackColor: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                            inactiveTrackColor: themeChange.getThem()
+                                ? AppThemeData.grey300Dark
+                                : AppThemeData.grey300,
                             activeTrackColor: AppThemeData.primary200,
-                            thumbColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
-                              return themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50Dark;
+                            thumbColor: WidgetStateProperty.resolveWith<Color>(
+                                (Set<WidgetState> states) {
+                              return themeChange.getThem()
+                                  ? AppThemeData.white90
+                                  : AppThemeData.grey80Dark;
                             }),
                             value: themeChange.getThem(),
-                            onChanged: (value) => (themeChange.darkTheme = value == true ? 0 : 1),
+                            onChanged: (value) =>
+                                (themeChange.darkTheme = value == true ? 0 : 1),
                           ),
                         )
                       : SvgPicture.asset(
@@ -143,7 +158,9 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
                           width: 20,
                           height: 20,
                           colorFilter: ColorFilter.mode(
-                            themeChange.getThem() ? AppThemeData.grey400Dark : AppThemeData.grey400,
+                            themeChange.getThem()
+                                ? AppThemeData.grey400Dark
+                                : AppThemeData.grey400,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -154,7 +171,9 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 height: 0.5,
-                color: themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200,
+                color: themeChange.getThem()
+                    ? AppThemeData.grey200Dark
+                    : AppThemeData.grey200,
               )
           ],
         ),
@@ -164,7 +183,9 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
 
   return Drawer(
     width: Responsive.width(85, context),
-    backgroundColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+    backgroundColor: themeChange.getThem()
+        ? AppThemeData.surface50Dark
+        : AppThemeData.surface50,
     child: ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -179,31 +200,39 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
                 onTap: () {},
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(80.0),
-                  child: controller.userModel.value.userData!.photoPath?.isEmpty == true
-                      ? CachedNetworkImage(
-                          imageUrl: Constant.placeholderUrl!,
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
-                          progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                            child: CircularProgressIndicator(value: downloadProgress.progress),
-                          ),
-                          errorWidget: (context, url, error) => Image.asset(
-                            "assets/images/appIcon.png",
-                          ),
-                        )
-                      : CachedNetworkImage(
-                          imageUrl: controller.userModel.value.userData!.photoPath.toString(),
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
-                          progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                            child: CircularProgressIndicator(value: downloadProgress.progress),
-                          ),
-                          errorWidget: (context, url, error) => Image.asset(
-                            "assets/images/appIcon.png",
-                          ),
-                        ),
+                  child:
+                      controller.userModel.value.userData!.photoPath?.isEmpty ==
+                              true
+                          ? CachedNetworkImage(
+                              imageUrl: Constant.placeholderUrl!,
+                              height: 120,
+                              width: 120,
+                              fit: BoxFit.cover,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) => Center(
+                                child: CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                              ),
+                              errorWidget: (context, url, error) => Image.asset(
+                                "assets/images/appIcon.png",
+                              ),
+                            )
+                          : CachedNetworkImage(
+                              imageUrl: controller
+                                  .userModel.value.userData!.photoPath
+                                  .toString(),
+                              height: 120,
+                              width: 120,
+                              fit: BoxFit.cover,
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) => Center(
+                                child: CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                              ),
+                              errorWidget: (context, url, error) => Image.asset(
+                                "assets/images/appIcon.png",
+                              ),
+                            ),
                 ),
               ),
             ),
@@ -212,7 +241,9 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
               child: Text(
                 "${controller.userModel.value.userData!.prenom} ${controller.userModel.value.userData!.nom}",
                 style: TextStyle(
-                  color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey900Dark
+                      : AppThemeData.grey900,
                   fontSize: 22,
                   fontFamily: AppThemeData.regular,
                 ),
@@ -223,7 +254,9 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
               child: Text(
                 '${controller.userModel.value.userData!.email}',
                 style: TextStyle(
-                  color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey500Dark
+                      : AppThemeData.grey500,
                   fontSize: 14,
                   fontFamily: AppThemeData.regular,
                 ),
@@ -249,7 +282,9 @@ Future<void> showAlertDialog(BuildContext context, String type) async {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text('To start earning with CabMe you need to fill in your information'.tr),
+              Text(
+                  'To start earning with CabMe you need to fill in your information'
+                      .tr),
             ],
           ),
         ),

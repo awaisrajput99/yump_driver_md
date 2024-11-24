@@ -24,42 +24,50 @@ class MobileNumberScreen extends StatelessWidget {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppThemeData.primary200,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           alignment: AlignmentDirectional.topStart,
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 50),
                         Text(
-                          isLogin == true ? "Log In with Mobile Number".tr : "Sign Up with Mobile Number".tr,
+                          isLogin == true
+                              ? "Log In with Mobile Number".tr
+                              : "Sign Up with Mobile Number".tr,
                           style: TextStyle(
                             fontSize: 24,
                             fontFamily: AppThemeData.semiBold,
-                            color: themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                            color: themeChange.getThem()
+                                ? AppThemeData.secondary200
+                                : AppThemeData.secondary200,
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         Text(
                           isLogin == true
-                              ? "Enter your mobile number to log in securely and get access to your CabME account.".tr
-                              : "Register using your mobile number for a fast and simple CabME sign-up process.".tr,
-                          textAlign: TextAlign.start,
+                              ? "Enter your mobile number to log in securely and get access to your CabME account."
+                                  .tr
+                              : "Register using your mobile number for a fast and simple CabME sign-up process."
+                                  .tr,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: AppThemeData.regular,
-                            color: themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                            color: themeChange.getThem()
+                                ? AppThemeData.secondary200
+                                : AppThemeData.secondary200,
                           ),
                         ),
-                        const SizedBox(height: 60),
+                        // const SizedBox(height: 60),
                       ],
                     ),
                   ),
@@ -67,12 +75,16 @@ class MobileNumberScreen extends StatelessWidget {
                 Expanded(
                   flex: 4,
                   child: Container(
-                    color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                    color: themeChange.getThem()
+                        ? AppThemeData.surface50Dark
+                        : AppThemeData.surface50,
                     child: Stack(
                       alignment: AlignmentDirectional.bottomCenter,
                       children: [
                         Image.asset(
-                          themeChange.getThem() ? 'assets/images/ic_bg_signup_dark.png' : 'assets/images/ic_bg_signup_light.png',
+                          themeChange.getThem()
+                              ? 'assets/images/ic_bg_signup_dark.png'
+                              : 'assets/images/ic_bg_signup_light.png',
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
@@ -83,7 +95,7 @@ class MobileNumberScreen extends StatelessWidget {
               ],
             ),
             Positioned(
-              top: 140,
+              top: 200,
               left: 20,
               right: 20,
               child: SizedBox(
@@ -96,45 +108,59 @@ class MobileNumberScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          // const SizedBox(height: 10),
                           Container(
                             decoration: BoxDecoration(
-                              color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                              color: themeChange.getThem()
+                                  ? AppThemeData.surface50Dark
+                                  : AppThemeData.surface50,
+                              borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey200Dark
+                                    : AppThemeData.grey200,
                               ),
                             ),
                             padding: const EdgeInsets.only(left: 10),
                             child: IntlPhoneField(
-                              flagsButtonPadding: const EdgeInsets.symmetric(horizontal: 8),
+                              flagsButtonPadding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               textAlign: TextAlign.start,
                               initialValue: controller.phoneNumber.value,
                               onChanged: (phone) {
-                                controller.phoneNumber.value = phone.completeNumber;
+                                controller.phoneNumber.value =
+                                    phone.completeNumber;
                               },
                               invalidNumberMessage: "number invalid".tr,
                               showDropdownIcon: false,
                               cursorColor: AppThemeData.primary200,
                               disableLengthCheck: true,
                               decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 14),
                                 hintText: 'mobile number'.tr,
                                 hintStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: AppThemeData.regular,
-                                  color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
-                                ),
+                                    fontSize: 16,
+                                    fontFamily: AppThemeData.regular,
+                                    color: themeChange.getThem()
+                                        ? ConstantColors.hintTextColor
+                                        : ConstantColors.hintTextColor),
                                 border: InputBorder.none,
                                 isDense: true,
                               ),
                               dropdownTextStyle: TextStyle(
                                 fontSize: 16,
                                 fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                               ),
                               style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                               ),
                             ),
                           ),
@@ -146,7 +172,9 @@ class MobileNumberScreen extends StatelessWidget {
                               title: 'Send OTP'.tr,
                               btnHeight: 50,
                               btnColor: AppThemeData.primary200,
-                              txtColor: themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                              txtColor: themeChange.getThem()
+                                  ? AppThemeData.white90
+                                  : AppThemeData.grey80Dark,
                               onPress: () async {
                                 FocusScope.of(context).unfocus();
                                 if (controller.phoneNumber.value.isNotEmpty) {
@@ -164,7 +192,9 @@ class MobileNumberScreen extends StatelessWidget {
                                 "or continue with".tr,
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: themeChange.getThem() ? AppThemeData.grey400Dark : AppThemeData.grey400,
+                                  color: themeChange.getThem()
+                                      ? AppThemeData.grey400Dark
+                                      : AppThemeData.grey400,
                                   fontFamily: AppThemeData.regular,
                                 ),
                               ),
@@ -176,98 +206,23 @@ class MobileNumberScreen extends StatelessWidget {
                                 context,
                                 title: 'Log in with email address'.tr,
                                 btnHeight: 50,
-                                btnColor: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
-                                txtColor: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                btnColor: themeChange.getThem()
+                                    ? AppThemeData.grey300Dark
+                                    : AppThemeData.grey300,
+                                txtColor: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 onPress: () {
                                   FocusScope.of(context).unfocus();
                                   Get.back();
                                 },
-                                btnBorderColor: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                                btnBorderColor: themeChange.getThem()
+                                    ? AppThemeData.grey300Dark
+                                    : AppThemeData.grey300,
                               )),
                         ],
                       ),
                     ),
-                    isLogin == true
-                        ? Padding(
-                            padding: const EdgeInsets.only(bottom: 30),
-                            child: Text.rich(
-                              textAlign: TextAlign.center,
-                              TextSpan(
-                                text: 'First time in CabMe?'.tr,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: AppThemeData.regular,
-                                  color: themeChange.getThem() ? AppThemeData.grey800Dark : AppThemeData.grey800,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: ' '.tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: AppThemeData.medium,
-                                      color: AppThemeData.primary200,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Get.back();
-                                        FocusScope.of(context).unfocus();
-                                        Get.to(MobileNumberScreen(isLogin: false),
-                                            duration: const Duration(milliseconds: 400), //duration of transitions, default 1 sec
-                                            transition: Transition.rightToLeft);
-                                      }, //transition effect);,
-                                    text: 'Create an account'.tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: AppThemeData.medium,
-                                      color: AppThemeData.primary200,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: AppThemeData.primary200,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.only(bottom: 30),
-                            child: Text.rich(
-                              textAlign: TextAlign.center,
-                              TextSpan(
-                                text: 'Already book rides?'.tr,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: AppThemeData.regular,
-                                  color: themeChange.getThem() ? AppThemeData.grey800Dark : AppThemeData.grey800,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: ' '.tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: AppThemeData.medium,
-                                      color: AppThemeData.primary200,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Get.back();
-                                      }, //transition effect);,
-                                    text: 'Login'.tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: AppThemeData.medium,
-                                      color: AppThemeData.primary200,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: AppThemeData.primary200,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
                   ],
                 ),
               ),
@@ -275,6 +230,93 @@ class MobileNumberScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: isLogin == true
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Text.rich(
+                textAlign: TextAlign.center,
+                TextSpan(
+                  text: 'First time in CabMe?'.tr,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: AppThemeData.regular,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey800Dark
+                        : AppThemeData.grey800,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: ' '.tr,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: AppThemeData.medium,
+                        color: AppThemeData.primary200,
+                      ),
+                    ),
+                    TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Get.back();
+                          FocusScope.of(context).unfocus();
+                          Get.to(MobileNumberScreen(isLogin: false),
+                              duration: const Duration(
+                                  milliseconds:
+                                      400), //duration of transitions, default 1 sec
+                              transition: Transition.rightToLeft);
+                        }, //transition effect);,
+                      text: 'Create an account'.tr,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: AppThemeData.medium,
+                        color: AppThemeData.primary200,
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppThemeData.primary200,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Text.rich(
+                textAlign: TextAlign.center,
+                TextSpan(
+                  text: 'Already book rides?'.tr,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: AppThemeData.regular,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey800Dark
+                        : AppThemeData.grey800,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: ' '.tr,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: AppThemeData.medium,
+                        color: AppThemeData.primary200,
+                      ),
+                    ),
+                    TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Get.back();
+                        }, //transition effect);,
+                      text: 'Login'.tr,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: AppThemeData.medium,
+                        color: AppThemeData.primary200,
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppThemeData.primary200,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

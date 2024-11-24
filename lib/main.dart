@@ -3,16 +3,19 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:cabme_driver/controller/dash_board_controller.dart';
+import 'package:cabme_driver/controller/login_conroller.dart';
 import 'package:cabme_driver/controller/settings_controller.dart';
 import 'package:cabme_driver/firebase_options.dart';
 import 'package:cabme_driver/on_boarding_screen.dart';
 import 'package:cabme_driver/page/auth_screens/login_screen.dart';
+import 'package:cabme_driver/page/auth_screens/signup_screen.dart';
 import 'package:cabme_driver/page/dash_board.dart';
 import 'package:cabme_driver/service/api.dart';
 import 'package:cabme_driver/themes/styles.dart';
 import 'package:cabme_driver/utils/dark_theme_provider.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +23,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'page/chats_screen/conversation_screen.dart';
 import 'page/localization_screens/localization_screen.dart';
 import 'service/localization_service.dart';
@@ -68,6 +73,23 @@ void main() async {
     }
   }
 
+  try {
+    await LoginController().loginWithGoogle();
+    // await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //     email: "safyantariq@gmail.com", password: "test123");
+    // await FirebaseAuth.instance.signInWithEmailAndPassword(
+    //     email: "safyantariq@gmail.com", password: "test123");
+    // print(
+    //     "Here is the current user: ${FirebaseAuth.instance.currentUser?.email ?? "null"}");
+    // Get.off(SignupScreen(), arguments: {
+    //   'email': "safyantariq@gmail.com",
+    //   'firstName': "Sunny",
+    //   'login_type': "google",
+    // });
+  } catch (e) {
+    print("Error white creating account $e");
+  }
+  // await clearAppData();
   runApp(MyApp());
 }
 
@@ -85,10 +107,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     getCurrentAppTheme();
     setupInteractedMessage(context);
     Future.delayed(const Duration(seconds: 3), () {
-      if (Preferences.getString(Preferences.languageCodeKey).toString().isNotEmpty) {
-        LocalizationService().changeLocale(Preferences.getString(Preferences.languageCodeKey).toString());
+      if (Preferences.getString(Preferences.languageCodeKey)
+          .toString()
+          .isNotEmpty) {
+        LocalizationService().changeLocale(
+            Preferences.getString(Preferences.languageCodeKey).toString());
       }
-      API.header['accesstoken'] = Preferences.getString(Preferences.accesstoken);
+      API.header['accesstoken'] =
+          Preferences.getString(Preferences.accesstoken);
     });
     super.initState();
   }
@@ -101,14 +127,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void getCurrentAppTheme() async {
-    themeChangeProvider.darkTheme = await themeChangeProvider.darkThemePreference.getTheme();
+    themeChangeProvider.darkTheme =
+        await themeChangeProvider.darkThemePreference.getTheme();
   }
 
   Future<void> setupInteractedMessage(BuildContext context) async {
     initialize(context);
     await FirebaseMessaging.instance.subscribeToTopic("cabme_driver");
 
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {}
 
@@ -122,15 +150,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       if (message.notification != null) {
         if (message.data['status'] == "done") {
           await Get.to(ConversationScreen(), arguments: {
-            'receiverId': int.parse(json.decode(message.data['message'])['senderId'].toString()),
-            'orderId': int.parse(json.decode(message.data['message'])['orderId'].toString()),
-            'receiverName': json.decode(message.data['message'])['senderName'].toString(),
-            'receiverPhoto': json.decode(message.data['message'])['senderPhoto'].toString(),
+            'receiverId': int.parse(
+                json.decode(message.data['message'])['senderId'].toString()),
+            'orderId': int.parse(
+                json.decode(message.data['message'])['orderId'].toString()),
+            'receiverName':
+                json.decode(message.data['message'])['senderName'].toString(),
+            'receiverPhoto':
+                json.decode(message.data['message'])['senderPhoto'].toString(),
           });
-        } else if (message.data['statut'] == "new" && message.data['statut'] == "rejected") {
+        } else if (message.data['statut'] == "new" &&
+            message.data['statut'] == "rejected") {
           await Get.to(DashBoard());
         } else if (message.data['type'] == "payment received") {
-          DashBoardController dashBoardController = Get.put(DashBoardController());
+          DashBoardController dashBoardController =
+              Get.put(DashBoardController());
           dashBoardController.selectedDrawerIndex.value = 4;
           await Get.to(DashBoard());
         }
@@ -145,12 +179,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       importance: Importance.high,
     );
 
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     var iosInitializationSettings = const DarwinInitializationSettings();
-    final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: iosInitializationSettings);
-    await FlutterLocalNotificationsPlugin().initialize(initializationSettings, onDidReceiveNotificationResponse: (payload) async {});
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: iosInitializationSettings);
+    await FlutterLocalNotificationsPlugin().initialize(initializationSettings,
+        onDidReceiveNotificationResponse: (payload) async {});
 
-    await FlutterLocalNotificationsPlugin().resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
+    await FlutterLocalNotificationsPlugin()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
   }
 
   void display(RemoteMessage message) async {
@@ -199,7 +241,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         home: GetBuilder(
             init: SettingsController(),
             builder: (controller) {
-              return Preferences.getString(Preferences.languageCodeKey).toString().isEmpty
+              return Preferences.getString(Preferences.languageCodeKey)
+                      .toString()
+                      .isEmpty
                   ? const LocalizationScreens(intentType: "main")
                   : Preferences.getBoolean(Preferences.isFinishOnBoardingKey)
                       ? Preferences.getBoolean(Preferences.isLogin)
@@ -210,4 +254,20 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       );
     }));
   }
+}
+
+Future<void> clearAppData() async {
+  // Clear Shared Preferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
+
+  // Clear Cache
+  final directory = await getTemporaryDirectory();
+  await directory.delete(recursive: true);
+
+  // Clear Application Storage
+  final appDirectory = await getApplicationDocumentsDirectory();
+  await appDirectory.delete(recursive: true);
+
+  print('Cache and storage cleared successfully.');
 }

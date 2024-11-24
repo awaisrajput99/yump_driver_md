@@ -26,14 +26,21 @@ class AddComplaintScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           backgroundColor: AppThemeData.primary200,
-          appBar: AppbarCustom(title: "Complaint".tr, bgColor: AppThemeData.primary200),
+          appBar: AppbarCustom(
+              title: "Complaint".tr, bgColor: AppThemeData.primary200),
           body: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
             child: Container(
-              decoration: BoxDecoration(color: themeChange.getThem() ? AppThemeData.grey50Dark : AppThemeData.grey50, borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey80Dark
+                      : AppThemeData.white90,
+                  borderRadius: BorderRadius.circular(10)),
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Column(
                     children: [
                       const SizedBox(
@@ -57,12 +64,19 @@ class AddComplaintScreen extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(60),
                             child: CachedNetworkImage(
-                              imageUrl: controller.rideType.value == "ride" ? controller.rideData.value.photoPath.toString() : controller.parcelData.value.userPhoto.toString(),
+                              imageUrl: controller.rideType.value == "ride"
+                                  ? controller.rideData.value.photoPath
+                                      .toString()
+                                  : controller.parcelData.value.userPhoto
+                                      .toString(),
                               height: 100,
                               width: 100,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) => Constant.loader(context, isDarkMode: themeChange.getThem()),
-                              errorWidget: (context, url, error) => Image.asset("assets/images/appIcon.png"),
+                              placeholder: (context, url) => Constant.loader(
+                                  context,
+                                  isDarkMode: themeChange.getThem()),
+                              errorWidget: (context, url, error) =>
+                                  Image.asset("assets/images/appIcon.png"),
                             ),
                           ),
                         ),
@@ -74,7 +88,9 @@ class AddComplaintScreen extends StatelessWidget {
                               ? '${controller.rideData.value.prenom.toString()} ${controller.rideData.value.nom.toString()}'
                               : "${controller.parcelData.value.userName}",
                           style: TextStyle(
-                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                            color: themeChange.getThem()
+                                ? AppThemeData.grey900Dark
+                                : AppThemeData.grey900,
                             fontSize: 18,
                             fontFamily: AppThemeData.semiBold,
                           ),
@@ -84,7 +100,12 @@ class AddComplaintScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            StarRating(size: 18, rating: double.parse(controller.rideData.value.moyenneDriver.toString()), color: AppThemeData.warning200),
+                            StarRating(
+                                size: 18,
+                                rating: double.parse(controller
+                                    .rideData.value.moyenneDriver
+                                    .toString()),
+                                color: AppThemeData.warning200),
                           ],
                         ),
                       if (controller.complaintStatus.value.isNotEmpty)
@@ -97,7 +118,9 @@ class AddComplaintScreen extends StatelessWidget {
                                 'Status : '.tr,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: themeChange.getThem()
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -105,7 +128,9 @@ class AddComplaintScreen extends StatelessWidget {
                                 controller.complaintStatus.value,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: themeChange.getThem()
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                   letterSpacing: 0.8,
                                 ),
                               ),
@@ -115,10 +140,14 @@ class AddComplaintScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
                         child: Text(
-                          controller.isReviewScreen.value == false ? 'Submit a Complaint Against a Customer'.tr : 'Review Customer'.tr,
+                          controller.isReviewScreen.value == false
+                              ? 'Submit a Complaint Against a Customer'.tr
+                              : 'Review Customer'.tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                            color: themeChange.getThem()
+                                ? AppThemeData.grey900Dark
+                                : AppThemeData.grey900,
                             fontSize: 18,
                             fontFamily: AppThemeData.semiBold,
                           ),
@@ -128,11 +157,15 @@ class AddComplaintScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 5),
                         child: Text(
                           controller.isReviewScreen.value == false
-                              ? 'Facing any inconvenience with a customer? File a complaint, and we’ll address the issue to help improve your driving experience.'.tr
-                              : 'Your feedback helps us improve and provide a better experience. Rate your customer and leave a comment!'.tr,
+                              ? 'Facing any inconvenience with a customer? File a complaint, and we’ll address the issue to help improve your driving experience.'
+                                  .tr
+                              : 'Your feedback helps us improve and provide a better experience. Rate your customer and leave a comment!'
+                                  .tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                            color: themeChange.getThem()
+                                ? AppThemeData.grey900Dark
+                                : AppThemeData.grey900,
                             fontSize: 14,
                             fontFamily: AppThemeData.regular,
                           ),
@@ -151,10 +184,14 @@ class AddComplaintScreen extends StatelessWidget {
                               children: [
                                 TextFieldWidget(
                                   hintText: 'Complain Title'.tr,
-                                  controller: controller.complaintTitleController,
+                                  controller:
+                                      controller.complaintTitleController,
                                   textInputType: TextInputType.emailAddress,
-                                  radius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                  radius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 14),
                                   validators: (String? value) {
                                     if (value!.isNotEmpty) {
                                       return null;
@@ -165,11 +202,15 @@ class AddComplaintScreen extends StatelessWidget {
                                 ),
                                 TextFieldWidget(
                                   hintText: 'Description'.tr,
-                                  controller: controller.complaintDiscriptionController,
+                                  controller:
+                                      controller.complaintDiscriptionController,
                                   textInputType: TextInputType.emailAddress,
                                   maxLine: 5,
-                                  radius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                  radius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 14),
                                   validators: (String? value) {
                                     if (value!.isNotEmpty) {
                                       return null;
@@ -193,34 +234,57 @@ class AddComplaintScreen extends StatelessWidget {
                           onPress: () async {
                             if (_formKey.currentState!.validate()) {
                               Map<String, String> bodyParams = {};
-                              if (controller.rideType.value.toString() == "ride") {
+                              if (controller.rideType.value.toString() ==
+                                  "ride") {
                                 bodyParams = {
-                                  'id_user_app': controller.rideData.value.idUserApp.toString(),
-                                  'id_conducteur': controller.rideData.value.idConducteur.toString(),
+                                  'id_user_app': controller
+                                      .rideData.value.idUserApp
+                                      .toString(),
+                                  'id_conducteur': controller
+                                      .rideData.value.idConducteur
+                                      .toString(),
                                   'user_type': 'driver',
-                                  'description': controller.complaintDiscriptionController.text.toString(),
-                                  'title': controller.complaintTitleController.text.toString(),
-                                  'order_id': controller.rideData.value.id.toString(),
+                                  'description': controller
+                                      .complaintDiscriptionController.text
+                                      .toString(),
+                                  'title': controller
+                                      .complaintTitleController.text
+                                      .toString(),
+                                  'order_id':
+                                      controller.rideData.value.id.toString(),
                                 };
                               } else {
                                 bodyParams = {
-                                  'id_user_app': controller.parcelData.value.idUserApp.toString(),
-                                  'id_conducteur': controller.parcelData.value.idConducteur.toString(),
+                                  'id_user_app': controller
+                                      .parcelData.value.idUserApp
+                                      .toString(),
+                                  'id_conducteur': controller
+                                      .parcelData.value.idConducteur
+                                      .toString(),
                                   'user_type': 'driver',
-                                  'description': controller.complaintDiscriptionController.text.toString(),
-                                  'title': controller.complaintTitleController.text.toString(),
-                                  'order_id': controller.parcelData.value.id.toString(),
+                                  'description': controller
+                                      .complaintDiscriptionController.text
+                                      .toString(),
+                                  'title': controller
+                                      .complaintTitleController.text
+                                      .toString(),
+                                  'order_id':
+                                      controller.parcelData.value.id.toString(),
                                   'ride_type': 'parcel'
                                 };
                               }
 
-                              await controller.addComplaint(bodyParams).then((value) {
+                              await controller
+                                  .addComplaint(bodyParams)
+                                  .then((value) {
                                 if (value != null) {
                                   if (value == true) {
-                                    ShowToastDialog.showToast("Complaint added successfully!");
+                                    ShowToastDialog.showToast(
+                                        "Complaint added successfully!");
                                     Get.back();
                                   } else {
-                                    ShowToastDialog.showToast("Something went wrong.");
+                                    ShowToastDialog.showToast(
+                                        "Something went wrong.");
                                   }
                                 }
                               });

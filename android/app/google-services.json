@@ -1,19 +1,114 @@
 {
   "project_info": {
-    "project_number": "YOUR_PROJECT_NUMBER",
-    "firebase_url": "https://YOUR_PROJECT_ID.firebaseio.com",
-    "project_id": "YOUR_PROJECT_ID",
-    "storage_bucket": "YOUR_PROJECT_ID.appspot.com"
+    "project_number": "600457798477",
+    "project_id": "maple-rides",
+    "storage_bucket": "maple-rides.firebasestorage.app"
   },
-  "api_key": [
+  "client": [
     {
-      "current_key": "YOUR_FIREBASE_API_KEY"
+      "client_info": {
+        "mobilesdk_app_id": "1:600457798477:android:e98d27cf32fd6db4948d04",
+        "android_client_info": {
+          "package_name": "com.cabme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600457798477-3ki13e5k2un5ek1gkqq6cad8ai4j3eqm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabme",
+            "certificate_hash": "a6d2f5c87bf8580919096e01322827ac892ad74a"
+          }
+        },
+        {
+          "client_id": "600457798477-b00054shef1gscmj317mferoq7kqbfm0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabme",
+            "certificate_hash": "1cce2eb92af86b9b2bc3b17ba2ca50d6ac7d0eb2"
+          }
+        },
+        {
+          "client_id": "600457798477-ot3a7614neja1ub32smle9p05hbmgmnk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabme",
+            "certificate_hash": "c827775be07e5151edcd9aa02e3dd052f863302e"
+          }
+        },
+        {
+          "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZYivFWS0u-KyAPNh5WqBM2UgpJS5Ogj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "600457798477-4raskjt8tb5j7htdoj56efrv8sc9n0h6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cabme.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600457798477:android:190d41a07dd35ca5948d04",
+        "android_client_info": {
+          "package_name": "com.cabme.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600457798477-g4ktis2gm4cm43ahrnnst6u8r957jkaj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cabme.driver",
+            "certificate_hash": "a6d2f5c87bf8580919096e01322827ac892ad74a"
+          }
+        },
+        {
+          "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZYivFWS0u-KyAPNh5WqBM2UgpJS5Ogj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "600457798477-4raskjt8tb5j7htdoj56efrv8sc9n0h6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cabme.ios"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
-  "services": {
-    "appinvite_service": {
-      "other_platform_oauth_client": []
-    }
-  },
   "configuration_version": "1"
 }

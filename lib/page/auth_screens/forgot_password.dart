@@ -25,14 +25,16 @@ class ForgotPasswordScreen extends StatelessWidget {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     bool isDarkMode = themeChange.getThem();
     return Scaffold(
-      backgroundColor: AppThemeData.primary200,
+      backgroundColor: Colors.white,
       bottomNavigationBar: Container(
         color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
             Image.asset(
-              isDarkMode ? 'assets/images/ic_bg_signup_dark.png' : 'assets/images/ic_bg_signup_light.png',
+              isDarkMode
+                  ? 'assets/images/ic_bg_signup_dark.png'
+                  : 'assets/images/ic_bg_signup_light.png',
               width: double.infinity,
               fit: BoxFit.cover,
             ),
@@ -45,7 +47,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: AppThemeData.regular,
-                    color: isDarkMode ? AppThemeData.grey800Dark : AppThemeData.grey800,
+                    color: isDarkMode
+                        ? AppThemeData.grey800Dark
+                        : AppThemeData.grey800,
                   ),
                   children: <TextSpan>[
                     TextSpan(
@@ -82,30 +86,36 @@ class ForgotPasswordScreen extends StatelessWidget {
           alignment: AlignmentDirectional.topStart,
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 50),
                       Text(
                         "Forgot Your Password?".tr,
+                        // textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 24,
                           fontFamily: AppThemeData.semiBold,
-                          color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                          color: isDarkMode
+                              ? AppThemeData.secondary200
+                              : AppThemeData.secondary200,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       Text(
-                        "Don’t worry! Enter your email or mobile number, and we’ll help you reset your password.".tr,
-                        textAlign: TextAlign.start,
+                        "Don’t worry! Enter your email or mobile number, and we’ll help you reset your password."
+                            .tr,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: AppThemeData.regular,
-                          color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                          color: isDarkMode
+                              ? AppThemeData.secondary200
+                              : AppThemeData.secondary200,
                         ),
                       ),
                       const SizedBox(height: 60),
@@ -115,7 +125,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                    color: isDarkMode
+                        ? AppThemeData.surface50Dark
+                        : AppThemeData.surface50,
                   ),
                 ),
               ],
@@ -132,15 +144,16 @@ class ForgotPasswordScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      SizedBox(
+                        height: 60,
+                      ),
                       TextFieldWidget(
+                        radius: BorderRadius.circular(12),
                         prefix: IconButton(
                           onPressed: () {},
-                          icon: SvgPicture.asset(
-                            "assets/icons/ic_email.svg",
-                            colorFilter: ColorFilter.mode(
-                              themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
-                              BlendMode.srcIn,
-                            ),
+                          icon: Icon(
+                            Icons.email_outlined,
+                            color: Colors.black,
                           ),
                         ),
                         hintText: 'email address'.tr,
@@ -163,7 +176,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                           title: 'Send'.tr,
                           btnHeight: 50,
                           btnColor: AppThemeData.primary200,
-                          txtColor: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                          txtColor: isDarkMode
+                              ? AppThemeData.white90
+                              : AppThemeData.grey80Dark,
                           onPress: () async {
                             FocusScope.of(context).unfocus();
                             if (_formKey.currentState!.validate()) {
@@ -174,12 +189,17 @@ class ForgotPasswordScreen extends StatelessWidget {
                               controller.sendEmail(bodyParams).then((value) {
                                 if (value != null) {
                                   if (value == true) {
-                                    Get.to(ForgotPasswordOtpScreen(email: _emailTextEditController.text.trim()),
-                                        duration: const Duration(milliseconds: 400),
+                                    Get.to(
+                                        ForgotPasswordOtpScreen(
+                                            email: _emailTextEditController.text
+                                                .trim()),
+                                        duration:
+                                            const Duration(milliseconds: 400),
                                         //duration of transitions, default 1 sec
                                         transition: Transition.rightToLeft);
                                   } else {
-                                    ShowToastDialog.showToast("Please try again later");
+                                    ShowToastDialog.showToast(
+                                        "Please try again later");
                                   }
                                 }
                               });

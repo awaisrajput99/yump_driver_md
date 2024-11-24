@@ -48,7 +48,9 @@ class NewRideScreen extends StatelessWidget {
         return Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
-              backgroundColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+              backgroundColor: themeChange.getThem()
+                  ? AppThemeData.surface50Dark
+                  : AppThemeData.surface50,
               elevation: 0,
               centerTitle: true,
               title: Row(
@@ -57,7 +59,9 @@ class NewRideScreen extends StatelessWidget {
                   Text(
                     'CabMe Driver'.tr,
                     style: TextStyle(
-                      color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                      color: themeChange.getThem()
+                          ? AppThemeData.grey900Dark
+                          : AppThemeData.grey900,
                       fontSize: 18,
                       fontFamily: AppThemeData.semiBold,
                     ),
@@ -67,7 +71,9 @@ class NewRideScreen extends StatelessWidget {
                       Text(
                         "Status".tr,
                         style: TextStyle(
-                          color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                          color: themeChange.getThem()
+                              ? AppThemeData.grey500Dark
+                              : AppThemeData.grey500,
                           fontFamily: AppThemeData.regular,
                           fontSize: 16,
                         ),
@@ -83,26 +89,43 @@ class NewRideScreen extends StatelessWidget {
                           inactiveTrackColor: AppThemeData.warning200,
                           onChanged: (value) async {
                             await controllerDashBoard.getUsrData();
-                            if (controllerDashBoard.userModel.value.userData!.statutVehicule == "no") {
+                            if (controllerDashBoard
+                                    .userModel.value.userData!.statutVehicule ==
+                                "no") {
                               showAlertDialog(context, "vehicleInformation");
-                            } else if (controllerDashBoard.userModel.value.userData!.isVerified == "no" || controllerDashBoard.userModel.value.userData!.isVerified!.isEmpty) {
+                            } else if (controllerDashBoard
+                                        .userModel.value.userData!.isVerified ==
+                                    "no" ||
+                                controllerDashBoard.userModel.value.userData!
+                                    .isVerified!.isEmpty) {
                               showAlertDialog(context, "document");
                             } else {
                               ShowToastDialog.showLoader("Please wait");
 
                               Map<String, dynamic> bodyParams = {
-                                'id_driver': Preferences.getInt(Preferences.userId),
-                                'online': controllerDashBoard.isActive.value ? 'no' : 'yes',
+                                'id_driver':
+                                    Preferences.getInt(Preferences.userId),
+                                'online': controllerDashBoard.isActive.value
+                                    ? 'no'
+                                    : 'yes',
                               };
 
-                              await controllerDashBoard.changeOnlineStatus(bodyParams).then((value) {
+                              await controllerDashBoard
+                                  .changeOnlineStatus(bodyParams)
+                                  .then((value) {
                                 if (value != null) {
                                   if (value['success'] == "success") {
-                                    UserModel userModel = Constant.getUserData();
-                                    userModel.userData!.online = value['data']['online'];
+                                    UserModel userModel =
+                                        Constant.getUserData();
+                                    userModel.userData!.online =
+                                        value['data']['online'];
                                     controller.userModel.value = userModel;
-                                    Preferences.setString(Preferences.user, jsonEncode(userModel.toJson()));
-                                    controllerDashBoard.isActive.value = userModel.userData!.online == 'no' ? false : true;
+                                    Preferences.setString(Preferences.user,
+                                        jsonEncode(userModel.toJson()));
+                                    controllerDashBoard.isActive.value =
+                                        userModel.userData!.online == 'no'
+                                            ? false
+                                            : true;
                                     ShowToastDialog.showToast(value['message']);
                                   } else {
                                     ShowToastDialog.showToast(value['error']);
@@ -130,14 +153,19 @@ class NewRideScreen extends StatelessWidget {
                     },
                     child: Image.asset(
                       "assets/icons/ic_side_menu.png",
-                      color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                      color: themeChange.getThem()
+                          ? AppThemeData.grey900Dark
+                          : AppThemeData.grey900,
                     ),
                   ),
                 );
               }),
             ),
-            backgroundColor: themeChange.getThem() ? AppThemeData.grey50Dark : AppThemeData.grey50,
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            backgroundColor: themeChange.getThem()
+                ? AppThemeData.grey80Dark
+                : AppThemeData.white90,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
             floatingActionButton: SizedBox(
               width: Responsive.width(50, context),
               height: 50,
@@ -145,7 +173,8 @@ class NewRideScreen extends StatelessWidget {
                 backgroundColor: AppThemeData.primary200,
                 foregroundColor: Colors.black,
                 onPressed: () {
-                  if (controller.userModel.value.userData?.isVerified == "yes") {
+                  if (controller.userModel.value.userData?.isVerified ==
+                      "yes") {
                     if (Constant.selectedMapType == 'osm') {
                       Get.to(() => const CreateOsmRideScreen())?.then((v) {
                         controller.getNewRide();
@@ -156,13 +185,15 @@ class NewRideScreen extends StatelessWidget {
                       });
                     }
                   } else {
-                    ShowToastDialog.showToast('Your document is not verified by admin');
+                    ShowToastDialog.showToast(
+                        'Your document is not verified by admin');
                   }
                 },
                 icon: const Icon(Icons.add),
                 label: Text(
                   'Create Ride'.tr,
-                  style: TextStyle(fontSize: 14, fontFamily: AppThemeData.medium),
+                  style:
+                      TextStyle(fontSize: 14, fontFamily: AppThemeData.medium),
                 ),
               ),
             ),
@@ -188,13 +219,19 @@ class NewRideScreen extends StatelessWidget {
             body: RefreshIndicator(
               onRefresh: () => controller.getNewRide(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 child: Column(
                   children: [
-                    if (double.parse(controller.userModel.value.userData!.amount.toString()) < double.parse(Constant.minimumWalletBalance!))
+                    if (double.parse(controller.userModel.value.userData!.amount
+                            .toString()) <
+                        double.parse(Constant.minimumWalletBalance!))
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppThemeData.primary200),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppThemeData.primary200),
                         child: Text(
                           "${"Your wallet balance must be".tr} ${Constant().amountShow(amount: Constant.minimumWalletBalance!.toString())} ${"to get ride.".tr}",
                         ),
@@ -203,12 +240,17 @@ class NewRideScreen extends StatelessWidget {
                       child: controller.isLoading.value
                           ? SizedBox()
                           : controller.rideList.isEmpty
-                              ? Constant.emptyView("Your don't have any ride booked.")
+                              ? Constant.emptyView(
+                                  "Your don't have any ride booked.")
                               : ListView.builder(
                                   itemCount: controller.rideList.length,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
-                                    return newRideWidgets(context, controller.rideList[index], controller, themeChange.getThem());
+                                    return newRideWidgets(
+                                        context,
+                                        controller.rideList[index],
+                                        controller,
+                                        themeChange.getThem());
                                   }),
                     ),
                   ],
@@ -219,7 +261,8 @@ class NewRideScreen extends StatelessWidget {
     );
   }
 
-  Widget newRideWidgets(BuildContext context, RideData data, NewRideController controller, bool isDarkMode) {
+  Widget newRideWidgets(BuildContext context, RideData data,
+      NewRideController controller, bool isDarkMode) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     return InkWell(
       onTap: () async {
@@ -241,8 +284,10 @@ class NewRideScreen extends StatelessWidget {
             }
           } else {
             Constant.redirectMap(
-              latitude: double.parse(data.latitudeArrivee!), //orderModel.destinationLocationLAtLng!.latitude!,
-              longLatitude: double.parse(data.longitudeArrivee!), //orderModel.destinationLocationLAtLng!.longitude!,
+              latitude: double.parse(data
+                  .latitudeArrivee!), //orderModel.destinationLocationLAtLng!.latitude!,
+              longLatitude: double.parse(data
+                  .longitudeArrivee!), //orderModel.destinationLocationLAtLng!.longitude!,
               name: data.destinationName!,
             ); //orderModel.destinationLocationName.toString());
           }
@@ -252,7 +297,9 @@ class NewRideScreen extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 10),
         child: Container(
           decoration: BoxDecoration(
-            color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+            color: themeChange.getThem()
+                ? AppThemeData.surface50Dark
+                : AppThemeData.surface50,
             borderRadius: const BorderRadius.all(Radius.circular(15.0)),
           ),
           child: Padding(
@@ -295,7 +342,9 @@ class NewRideScreen extends StatelessWidget {
                       Container(
                         width: 100,
                         height: 34,
-                        decoration: BoxDecoration(color: Constant.statusColor(data), borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(
+                            color: Constant.statusColor(data),
+                            borderRadius: BorderRadius.circular(10)),
                         child: Center(
                           child: Text(
                             Constant().capitalizeWords(data.statut.toString()),
@@ -383,7 +432,8 @@ class NewRideScreen extends StatelessWidget {
                   child: dividerCust(isDarkMode: themeChange.getThem()),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                   child: Row(
                     children: [
                       Expanded(
@@ -393,10 +443,18 @@ class NewRideScreen extends StatelessWidget {
                               '${double.parse(data.distance.toString()).toStringAsFixed(int.parse(Constant.decimal!))} ${Constant.distanceUnit}',
                               mode: TextScrollMode.bouncing,
                               pauseBetween: const Duration(seconds: 2),
-                              style: TextStyle(color: AppThemeData.primary400, fontSize: 18, fontFamily: AppThemeData.semiBold),
+                              style: TextStyle(
+                                  color: AppThemeData.primary400,
+                                  fontSize: 18,
+                                  fontFamily: AppThemeData.semiBold),
                             ),
                             Text("Distance".tr,
-                                style: TextStyle(color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontSize: 12, fontFamily: AppThemeData.regular)),
+                                style: TextStyle(
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey900Dark
+                                        : AppThemeData.grey900,
+                                    fontSize: 12,
+                                    fontFamily: AppThemeData.regular)),
                           ],
                         ),
                       ),
@@ -408,10 +466,18 @@ class NewRideScreen extends StatelessWidget {
                           children: [
                             Text(
                               data.numberPoeple.toString(),
-                              style: TextStyle(color: AppThemeData.primary400, fontSize: 18, fontFamily: AppThemeData.semiBold),
+                              style: TextStyle(
+                                  color: AppThemeData.primary400,
+                                  fontSize: 18,
+                                  fontFamily: AppThemeData.semiBold),
                             ),
                             Text("Passangers".tr,
-                                style: TextStyle(color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontSize: 12, fontFamily: AppThemeData.regular)),
+                                style: TextStyle(
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey900Dark
+                                        : AppThemeData.grey900,
+                                    fontSize: 12,
+                                    fontFamily: AppThemeData.regular)),
                           ],
                         ),
                       ),
@@ -425,10 +491,18 @@ class NewRideScreen extends StatelessWidget {
                               data.duree.toString(),
                               mode: TextScrollMode.bouncing,
                               pauseBetween: const Duration(seconds: 2),
-                              style: TextStyle(color: AppThemeData.primary400, fontSize: 18, fontFamily: AppThemeData.semiBold),
+                              style: TextStyle(
+                                  color: AppThemeData.primary400,
+                                  fontSize: 18,
+                                  fontFamily: AppThemeData.semiBold),
                             ),
                             Text("Duration".tr,
-                                style: TextStyle(color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontSize: 12, fontFamily: AppThemeData.regular)),
+                                style: TextStyle(
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey900Dark
+                                        : AppThemeData.grey900,
+                                    fontSize: 12,
+                                    fontFamily: AppThemeData.regular)),
                           ],
                         ),
                       ),
@@ -439,11 +513,20 @@ class NewRideScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              Constant().amountShow(amount: data.montant.toString()),
-                              style: TextStyle(color: AppThemeData.primary400, fontSize: 18, fontFamily: AppThemeData.semiBold),
+                              Constant()
+                                  .amountShow(amount: data.montant.toString()),
+                              style: TextStyle(
+                                  color: AppThemeData.primary400,
+                                  fontSize: 18,
+                                  fontFamily: AppThemeData.semiBold),
                             ),
                             Text("Trip Price".tr,
-                                style: TextStyle(color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontSize: 12, fontFamily: AppThemeData.regular)),
+                                style: TextStyle(
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey900Dark
+                                        : AppThemeData.grey900,
+                                    fontSize: 12,
+                                    fontFamily: AppThemeData.regular)),
                           ],
                         ),
                       )
@@ -463,7 +546,9 @@ class NewRideScreen extends StatelessWidget {
                           height: 45,
                           width: 45,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Constant.loader(context, isDarkMode: themeChange.getThem()),
+                          placeholder: (context, url) => Constant.loader(
+                              context,
+                              isDarkMode: themeChange.getThem()),
                           errorWidget: (context, url, error) => Image.asset(
                             "assets/images/appIcon.png",
                           ),
@@ -472,29 +557,42 @@ class NewRideScreen extends StatelessWidget {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 12.0),
-                          child: data.rideType! == 'driver' && data.existingUserId.toString() == "null"
+                          child: data.rideType! == 'driver' &&
+                                  data.existingUserId.toString() == "null"
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('${data.userInfo!.name}',
                                         style: TextStyle(
-                                          color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                          color: themeChange.getThem()
+                                              ? AppThemeData.grey900Dark
+                                              : AppThemeData.grey900,
                                           fontSize: 16,
                                           fontFamily: AppThemeData.semiBold,
                                         )),
-                                    Text('${data.userInfo!.email}', style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.w400)),
+                                    Text('${data.userInfo!.email}',
+                                        style: const TextStyle(
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w400)),
                                   ],
                                 )
                               : Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('${data.prenom.toString()} ${data.nom.toString()}',
+                                    Text(
+                                        '${data.prenom.toString()} ${data.nom.toString()}',
                                         style: TextStyle(
-                                          color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                          color: themeChange.getThem()
+                                              ? AppThemeData.grey900Dark
+                                              : AppThemeData.grey900,
                                           fontSize: 16,
                                           fontFamily: AppThemeData.semiBold,
                                         )),
-                                    StarRating(size: 18, rating: double.parse(data.moyenneDriver.toString()), color: AppThemeData.warning200),
+                                    StarRating(
+                                        size: 18,
+                                        rating: double.parse(
+                                            data.moyenneDriver.toString()),
+                                        color: AppThemeData.warning200),
                                   ],
                                 ),
                         ),
@@ -504,8 +602,10 @@ class NewRideScreen extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              if (data.rideType! == 'driver' && data.existingUserId.toString() == "null") {
-                                Constant.makePhoneCall(data.userInfo!.phone.toString());
+                              if (data.rideType! == 'driver' &&
+                                  data.existingUserId.toString() == "null") {
+                                Constant.makePhoneCall(
+                                    data.userInfo!.phone.toString());
                               } else {
                                 Constant.makePhoneCall(data.phone.toString());
                               }
@@ -514,7 +614,8 @@ class NewRideScreen extends StatelessWidget {
                               foregroundColor: Colors.blue,
                               shape: const CircleBorder(),
                               backgroundColor: Colors.blue,
-                              padding: const EdgeInsets.all(6), // <-- Splash color
+                              padding:
+                                  const EdgeInsets.all(6), // <-- Splash color
                             ),
                             child: const Icon(
                               Icons.call,
@@ -546,11 +647,18 @@ class NewRideScreen extends StatelessWidget {
                                   child: ButtonThem.buildButton(context,
                                       btnHeight: 45,
                                       btnWidthRatio: 1,
-                                      title: data.statutPaiement == "yes" ? "paid".tr : "Not paid".tr,
-                                      btnColor: data.statutPaiement == "yes" ? AppThemeData.success300 : AppThemeData.success300,
-                                      txtColor: themeChange.getThem() ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                      title: data.statutPaiement == "yes"
+                                          ? "paid".tr
+                                          : "Not paid".tr,
+                                      btnColor: data.statutPaiement == "yes"
+                                          ? AppThemeData.success300
+                                          : AppThemeData.success300,
+                                      txtColor: themeChange.getThem()
+                                          ? AppThemeData.grey900
+                                          : AppThemeData.grey900Dark,
                                       onPress: () {})),
-                              if (data.existingUserId.toString() != "null") SizedBox(width: 10),
+                              if (data.existingUserId.toString() != "null")
+                                SizedBox(width: 10),
                               if (data.existingUserId.toString() != "null")
                                 Expanded(
                                   child: ButtonThem.buildButton(
@@ -561,9 +669,10 @@ class NewRideScreen extends StatelessWidget {
                                     btnColor: AppThemeData.primary200,
                                     txtColor: AppThemeData.grey900,
                                     onPress: () async {
-                                      Get.to(const AddReviewScreen(), arguments: {
-                                        'rideData': data,
-                                      });
+                                      Get.to(const AddReviewScreen(),
+                                          arguments: {
+                                            'rideData': data,
+                                          });
                                     },
                                   ),
                                 ),
@@ -575,13 +684,18 @@ class NewRideScreen extends StatelessWidget {
                         height: 10,
                       ),
                       Visibility(
-                        visible: data.statut == "completed" && data.existingUserId.toString() != "null",
+                        visible: data.statut == "completed" &&
+                            data.existingUserId.toString() != "null",
                         child: ButtonThem.buildButton(
                           context,
                           title: 'Add Complaint'.tr,
                           btnHeight: 45,
-                          btnColor: themeChange.getThem() ? AppThemeData.grey900 : AppThemeData.grey900Dark,
-                          txtColor: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey300Dark,
+                          btnColor: themeChange.getThem()
+                              ? AppThemeData.grey900
+                              : AppThemeData.grey900Dark,
+                          txtColor: themeChange.getThem()
+                              ? AppThemeData.grey500Dark
+                              : AppThemeData.grey300Dark,
                           onPress: () async {
                             Get.to(AddComplaintScreen(), arguments: {
                               "isReviewScreen": false,
@@ -594,19 +708,26 @@ class NewRideScreen extends StatelessWidget {
                       Row(
                         children: [
                           Visibility(
-                            visible: data.statut == "new" || data.statut == "confirmed" ? true : false,
+                            visible: data.statut == "new" ||
+                                    data.statut == "confirmed"
+                                ? true
+                                : false,
                             child: Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: 5, left: 8, right: 8),
+                                padding: const EdgeInsets.only(
+                                    bottom: 5, left: 8, right: 8),
                                 child: ButtonThem.buildButton(
                                   context,
                                   title: 'REJECT'.tr,
                                   btnHeight: 45,
                                   btnWidthRatio: 1,
                                   btnColor: AppThemeData.warning200,
-                                  txtColor: themeChange.getThem() ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                  txtColor: themeChange.getThem()
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900Dark,
                                   onPress: () async {
-                                    buildShowBottomSheet(context, data, controller, isDarkMode);
+                                    buildShowBottomSheet(
+                                        context, data, controller, isDarkMode);
                                   },
                                 ),
                               ),
@@ -616,21 +737,26 @@ class NewRideScreen extends StatelessWidget {
                             visible: data.statut == "new" ? true : false,
                             child: Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: 5, left: 8, right: 8),
+                                padding: const EdgeInsets.only(
+                                    bottom: 5, left: 8, right: 8),
                                 child: ButtonThem.buildButton(
                                   context,
                                   title: 'ACCEPT'.tr,
                                   btnHeight: 45,
                                   btnWidthRatio: 1,
                                   btnColor: AppThemeData.success300,
-                                  txtColor: themeChange.getThem() ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                  txtColor: themeChange.getThem()
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900Dark,
                                   onPress: () async {
                                     showDialog(
                                       barrierColor: Colors.black26,
                                       context: context,
                                       builder: (context) {
                                         return CustomAlertDialog(
-                                          title: "Do you want to confirm this booking?".tr,
+                                          title:
+                                              "Do you want to confirm this booking?"
+                                                  .tr,
                                           onPressNegative: () {
                                             Get.back();
                                           },
@@ -639,31 +765,51 @@ class NewRideScreen extends StatelessWidget {
                                           onPressPositive: () {
                                             Map<String, String> bodyParams = {
                                               'id_ride': data.id.toString(),
-                                              'id_user': data.idUserApp.toString(),
-                                              'driver_name': '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
-                                              'lat_conducteur': data.latitudeDepart.toString(),
-                                              'lng_conducteur': data.longitudeDepart.toString(),
-                                              'lat_client': data.latitudeArrivee.toString(),
-                                              'lng_client': data.longitudeArrivee.toString(),
-                                              'from_id': Preferences.getInt(Preferences.userId).toString(),
+                                              'id_user':
+                                                  data.idUserApp.toString(),
+                                              'driver_name':
+                                                  '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
+                                              'lat_conducteur': data
+                                                  .latitudeDepart
+                                                  .toString(),
+                                              'lng_conducteur': data
+                                                  .longitudeDepart
+                                                  .toString(),
+                                              'lat_client': data.latitudeArrivee
+                                                  .toString(),
+                                              'lng_client': data
+                                                  .longitudeArrivee
+                                                  .toString(),
+                                              'from_id': Preferences.getInt(
+                                                      Preferences.userId)
+                                                  .toString(),
                                             };
 
-                                            controller.confirmedRide(bodyParams).then((value) {
+                                            controller
+                                                .confirmedRide(bodyParams)
+                                                .then((value) {
                                               if (value != null) {
                                                 data.statut = "confirmed";
                                                 Get.back();
                                                 showDialog(
                                                     context: context,
-                                                    builder: (BuildContext context) {
+                                                    builder:
+                                                        (BuildContext context) {
                                                       return CustomDialogBox(
-                                                        title: "Confirmed Successfully".tr,
-                                                        descriptions: "Ride Successfully confirmed.".tr,
+                                                        title:
+                                                            "Confirmed Successfully"
+                                                                .tr,
+                                                        descriptions:
+                                                            "Ride Successfully confirmed."
+                                                                .tr,
                                                         text: "Ok".tr,
                                                         onPress: () {
                                                           Get.back();
-                                                          controller.getNewRide();
+                                                          controller
+                                                              .getNewRide();
                                                         },
-                                                        img: Image.asset('assets/images/green_checked.png'),
+                                                        img: Image.asset(
+                                                            'assets/images/green_checked.png'),
                                                       );
                                                     });
                                               }
@@ -681,21 +827,27 @@ class NewRideScreen extends StatelessWidget {
                             visible: data.statut == "confirmed" ? true : false,
                             child: Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: 5, left: 8, right: 8),
+                                padding: const EdgeInsets.only(
+                                    bottom: 5, left: 8, right: 8),
                                 child: ButtonThem.buildButton(
                                   context,
                                   title: 'On Ride'.tr,
                                   btnHeight: 45,
                                   btnWidthRatio: 1,
                                   btnColor: AppThemeData.primary200,
-                                  txtColor: themeChange.getThem() ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                  txtColor: themeChange.getThem()
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900Dark,
                                   onPress: () async {
                                     showDialog(
-                                      barrierColor: const Color.fromARGB(66, 20, 14, 14),
+                                      barrierColor:
+                                          const Color.fromARGB(66, 20, 14, 14),
                                       context: context,
                                       builder: (context) {
                                         return CustomAlertDialog(
-                                          title: "Do you want to on ride this ride?".tr,
+                                          title:
+                                              "Do you want to on ride this ride?"
+                                                  .tr,
                                           negativeButtonText: 'No'.tr,
                                           positiveButtonText: 'Yes'.tr,
                                           onPressNegative: () {
@@ -704,81 +856,139 @@ class NewRideScreen extends StatelessWidget {
                                           onPressPositive: () {
                                             Get.back();
 
-                                            if (Constant.rideOtp.toString() != 'yes' || data.rideType! == 'driver') {
+                                            if (Constant.rideOtp.toString() !=
+                                                    'yes' ||
+                                                data.rideType! == 'driver') {
                                               Map<String, String> bodyParams = {
                                                 'id_ride': data.id.toString(),
-                                                'id_user': data.idUserApp.toString(),
-                                                'use_name': '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
-                                                'from_id': Preferences.getInt(Preferences.userId).toString(),
+                                                'id_user':
+                                                    data.idUserApp.toString(),
+                                                'use_name':
+                                                    '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
+                                                'from_id': Preferences.getInt(
+                                                        Preferences.userId)
+                                                    .toString(),
                                               };
-                                              controller.setOnRideRequest(bodyParams).then((value) {
+                                              controller
+                                                  .setOnRideRequest(bodyParams)
+                                                  .then((value) {
                                                 if (value != null) {
                                                   Get.back();
                                                   showDialog(
                                                       context: context,
-                                                      builder: (BuildContext context) {
+                                                      builder: (BuildContext
+                                                          context) {
                                                         return CustomDialogBox(
-                                                          title: "On ride Successfully".tr,
-                                                          descriptions: "Ride Successfully On ride.".tr,
+                                                          title:
+                                                              "On ride Successfully"
+                                                                  .tr,
+                                                          descriptions:
+                                                              "Ride Successfully On ride."
+                                                                  .tr,
                                                           text: "Ok".tr,
                                                           onPress: () {
-                                                            controller.getNewRide();
+                                                            controller
+                                                                .getNewRide();
                                                           },
-                                                          img: Image.asset('assets/images/green_checked.png'),
+                                                          img: Image.asset(
+                                                              'assets/images/green_checked.png'),
                                                         );
                                                       });
                                                 }
                                               });
                                             } else {
-                                              controller.otpController = TextEditingController();
+                                              controller.otpController =
+                                                  TextEditingController();
                                               showDialog(
                                                 barrierColor: Colors.black26,
                                                 context: context,
                                                 builder: (context) {
                                                   return Dialog(
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(20),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
                                                     ),
                                                     elevation: 0,
-                                                    backgroundColor: Colors.transparent,
+                                                    backgroundColor:
+                                                        Colors.transparent,
                                                     child: Container(
                                                       height: 200,
-                                                      padding: const EdgeInsets.only(left: 10, top: 20, right: 10, bottom: 20),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              top: 20,
+                                                              right: 10,
+                                                              bottom: 20),
                                                       decoration: BoxDecoration(
-                                                          shape: BoxShape.rectangle,
-                                                          color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
-                                                          borderRadius: BorderRadius.circular(20),
+                                                          shape: BoxShape
+                                                              .rectangle,
+                                                          color: isDarkMode
+                                                              ? AppThemeData
+                                                                  .surface50Dark
+                                                              : AppThemeData
+                                                                  .surface50,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
                                                           boxShadow: const [
-                                                            BoxShadow(color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
+                                                            BoxShadow(
+                                                                color: Colors
+                                                                    .black,
+                                                                offset: Offset(
+                                                                    0, 10),
+                                                                blurRadius: 10),
                                                           ]),
                                                       child: Column(
                                                         children: [
                                                           Text(
                                                             "Enter OTP".tr,
-                                                            style: TextStyle(fontSize: 16),
+                                                            style: TextStyle(
+                                                                fontSize: 16),
                                                           ),
                                                           const SizedBox(
                                                             height: 20,
                                                           ),
                                                           Pinput(
-                                                            controller: controller.otpController,
-                                                            defaultPinTheme: PinTheme(
+                                                            controller: controller
+                                                                .otpController,
+                                                            defaultPinTheme:
+                                                                PinTheme(
                                                               height: 50,
                                                               width: 50,
-                                                              textStyle: const TextStyle(
-                                                                letterSpacing: 0.60,
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                                letterSpacing:
+                                                                    0.60,
                                                                 fontSize: 16,
                                                               ),
                                                               // margin: EdgeInsets.all(10),
-                                                              decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(10),
-                                                                shape: BoxShape.rectangle,
-                                                                color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
-                                                                border: Border.all(color: AppThemeData.textFieldBoarderColor, width: 0.7),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                shape: BoxShape
+                                                                    .rectangle,
+                                                                color: isDarkMode
+                                                                    ? AppThemeData
+                                                                        .surface50Dark
+                                                                    : AppThemeData
+                                                                        .surface50,
+                                                                border: Border.all(
+                                                                    color: AppThemeData
+                                                                        .textFieldBoarderColor,
+                                                                    width: 0.7),
                                                               ),
                                                             ),
-                                                            keyboardType: TextInputType.phone,
-                                                            textInputAction: TextInputAction.done,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .phone,
+                                                            textInputAction:
+                                                                TextInputAction
+                                                                    .done,
                                                             length: 6,
                                                           ),
                                                           const SizedBox(
@@ -787,30 +997,61 @@ class NewRideScreen extends StatelessWidget {
                                                           Row(
                                                             children: [
                                                               Expanded(
-                                                                child: ButtonThem.buildButton(
+                                                                child: ButtonThem
+                                                                    .buildButton(
                                                                   context,
-                                                                  title: 'done'.tr,
+                                                                  title:
+                                                                      'done'.tr,
                                                                   btnHeight: 45,
-                                                                  btnWidthRatio: 1,
-                                                                  btnColor: AppThemeData.primary200,
-                                                                  txtColor: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                                                  btnWidthRatio:
+                                                                      1,
+                                                                  btnColor:
+                                                                      AppThemeData
+                                                                          .primary200,
+                                                                  txtColor: isDarkMode
+                                                                      ? AppThemeData
+                                                                          .grey900Dark
+                                                                      : AppThemeData
+                                                                          .grey900,
                                                                   onPress: () {
-                                                                    if (controller.otpController.text.toString().length == 6) {
+                                                                    if (controller
+                                                                            .otpController
+                                                                            .text
+                                                                            .toString()
+                                                                            .length ==
+                                                                        6) {
                                                                       controller
                                                                           .verifyOTP(
-                                                                        userId: data.idUserApp!.toString(),
-                                                                        rideId: data.id!.toString(),
+                                                                        userId: data
+                                                                            .idUserApp!
+                                                                            .toString(),
+                                                                        rideId: data
+                                                                            .id!
+                                                                            .toString(),
                                                                       )
-                                                                          .then((value) {
-                                                                        if (value != null && value['success'] == "success") {
-                                                                          Map<String, String> bodyParams = {
-                                                                            'id_ride': data.id.toString(),
-                                                                            'id_user': data.idUserApp.toString(),
-                                                                            'use_name': '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
-                                                                            'from_id': Preferences.getInt(Preferences.userId).toString(),
+                                                                          .then(
+                                                                              (value) {
+                                                                        if (value !=
+                                                                                null &&
+                                                                            value['success'] ==
+                                                                                "success") {
+                                                                          Map<String, String>
+                                                                              bodyParams =
+                                                                              {
+                                                                            'id_ride':
+                                                                                data.id.toString(),
+                                                                            'id_user':
+                                                                                data.idUserApp.toString(),
+                                                                            'use_name':
+                                                                                '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
+                                                                            'from_id':
+                                                                                Preferences.getInt(Preferences.userId).toString(),
                                                                           };
-                                                                          controller.setOnRideRequest(bodyParams).then((value) {
-                                                                            if (value != null) {
+                                                                          controller
+                                                                              .setOnRideRequest(bodyParams)
+                                                                              .then((value) {
+                                                                            if (value !=
+                                                                                null) {
                                                                               Get.back();
                                                                               showDialog(
                                                                                   context: context,
@@ -831,7 +1072,9 @@ class NewRideScreen extends StatelessWidget {
                                                                         }
                                                                       });
                                                                     } else {
-                                                                      ShowToastDialog.showToast('Please Enter OTP');
+                                                                      ShowToastDialog
+                                                                          .showToast(
+                                                                              'Please Enter OTP');
                                                                     }
                                                                   },
                                                                 ),
@@ -840,14 +1083,30 @@ class NewRideScreen extends StatelessWidget {
                                                                 width: 8,
                                                               ),
                                                               Expanded(
-                                                                child: ButtonThem.buildBorderButton(
+                                                                child: ButtonThem
+                                                                    .buildBorderButton(
                                                                   context,
-                                                                  title: 'cancel'.tr,
+                                                                  title:
+                                                                      'cancel'
+                                                                          .tr,
                                                                   btnHeight: 45,
-                                                                  btnWidthRatio: 1,
-                                                                  btnColor: isDarkMode ? AppThemeData.grey800 : AppThemeData.grey100,
-                                                                  txtColor: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
-                                                                  btnBorderColor: isDarkMode ? AppThemeData.grey800 : AppThemeData.grey100,
+                                                                  btnWidthRatio:
+                                                                      1,
+                                                                  btnColor: isDarkMode
+                                                                      ? AppThemeData
+                                                                          .grey800
+                                                                      : AppThemeData
+                                                                          .grey100,
+                                                                  txtColor: isDarkMode
+                                                                      ? AppThemeData
+                                                                          .grey900Dark
+                                                                      : AppThemeData
+                                                                          .grey900,
+                                                                  btnBorderColor: isDarkMode
+                                                                      ? AppThemeData
+                                                                          .grey800
+                                                                      : AppThemeData
+                                                                          .grey100,
                                                                   onPress: () {
                                                                     Get.back();
                                                                   },
@@ -884,14 +1143,17 @@ class NewRideScreen extends StatelessWidget {
                             visible: data.statut == "on ride" ? true : false,
                             child: Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: 5, left: 8, right: 8),
+                                padding: const EdgeInsets.only(
+                                    bottom: 5, left: 8, right: 8),
                                 child: ButtonThem.buildButton(
                                   context,
                                   title: 'START RIDE'.tr,
                                   btnHeight: 45,
                                   btnWidthRatio: 1,
                                   btnColor: AppThemeData.secondary200,
-                                  txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900,
+                                  txtColor: isDarkMode
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900,
                                   onPress: () async {
                                     String googleUrl =
                                         'https://www.google.com/maps/search/?api=1&query=${double.parse(data.latitudeArrivee.toString())},${double.parse(data.longitudeArrivee.toString())}';
@@ -920,14 +1182,18 @@ class NewRideScreen extends StatelessWidget {
                                   btnHeight: 45,
                                   btnWidthRatio: 1,
                                   btnColor: AppThemeData.success300,
-                                  txtColor: isDarkMode ? AppThemeData.surface50 : AppThemeData.surface50,
+                                  txtColor: isDarkMode
+                                      ? AppThemeData.surface50
+                                      : AppThemeData.surface50,
                                   onPress: () async {
                                     showDialog(
                                       barrierColor: Colors.black26,
                                       context: context,
                                       builder: (context) {
                                         return CustomAlertDialog(
-                                          title: "Do you want to complete this ride?".tr,
+                                          title:
+                                              "Do you want to complete this ride?"
+                                                  .tr,
                                           onPressNegative: () {
                                             Get.back();
                                           },
@@ -936,25 +1202,39 @@ class NewRideScreen extends StatelessWidget {
                                           onPressPositive: () {
                                             Map<String, String> bodyParams = {
                                               'id_ride': data.id.toString(),
-                                              'id_user': data.idUserApp.toString(),
-                                              'driver_name': '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
-                                              'from_id': Preferences.getInt(Preferences.userId).toString(),
+                                              'id_user':
+                                                  data.idUserApp.toString(),
+                                              'driver_name':
+                                                  '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
+                                              'from_id': Preferences.getInt(
+                                                      Preferences.userId)
+                                                  .toString(),
                                             };
-                                            controller.setCompletedRequest(bodyParams, data).then((value) {
+                                            controller
+                                                .setCompletedRequest(
+                                                    bodyParams, data)
+                                                .then((value) {
                                               if (value != null) {
                                                 Get.back();
                                                 showDialog(
                                                     context: context,
-                                                    builder: (BuildContext context) {
+                                                    builder:
+                                                        (BuildContext context) {
                                                       return CustomDialogBox(
-                                                        title: "Completed Successfully".tr,
-                                                        descriptions: "Ride Successfully completed.".tr,
+                                                        title:
+                                                            "Completed Successfully"
+                                                                .tr,
+                                                        descriptions:
+                                                            "Ride Successfully completed."
+                                                                .tr,
                                                         text: "Ok".tr,
                                                         onPress: () {
                                                           Get.back();
-                                                          controller.getNewRide();
+                                                          controller
+                                                              .getNewRide();
                                                         },
-                                                        img: Image.asset('assets/images/green_checked.png'),
+                                                        img: Image.asset(
+                                                            'assets/images/green_checked.png'),
                                                       );
                                                     });
                                               }
@@ -983,16 +1263,20 @@ class NewRideScreen extends StatelessWidget {
 
   final resonController = TextEditingController();
 
-  buildShowBottomSheet(BuildContext context, RideData data, NewRideController controller, bool isDarkMode) {
+  buildShowBottomSheet(BuildContext context, RideData data,
+      NewRideController controller, bool isDarkMode) {
     return showModalBottomSheet(
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15), topLeft: Radius.circular(15))),
         context: context,
         isDismissible: true,
         isScrollControlled: true,
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Column(
@@ -1025,10 +1309,12 @@ class NewRideScreen extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         decoration: const InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
                           ),
                         ),
                       ),
@@ -1046,7 +1332,9 @@ class NewRideScreen extends StatelessWidget {
                                 btnHeight: 45,
                                 btnWidthRatio: 0.8,
                                 btnColor: AppThemeData.primary200,
-                                txtColor: !isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                txtColor: !isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark,
                                 onPress: () async {
                                   if (resonController.text.isNotEmpty) {
                                     Get.back();
@@ -1055,7 +1343,9 @@ class NewRideScreen extends StatelessWidget {
                                       context: context,
                                       builder: (context) {
                                         return CustomAlertDialog(
-                                          title: "Do you want to reject this booking?".tr,
+                                          title:
+                                              "Do you want to reject this booking?"
+                                                  .tr,
                                           onPressNegative: () {
                                             Get.back();
                                           },
@@ -1064,27 +1354,43 @@ class NewRideScreen extends StatelessWidget {
                                           onPressPositive: () {
                                             Map<String, String> bodyParams = {
                                               'id_ride': data.id.toString(),
-                                              'id_user': data.idUserApp.toString(),
-                                              'name': '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
-                                              'from_id': Preferences.getInt(Preferences.userId).toString(),
-                                              'user_cat': controller.userModel.value.userData!.userCat.toString(),
-                                              'reason': resonController.text.toString(),
+                                              'id_user':
+                                                  data.idUserApp.toString(),
+                                              'name':
+                                                  '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
+                                              'from_id': Preferences.getInt(
+                                                      Preferences.userId)
+                                                  .toString(),
+                                              'user_cat': controller.userModel
+                                                  .value.userData!.userCat
+                                                  .toString(),
+                                              'reason': resonController.text
+                                                  .toString(),
                                             };
-                                            controller.canceledRide(bodyParams).then((value) {
+                                            controller
+                                                .canceledRide(bodyParams)
+                                                .then((value) {
                                               Get.back();
                                               if (value != null) {
                                                 showDialog(
                                                     context: context,
-                                                    builder: (BuildContext context) {
+                                                    builder:
+                                                        (BuildContext context) {
                                                       return CustomDialogBox(
-                                                        title: "Reject Successfully".tr,
-                                                        descriptions: "Ride Successfully rejected.".tr,
+                                                        title:
+                                                            "Reject Successfully"
+                                                                .tr,
+                                                        descriptions:
+                                                            "Ride Successfully rejected."
+                                                                .tr,
                                                         text: "Ok".tr,
                                                         onPress: () {
                                                           Get.back();
-                                                          controller.getNewRide();
+                                                          controller
+                                                              .getNewRide();
                                                         },
-                                                        img: Image.asset('assets/images/green_checked.png'),
+                                                        img: Image.asset(
+                                                            'assets/images/green_checked.png'),
                                                       );
                                                     });
                                               }
@@ -1094,7 +1400,8 @@ class NewRideScreen extends StatelessWidget {
                                       },
                                     );
                                   } else {
-                                    ShowToastDialog.showToast("Please enter a reason");
+                                    ShowToastDialog.showToast(
+                                        "Please enter a reason");
                                   }
                                 },
                               ),
@@ -1103,14 +1410,19 @@ class NewRideScreen extends StatelessWidget {
                           SizedBox(width: 5),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 5, left: 10),
+                              padding:
+                                  const EdgeInsets.only(bottom: 5, left: 10),
                               child: ButtonThem.buildBorderButton(
                                 context,
                                 title: 'Close'.tr,
                                 btnHeight: 45,
                                 btnWidthRatio: 0.8,
-                                btnColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
-                                txtColor: !isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                btnColor: isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark,
+                                txtColor: !isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark,
                                 btnBorderColor: AppThemeData.primary200,
                                 onPress: () async {
                                   Get.back();

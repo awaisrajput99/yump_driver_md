@@ -34,6 +34,7 @@ class Constant {
   static String? appVersion = "0.0";
   static String? minimumWalletBalance = "0";
   static String? decimal = "2";
+  static String appName = "MapleridesX";
   static String? currency = "\$";
   static bool symbolAtRight = false;
   static List<TaxModel> taxList = [];
@@ -50,10 +51,12 @@ class Constant {
   static String? deliveryChargeParcel = "";
   static String? parcelActive = "";
   static String? parcelPerWeightCharge = "";
-  static CollectionReference conversation = FirebaseFirestore.instance.collection('conversation');
+  static CollectionReference conversation =
+      FirebaseFirestore.instance.collection('conversation');
 
   // static CollectionReference locationUpdate = FirebaseFirestore.instance.collection('ride_location_update');
-  static CollectionReference driverLocationUpdate = FirebaseFirestore.instance.collection('driver_location_update');
+  static CollectionReference driverLocationUpdate =
+      FirebaseFirestore.instance.collection('driver_location_update');
   static LocationData? currentLocation;
   static String liveTrackingMapType = "google";
   static String selectedMapType = 'osm';
@@ -162,7 +165,8 @@ class Constant {
   }
 
   String amountShow({required String? amount}) {
-    String amountdata = (amount == 'null' || amount == '' || amount == null) ? '0' : amount;
+    String amountdata =
+        (amount == 'null' || amount == '' || amount == null) ? '0' : amount;
     if (Constant.symbolAtRight == true) {
       return "${double.parse(amountdata.toString()).toStringAsFixed(int.parse(Constant.decimal!))}${Constant.currency.toString()}";
     } else {
@@ -170,15 +174,22 @@ class Constant {
     }
   }
 
-  static Widget loader(context, {required bool isDarkMode, Color? loadingcolor, Color? bgColor}) {
+  static Widget loader(context,
+      {required bool isDarkMode, Color? loadingcolor, Color? bgColor}) {
     return Center(
       child: Container(
         width: 40,
         height: 40,
         padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(color: bgColor ?? (isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50), borderRadius: BorderRadius.circular(50)),
+        decoration: BoxDecoration(
+            color: bgColor ??
+                (isDarkMode
+                    ? AppThemeData.surface50Dark
+                    : AppThemeData.surface50),
+            borderRadius: BorderRadius.circular(50)),
         child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(loadingcolor ?? AppThemeData.primary200),
+          valueColor: AlwaysStoppedAnimation<Color>(
+              loadingcolor ?? AppThemeData.primary200),
           strokeWidth: 3,
         ),
       ),
@@ -193,9 +204,12 @@ class Constant {
     await launchUrl(launchUri);
   }
 
-  static Future<void> launchMapURl(String? latitude, String? longLatitude) async {
-    String appleUrl = 'https://maps.apple.com/?saddr=&daddr=$latitude,$longLatitude&directionsmode=driving';
-    String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longLatitude';
+  static Future<void> launchMapURl(
+      String? latitude, String? longLatitude) async {
+    String appleUrl =
+        'https://maps.apple.com/?saddr=&daddr=$latitude,$longLatitude&directionsmode=driving';
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longLatitude';
 
     if (Platform.isIOS) {
       if (await canLaunchUrl(Uri.parse(appleUrl))) {
@@ -213,11 +227,13 @@ class Constant {
   static Future<Url> uploadChatImageToFireStorage(File image) async {
     ShowToastDialog.showLoader('Uploading image...');
     var uniqueID = const Uuid().v4();
-    Reference upload = FirebaseStorage.instance.ref().child('images/$uniqueID.png');
+    Reference upload =
+        FirebaseStorage.instance.ref().child('images/$uniqueID.png');
     UploadTask uploadTask = upload.putFile(image);
 
     uploadTask.snapshotEvents.listen((event) {
-      ShowToastDialog.showLoader('Uploading image ${(event.bytesTransferred.toDouble() / 1000).toStringAsFixed(2)} /'
+      ShowToastDialog.showLoader(
+          'Uploading image ${(event.bytesTransferred.toDouble() / 1000).toStringAsFixed(2)} /'
           '${(event.totalBytes.toDouble() / 1000).toStringAsFixed(2)} '
           'KB');
     });
@@ -228,13 +244,16 @@ class Constant {
     var downloadUrl = await storageRef.getDownloadURL();
     var metaData = await storageRef.getMetadata();
     ShowToastDialog.closeLoader();
-    return Url(mime: metaData.contentType ?? 'image', url: downloadUrl.toString());
+    return Url(
+        mime: metaData.contentType ?? 'image', url: downloadUrl.toString());
   }
 
-  static Future<ChatVideoContainer> uploadChatVideoToFireStorage(File video) async {
+  static Future<ChatVideoContainer> uploadChatVideoToFireStorage(
+      File video) async {
     ShowToastDialog.showLoader('Uploading video');
     var uniqueID = const Uuid().v4();
-    Reference upload = FirebaseStorage.instance.ref().child('videos/$uniqueID.mp4');
+    Reference upload =
+        FirebaseStorage.instance.ref().child('videos/$uniqueID.mp4');
     File compressedVideo = await _compressVideo(video);
     SettableMetadata metadata = SettableMetadata(contentType: 'video');
     UploadTask uploadTask = upload.putFile(compressedVideo, metadata);
@@ -245,15 +264,25 @@ class Constant {
     var storageRef = (await uploadTask.whenComplete(() {})).ref;
     var downloadUrl = await storageRef.getDownloadURL();
     var metaData = await storageRef.getMetadata();
-    final uint8list = await VideoThumbnail.thumbnailFile(video: downloadUrl, thumbnailPath: (await getTemporaryDirectory()).path, imageFormat: ImageFormat.PNG);
+    final uint8list = await VideoThumbnail.thumbnailFile(
+        video: downloadUrl,
+        thumbnailPath: (await getTemporaryDirectory()).path,
+        imageFormat: ImageFormat.PNG);
     final file = File(uint8list ?? '');
     String thumbnailDownloadUrl = await uploadVideoThumbnailToFireStorage(file);
     ShowToastDialog.closeLoader();
-    return ChatVideoContainer(videoUrl: Url(url: downloadUrl.toString(), mime: metaData.contentType ?? 'video'), thumbnailUrl: thumbnailDownloadUrl);
+    return ChatVideoContainer(
+        videoUrl: Url(
+            url: downloadUrl.toString(), mime: metaData.contentType ?? 'video'),
+        thumbnailUrl: thumbnailDownloadUrl);
   }
 
   static Future<File> _compressVideo(File file) async {
-    MediaInfo? info = await VideoCompress.compressVideo(file.path, quality: VideoQuality.DefaultQuality, deleteOrigin: false, includeAudio: true, frameRate: 24);
+    MediaInfo? info = await VideoCompress.compressVideo(file.path,
+        quality: VideoQuality.DefaultQuality,
+        deleteOrigin: false,
+        includeAudio: true,
+        frameRate: 24);
     if (info != null) {
       File compressedVideo = File(info.path!);
       return compressedVideo;
@@ -264,13 +293,18 @@ class Constant {
 
   static Future<String> uploadVideoThumbnailToFireStorage(File file) async {
     var uniqueID = const Uuid().v4();
-    Reference upload = FirebaseStorage.instance.ref().child('thumbnails/$uniqueID.png');
+    Reference upload =
+        FirebaseStorage.instance.ref().child('thumbnails/$uniqueID.png');
     UploadTask uploadTask = upload.putFile(file);
-    var downloadUrl = await (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
+    var downloadUrl =
+        await (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
     return downloadUrl.toString();
   }
 
-  static redirectMap({required String name, required double latitude, required double longLatitude}) async {
+  static redirectMap(
+      {required String name,
+      required double latitude,
+      required double longLatitude}) async {
     if (Constant.liveTrackingMapType == "google") {
       bool? isAvailable = await MapLauncher.isMapAvailable(MapType.google);
       if (isAvailable == true) {
@@ -404,7 +438,10 @@ class Url {
   Url({this.mime = '', this.url = '', this.videoThumbnail});
 
   factory Url.fromJson(Map<dynamic, dynamic> parsedJson) {
-    return Url(mime: parsedJson['mime'] ?? '', url: parsedJson['url'] ?? '', videoThumbnail: parsedJson['videoThumbnail'] ?? '');
+    return Url(
+        mime: parsedJson['mime'] ?? '',
+        url: parsedJson['url'] ?? '',
+        videoThumbnail: parsedJson['videoThumbnail'] ?? '');
   }
 
   Map<String, dynamic> toJson() {

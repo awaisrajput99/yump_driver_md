@@ -1,3 +1,4 @@
+import 'package:cabme_driver/constant/constant.dart';
 import 'package:cabme_driver/constant/show_toast_dialog.dart';
 import 'package:cabme_driver/controller/localization_controller.dart';
 import 'package:cabme_driver/on_boarding_screen.dart';
@@ -24,7 +25,9 @@ class LocalizationScreens extends StatelessWidget {
       init: LocalizationController(),
       builder: (controller) {
         return Scaffold(
-          backgroundColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+          backgroundColor: themeChange.getThem()
+              ? AppThemeData.surface50Dark
+              : AppThemeData.surface50,
           appBar: AppbarCustom(
             title: '',
             elevation: 0,
@@ -34,12 +37,15 @@ class LocalizationScreens extends StatelessWidget {
                 InkWell(
                   splashColor: Colors.transparent,
                   onTap: () {
-                    LocalizationService().changeLocale(controller.selectedLanguage.value);
-                    Preferences.setString(Preferences.languageCodeKey, controller.selectedLanguage.toString());
+                    LocalizationService()
+                        .changeLocale(controller.selectedLanguage.value);
+                    Preferences.setString(Preferences.languageCodeKey,
+                        controller.selectedLanguage.toString());
                     if (intentType == "dashBoard") {
                       ShowToastDialog.showToast("Language change successfully");
                     } else {
-                      Get.offAll(const OnBoardingScreen(), transition: Transition.rightToLeft);
+                      Get.offAll(const OnBoardingScreen(),
+                          transition: Transition.rightToLeft);
                     }
                   },
                   child: Padding(
@@ -70,16 +76,21 @@ class LocalizationScreens extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 22,
                       fontFamily: AppThemeData.semiBold,
-                      color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                      color: themeChange.getThem()
+                          ? AppThemeData.grey900Dark
+                          : AppThemeData.grey900,
                     ),
                   ),
                 ),
                 Text(
-                  'Choose a language to personalize your CabME experience.'.tr,
+                  'Choose a language to personalize your ${Constant.appName} experience.'
+                      .tr,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: AppThemeData.regular,
-                    color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey900Dark
+                        : AppThemeData.grey900,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -88,7 +99,9 @@ class LocalizationScreens extends StatelessWidget {
                     separatorBuilder: (context, index) {
                       return Container(
                         height: 0.6,
-                        color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey100,
+                        color: themeChange.getThem()
+                            ? AppThemeData.grey300Dark
+                            : AppThemeData.grey100,
                       );
                     },
                     itemCount: controller.languageList.length,
@@ -98,7 +111,8 @@ class LocalizationScreens extends StatelessWidget {
                         () => InkWell(
                           splashColor: Colors.transparent,
                           onTap: () {
-                            controller.selectedLanguage.value = controller.languageList[index].code.toString();
+                            controller.selectedLanguage.value =
+                                controller.languageList[index].code.toString();
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -113,9 +127,12 @@ class LocalizationScreens extends StatelessWidget {
                                       child: Row(
                                         children: [
                                           ClipRRect(
-                                            borderRadius: BorderRadius.circular(6),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                             child: Image.network(
-                                              controller.languageList[index].flag.toString(),
+                                              controller
+                                                  .languageList[index].flag
+                                                  .toString(),
                                               height: 35,
                                               width: 50,
                                               fit: BoxFit.cover,
@@ -125,17 +142,23 @@ class LocalizationScreens extends StatelessWidget {
                                           Align(
                                               alignment: Alignment.bottomRight,
                                               child: Text(
-                                                controller.languageList[index].language.toString(),
+                                                controller.languageList[index]
+                                                    .language
+                                                    .toString(),
                                                 style: TextStyle(
                                                   fontSize: 16,
-                                                  fontFamily: AppThemeData.medium,
-                                                  color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                                  fontFamily:
+                                                      AppThemeData.medium,
+                                                  color: themeChange.getThem()
+                                                      ? AppThemeData.grey900Dark
+                                                      : AppThemeData.grey900,
                                                 ),
                                               ))
                                         ],
                                       ),
                                     ),
-                                    controller.languageList[index].code == controller.selectedLanguage.value
+                                    controller.languageList[index].code ==
+                                            controller.selectedLanguage.value
                                         ? SvgPicture.asset(
                                             "assets/icons/ic_radio_selected.svg",
                                             // colorFilter: ColorFilter.mode(
@@ -162,12 +185,15 @@ class LocalizationScreens extends StatelessWidget {
                 ),
                 if (intentType != "dashBoard")
                   Text(
-                    'You can skip this steps and change it later in your profile settings.'.tr,
+                    'You can skip this steps and change it later in your profile settings.'
+                        .tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: AppThemeData.light,
-                      color: themeChange.getThem() ? AppThemeData.grey400Dark : AppThemeData.grey400,
+                      color: themeChange.getThem()
+                          ? AppThemeData.grey400Dark
+                          : AppThemeData.grey400,
                     ),
                   ),
                 const SizedBox(height: 5),
@@ -180,14 +206,20 @@ class LocalizationScreens extends StatelessWidget {
                 heightFactor: 1,
                 child: ButtonThem.buildButton(
                   context,
-                  title: intentType == "dashBoard" ? "Update".tr : 'Continue'.tr,
+                  title:
+                      intentType == "dashBoard" ? "Update".tr : 'Continue'.tr,
                   btnWidthRatio: 0.6,
-                  txtColor: themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                  txtColor: themeChange.getThem()
+                      ? AppThemeData.white90
+                      : AppThemeData.grey80Dark,
                   onPress: () async {
-                    LocalizationService().changeLocale(controller.selectedLanguage.value);
-                    Preferences.setString(Preferences.languageCodeKey, controller.selectedLanguage.toString());
+                    LocalizationService()
+                        .changeLocale(controller.selectedLanguage.value);
+                    Preferences.setString(Preferences.languageCodeKey,
+                        controller.selectedLanguage.toString());
                     if (intentType == "dashBoard") {
-                      ShowToastDialog.showToast("Language change successfully".tr);
+                      ShowToastDialog.showToast(
+                          "Language change successfully".tr);
                     } else {
                       Get.offAll(const OnBoardingScreen());
                     }

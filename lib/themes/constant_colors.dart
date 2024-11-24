@@ -1,27 +1,31 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class ConstantColors {
-  static Color primary = const Color(0xffFFD626);
+  static Color primary = Colors.black;
+  // static Color primary = const Color(0xffFFD626);
   static Color blue = const Color(0xff0873FF);
   static Color yellow = const Color(0xffEAA501);
   static Color yellow1 = const Color(0xffFFC003);
   static Color background = const Color(0xfff6f3f3);
   static Color titleTextColor = const Color(0xff242123);
   static Color subTitleTextColor = const Color(0xff666666);
-  static Color hintTextColor = const Color(0xff747474);
+  static Color hintTextColor = Colors.black.withOpacity(0.7);
   static Color textFieldBoarderColor = const Color(0xffC8CED8);
 }
 
 class AppThemeData {
   static Color surface50 = const Color(0XFFFFFFFF);
   static Color surface50Dark = const Color(0XFF09090B);
-  static Color primary200 = const Color(0XFFFCA431);
+  static Color primary200 = Colors.black87;
+  // static Color primary200 = const Color(0XFFFCA431);
   static Color primary300 = const Color(0XFF184A8B);
   static Color primary400 = const Color(0XFF2F89FC);
-  static Color grey50 = const Color(0XFFFAFAFA);
-  static Color grey50Dark = const Color(0XFF18181B);
-  static Color grey300 = const Color(0XFFD4D4D8);
-  static Color grey300Dark = const Color(0XFF52525B);
+  static Color white90 = Colors.white.withOpacity(0.9);
+  static Color grey80Dark = Colors.white.withOpacity(0.9);
+  static Color grey300 = const Color.fromARGB(255, 245, 245, 245);
+  static Color grey300Dark = const Color.fromARGB(255, 245, 245, 245);
   static Color grey900 = const Color(0XFF18181B);
   static Color grey900Dark = const Color(0XFFFAFAFA);
   static Color grey500 = const Color(0XFF18181B);
@@ -55,7 +59,7 @@ class AppThemeData {
   static Color info300 = const Color(0XFF297785);
 
   static Color secondary50 = const Color(0XFFFFF4E6);
-  static Color secondary200 = const Color(0XFFFCA431);
+  static Color secondary200 = Colors.black87;
   static Color secondary300 = const Color(0XFF8B5919);
   static Color secondar300 = const Color(0XFFFECC8C);
 

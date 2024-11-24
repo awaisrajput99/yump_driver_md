@@ -47,7 +47,8 @@ class SignupScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -57,17 +58,22 @@ class SignupScreen extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 24,
                                         fontFamily: AppThemeData.semiBold,
-                                        color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                        color: isDarkMode
+                                            ? AppThemeData.white90
+                                            : AppThemeData.grey80Dark,
                                       ),
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      "Sign up for a personalized CabME experience. Start booking your rides in just a few taps.".tr,
+                                      "Sign up for a personalized CabME experience. Start booking your rides in just a few taps."
+                                          .tr,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: AppThemeData.regular,
-                                        color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                        color: isDarkMode
+                                            ? AppThemeData.white90
+                                            : AppThemeData.grey80Dark,
                                       ),
                                     ),
                                     const SizedBox(height: 60),
@@ -81,12 +87,16 @@ class SignupScreen extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: Container(
-                          color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                          color: isDarkMode
+                              ? AppThemeData.surface50Dark
+                              : AppThemeData.surface50,
                           child: Stack(
                             alignment: AlignmentDirectional.bottomCenter,
                             children: [
                               Image.asset(
-                                isDarkMode ? 'assets/images/ic_bg_signup_dark.png' : 'assets/images/ic_bg_signup_light.png',
+                                isDarkMode
+                                    ? 'assets/images/ic_bg_signup_dark.png'
+                                    : 'assets/images/ic_bg_signup_light.png',
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                               ),
@@ -121,16 +131,21 @@ class SignupScreen extends StatelessWidget {
                                             icon: SvgPicture.asset(
                                               'assets/icons/ic_user.svg',
                                               colorFilter: ColorFilter.mode(
-                                                themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                                themeChange.getThem()
+                                                    ? AppThemeData.grey500Dark
+                                                    : AppThemeData.grey500,
                                                 BlendMode.srcIn,
                                               ),
                                             ),
                                           ),
                                           hintText: 'Name'.tr,
-                                          controller: controller.firstNameController.value,
+                                          controller: controller
+                                              .firstNameController.value,
                                           textInputType: TextInputType.text,
                                           maxLength: 22,
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 16),
                                           validators: (String? value) {
                                             if (value!.isNotEmpty) {
                                               return null;
@@ -147,16 +162,21 @@ class SignupScreen extends StatelessWidget {
                                             icon: SvgPicture.asset(
                                               'assets/icons/ic_user.svg',
                                               colorFilter: ColorFilter.mode(
-                                                themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                                themeChange.getThem()
+                                                    ? AppThemeData.grey500Dark
+                                                    : AppThemeData.grey500,
                                                 BlendMode.srcIn,
                                               ),
                                             ),
                                           ),
                                           hintText: 'Last Name'.tr,
-                                          controller: controller.lastNameController.value,
+                                          controller: controller
+                                              .lastNameController.value,
                                           textInputType: TextInputType.text,
                                           maxLength: 22,
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 16),
                                           validators: (String? value) {
                                             if (value!.isNotEmpty) {
                                               return null;
@@ -171,28 +191,45 @@ class SignupScreen extends StatelessWidget {
                                   Container(
                                       decoration: BoxDecoration(
                                           border: Border.all(
-                                            color: themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200,
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey200Dark
+                                                : AppThemeData.grey200,
                                           ),
-                                          borderRadius: const BorderRadius.all(Radius.circular(0))),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(0))),
                                       padding: const EdgeInsets.only(left: 10),
                                       child: IntlPhoneField(
                                         textAlign: TextAlign.start,
-                                        flagsButtonPadding: const EdgeInsets.symmetric(horizontal: 8),
-                                        initialValue: controller.phoneNumber.value.text,
+                                        flagsButtonPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 8),
+                                        initialValue:
+                                            controller.phoneNumber.value.text,
                                         onChanged: (number) {
-                                          controller.phoneNumber.value.text = number.completeNumber;
+                                          controller.phoneNumber.value.text =
+                                              number.completeNumber;
                                         },
                                         showDropdownIcon: false,
-                                        readOnly: controller.loginType.value == "google" || controller.loginType.value == "apple" ? false : true,
-                                        invalidNumberMessage: "number invalid".tr,
+                                        readOnly: controller.loginType.value ==
+                                                    "google" ||
+                                                controller.loginType.value ==
+                                                    "apple"
+                                            ? false
+                                            : true,
+                                        invalidNumberMessage:
+                                            "number invalid".tr,
                                         disableLengthCheck: true,
                                         decoration: InputDecoration(
                                           hintStyle: TextStyle(
                                             fontSize: 16,
-                                            color: themeChange.getThem() ? AppThemeData.grey400Dark : AppThemeData.grey400,
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey400Dark
+                                                : AppThemeData.grey400,
                                             fontFamily: AppThemeData.regular,
                                           ),
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 16),
                                           hintText: 'mobile number'.tr,
                                           border: InputBorder.none,
                                           isDense: true,
@@ -217,21 +254,27 @@ class SignupScreen extends StatelessWidget {
                                   TextFieldWidget(
                                     prefix: IconButton(
                                       onPressed: () {},
-                                      icon: SvgPicture.asset(
-                                        'assets/icons/ic_email.svg',
-                                        colorFilter: ColorFilter.mode(
-                                          themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
-                                          BlendMode.srcIn,
-                                        ),
+                                      icon: Icon(
+                                        Icons.email_outlined,
+                                        color: Colors.black,
                                       ),
                                     ),
                                     hintText: 'email'.tr,
-                                    isReadOnly: controller.loginType.value == "google" || controller.loginType.value == "apple" ? true : false,
-                                    controller: controller.emailController.value,
+                                    isReadOnly: controller.loginType.value ==
+                                                "google" ||
+                                            controller.loginType.value ==
+                                                "apple"
+                                        ? true
+                                        : false,
+                                    controller:
+                                        controller.emailController.value,
                                     textInputType: TextInputType.emailAddress,
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 16),
                                     validators: (String? value) {
-                                      bool emailValid = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$').hasMatch(value!);
+                                      bool emailValid = RegExp(
+                                              r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                                          .hasMatch(value!);
                                       if (!emailValid) {
                                         return 'email not valid'.tr;
                                       } else {
@@ -239,7 +282,8 @@ class SignupScreen extends StatelessWidget {
                                       }
                                     },
                                   ),
-                                  controller.loginType.value == "google" || controller.loginType.value == "apple"
+                                  controller.loginType.value == "google" ||
+                                          controller.loginType.value == "apple"
                                       ? SizedBox()
                                       : TextFieldWidget(
                                           prefix: IconButton(
@@ -247,25 +291,32 @@ class SignupScreen extends StatelessWidget {
                                             icon: SvgPicture.asset(
                                               'assets/icons/ic_lock.svg',
                                               colorFilter: ColorFilter.mode(
-                                                themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                                themeChange.getThem()
+                                                    ? AppThemeData.grey500Dark
+                                                    : AppThemeData.grey500,
                                                 BlendMode.srcIn,
                                               ),
                                             ),
                                           ),
                                           hintText: 'password'.tr,
-                                          controller: controller.passwordController.value,
+                                          controller: controller
+                                              .passwordController.value,
                                           textInputType: TextInputType.text,
                                           obscureText: false,
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 16),
                                           validators: (String? value) {
                                             if (value!.length >= 6) {
                                               return null;
                                             } else {
-                                              return 'Password required at least 6 characters'.tr;
+                                              return 'Password required at least 6 characters'
+                                                  .tr;
                                             }
                                           },
                                         ),
-                                  controller.loginType.value == "google" || controller.loginType.value == "apple"
+                                  controller.loginType.value == "google" ||
+                                          controller.loginType.value == "apple"
                                       ? SizedBox()
                                       : TextFieldWidget(
                                           prefix: IconButton(
@@ -273,19 +324,27 @@ class SignupScreen extends StatelessWidget {
                                             icon: SvgPicture.asset(
                                               'assets/icons/ic_lock.svg',
                                               colorFilter: ColorFilter.mode(
-                                                themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                                themeChange.getThem()
+                                                    ? AppThemeData.grey500Dark
+                                                    : AppThemeData.grey500,
                                                 BlendMode.srcIn,
                                               ),
                                             ),
                                           ),
                                           hintText: 'Confirm Password'.tr,
-                                          controller: controller.conformPasswordController.value,
+                                          controller: controller
+                                              .conformPasswordController.value,
                                           textInputType: TextInputType.text,
                                           obscureText: false,
-                                          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 16),
                                           validators: (String? value) {
-                                            if (controller.passwordController.value.text != value) {
-                                              return 'Confirm password is invalid'.tr;
+                                            if (controller.passwordController
+                                                    .value.text !=
+                                                value) {
+                                              return 'Confirm password is invalid'
+                                                  .tr;
                                             } else {
                                               return null;
                                             }
@@ -302,28 +361,60 @@ class SignupScreen extends StatelessWidget {
                                         txtColor: Colors.white,
                                         onPress: () async {
                                           FocusScope.of(context).unfocus();
-                                          if (_formKey.currentState!.validate()) {
-                                            if (controller.phoneNumber.value.value.text.isEmpty) {
-                                              ShowToastDialog.showToast("Phone number is empty");
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            if (controller.phoneNumber.value
+                                                .value.text.isEmpty) {
+                                              ShowToastDialog.showToast(
+                                                  "Phone number is empty");
                                             } else {
                                               Map<String, String> bodyParams = {
-                                                'firstname': controller.firstNameController.value.text.trim().toString(),
-                                                'lastname': controller.lastNameController.value.text.trim().toString(),
-                                                'phone': controller.phoneNumber.value.value.text.trim(),
-                                                'email': controller.emailController.value.text.trim(),
-                                                'password': controller.passwordController.value.text,
-                                                'login_type': controller.loginType.value,
+                                                'firstname': controller
+                                                    .firstNameController
+                                                    .value
+                                                    .text
+                                                    .trim()
+                                                    .toString(),
+                                                'lastname': controller
+                                                    .lastNameController
+                                                    .value
+                                                    .text
+                                                    .trim()
+                                                    .toString(),
+                                                'phone': controller.phoneNumber
+                                                    .value.value.text
+                                                    .trim(),
+                                                'email': controller
+                                                    .emailController.value.text
+                                                    .trim(),
+                                                'password': controller
+                                                    .passwordController
+                                                    .value
+                                                    .text,
+                                                'login_type':
+                                                    controller.loginType.value,
                                                 'tonotify': 'yes',
                                                 'account_type': 'driver',
                                               };
-                                              await controller.signUp(bodyParams).then((value) {
+                                              await controller
+                                                  .signUp(bodyParams)
+                                                  .then((value) {
                                                 if (value != null) {
-                                                  if (value.success == "success") {
-                                                    Preferences.setInt(Preferences.userId, int.parse(value.userData!.id.toString()));
-                                                    Preferences.setString(Preferences.user, jsonEncode(value));
-                                                    Get.offAll(const LoginScreen());
+                                                  if (value.success ==
+                                                      "success") {
+                                                    Preferences.setInt(
+                                                        Preferences.userId,
+                                                        int.parse(value
+                                                            .userData!.id
+                                                            .toString()));
+                                                    Preferences.setString(
+                                                        Preferences.user,
+                                                        jsonEncode(value));
+                                                    Get.offAll(
+                                                        const LoginScreen());
                                                   } else {
-                                                    ShowToastDialog.showToast(value.error);
+                                                    ShowToastDialog.showToast(
+                                                        value.error);
                                                   }
                                                 }
                                               });
@@ -343,7 +434,9 @@ class SignupScreen extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: AppThemeData.regular,
-                                    color: isDarkMode ? AppThemeData.grey800Dark : AppThemeData.grey800,
+                                    color: isDarkMode
+                                        ? AppThemeData.grey800Dark
+                                        : AppThemeData.grey800,
                                   ),
                                   children: <TextSpan>[
                                     TextSpan(
@@ -356,15 +449,19 @@ class SignupScreen extends StatelessWidget {
                                     ),
                                     TextSpan(
                                       recognizer: TapGestureRecognizer()
-                                        ..onTap = () => Get.offAll(const LoginScreen(),
-                                            duration: const Duration(milliseconds: 400), transition: Transition.rightToLeft),
+                                        ..onTap = () => Get.offAll(
+                                            const LoginScreen(),
+                                            duration: const Duration(
+                                                milliseconds: 400),
+                                            transition: Transition.rightToLeft),
                                       text: 'Login'.tr,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: AppThemeData.medium,
                                         color: AppThemeData.primary200,
                                         decoration: TextDecoration.underline,
-                                        decorationColor: AppThemeData.primary200,
+                                        decorationColor:
+                                            AppThemeData.primary200,
                                       ),
                                     ),
                                   ],

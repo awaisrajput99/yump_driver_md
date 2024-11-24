@@ -50,7 +50,9 @@ class AddCarServiceBookHistory extends StatelessWidget {
                                 child: SfPdfViewerTheme(
                                   data: SfPdfViewerThemeData(
                                     progressBarColor: AppThemeData.primary200,
-                                    backgroundColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50, //<----
+                                    backgroundColor: themeChange.getThem()
+                                        ? AppThemeData.surface50Dark
+                                        : AppThemeData.surface50, //<----
                                   ),
                                   child: SfPdfViewer.file(
                                     File(controller.carServiceBook.value),
@@ -67,7 +69,9 @@ class AddCarServiceBookHistory extends StatelessWidget {
                           ),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                              color: themeChange.getThem()
+                                  ? AppThemeData.surface50Dark
+                                  : AppThemeData.surface50,
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(15),
                               )),
@@ -93,7 +97,8 @@ class AddCarServiceBookHistory extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Take a clear picture of your file or choose an pdf from your gallery to ensure service details.'.tr,
+                                'Take a clear picture of your file or choose an pdf from your gallery to ensure service details.'
+                                    .tr,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 12,
@@ -115,7 +120,9 @@ class AddCarServiceBookHistory extends StatelessWidget {
                                 title: 'Click to Upload'.tr,
                                 btnHeight: 50,
                                 btnColor: AppThemeData.secondary300,
-                                txtColor: themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50,
+                                txtColor: themeChange.getThem()
+                                    ? AppThemeData.white90
+                                    : AppThemeData.white90,
                                 onPress: () async {
                                   pickDoc(controller);
                                 },
@@ -130,8 +137,11 @@ class AddCarServiceBookHistory extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5),
                       child: TextFieldWidget(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                        borderColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        borderColor: themeChange.getThem()
+                            ? AppThemeData.surface50Dark
+                            : AppThemeData.surface50,
                         radius: BorderRadius.circular(10),
                         hintText: 'ADD KM'.tr,
                         controller: controller.kmDrivenController.value,
@@ -161,10 +171,16 @@ class AddCarServiceBookHistory extends StatelessWidget {
                 title: 'Save Details'.tr,
                 btnWidthRatio: 0.7,
                 btnColor: AppThemeData.primary200,
-                txtColor: themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                txtColor: themeChange.getThem()
+                    ? AppThemeData.white90
+                    : AppThemeData.grey80Dark,
                 onPress: () {
-                  if (controller.carServiceBook.isNotEmpty && _formKey.currentState!.validate()) {
-                    controller.userCarServiceBook(kmDriven: controller.kmDrivenController.value.text).then((value) {
+                  if (controller.carServiceBook.isNotEmpty &&
+                      _formKey.currentState!.validate()) {
+                    controller
+                        .userCarServiceBook(
+                            kmDriven: controller.kmDrivenController.value.text)
+                        .then((value) {
                       if (value != null) {
                         if (value["success"] == "Success") {
                           controller.getCarServiceBooks();

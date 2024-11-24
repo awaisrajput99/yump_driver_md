@@ -26,31 +26,43 @@ class OnBoardingScreen extends StatelessWidget {
       init: OnBoardingController(),
       builder: (controller) {
         return Scaffold(
-          backgroundColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+          backgroundColor: themeChange.getThem()
+              ? AppThemeData.surface50Dark
+              : AppThemeData.surface50,
           appBar: AppbarCustom(
             elevation: 0,
-            bgColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+            bgColor: themeChange.getThem()
+                ? AppThemeData.surface50Dark
+                : AppThemeData.surface50,
             title: '',
             isLeadingIcon: controller.selectedPageIndex.value != 0,
             leading: IconButton(
                 onPressed: () {
-                  controller.selectedPageIndex.value = controller.selectedPageIndex.value - 1;
-                  controller.pageController.jumpToPage(controller.selectedPageIndex.value);
+                  controller.selectedPageIndex.value =
+                      controller.selectedPageIndex.value - 1;
+                  controller.pageController
+                      .jumpToPage(controller.selectedPageIndex.value);
                   controller.update();
                 },
                 icon: SvgPicture.asset(
                   "assets/icons/ic_back_arrow.svg",
                   colorFilter: ColorFilter.mode(
-                    themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                    themeChange.getThem()
+                        ? AppThemeData.grey900Dark
+                        : AppThemeData.grey900,
                     BlendMode.srcIn,
                   ),
                 )),
             actions: [
-              if (controller.isLoading.value == false && controller.selectedPageIndex.value != ((controller.onboardingModel.value.data?.length ?? 2) - 1))
+              if (controller.isLoading.value == false &&
+                  controller.selectedPageIndex.value !=
+                      ((controller.onboardingModel.value.data?.length ?? 2) -
+                          1))
                 InkWell(
                   splashColor: Colors.transparent,
                   onTap: () {
-                    Preferences.setBoolean(Preferences.isFinishOnBoardingKey, true);
+                    Preferences.setBoolean(
+                        Preferences.isFinishOnBoardingKey, true);
                     Get.offAll(const LoginScreen());
                   },
                   child: Padding(
@@ -80,29 +92,11 @@ class OnBoardingScreen extends StatelessWidget {
                         child: PageView.builder(
                             controller: controller.pageController,
                             onPageChanged: controller.selectedPageIndex,
-                            itemCount: controller.onboardingModel.value.data?.length,
+                            itemCount:
+                                controller.onboardingModel.value.data?.length,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Center(
-                                      child: CachedNetworkImage(
-                                        filterQuality: FilterQuality.high,
-                                        fit: BoxFit.cover,
-                                        width: Responsive.width(75, context),
-                                        height: Responsive.width(75, context),
-                                        imageUrl: controller.onboardingModel.value.data?[index].image ?? '',
-                                        placeholder: (context, url) => Constant.loader(context, isDarkMode: themeChange.getThem()),
-                                        errorWidget: (context, url, error) => Image.asset(
-                                          controller.localImage[index],
-                                          fit: BoxFit.cover,
-                                          width: Responsive.width(75, context),
-                                          height: Responsive.width(75, context),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                   // Expanded(
                                   //   flex: 2,
                                   //   child: Center(
@@ -114,55 +108,104 @@ class OnBoardingScreen extends StatelessWidget {
                                   //     ),
                                   //   ),
                                   // ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10, bottom: 50),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: List.generate(
-                                        controller.onboardingModel.value.data?.length ?? 0,
-                                        (index) => Container(
-                                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                                          width: controller.selectedPageIndex.value == index ? 38 : 10,
-                                          height: 10,
-                                          decoration: BoxDecoration(
-                                            color: controller.selectedPageIndex.value == index
-                                                ? themeChange.getThem()
-                                                    ? AppThemeData.primary200
-                                                    : AppThemeData.primary200
-                                                : AppThemeData.grey200,
-                                            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+
                                   const SizedBox(height: 40),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          controller.onboardingModel.value.data?[index].title ?? '',
+                                          controller.onboardingModel.value
+                                                  .data?[index].title ??
+                                              '',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 24,
-                                              color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                              color: themeChange.getThem()
+                                                  ? AppThemeData.grey900Dark
+                                                  : AppThemeData.grey900,
                                               fontFamily: AppThemeData.semiBold,
                                               letterSpacing: 1.5),
                                         ),
                                         const SizedBox(height: 10),
                                         Text(
-                                          controller.onboardingModel.value.data?[index].description ?? '',
+                                          controller.onboardingModel.value
+                                                  .data?[index].description ??
+                                              '',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontSize: 16,
-                                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
                                             letterSpacing: 1.5,
                                             fontFamily: AppThemeData.regular,
                                           ),
                                         ),
                                       ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Center(
+                                      child: CachedNetworkImage(
+                                        filterQuality: FilterQuality.high,
+                                        fit: BoxFit.cover,
+                                        width: Responsive.width(75, context),
+                                        height: Responsive.width(75, context),
+                                        imageUrl: controller.onboardingModel
+                                                .value.data?[index].image ??
+                                            '',
+                                        placeholder: (context, url) =>
+                                            Constant.loader(context,
+                                                isDarkMode:
+                                                    themeChange.getThem()),
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(
+                                          controller.localImage[index],
+                                          fit: BoxFit.cover,
+                                          width: Responsive.width(75, context),
+                                          height: Responsive.width(75, context),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, bottom: 50),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: List.generate(
+                                        controller.onboardingModel.value.data
+                                                ?.length ??
+                                            0,
+                                        (index) => Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 4),
+                                          width: controller.selectedPageIndex
+                                                      .value ==
+                                                  index
+                                              ? 38
+                                              : 10,
+                                          height: 10,
+                                          decoration: BoxDecoration(
+                                            color: controller.selectedPageIndex
+                                                        .value ==
+                                                    index
+                                                ? themeChange.getThem()
+                                                    ? AppThemeData.primary200
+                                                    : AppThemeData.primary200
+                                                : AppThemeData.grey200,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(20.0)),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -172,7 +215,8 @@ class OnBoardingScreen extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
-                      if (controller.selectedPageIndex.value == (controller.onboardingModel.value.data!.length - 1))
+                      if (controller.selectedPageIndex.value ==
+                          (controller.onboardingModel.value.data!.length - 1))
                         Center(
                           heightFactor: 1,
                           child: ButtonThem.buildButton(
@@ -180,14 +224,16 @@ class OnBoardingScreen extends StatelessWidget {
                             title: 'Start Your Journey'.tr,
                             btnHeight: 55,
                             btnWidthRatio: 0.6,
-                            txtColor: AppThemeData.grey900,
+                            txtColor: AppThemeData.white90,
                             onPress: () async {
-                              Preferences.setBoolean(Preferences.isFinishOnBoardingKey, true);
+                              Preferences.setBoolean(
+                                  Preferences.isFinishOnBoardingKey, true);
                               Get.offAll(const LoginScreen());
                             },
                           ),
                         ),
-                      if (controller.selectedPageIndex.value != (controller.onboardingModel.value.data!.length - 1))
+                      if (controller.selectedPageIndex.value !=
+                          (controller.onboardingModel.value.data!.length - 1))
                         Center(
                           heightFactor: 1,
                           child: ButtonThem.buildButton(
@@ -195,10 +241,12 @@ class OnBoardingScreen extends StatelessWidget {
                             title: 'Next'.tr,
                             btnHeight: 55,
                             btnWidthRatio: 0.6,
-                            txtColor: AppThemeData.grey900,
+                            txtColor: AppThemeData.white90,
                             onPress: () async {
-                              controller.selectedPageIndex.value = controller.selectedPageIndex.value + 1;
-                              controller.pageController.jumpToPage(controller.selectedPageIndex.value);
+                              controller.selectedPageIndex.value =
+                                  controller.selectedPageIndex.value + 1;
+                              controller.pageController.jumpToPage(
+                                  controller.selectedPageIndex.value);
                             },
                           ),
                         ),
@@ -216,10 +264,12 @@ class OnBoardingScreen extends StatelessWidget {
       return const BorderRadius.all(Radius.circular(10.0));
     }
     if (index == 0 && currentIndex == 1) {
-      return const BorderRadius.only(topLeft: Radius.circular(40.0), bottomLeft: Radius.circular(40.0));
+      return const BorderRadius.only(
+          topLeft: Radius.circular(40.0), bottomLeft: Radius.circular(40.0));
     }
     if (index == 0 && currentIndex == 2) {
-      return const BorderRadius.only(topRight: Radius.circular(40.0), bottomRight: Radius.circular(40.0));
+      return const BorderRadius.only(
+          topRight: Radius.circular(40.0), bottomRight: Radius.circular(40.0));
     }
     if (index == 1 && currentIndex == 1) {
       return const BorderRadius.all(Radius.circular(10.0));
@@ -234,10 +284,12 @@ class OnBoardingScreen extends StatelessWidget {
       return const BorderRadius.all(Radius.circular(10.0));
     }
     if (index == 2 && currentIndex == 0) {
-      return const BorderRadius.only(topLeft: Radius.circular(40.0), bottomLeft: Radius.circular(40.0));
+      return const BorderRadius.only(
+          topLeft: Radius.circular(40.0), bottomLeft: Radius.circular(40.0));
     }
     if (index == 2 && currentIndex == 1) {
-      return const BorderRadius.only(topRight: Radius.circular(40.0), bottomRight: Radius.circular(40.0));
+      return const BorderRadius.only(
+          topRight: Radius.circular(40.0), bottomRight: Radius.circular(40.0));
     }
     return const BorderRadius.all(Radius.circular(10.0));
   }

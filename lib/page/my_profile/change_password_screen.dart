@@ -38,10 +38,13 @@ class ChangePasswordScreen extends StatelessWidget {
                     height: 20,
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                      color: themeChange.getThem()
+                          ? AppThemeData.surface50Dark
+                          : AppThemeData.surface50,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -51,7 +54,8 @@ class ChangePasswordScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             TextFieldWidget(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 14),
                               isBorderEnable: false,
                               prefix: IconButton(
                                 onPressed: () {},
@@ -62,7 +66,8 @@ class ChangePasswordScreen extends StatelessWidget {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              controller: myProfileController.currentPasswordController.value,
+                              controller: myProfileController
+                                  .currentPasswordController.value,
                               hintText: 'Current Password'.tr,
                               validators: (String? value) {
                                 if (value!.isNotEmpty) {
@@ -76,7 +81,8 @@ class ChangePasswordScreen extends StatelessWidget {
                               isDarkMode: themeChange.getThem(),
                             ),
                             TextFieldWidget(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(vertical: 14),
                               isBorderEnable: false,
                               prefix: IconButton(
                                 onPressed: () {},
@@ -87,7 +93,8 @@ class ChangePasswordScreen extends StatelessWidget {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              controller: myProfileController.newPasswordController.value,
+                              controller: myProfileController
+                                  .newPasswordController.value,
                               hintText: 'New Password'.tr,
                               validators: (String? value) {
                                 if (value!.isNotEmpty) {
@@ -101,7 +108,8 @@ class ChangePasswordScreen extends StatelessWidget {
                               isDarkMode: themeChange.getThem(),
                             ),
                             TextFieldWidget(
-                                contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 14),
                                 isBorderEnable: false,
                                 prefix: IconButton(
                                   onPressed: () {},
@@ -112,14 +120,18 @@ class ChangePasswordScreen extends StatelessWidget {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                controller: myProfileController.confirmPasswordController.value,
+                                controller: myProfileController
+                                    .confirmPasswordController.value,
                                 hintText: 'Confirm Password'.tr,
                                 validators: (String? value) {
                                   if (value!.isNotEmpty) {
-                                    if (value == myProfileController.newPasswordController.value.text) {
+                                    if (value ==
+                                        myProfileController
+                                            .newPasswordController.value.text) {
                                       return null;
                                     } else {
-                                      return "Password Field do not match  !!".tr;
+                                      return "Password Field do not match  !!"
+                                          .tr;
                                     }
                                   } else {
                                     return "required".tr;
@@ -141,18 +153,24 @@ class ChangePasswordScreen extends StatelessWidget {
                     title: 'Save Password'.tr,
                     btnWidthRatio: 0.7,
                     btnColor: AppThemeData.primary200,
-                    txtColor: themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50Dark, onPress: () {
+                    txtColor: themeChange.getThem()
+                        ? AppThemeData.white90
+                        : AppThemeData.grey80Dark, onPress: () {
                   if (_passwordKey.currentState!.validate()) {
                     myProfileController.updatePassword({
                       "id_driver": myProfileController.userID.value,
-                      "anc_mdp": myProfileController.currentPasswordController.value.text,
-                      "new_mdp": myProfileController.newPasswordController.value.text,
+                      "anc_mdp": myProfileController
+                          .currentPasswordController.value.text,
+                      "new_mdp":
+                          myProfileController.newPasswordController.value.text,
                       "user_cat": "driver",
                     }).then((value) {
                       if (value == true) {
-                        myProfileController.currentPasswordController.value.clear();
+                        myProfileController.currentPasswordController.value
+                            .clear();
                         myProfileController.newPasswordController.value.clear();
-                        myProfileController.confirmPasswordController.value.clear();
+                        myProfileController.confirmPasswordController.value
+                            .clear();
                         Get.back();
                         ShowToastDialog.showToast("Password Updated!!");
                       } else {

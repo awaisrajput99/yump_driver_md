@@ -30,7 +30,9 @@ class DocumentStatusScreen extends StatelessWidget {
             title: '',
             elevation: 0,
           ),
-          backgroundColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+          backgroundColor: themeChange.getThem()
+              ? AppThemeData.surface50Dark
+              : AppThemeData.surface50,
           body: controller.isLoading.value
               ? SizedBox()
               : Padding(
@@ -43,7 +45,9 @@ class DocumentStatusScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 24,
                           fontFamily: AppThemeData.semiBold,
-                          color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                          color: themeChange.getThem()
+                              ? AppThemeData.grey900Dark
+                              : AppThemeData.grey900,
                         ),
                       ),
                       Text(
@@ -52,7 +56,9 @@ class DocumentStatusScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: AppThemeData.regular,
-                          color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                          color: themeChange.getThem()
+                              ? AppThemeData.grey900Dark
+                              : AppThemeData.grey900,
                         ),
                       ),
                       const SizedBox(
@@ -66,29 +72,40 @@ class DocumentStatusScreen extends StatelessWidget {
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: Column(
                                   children: [
                                     Row(
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            controller.documentList[index].documentName.toString(),
-                                            style: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+                                            controller.documentList[index]
+                                                .documentName
+                                                .toString(),
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
-                                        controller.documentList[index].documentStatus == "Disapprove"
+                                        controller.documentList[index]
+                                                    .documentStatus ==
+                                                "Disapprove"
                                             ? InkWell(
                                                 onTap: () {
                                                   showDialog(
-                                                    barrierColor: Colors.black26,
+                                                    barrierColor:
+                                                        Colors.black26,
                                                     context: context,
                                                     builder: (context) {
                                                       return CustomAlertDialog(
                                                         title:
                                                             "${"Reason :".tr} ${controller.documentList[index].comment!.isEmpty ? "Under Verification".tr : controller.documentList[index].comment.toString()}",
-                                                        negativeButtonText: 'Ok'.tr,
-                                                        positiveButtonText: 'Ok'.tr,
+                                                        negativeButtonText:
+                                                            'Ok'.tr,
+                                                        positiveButtonText:
+                                                            'Ok'.tr,
                                                         onPressPositive: () {
                                                           Get.back();
                                                         },
@@ -96,15 +113,27 @@ class DocumentStatusScreen extends StatelessWidget {
                                                     },
                                                   );
                                                 },
-                                                child: const Icon(Icons.remove_red_eye))
+                                                child: const Icon(
+                                                    Icons.remove_red_eye))
                                             : Container(),
                                         const SizedBox(
                                           width: 10,
                                         ),
                                         Text(
-                                          controller.documentList[index].documentStatus.toString(),
+                                          controller.documentList[index]
+                                              .documentStatus
+                                              .toString(),
                                           style: TextStyle(
-                                              color: controller.documentList[index].documentStatus == "Disapprove" || controller.documentList[index].documentStatus == "Pending"
+                                              color: controller
+                                                              .documentList[
+                                                                  index]
+                                                              .documentStatus ==
+                                                          "Disapprove" ||
+                                                      controller
+                                                              .documentList[
+                                                                  index]
+                                                              .documentStatus ==
+                                                          "Pending"
                                                   ? Colors.red
                                                   : Colors.green),
                                         ),
@@ -113,16 +142,26 @@ class DocumentStatusScreen extends StatelessWidget {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    controller.documentList[index].documentPath!.isEmpty
+                                    controller.documentList[index].documentPath!
+                                            .isEmpty
                                         ? Container(
                                             decoration: ShapeDecoration(
                                               shape: RoundedRectangleBorder(
-                                                side: BorderSide(width: 1, color: themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200),
-                                                borderRadius: BorderRadius.circular(12),
+                                                side: BorderSide(
+                                                    width: 1,
+                                                    color: themeChange.getThem()
+                                                        ? AppThemeData
+                                                            .grey200Dark
+                                                        : AppThemeData.grey200),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
                                               ),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20,
+                                                      horizontal: 30),
                                               child: Column(
                                                 children: [
                                                   SvgPicture.asset(
@@ -139,8 +178,14 @@ class DocumentStatusScreen extends StatelessWidget {
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontSize: 16,
-                                                      fontFamily: AppThemeData.semiBold,
-                                                      color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                                      fontFamily:
+                                                          AppThemeData.semiBold,
+                                                      color:
+                                                          themeChange.getThem()
+                                                              ? AppThemeData
+                                                                  .grey900Dark
+                                                              : AppThemeData
+                                                                  .grey900,
                                                     ),
                                                   ),
                                                   const SizedBox(height: 12),
@@ -149,20 +194,42 @@ class DocumentStatusScreen extends StatelessWidget {
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontSize: 12,
-                                                      fontFamily: AppThemeData.regular,
-                                                      color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                                      fontFamily:
+                                                          AppThemeData.regular,
+                                                      color:
+                                                          themeChange.getThem()
+                                                              ? AppThemeData
+                                                                  .grey900Dark
+                                                              : AppThemeData
+                                                                  .grey900,
                                                     ),
                                                   ),
                                                   Padding(
-                                                    padding: const EdgeInsets.only(top: 26),
-                                                    child: ButtonThem.buildButton(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 26),
+                                                    child:
+                                                        ButtonThem.buildButton(
                                                       context,
-                                                      title: 'Click to Upload'.tr,
+                                                      title:
+                                                          'Click to Upload'.tr,
                                                       btnWidthRatio: 0.40,
-                                                      btnColor: AppThemeData.primary200,
-                                                      txtColor: AppThemeData.surface50,
+                                                      btnColor: AppThemeData
+                                                          .primary200,
+                                                      txtColor: AppThemeData
+                                                          .surface50,
                                                       onPress: () async {
-                                                        buildBottomSheet(context, controller, index, controller.documentList[index].id.toString(), themeChange.getThem());
+                                                        buildBottomSheet(
+                                                            context,
+                                                            controller,
+                                                            index,
+                                                            controller
+                                                                .documentList[
+                                                                    index]
+                                                                .id
+                                                                .toString(),
+                                                            themeChange
+                                                                .getThem());
                                                       },
                                                     ),
                                                   ),
@@ -171,31 +238,55 @@ class DocumentStatusScreen extends StatelessWidget {
                                             ),
                                           )
                                         : ClipRRect(
-                                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10)),
                                             child: CachedNetworkImage(
-                                              height: Responsive.height(25, context),
-                                              width: Responsive.width(90, context),
+                                              height: Responsive.height(
+                                                  25, context),
+                                              width:
+                                                  Responsive.width(90, context),
                                               fit: BoxFit.cover,
-                                              imageUrl: controller.documentList[index].documentPath!,
-                                              placeholder: (context, url) => Constant.loader(context, isDarkMode: themeChange.getThem()),
+                                              imageUrl: controller
+                                                  .documentList[index]
+                                                  .documentPath!,
+                                              placeholder: (context, url) =>
+                                                  Constant.loader(context,
+                                                      isDarkMode: themeChange
+                                                          .getThem()),
                                             ),
                                           ),
-                                    controller.documentList[index].documentStatus == "Disapprove"
+                                    controller.documentList[index]
+                                                .documentStatus ==
+                                            "Disapprove"
                                         ? Padding(
-                                            padding: const EdgeInsets.only(top: 10),
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
-                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
                                               children: [
                                                 ButtonThem.buildButton(
                                                   context,
                                                   title: 'Upload'.tr,
                                                   btnHeight: 40,
                                                   btnWidthRatio: 0.30,
-                                                  btnColor: AppThemeData.primary200,
-                                                  txtColor: AppThemeData.surface50,
+                                                  btnColor:
+                                                      AppThemeData.primary200,
+                                                  txtColor:
+                                                      AppThemeData.surface50,
                                                   onPress: () async {
-                                                    buildBottomSheet(context, controller, index, controller.documentList[index].id.toString(), themeChange.getThem());
+                                                    buildBottomSheet(
+                                                        context,
+                                                        controller,
+                                                        index,
+                                                        controller
+                                                            .documentList[index]
+                                                            .id
+                                                            .toString(),
+                                                        themeChange.getThem());
                                                   },
                                                 )
                                               ],
@@ -217,14 +308,17 @@ class DocumentStatusScreen extends StatelessWidget {
     );
   }
 
-  buildBottomSheet(BuildContext context, DocumentStatusController controller, int index, String documentId, bool isDarkMode) {
+  buildBottomSheet(BuildContext context, DocumentStatusController controller,
+      int index, String documentId, bool isDarkMode) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return Container(
               height: Responsive.height(22, context),
-              color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+              color: isDarkMode
+                  ? AppThemeData.surface50Dark
+                  : AppThemeData.surface50,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -235,7 +329,9 @@ class DocumentStatusScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontFamily: AppThemeData.semiBold,
-                        color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                        color: isDarkMode
+                            ? AppThemeData.white90
+                            : AppThemeData.grey80Dark,
                       ),
                     ),
                   ),
@@ -249,7 +345,10 @@ class DocumentStatusScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () => pickFile(controller, source: ImageSource.camera, index: index, documentId: documentId),
+                                onPressed: () => pickFile(controller,
+                                    source: ImageSource.camera,
+                                    index: index,
+                                    documentId: documentId),
                                 icon: const Icon(
                                   Icons.camera_alt,
                                   size: 32,
@@ -261,7 +360,9 @@ class DocumentStatusScreen extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: AppThemeData.medium,
-                                  color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                  color: isDarkMode
+                                      ? AppThemeData.white90
+                                      : AppThemeData.grey80Dark,
                                 ),
                               ),
                             ),
@@ -276,11 +377,16 @@ class DocumentStatusScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () => pickFile(controller, source: ImageSource.gallery, index: index, documentId: documentId),
+                                onPressed: () => pickFile(controller,
+                                    source: ImageSource.gallery,
+                                    index: index,
+                                    documentId: documentId),
                                 icon: Icon(
                                   Icons.photo_library_sharp,
                                   size: 32,
-                                  color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                  color: isDarkMode
+                                      ? AppThemeData.white90
+                                      : AppThemeData.grey80Dark,
                                 )),
                             Padding(
                               padding: const EdgeInsets.only(top: 3),
@@ -289,7 +395,9 @@ class DocumentStatusScreen extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: AppThemeData.medium,
-                                  color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                  color: isDarkMode
+                                      ? AppThemeData.white90
+                                      : AppThemeData.grey80Dark,
                                 ),
                               ),
                             ),
@@ -307,7 +415,10 @@ class DocumentStatusScreen extends StatelessWidget {
 
   final ImagePicker _imagePicker = ImagePicker();
 
-  Future pickFile(DocumentStatusController controller, {required ImageSource source, required int index, required String documentId}) async {
+  Future pickFile(DocumentStatusController controller,
+      {required ImageSource source,
+      required int index,
+      required String documentId}) async {
     try {
       XFile? image = await _imagePicker.pickImage(source: source);
       if (image == null) return;
@@ -355,7 +466,12 @@ class DocumentStatusScreen extends StatelessWidget {
               height: 20,
             ),
             ButtonThem.buildButton(context,
-                title: "Close".tr, btnHeight: 40, btnWidthRatio: 0.6, btnColor: AppThemeData.primary200, txtColor: Colors.white, onPress: () => Get.back()),
+                title: "Close".tr,
+                btnHeight: 40,
+                btnWidthRatio: 0.6,
+                btnColor: AppThemeData.primary200,
+                txtColor: Colors.white,
+                onPress: () => Get.back()),
           ],
         ),
       ),

@@ -21,7 +21,8 @@ class LoginController extends GetxController {
   Future<UserModel?> loginAPI(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.userLogin), headers: API.authheader, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.userLogin),
+          headers: API.authheader, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.userLogin}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -29,17 +30,27 @@ class LoginController extends GetxController {
       showLog("API :: responseBody :: ${response.body} ");
       Map<String, dynamic> responseBody = json.decode(response.body);
 
-      if (response.statusCode == 200 && responseBody['success'].toString() == 'success') {
+      if (response.statusCode == 200 &&
+          responseBody['success'].toString() == 'success') {
         ShowToastDialog.closeLoader();
 
-        Preferences.setString(Preferences.accesstoken, responseBody['data']['accesstoken'].toString());
-        Preferences.setString(Preferences.admincommissiontype, responseBody['data']['commision_type'].toString());
+        Preferences.setString(Preferences.accesstoken,
+            responseBody['data']['accesstoken'].toString());
+        Preferences.setString(Preferences.admincommissiontype,
+            responseBody['data']['commision_type'].toString());
 
-        Preferences.setString(Preferences.admincommission, responseBody['data']['admin_commission'].toString());
-        Preferences.setString(Preferences.walletBalance, responseBody['data']['amount'].toString());
-        Preferences.setBoolean(Preferences.documentVerified, responseBody['data']['is_verified'].toString() == "1" ? true : false);
+        Preferences.setString(Preferences.admincommission,
+            responseBody['data']['admin_commission'].toString());
+        Preferences.setString(Preferences.walletBalance,
+            responseBody['data']['amount'].toString());
+        Preferences.setBoolean(
+            Preferences.documentVerified,
+            responseBody['data']['is_verified'].toString() == "1"
+                ? true
+                : false);
         log("--${responseBody['data']}");
-        API.header['accesstoken'] = Preferences.getString(Preferences.accesstoken);
+        API.header['accesstoken'] =
+            Preferences.getString(Preferences.accesstoken);
         return UserModel.fromJson(responseBody);
       } else {
         ShowToastDialog.closeLoader();
@@ -62,7 +73,8 @@ class LoginController extends GetxController {
   Future<bool?> phoneNumberIsExit(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.getExistingUserOrNot), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.getExistingUserOrNot),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.getExistingUserOrNot} ");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -76,12 +88,14 @@ class LoginController extends GetxController {
         } else {
           return false;
         }
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error']);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -100,10 +114,12 @@ class LoginController extends GetxController {
     return null;
   }
 
-  Future<UserModel?> getDataByPhoneNumber(Map<String, String> bodyParams) async {
+  Future<UserModel?> getDataByPhoneNumber(
+      Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.getProfileByPhone), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.getProfileByPhone),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.getProfileByPhone} ");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -113,12 +129,14 @@ class LoginController extends GetxController {
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         ShowToastDialog.closeLoader();
         return UserModel.fromJson(responseBody);
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error']);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -159,10 +177,13 @@ class LoginController extends GetxController {
                 if (value.success == "success") {
                   ShowToastDialog.closeLoader();
 
-                  Preferences.setInt(Preferences.userId, int.parse(value.userData!.id.toString()));
+                  Preferences.setInt(Preferences.userId,
+                      int.parse(value.userData!.id.toString()));
                   Preferences.setString(Preferences.user, jsonEncode(value));
-                  Preferences.setString(Preferences.accesstoken, value.userData!.accesstoken.toString());
-                  API.header['accesstoken'] = Preferences.getString(Preferences.accesstoken);
+                  Preferences.setString(Preferences.accesstoken,
+                      value.userData!.accesstoken.toString());
+                  API.header['accesstoken'] =
+                      Preferences.getString(Preferences.accesstoken);
                   Preferences.setBoolean(Preferences.isLogin, true);
                   Get.offAll(DashBoard());
                 } else {
@@ -182,7 +203,6 @@ class LoginController extends GetxController {
       }
     });
   }
-
 
   loginWithApple() async {
     ShowToastDialog.showLoader("please wait...".tr);
@@ -209,10 +229,13 @@ class LoginController extends GetxController {
                 if (value.success == "success") {
                   ShowToastDialog.closeLoader();
 
-                  Preferences.setInt(Preferences.userId, int.parse(value.userData!.id.toString()));
+                  Preferences.setInt(Preferences.userId,
+                      int.parse(value.userData!.id.toString()));
                   Preferences.setString(Preferences.user, jsonEncode(value));
-                  Preferences.setString(Preferences.accesstoken, value.userData!.accesstoken.toString());
-                  API.header['accesstoken'] = Preferences.getString(Preferences.accesstoken);
+                  Preferences.setString(Preferences.accesstoken,
+                      value.userData!.accesstoken.toString());
+                  API.header['accesstoken'] =
+                      Preferences.getString(Preferences.accesstoken);
                   Preferences.setBoolean(Preferences.isLogin, true);
                   Get.offAll(DashBoard());
                 } else {
@@ -236,14 +259,16 @@ class LoginController extends GetxController {
 
   Future<UserCredential?> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn().catchError((error) {
+      final GoogleSignInAccount? googleUser =
+          await GoogleSignIn().signIn().catchError((error) {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast("something_went_wrong".tr);
         return null;
       });
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
@@ -263,7 +288,8 @@ class LoginController extends GetxController {
   Future<Map<String, dynamic>?> signInWithApple() async {
     try {
       // Request credential for the currently signed in Apple account.
-      AuthorizationCredentialAppleID appleCredential = await SignInWithApple.getAppleIDCredential(
+      AuthorizationCredentialAppleID appleCredential =
+          await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
@@ -279,12 +305,15 @@ class LoginController extends GetxController {
 
       // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-      return {"appleCredential": appleCredential, "userCredential": userCredential};
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      return {
+        "appleCredential": appleCredential,
+        "userCredential": userCredential
+      };
     } catch (e) {
       debugPrint(e.toString());
     }
     return null;
   }
-
 }

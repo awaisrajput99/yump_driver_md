@@ -36,18 +36,25 @@ class ShowBankDetails extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 40),
-                            child: Image.asset('assets/images/add_bank_placeholder.png'),
+                            child: Image.asset(
+                                'assets/images/add_bank_placeholder.png'),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 16, top: 100),
                             child: Text(
-                              'You have not  added bank account \n please add bank account'.tr,
+                              'You have not  added bank account \n please add bank account'
+                                  .tr,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: themeChange.getThem() ? AppThemeData.grey400Dark : AppThemeData.grey400, fontFamily: AppThemeData.regular),
+                              style: TextStyle(
+                                  color: themeChange.getThem()
+                                      ? AppThemeData.grey400Dark
+                                      : AppThemeData.grey400,
+                                  fontFamily: AppThemeData.regular),
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 40, left: 25, right: 25),
+                            padding: const EdgeInsets.only(
+                                top: 40, left: 25, right: 25),
                             child: ButtonThem.buildButton(
                               context,
                               btnHeight: 44,
@@ -59,7 +66,9 @@ class ShowBankDetails extends StatelessWidget {
                                     isDismissible: true,
                                     isScrollControlled: true,
                                     context: context,
-                                    backgroundColor: themeChange.getThem() ? AppThemeData.grey50Dark : AppThemeData.grey50,
+                                    backgroundColor: themeChange.getThem()
+                                        ? AppThemeData.grey80Dark
+                                        : AppThemeData.white90,
                                     builder: (context) {
                                       return const AddBankAccount();
                                     });
@@ -69,13 +78,18 @@ class ShowBankDetails extends StatelessWidget {
                         ],
                       )
                     : Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
                         decoration: BoxDecoration(
-                          color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
-                          borderRadius: const BorderRadius.all(Radius.circular(12)),
+                          color: themeChange.getThem()
+                              ? AppThemeData.surface50Dark
+                              : AppThemeData.surface50,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12)),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 30),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 30),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -92,16 +106,21 @@ class ShowBankDetails extends StatelessWidget {
                                           height: 25,
                                           fit: BoxFit.cover,
                                           colorFilter: ColorFilter.mode(
-                                            themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                            themeChange.getThem()
+                                                ? AppThemeData.grey200
+                                                : AppThemeData.grey500Dark,
                                             BlendMode.srcIn,
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 16),
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
                                           child: Text(
                                             'Bank Name'.tr,
                                             style: TextStyle(
-                                              color: themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                              color: themeChange.getThem()
+                                                  ? AppThemeData.grey200
+                                                  : AppThemeData.grey500Dark,
                                               fontFamily: AppThemeData.regular,
                                             ),
                                           ),
@@ -109,18 +128,25 @@ class ShowBankDetails extends StatelessWidget {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 2.0, left: 38),
+                                      padding: const EdgeInsets.only(
+                                          top: 2.0, left: 38),
                                       child: Text(
-                                        controller.bankDetails.value.bankName.toString(),
+                                        controller.bankDetails.value.bankName
+                                            .toString(),
                                         style: TextStyle(
-                                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontFamily: AppThemeData.medium, fontSize: 16),
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
+                                            fontFamily: AppThemeData.medium,
+                                            fontSize: 16),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10, top: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -132,33 +158,48 @@ class ShowBankDetails extends StatelessWidget {
                                           height: 23,
                                           fit: BoxFit.cover,
                                           colorFilter: ColorFilter.mode(
-                                            themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                            themeChange.getThem()
+                                                ? AppThemeData.grey200
+                                                : AppThemeData.grey500Dark,
                                             BlendMode.srcIn,
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 16),
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
                                           child: Text(
                                             'Branch Name'.tr,
                                             style: TextStyle(
-                                                color: themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark, fontFamily: AppThemeData.regular, fontSize: 16),
+                                                color: themeChange.getThem()
+                                                    ? AppThemeData.grey200
+                                                    : AppThemeData.grey500Dark,
+                                                fontFamily:
+                                                    AppThemeData.regular,
+                                                fontSize: 16),
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 2.0, left: 38),
+                                      padding: const EdgeInsets.only(
+                                          top: 2.0, left: 38),
                                       child: Text(
-                                        controller.bankDetails.value.branchName.toString(),
+                                        controller.bankDetails.value.branchName
+                                            .toString(),
                                         style: TextStyle(
-                                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontFamily: AppThemeData.medium, fontSize: 16),
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
+                                            fontFamily: AppThemeData.medium,
+                                            fontSize: 16),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10, top: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -170,33 +211,48 @@ class ShowBankDetails extends StatelessWidget {
                                           height: 23,
                                           fit: BoxFit.cover,
                                           colorFilter: ColorFilter.mode(
-                                            themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                            themeChange.getThem()
+                                                ? AppThemeData.grey200
+                                                : AppThemeData.grey500Dark,
                                             BlendMode.srcIn,
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 16),
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
                                           child: Text(
                                             'Holder Name'.tr,
                                             style: TextStyle(
-                                                color: themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark, fontFamily: AppThemeData.regular, fontSize: 16),
+                                                color: themeChange.getThem()
+                                                    ? AppThemeData.grey200
+                                                    : AppThemeData.grey500Dark,
+                                                fontFamily:
+                                                    AppThemeData.regular,
+                                                fontSize: 16),
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 2.0, left: 38),
+                                      padding: const EdgeInsets.only(
+                                          top: 2.0, left: 38),
                                       child: Text(
-                                        controller.bankDetails.value.holderName.toString(),
+                                        controller.bankDetails.value.holderName
+                                            .toString(),
                                         style: TextStyle(
-                                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontFamily: AppThemeData.medium, fontSize: 16),
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
+                                            fontFamily: AppThemeData.medium,
+                                            fontSize: 16),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10, top: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -208,33 +264,48 @@ class ShowBankDetails extends StatelessWidget {
                                           height: 23,
                                           fit: BoxFit.cover,
                                           colorFilter: ColorFilter.mode(
-                                            themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                            themeChange.getThem()
+                                                ? AppThemeData.grey200
+                                                : AppThemeData.grey500Dark,
                                             BlendMode.srcIn,
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 16),
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
                                           child: Text(
                                             'Account Number'.tr,
                                             style: TextStyle(
-                                                color: themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark, fontFamily: AppThemeData.regular, fontSize: 16),
+                                                color: themeChange.getThem()
+                                                    ? AppThemeData.grey200
+                                                    : AppThemeData.grey500Dark,
+                                                fontFamily:
+                                                    AppThemeData.regular,
+                                                fontSize: 16),
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 2.0, left: 38),
+                                      padding: const EdgeInsets.only(
+                                          top: 2.0, left: 38),
                                       child: Text(
-                                        controller.bankDetails.value.accountNo.toString(),
+                                        controller.bankDetails.value.accountNo
+                                            .toString(),
                                         style: TextStyle(
-                                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontFamily: AppThemeData.medium, fontSize: 16),
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
+                                            fontFamily: AppThemeData.medium,
+                                            fontSize: 16),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10, top: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -246,33 +317,48 @@ class ShowBankDetails extends StatelessWidget {
                                           height: 23,
                                           fit: BoxFit.cover,
                                           colorFilter: ColorFilter.mode(
-                                            themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                            themeChange.getThem()
+                                                ? AppThemeData.grey200
+                                                : AppThemeData.grey500Dark,
                                             BlendMode.srcIn,
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 16),
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
                                           child: Text(
                                             'IFSC Code'.tr,
                                             style: TextStyle(
-                                                color: themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark, fontFamily: AppThemeData.regular, fontSize: 16),
+                                                color: themeChange.getThem()
+                                                    ? AppThemeData.grey200
+                                                    : AppThemeData.grey500Dark,
+                                                fontFamily:
+                                                    AppThemeData.regular,
+                                                fontSize: 16),
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 2.0, left: 38),
+                                      padding: const EdgeInsets.only(
+                                          top: 2.0, left: 38),
                                       child: Text(
-                                        controller.bankDetails.value.ifscCode.toString(),
+                                        controller.bankDetails.value.ifscCode
+                                            .toString(),
                                         style: TextStyle(
-                                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontFamily: AppThemeData.medium, fontSize: 16),
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
+                                            fontFamily: AppThemeData.medium,
+                                            fontSize: 16),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10, top: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -284,33 +370,47 @@ class ShowBankDetails extends StatelessWidget {
                                           height: 23,
                                           fit: BoxFit.cover,
                                           colorFilter: ColorFilter.mode(
-                                            themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                            themeChange.getThem()
+                                                ? AppThemeData.grey200
+                                                : AppThemeData.grey500Dark,
                                             BlendMode.srcIn,
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 16),
+                                          padding:
+                                              const EdgeInsets.only(left: 16),
                                           child: Text(
                                             'Other Information'.tr,
                                             style: TextStyle(
-                                                color: themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark, fontFamily: AppThemeData.medium, fontSize: 16),
+                                                color: themeChange.getThem()
+                                                    ? AppThemeData.grey200
+                                                    : AppThemeData.grey500Dark,
+                                                fontFamily: AppThemeData.medium,
+                                                fontSize: 16),
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 2.0, left: 38),
+                                      padding: const EdgeInsets.only(
+                                          top: 2.0, left: 38),
                                       child: Text(
-                                        controller.bankDetails.value.otherInfo.toString(),
+                                        controller.bankDetails.value.otherInfo
+                                            .toString(),
                                         style: TextStyle(
-                                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900, fontFamily: AppThemeData.medium, fontSize: 16),
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
+                                            fontFamily: AppThemeData.medium,
+                                            fontSize: 16),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               Padding(
-                                  padding: const EdgeInsets.only(top: 30, left: 12, right: 12),
+                                  padding: const EdgeInsets.only(
+                                      top: 30, left: 12, right: 12),
                                   child: ButtonThem.buildButton(
                                     context,
                                     btnHeight: 50,
@@ -322,7 +422,9 @@ class ShowBankDetails extends StatelessWidget {
                                           isDismissible: true,
                                           isScrollControlled: true,
                                           context: context,
-                                          backgroundColor: themeChange.getThem() ? AppThemeData.grey50Dark : AppThemeData.grey50,
+                                          backgroundColor: themeChange.getThem()
+                                              ? AppThemeData.grey80Dark
+                                              : AppThemeData.white90,
                                           builder: (context) {
                                             return const AddBankAccount();
                                           });

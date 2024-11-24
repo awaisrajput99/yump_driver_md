@@ -29,8 +29,13 @@ class TextFieldThem {
       maxLength: maxLength,
       enabled: enabled,
       textInputAction: TextInputAction.done,
-      decoration:
-          InputDecoration(counterText: "", labelText: labelText, hintText: title, contentPadding: contentPadding, suffixIcon: Icon(icon), border: const UnderlineInputBorder()),
+      decoration: InputDecoration(
+          counterText: "",
+          labelText: labelText,
+          hintText: title,
+          contentPadding: contentPadding,
+          suffixIcon: Icon(icon),
+          border: const UnderlineInputBorder()),
     );
   }
 
@@ -68,13 +73,16 @@ class TextFieldThem {
               borderSide: BorderSide(color: AppThemeData.grey500, width: 0.7),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ConstantColors.textFieldBoarderColor, width: 0.7),
+              borderSide: BorderSide(
+                  color: ConstantColors.textFieldBoarderColor, width: 0.7),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: ConstantColors.textFieldBoarderColor, width: 0.7),
+              borderSide: BorderSide(
+                  color: ConstantColors.textFieldBoarderColor, width: 0.7),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: ConstantColors.textFieldBoarderColor, width: 0.7),
+              borderSide: BorderSide(
+                  color: ConstantColors.textFieldBoarderColor, width: 0.7),
             ),
             hintText: hintText,
             hintStyle: TextStyle(color: ConstantColors.hintTextColor)));
@@ -102,7 +110,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool? isBorderEnable;
   final List<TextInputFormatter>? inputFormatters;
 
-  const TextFieldWidget(
+  TextFieldWidget(
       {super.key,
       required this.hintText,
       required this.controller,
@@ -112,7 +120,8 @@ class TextFieldWidget extends StatelessWidget {
       this.validators,
       this.textInputType = TextInputType.text,
       this.obscureText = true,
-      this.contentPadding = const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      this.contentPadding =
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       this.maxLine = 1,
       this.enabled = true,
       this.prefix,
@@ -145,7 +154,9 @@ class TextFieldWidget extends StatelessWidget {
       textInputAction: TextInputAction.done,
       style: TextStyle(
         fontSize: 16,
-        color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+        color: themeChange.getThem()
+            ? AppThemeData.grey900Dark
+            : AppThemeData.grey900,
         fontFamily: AppThemeData.regular,
       ),
       decoration: InputDecoration(
@@ -153,13 +164,18 @@ class TextFieldWidget extends StatelessWidget {
         suffixIcon: suffix,
         counterText: "",
         contentPadding: contentPadding,
-        fillColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+        fillColor: themeChange.getThem()
+            ? AppThemeData.surface50Dark
+            : AppThemeData.surface50,
         filled: true,
         focusedBorder: isBorderEnable == true
             ? OutlineInputBorder(
                 borderRadius: radius,
                 borderSide: BorderSide(
-                  color: borderColor ?? (themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200),
+                  color: borderColor ??
+                      (themeChange.getThem()
+                          ? AppThemeData.grey200Dark
+                          : AppThemeData.grey200),
                   width: 0.7,
                 ),
               )
@@ -174,7 +190,10 @@ class TextFieldWidget extends StatelessWidget {
             ? OutlineInputBorder(
                 borderRadius: radius,
                 borderSide: BorderSide(
-                  color: borderColor ?? (themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200),
+                  color: borderColor ??
+                      (themeChange.getThem()
+                          ? AppThemeData.grey200Dark
+                          : AppThemeData.grey200),
                   width: 0.7,
                 ),
               )
@@ -183,7 +202,10 @@ class TextFieldWidget extends StatelessWidget {
             ? OutlineInputBorder(
                 borderRadius: radius,
                 borderSide: BorderSide(
-                  color: borderColor ?? (themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200),
+                  color: borderColor ??
+                      (themeChange.getThem()
+                          ? AppThemeData.grey200Dark
+                          : AppThemeData.grey200),
                   width: 0.7,
                 ),
               )
@@ -192,7 +214,10 @@ class TextFieldWidget extends StatelessWidget {
             ? OutlineInputBorder(
                 borderRadius: radius,
                 borderSide: BorderSide(
-                  color: borderColor ?? (themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200),
+                  color: borderColor ??
+                      (themeChange.getThem()
+                          ? AppThemeData.grey200Dark
+                          : AppThemeData.grey200),
                   width: 0.7,
                 ),
               )
@@ -201,7 +226,10 @@ class TextFieldWidget extends StatelessWidget {
             ? OutlineInputBorder(
                 borderRadius: radius,
                 borderSide: BorderSide(
-                  color: borderColor ?? (themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200),
+                  color: borderColor ??
+                      (themeChange.getThem()
+                          ? AppThemeData.grey200Dark
+                          : AppThemeData.grey200),
                   width: 0.7,
                 ),
               )
@@ -209,7 +237,9 @@ class TextFieldWidget extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: 16,
-          color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+          color: themeChange.getThem()
+              ? ConstantColors.hintTextColor
+              : ConstantColors.hintTextColor,
           fontFamily: AppThemeData.regular,
         ),
       ),
@@ -247,7 +277,8 @@ class TextFieldWithoutBorderWidget extends StatelessWidget {
       this.validators,
       this.textInputType = TextInputType.text,
       this.obscureText = true,
-      this.contentPadding = const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      this.contentPadding =
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       this.maxLine = 1,
       this.enabled = true,
       this.prefix,
@@ -278,7 +309,9 @@ class TextFieldWithoutBorderWidget extends StatelessWidget {
       textInputAction: TextInputAction.done,
       style: TextStyle(
         fontSize: 16,
-        color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+        color: themeChange.getThem()
+            ? AppThemeData.grey900Dark
+            : AppThemeData.grey900,
         fontFamily: AppThemeData.regular,
       ),
       decoration: InputDecoration(
@@ -286,7 +319,9 @@ class TextFieldWithoutBorderWidget extends StatelessWidget {
         suffixIcon: suffix,
         counterText: "",
         contentPadding: contentPadding,
-        fillColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+        fillColor: themeChange.getThem()
+            ? AppThemeData.surface50Dark
+            : AppThemeData.surface50,
         filled: true,
         focusedBorder: null,
         disabledBorder: null,
@@ -296,7 +331,9 @@ class TextFieldWithoutBorderWidget extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: 16,
-          color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+          color: themeChange.getThem()
+              ? AppThemeData.grey500Dark
+              : AppThemeData.grey500,
           fontFamily: AppThemeData.regular,
         ),
       ),

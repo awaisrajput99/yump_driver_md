@@ -155,43 +155,51 @@ class ButtonThem {
   }
 
   static buildIconButtonWidget(
-      BuildContext context, {
-        required String title,
-        Color? btnColor,
-        Color? txtColor,
-        required Color iconColor,
-        required Widget icon,
-        double btnHeight = 50,
-        double txtSize = 16,
-        double btnWidthRatio = 0.9,
-        iconSize = 18.0,
-        required Function() onPress,
-        double radius = 10,
-        bool isVisible = true,
-      }) {
+    BuildContext context, {
+    required String title,
+    Color? btnColor,
+    Color? txtColor,
+    required Color iconColor,
+    required Widget icon,
+    double btnHeight = 50,
+    double txtSize = 16,
+    double btnWidthRatio = 0.9,
+    iconSize = 18.0,
+    required Function() onPress,
+    double radius = 10,
+    bool isVisible = true,
+  }) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
-    return Visibility(
-      visible: isVisible,
-      child: SizedBox(
-        width: Responsive.width(100, context) * btnWidthRatio,
-        height: btnHeight,
-        child: TextButton.icon(
-          style: TextButton.styleFrom(
-            backgroundColor: btnColor ?? AppThemeData.primary200,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius),
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black12),
+          borderRadius: BorderRadius.circular(radius)),
+      child: Visibility(
+        visible: isVisible,
+        child: SizedBox(
+          width: Responsive.width(100, context) * btnWidthRatio,
+          height: btnHeight,
+          child: TextButton.icon(
+            style: TextButton.styleFrom(
+              backgroundColor: btnColor ?? AppThemeData.primary200,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius),
+              ),
             ),
-          ),
-          onPressed: onPress,
-          label: Text(
-            title,
-            style: TextStyle(
-              color: txtColor ?? (themeChange.getThem() ? AppThemeData.grey50 : AppThemeData.grey50Dark),
-              fontFamily: AppThemeData.medium,
-              fontSize: txtSize,
+            onPressed: onPress,
+            label: Text(
+              title,
+              style: TextStyle(
+                color: txtColor ??
+                    (themeChange.getThem()
+                        ? AppThemeData.white90
+                        : AppThemeData.grey80Dark),
+                fontFamily: AppThemeData.medium,
+                fontSize: txtSize,
+              ),
             ),
+            icon: icon,
           ),
-          icon: icon,
         ),
       ),
     );

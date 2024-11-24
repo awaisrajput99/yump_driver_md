@@ -88,12 +88,19 @@ class MyProfileScreen extends StatelessWidget {
                                         btnColor: AppThemeData.primary200,
                                         txtColor: Colors.white,
                                         onPress: () {
-                                          myProfileController.deleteAccount(myProfileController.userID.toString()).then((value) {
+                                          myProfileController
+                                              .deleteAccount(myProfileController
+                                                  .userID
+                                                  .toString())
+                                              .then((value) {
                                             if (value != null) {
-                                              if (value["success"] == "success") {
-                                                ShowToastDialog.showToast(value['message']);
+                                              if (value["success"] ==
+                                                  "success") {
+                                                ShowToastDialog.showToast(
+                                                    value['message']);
                                                 Get.back();
-                                                Preferences.clearSharPreference();
+                                                Preferences
+                                                    .clearSharPreference();
                                                 Get.offAll(const LoginScreen());
                                               }
                                             }
@@ -131,22 +138,32 @@ class MyProfileScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(100),
                             child: myProfileController.profileImage.isEmpty
                                 ? CachedNetworkImage(
-                                    imageUrl: "https://cabme.siswebapp.com/assets/images/placeholder_image.jpg",
+                                    imageUrl:
+                                        "https://cabme.siswebapp.com/assets/images/placeholder_image.jpg",
                                     height: 130,
                                     width: 130,
                                     fit: BoxFit.cover,
-                                    progressIndicatorBuilder: (context, url, downloadProgress) => Constant.loader(context, isDarkMode: themeChange.getThem()),
-                                    errorWidget: (context, url, error) => Image.asset(
+                                    progressIndicatorBuilder: (context, url,
+                                            downloadProgress) =>
+                                        Constant.loader(context,
+                                            isDarkMode: themeChange.getThem()),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
                                       "assets/images/appIcon.png",
                                     ),
                                   )
                                 : CachedNetworkImage(
-                                    imageUrl: myProfileController.profileImage.toString(),
+                                    imageUrl: myProfileController.profileImage
+                                        .toString(),
                                     height: 130,
                                     width: 130,
                                     fit: BoxFit.cover,
-                                    progressIndicatorBuilder: (context, url, downloadProgress) => Constant.loader(context, isDarkMode: themeChange.getThem()),
-                                    errorWidget: (context, url, error) => Image.asset(
+                                    progressIndicatorBuilder: (context, url,
+                                            downloadProgress) =>
+                                        Constant.loader(context,
+                                            isDarkMode: themeChange.getThem()),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
                                       "assets/images/appIcon.png",
                                     ),
                                   ),
@@ -156,9 +173,12 @@ class MyProfileScreen extends StatelessWidget {
                           bottom: 10,
                           right: 20,
                           child: InkWell(
-                            onTap: () => buildBottomSheet(context, myProfileController, themeChange.getThem()),
+                            onTap: () => buildBottomSheet(context,
+                                myProfileController, themeChange.getThem()),
                             child: Image.asset(
-                              themeChange.getThem() ? 'assets/icons/ic_edit_dark.png' : 'assets/icons/ic_edit_light.png',
+                              themeChange.getThem()
+                                  ? 'assets/icons/ic_edit_dark.png'
+                                  : 'assets/icons/ic_edit_light.png',
                               fit: BoxFit.cover,
                               width: 35,
                               height: 35,
@@ -173,11 +193,15 @@ class MyProfileScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                    color: themeChange.getThem()
+                        ? AppThemeData.surface50Dark
+                        : AppThemeData.surface50,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -226,7 +250,8 @@ class MyProfileScreen extends StatelessWidget {
         width: 20,
         height: 20,
         colorFilter: ColorFilter.mode(
-          textIconColor ?? (isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900),
+          textIconColor ??
+              (isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900),
           BlendMode.srcIn,
         ),
       ),
@@ -235,7 +260,8 @@ class MyProfileScreen extends StatelessWidget {
         style: TextStyle(
           fontSize: 16,
           fontFamily: AppThemeData.medium,
-          color: textIconColor ?? (isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900),
+          color: textIconColor ??
+              (isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900),
         ),
       ),
       onTap: onPress,
@@ -276,14 +302,22 @@ class MyProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFieldThem.boxBuildTextField(hintText: title, controller: controller, validators: validators),
+              TextFieldThem.boxBuildTextField(
+                  hintText: title,
+                  controller: controller,
+                  validators: validators),
               const SizedBox(
                 height: 20,
               ),
               Row(
                 children: [
                   ButtonThem.buildButton(context,
-                      title: "Save".tr, btnColor: AppThemeData.primary200, txtColor: Colors.white, onPress: onSubmitBtn, btnHeight: 40, btnWidthRatio: 0.3),
+                      title: "Save".tr,
+                      btnColor: AppThemeData.primary200,
+                      txtColor: Colors.white,
+                      onPress: onSubmitBtn,
+                      btnHeight: 40,
+                      btnWidthRatio: 0.3),
                   const SizedBox(
                     width: 15,
                   ),
@@ -359,7 +393,8 @@ class MyProfileScreen extends StatelessWidget {
                 controller: myProfileController.confirmPasswordController.value,
                 validators: (valve) {
                   if (valve!.isNotEmpty) {
-                    if (valve == myProfileController.newPasswordController.value.text) {
+                    if (valve ==
+                        myProfileController.newPasswordController.value.text) {
                       return null;
                     } else {
                       return "Password Field do not match  !!".tr;
@@ -385,8 +420,10 @@ class MyProfileScreen extends StatelessWidget {
                       if (_passwordKey.currentState!.validate()) {
                         myProfileController.updatePassword({
                           "id_driver": myProfileController.userID.value,
-                          "anc_mdp": myProfileController.currentPasswordController.value.text,
-                          "new_mdp": myProfileController.newPasswordController.value.text,
+                          "anc_mdp": myProfileController
+                              .currentPasswordController.value.text,
+                          "new_mdp": myProfileController
+                              .newPasswordController.value.text,
                           "user_cat": "driver",
                         }).then((value) {
                           Get.back();
@@ -419,14 +456,17 @@ class MyProfileScreen extends StatelessWidget {
     );
   }
 
-  buildBottomSheet(BuildContext context, MyProfileController controller, bool isDarkMode) {
+  buildBottomSheet(
+      BuildContext context, MyProfileController controller, bool isDarkMode) {
     return showModalBottomSheet(
         context: context,
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return Container(
               height: Responsive.height(22, context),
-              color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+              color: isDarkMode
+                  ? AppThemeData.surface50Dark
+                  : AppThemeData.surface50,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -437,7 +477,9 @@ class MyProfileScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: AppThemeData.semiBold,
-                        color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                        color: isDarkMode
+                            ? AppThemeData.white90
+                            : AppThemeData.grey80Dark,
                       ),
                     ),
                   ),
@@ -451,11 +493,14 @@ class MyProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () => pickFile1(controller, source: ImageSource.camera),
+                                onPressed: () => pickFile1(controller,
+                                    source: ImageSource.camera),
                                 icon: Icon(
                                   Icons.camera_alt,
                                   size: 32,
-                                  color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                  color: isDarkMode
+                                      ? AppThemeData.white90
+                                      : AppThemeData.grey80Dark,
                                 )),
                             Padding(
                               padding: const EdgeInsets.only(top: 3),
@@ -464,7 +509,9 @@ class MyProfileScreen extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: AppThemeData.medium,
-                                  color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                  color: isDarkMode
+                                      ? AppThemeData.white90
+                                      : AppThemeData.grey80Dark,
                                 ),
                               ),
                             ),
@@ -478,11 +525,14 @@ class MyProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () => pickFile1(controller, source: ImageSource.gallery),
+                                onPressed: () => pickFile1(controller,
+                                    source: ImageSource.gallery),
                                 icon: Icon(
                                   Icons.photo_library_sharp,
                                   size: 32,
-                                  color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                  color: isDarkMode
+                                      ? AppThemeData.white90
+                                      : AppThemeData.grey80Dark,
                                 )),
                             Padding(
                               padding: const EdgeInsets.only(top: 3),
@@ -491,7 +541,9 @@ class MyProfileScreen extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: AppThemeData.medium,
-                                  color: isDarkMode ? AppThemeData.grey50 : AppThemeData.grey50Dark,
+                                  color: isDarkMode
+                                      ? AppThemeData.white90
+                                      : AppThemeData.grey80Dark,
                                 ),
                               ),
                             ),
@@ -517,7 +569,8 @@ class MyProfileScreen extends StatelessWidget {
 
   final ImagePicker _imagePicker = ImagePicker();
 
-  Future pickFile1(MyProfileController controller, {required ImageSource source}) async {
+  Future pickFile1(MyProfileController controller,
+      {required ImageSource source}) async {
     try {
       XFile? image = await _imagePicker.pickImage(source: source);
       if (image == null) return;
@@ -527,7 +580,8 @@ class MyProfileScreen extends StatelessWidget {
           if (value["success"] == "Success") {
             UserModel userModel = Constant.getUserData();
             userModel.userData!.photoPath = value['data']['photo_path'];
-            Preferences.setString(Preferences.user, jsonEncode(userModel.toJson()));
+            Preferences.setString(
+                Preferences.user, jsonEncode(userModel.toJson()));
             controller.getUsrData();
             dashboardController.getUsrData();
             ShowToastDialog.showToast("Upload successfully!");
