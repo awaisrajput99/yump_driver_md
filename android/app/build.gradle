@@ -60,12 +60,12 @@ android {
 //        }
 //     }
 signingConfigs {
-    // debug {
-    //     storeFile file('../app/debug.keystore')
-    //     storePassword 'android'
-    //     keyAlias 'androiddebugkey'
-    //     keyPassword 'android'
-    // }
+    debug {
+        storeFile file('../app/debug.keystore')
+        storePassword 'android'
+        keyAlias 'androiddebugkey'
+        keyPassword 'android'
+    }
     release {
         keyAlias 'my-key-alias'
         keyPassword 'safyan123'
@@ -75,9 +75,9 @@ signingConfigs {
 }
 
     buildTypes {
-    // debug {
-    //     signingConfig signingConfigs.debug
-    // }
+    debug {
+        signingConfig signingConfigs.debug
+    }
     release {
         signingConfig signingConfigs.release
     }

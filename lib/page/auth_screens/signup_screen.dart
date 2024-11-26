@@ -42,7 +42,9 @@ class SignupScreen extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Container(
-                          color: AppThemeData.primary200,
+                          // color: AppThemeData.primary200,
+                          color: Colors.white,
+
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -59,8 +61,8 @@ class SignupScreen extends StatelessWidget {
                                         fontSize: 24,
                                         fontFamily: AppThemeData.semiBold,
                                         color: isDarkMode
-                                            ? AppThemeData.white90
-                                            : AppThemeData.grey80Dark,
+                                            ? AppThemeData.secondary200
+                                            : AppThemeData.secondary200,
                                       ),
                                     ),
                                     const SizedBox(height: 10),
@@ -72,11 +74,11 @@ class SignupScreen extends StatelessWidget {
                                         fontSize: 14,
                                         fontFamily: AppThemeData.regular,
                                         color: isDarkMode
-                                            ? AppThemeData.white90
-                                            : AppThemeData.grey80Dark,
+                                            ? AppThemeData.secondary200
+                                            : AppThemeData.secondary200,
                                       ),
                                     ),
-                                    const SizedBox(height: 60),
+                                    // const SizedBox(height: 60),
                                   ],
                                 ),
                               ),
@@ -85,7 +87,7 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        flex: 4,
+                        // flex: 4,
                         child: Container(
                           color: isDarkMode
                               ? AppThemeData.surface50Dark

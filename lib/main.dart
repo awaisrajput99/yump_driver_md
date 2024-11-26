@@ -73,22 +73,22 @@ void main() async {
     }
   }
 
-  try {
-    await LoginController().loginWithGoogle();
-    // await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    //     email: "safyantariq@gmail.com", password: "test123");
-    // await FirebaseAuth.instance.signInWithEmailAndPassword(
-    //     email: "safyantariq@gmail.com", password: "test123");
-    // print(
-    //     "Here is the current user: ${FirebaseAuth.instance.currentUser?.email ?? "null"}");
-    // Get.off(SignupScreen(), arguments: {
-    //   'email': "safyantariq@gmail.com",
-    //   'firstName': "Sunny",
-    //   'login_type': "google",
-    // });
-  } catch (e) {
-    print("Error white creating account $e");
-  }
+  // try {
+  //   await LoginController().loginWithGoogle();
+  //   // await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //   //     email: "safyantariq@gmail.com", password: "test123");
+  //   // await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //   //     email: "safyantariq@gmail.com", password: "test123");
+  //   // print(
+  //   //     "Here is the current user: ${FirebaseAuth.instance.currentUser?.email ?? "null"}");
+  //   // Get.off(SignupScreen(), arguments: {
+  //   //   'email': "safyantariq@gmail.com",
+  //   //   'firstName': "Sunny",
+  //   //   'login_type': "google",
+  //   // });
+  // } catch (e) {
+  //   print("Error white creating account $e");
+  // }
   // await clearAppData();
   runApp(MyApp());
 }
