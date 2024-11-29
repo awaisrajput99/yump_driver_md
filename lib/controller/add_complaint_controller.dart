@@ -1,17 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/parcel_model.dart';
-import 'package:cabme_driver/model/ride_model.dart';
-import 'package:cabme_driver/service/api.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/parcel_model.dart';
+import 'package:yumprides_driver/model/ride_model.dart';
+import 'package:yumprides_driver/service/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class AddComplaintController extends GetxController {
-  TextEditingController complaintDiscriptionController = TextEditingController();
+  TextEditingController complaintDiscriptionController =
+      TextEditingController();
   TextEditingController complaintTitleController = TextEditingController();
   RxString complaintStatus = "".obs;
   RxBool isReviewScreen = false.obs;
@@ -43,7 +44,8 @@ class AddComplaintController extends GetxController {
   Future<bool?> addComplaint(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.addComplaint), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.addComplaint),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.addComplaint} ");
       showLog("API :: Request Body :: ${bodyParams.toString()} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -53,12 +55,14 @@ class AddComplaintController extends GetxController {
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         ShowToastDialog.closeLoader();
         return true;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error']);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something went wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something went wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -81,11 +85,13 @@ class AddComplaintController extends GetxController {
     try {
       ShowToastDialog.showLoader("Please wait");
       final response = await http.get(
-        Uri.parse("${API.getComplaint}?ride_type=${rideType.value}&order_id=${rideType.value == "ride" ? rideData.value.id : parcelData.value.id}&user_type=driver"),
+        Uri.parse(
+            "${API.getComplaint}?ride_type=${rideType.value}&order_id=${rideType.value == "ride" ? rideData.value.id : parcelData.value.id}&user_type=driver"),
         headers: API.header,
       );
 
-      showLog("API :: URL :: ${API.getComplaint}?ride_type=${rideType.value}&order_id=${rideType.value == "ride" ? rideData.value.id : parcelData.value.id}&user_type=driver} ");
+      showLog(
+          "API :: URL :: ${API.getComplaint}?ride_type=${rideType.value}&order_id=${rideType.value == "ride" ? rideData.value.id : parcelData.value.id}&user_type=driver} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
@@ -94,16 +100,20 @@ class AddComplaintController extends GetxController {
       Map<String, dynamic> responseBody = json.decode(response.body);
 
       if (response.statusCode == 200 && responseBody['success'] == "success") {
-        complaintTitleController.text = responseBody['data'][0]['title'].toString();
-        complaintDiscriptionController.text = responseBody['data'][0]['description'].toString();
+        complaintTitleController.text =
+            responseBody['data'][0]['title'].toString();
+        complaintDiscriptionController.text =
+            responseBody['data'][0]['description'].toString();
         complaintStatus.value = responseBody['data'][0]['status'].toString();
         ShowToastDialog.closeLoader();
         return true;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/model/xenditModel.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/model/xenditModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -15,7 +15,11 @@ class XenditScreen extends StatefulWidget {
   final String transId;
   final String apiKey;
 
-  const XenditScreen({super.key, required this.initialURl, required this.transId, required this.apiKey});
+  const XenditScreen(
+      {super.key,
+      required this.initialURl,
+      required this.transId,
+      required this.apiKey});
 
   @override
   State<XenditScreen> createState() => _XenditScreenState();
@@ -103,9 +107,12 @@ class _XenditScreenState extends State<XenditScreen> {
                     color: Colors.white,
                   ),
                 )),
-            body: Stack(
-                alignment: Alignment.center,
-                children: [WebViewWidget(controller: controller), Visibility(visible: isLoading, child: Constant.loader(context, isDarkMode: false))])));
+            body: Stack(alignment: Alignment.center, children: [
+              WebViewWidget(controller: controller),
+              Visibility(
+                  visible: isLoading,
+                  child: Constant.loader(context, isDarkMode: false))
+            ])));
   }
 
   Future<void> _showMyDialog() async {

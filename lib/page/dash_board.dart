@@ -1,13 +1,13 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/controller/dash_board_controller.dart';
-import 'package:cabme_driver/page/auth_screens/vehicle_info_screen.dart';
-import 'package:cabme_driver/page/document_status/document_status_screen.dart';
-import 'package:cabme_driver/page/new_ride_screens/new_ride_screen.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/responsive.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/controller/dash_board_controller.dart';
+import 'package:yumprides_driver/page/auth_screens/vehicle_info_screen.dart';
+import 'package:yumprides_driver/page/document_status/document_status_screen.dart';
+import 'package:yumprides_driver/page/new_ride_screens/new_ride_screen.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/responsive.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -283,7 +283,7 @@ Future<void> showAlertDialog(BuildContext context, String type) async {
           child: ListBody(
             children: <Widget>[
               Text(
-                  'To start earning with CabMe you need to fill in your information'
+                  'To start earning with Yum Rides you need to fill in your information'
                       .tr),
             ],
           ),

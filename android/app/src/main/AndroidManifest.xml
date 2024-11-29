@@ -46,7 +46,7 @@
             />
 
         <activity
-            android:name="com.cabme.driver.MainActivity"
+            android:name="com.yumprides.driver.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"

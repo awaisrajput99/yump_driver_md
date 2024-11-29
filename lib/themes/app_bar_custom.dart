@@ -1,5 +1,5 @@
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -27,9 +27,13 @@ class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context); // Example usage of theme
+    final themeChange =
+        Provider.of<DarkThemeProvider>(context); // Example usage of theme
     return AppBar(
-        backgroundColor: bgColor ?? (themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50),
+        backgroundColor: bgColor ??
+            (themeChange.getThem()
+                ? AppThemeData.surface50Dark
+                : AppThemeData.surface50),
         elevation: elevation ?? 0,
         centerTitle: false,
         titleSpacing: 4,
@@ -38,7 +42,9 @@ class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
           style: TextStyle(
             fontSize: 18,
             fontFamily: AppThemeData.semiBold,
-            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+            color: themeChange.getThem()
+                ? AppThemeData.grey900Dark
+                : AppThemeData.grey900,
           ),
         ),
         leading: isLeadingIcon == true
@@ -48,11 +54,15 @@ class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
                     onPressed: onClick ?? () => Get.back(),
                     icon: Transform(
                       alignment: Alignment.center,
-                      transform: Directionality.of(context) == TextDirection.rtl ? Matrix4.rotationY(3.14159) : Matrix4.identity(),
+                      transform: Directionality.of(context) == TextDirection.rtl
+                          ? Matrix4.rotationY(3.14159)
+                          : Matrix4.identity(),
                       child: SvgPicture.asset(
                         "assets/icons/ic_back_arrow.svg",
                         colorFilter: ColorFilter.mode(
-                          themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                          themeChange.getThem()
+                              ? AppThemeData.grey900Dark
+                              : AppThemeData.grey900,
                           BlendMode.srcIn,
                         ),
                       ),

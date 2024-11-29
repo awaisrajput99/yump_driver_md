@@ -2,20 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/create_ride_controller.dart';
-import 'package:cabme_driver/model/customer_model.dart';
-import 'package:cabme_driver/model/tax_model.dart';
-import 'package:cabme_driver/page/search_location_screen.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/custom_dialog_box.dart';
-import 'package:cabme_driver/themes/custom_widget.dart';
-import 'package:cabme_driver/themes/text_field_them.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/create_ride_controller.dart';
+import 'package:yumprides_driver/model/customer_model.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
+import 'package:yumprides_driver/page/search_location_screen.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/custom_dialog_box.dart';
+import 'package:yumprides_driver/themes/custom_widget.dart';
+import 'package:yumprides_driver/themes/text_field_them.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
@@ -59,17 +59,23 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
   @override
   void initState() {
     ShowToastDialog.showLoader("Please wait".tr);
-    mapController = MapController(initPosition: GeoPoint(latitude: 20.9153, longitude: -100.7439));
+    mapController = MapController(
+        initPosition: GeoPoint(latitude: 20.9153, longitude: -100.7439));
     setIcons();
     super.initState();
   }
 
   setIcons() async {
-    departureIcon = Image.asset("assets/icons/pickup.png", width: 30, height: 30);
+    departureIcon =
+        Image.asset("assets/icons/pickup.png", width: 30, height: 30);
 
-    destinationIcon = Image.asset("assets/icons/dropoff.png", width: 30, height: 30);
+    destinationIcon =
+        Image.asset("assets/icons/dropoff.png", width: 30, height: 30);
 
-    taxiIcon = Image.asset("assets/images/ic_taxi.png", width: Platform.isIOS ? 30 : 40, height: Platform.isIOS ? 30 : 80, fit: BoxFit.cover);
+    taxiIcon = Image.asset("assets/images/ic_taxi.png",
+        width: Platform.isIOS ? 30 : 40,
+        height: Platform.isIOS ? 30 : 80,
+        fit: BoxFit.cover);
 
     stopIcon = Image.asset("assets/icons/location.png", width: 30, height: 30);
   }
@@ -77,10 +83,13 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
   void getCurrentLocation(bool isDepartureSet, bool isDarkMode) async {
     if (isDepartureSet) {
       GeoPoint location = await mapController.myLocation();
-      String url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.latitude}&lon=${location.longitude}&zoom=18&addressdetails=1';
+      String url =
+          'https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.latitude}&lon=${location.longitude}&zoom=18&addressdetails=1';
 
       var addressData = <String, dynamic>{};
-      var package = Platform.isAndroid ? 'com.cabme.driver' : 'com.cabme.driver.ios';
+      var package = Platform.isAndroid
+          ? 'com.yumprides.driver'
+          : 'com.yumprides.driver.ios';
       http.Response response = await http.get(
         Uri.parse(url),
         headers: {
@@ -100,7 +109,10 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
 
       departureController.text = addressData['display_name'] ?? '';
       setState(() {
-        setDepartureMarker(GeoPoint(latitude: location.latitude, longitude: location.longitude), isDarkMode);
+        setDepartureMarker(
+            GeoPoint(
+                latitude: location.latitude, longitude: location.longitude),
+            isDarkMode);
       });
     }
   }
@@ -128,7 +140,9 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                 roadConfiguration: RoadOption(
                   roadWidth: Platform.isIOS ? 50 : 10,
                   roadColor: Colors.blue,
-                  roadBorderWidth: Platform.isIOS ? 15 : 10, // Set the road border width (outline)
+                  roadBorderWidth: Platform.isIOS
+                      ? 15
+                      : 10, // Set the road border width (outline)
                   roadBorderColor: Colors.black, // Border color
                   zoomInto: true,
                 ),
@@ -156,33 +170,50 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: themeChange.getThem()
+                            ? AppThemeData.surface50Dark
+                            : AppThemeData.surface50),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 10),
                       child: Column(
                         children: [
                           Builder(builder: (context) {
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 00),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 00),
                               child: Row(
                                 children: [
                                   SvgPicture.asset(
                                     'assets/icons/ic_location_map.svg',
                                     colorFilter: ColorFilter.mode(
-                                      themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey300Dark,
+                                      themeChange.getThem()
+                                          ? AppThemeData.grey500Dark
+                                          : AppThemeData.grey300Dark,
                                       BlendMode.srcIn,
                                     ),
                                   ),
                                   Expanded(
                                     child: InkWell(
                                       onTap: () async {
-                                        Get.to(const AddressSearchScreen())?.then((value) {
+                                        Get.to(const AddressSearchScreen())
+                                            ?.then((value) {
                                           if (value != null) {
                                             SearchInfo place = value;
-                                            departureController.text = place.address.toString();
-                                            setDepartureMarker(GeoPoint(latitude: place.point!.latitude, longitude: place.point!.longitude), themeChange.getThem());
+                                            departureController.text =
+                                                place.address.toString();
+                                            setDepartureMarker(
+                                                GeoPoint(
+                                                    latitude:
+                                                        place.point!.latitude,
+                                                    longitude:
+                                                        place.point!.longitude),
+                                                themeChange.getThem());
                                           }
                                         });
                                       },
@@ -195,7 +226,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                   ),
                                   IconButton(
                                     onPressed: () {
-                                      getCurrentLocation(true, themeChange.getThem());
+                                      getCurrentLocation(
+                                          true, themeChange.getThem());
                                     },
                                     autofocus: false,
                                     icon: const Icon(
@@ -211,54 +243,93 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             children: <Widget>[
-                              for (int index = 0; index < controller.multiStopListNew.length; index += 1)
+                              for (int index = 0;
+                                  index < controller.multiStopListNew.length;
+                                  index += 1)
                                 Container(
-                                  key: ValueKey(controller.multiStopListNew[index]),
+                                  key: ValueKey(
+                                      controller.multiStopListNew[index]),
                                   child: Column(
                                     children: [
                                       InkWell(
                                           onTap: () async {
-                                            Get.to(const AddressSearchScreen())?.then((value) {
+                                            Get.to(const AddressSearchScreen())
+                                                ?.then((value) {
                                               if (value != null) {
                                                 SearchInfo place = value;
-                                                controller.multiStopListNew[index].editingController.text = place.address.toString();
-                                                controller.multiStopListNew[index].latitude = place.point!.latitude.toString();
-                                                controller.multiStopListNew[index].longitude = place.point!.longitude.toString();
-                                                setStopMarker(GeoPoint(latitude: place.point!.latitude, longitude: place.point!.longitude), index, themeChange.getThem());
+                                                controller
+                                                        .multiStopListNew[index]
+                                                        .editingController
+                                                        .text =
+                                                    place.address.toString();
+                                                controller
+                                                        .multiStopListNew[index]
+                                                        .latitude =
+                                                    place.point!.latitude
+                                                        .toString();
+                                                controller
+                                                        .multiStopListNew[index]
+                                                        .longitude =
+                                                    place.point!.longitude
+                                                        .toString();
+                                                setStopMarker(
+                                                    GeoPoint(
+                                                        latitude: place
+                                                            .point!.latitude,
+                                                        longitude: place
+                                                            .point!.longitude),
+                                                    index,
+                                                    themeChange.getThem());
                                               }
                                             });
                                           },
-                                          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 6),
-                                              child: Text(
-                                                String.fromCharCode(index + 65),
-                                                style: TextStyle(fontSize: 16, color: ConstantColors.hintTextColor),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: buildTextField(
-                                                isDarkMode: themeChange.getThem(),
-                                                title: "Where do you want to stop ?".tr,
-                                                textController: controller.multiStopListNew[index].editingController,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                controller.removeStops(index);
-                                                markers.remove("Stop $index");
-                                                getDirections();
-                                              },
-                                              icon: Icon(
-                                                Icons.close,
-                                                size: 20,
-                                                color: ConstantColors.hintTextColor,
-                                              ),
-                                            )
-                                          ])),
+                                          child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(horizontal: 6),
+                                                  child: Text(
+                                                    String.fromCharCode(
+                                                        index + 65),
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: ConstantColors
+                                                            .hintTextColor),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: buildTextField(
+                                                    isDarkMode:
+                                                        themeChange.getThem(),
+                                                    title:
+                                                        "Where do you want to stop ?"
+                                                            .tr,
+                                                    textController: controller
+                                                        .multiStopListNew[index]
+                                                        .editingController,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    controller
+                                                        .removeStops(index);
+                                                    markers
+                                                        .remove("Stop $index");
+                                                    getDirections();
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.close,
+                                                    size: 20,
+                                                    color: ConstantColors
+                                                        .hintTextColor,
+                                                  ),
+                                                )
+                                              ])),
                                     ],
                                   ),
                                 ),
@@ -268,8 +339,11 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                 if (oldIndex < newIndex) {
                                   newIndex -= 1;
                                 }
-                                final AddStopModel item = controller.multiStopListNew.removeAt(oldIndex);
-                                controller.multiStopListNew.insert(newIndex, item);
+                                final AddStopModel item = controller
+                                    .multiStopListNew
+                                    .removeAt(oldIndex);
+                                controller.multiStopListNew
+                                    .insert(newIndex, item);
                               });
                             },
                           ),
@@ -278,20 +352,28 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                               SvgPicture.asset(
                                 'assets/icons/ic_location_map.svg',
                                 colorFilter: ColorFilter.mode(
-                                  themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey300Dark,
+                                  themeChange.getThem()
+                                      ? AppThemeData.grey500Dark
+                                      : AppThemeData.grey300Dark,
                                   BlendMode.srcIn,
                                 ),
                               ),
                               Expanded(
                                 child: InkWell(
                                   onTap: () async {
-                                    Get.to(const AddressSearchScreen())?.then((value) {
+                                    Get.to(const AddressSearchScreen())
+                                        ?.then((value) {
                                       if (value != null) {
                                         SearchInfo place = value;
-                                        destinationController.text = place.address.toString();
+                                        destinationController.text =
+                                            place.address.toString();
 
                                         setDestinationMarker(
-                                          GeoPoint(latitude: place.point?.latitude ?? 0, longitude: place.point?.longitude ?? 0),
+                                          GeoPoint(
+                                              latitude:
+                                                  place.point?.latitude ?? 0,
+                                              longitude:
+                                                  place.point?.longitude ?? 0),
                                           themeChange.getThem(),
                                         );
                                       }
@@ -308,7 +390,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 8),
-                            child: dividerCust(isDarkMode: themeChange.getThem()),
+                            child:
+                                dividerCust(isDarkMode: themeChange.getThem()),
                           ),
                           InkWell(
                             onTap: () {
@@ -321,14 +404,18 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                 children: [
                                   Icon(
                                     Icons.add_circle,
-                                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                   ),
                                   const SizedBox(
                                     width: 5,
                                   ),
                                   Text('Add stop'.tr,
                                       style: TextStyle(
-                                        color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                        color: themeChange.getThem()
+                                            ? AppThemeData.grey500Dark
+                                            : AppThemeData.grey500,
                                         fontSize: 16,
                                         fontFamily: AppThemeData.regular,
                                       )),
@@ -428,13 +515,19 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
     });
   }
 
-  Widget buildTextField({required title, required TextEditingController textController, required bool isDarkMode}) {
+  Widget buildTextField(
+      {required title,
+      required TextEditingController textController,
+      required bool isDarkMode}) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: TextField(
         controller: textController,
         textInputAction: TextInputAction.done,
-        style: TextStyle(color: isDarkMode == true ? AppThemeData.grey900Dark : AppThemeData.grey900),
+        style: TextStyle(
+            color: isDarkMode == true
+                ? AppThemeData.grey900Dark
+                : AppThemeData.grey900),
         decoration: InputDecoration(
           hintStyle: TextStyle(
             fontSize: 16,
@@ -453,21 +546,30 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
   getDirections() async {
     await mapController.removeLastRoad();
     roadInfo = await mapController.drawRoad(
-      GeoPoint(latitude: departureLatLong?.latitude ?? 0, longitude: departureLatLong?.longitude ?? 0),
-      GeoPoint(latitude: destinationLatLong?.latitude ?? 0, longitude: destinationLatLong?.longitude ?? 0),
+      GeoPoint(
+          latitude: departureLatLong?.latitude ?? 0,
+          longitude: departureLatLong?.longitude ?? 0),
+      GeoPoint(
+          latitude: destinationLatLong?.latitude ?? 0,
+          longitude: destinationLatLong?.longitude ?? 0),
       roadType: RoadType.car,
       roadOption: RoadOption(
         roadWidth: Platform.isIOS ? 50 : 10,
         roadColor: Colors.blue,
-        roadBorderWidth: Platform.isIOS ? 15 : 10, // Set the road border width (outline)
+        roadBorderWidth:
+            Platform.isIOS ? 15 : 10, // Set the road border width (outline)
         roadBorderColor: Colors.black, // Border color
         zoomInto: true,
       ),
     );
     setState(() {});
     updateCameraLocation(
-        source: GeoPoint(latitude: departureLatLong?.latitude ?? 0, longitude: departureLatLong?.longitude ?? 0),
-        destination: GeoPoint(latitude: destinationLatLong?.latitude ?? 0, longitude: destinationLatLong?.longitude ?? 0),
+        source: GeoPoint(
+            latitude: departureLatLong?.latitude ?? 0,
+            longitude: departureLatLong?.longitude ?? 0),
+        destination: GeoPoint(
+            latitude: destinationLatLong?.latitude ?? 0,
+            longitude: destinationLatLong?.longitude ?? 0),
         mapController: mapController);
     setState(() {});
     // await mapController.moveTo(
@@ -478,26 +580,33 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
 
   conformationBottomSheet(BuildContext context, bool isDarkMode) {
     return showModalBottomSheet(
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15), topLeft: Radius.circular(15))),
         context: context,
         isDismissible: false,
         backgroundColor: Colors.transparent,
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
               child: Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: ButtonThem.buildIconButton(context,
                         icon: Icons.arrow_back_ios,
-                        iconColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                        iconColor: isDarkMode
+                            ? AppThemeData.grey900
+                            : AppThemeData.grey900Dark,
                         btnHeight: 40,
                         btnWidthRatio: 0.25,
                         title: "Back".tr,
                         btnColor: AppThemeData.primary200,
-                        txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark, onPress: () {
+                        txtColor: isDarkMode
+                            ? AppThemeData.grey900
+                            : AppThemeData.grey900Dark, onPress: () {
                       Get.back();
                     }),
                   ),
@@ -506,7 +615,9 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                         btnHeight: 40,
                         title: "Continue".tr,
                         btnColor: AppThemeData.primary200,
-                        txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark, onPress: () async {
+                        txtColor: isDarkMode
+                            ? AppThemeData.grey900
+                            : AppThemeData.grey900Dark, onPress: () async {
                       controller.checkBalance().then((value) async {
                         if (value == true) {
                           if (roadInfo.distance != null) {
@@ -516,16 +627,27 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                             //   controller.distance.value = roadInfo.distance! / 1609.34;
                             // }
                             controller.distance.value = roadInfo.distance!;
-                            int hours = double.parse(roadInfo.duration.toString()) ~/ 3600;
-                            int minutes = ((double.parse(roadInfo.duration.toString()) % 3600) / 60).round();
-                            controller.duration.value = '$hours hours $minutes minutes';
+                            int hours =
+                                double.parse(roadInfo.duration.toString()) ~/
+                                    3600;
+                            int minutes =
+                                ((double.parse(roadInfo.duration.toString()) %
+                                            3600) /
+                                        60)
+                                    .round();
+                            controller.duration.value =
+                                '$hours hours $minutes minutes';
 
                             Get.back();
                             tripOptionBottomSheet(context, isDarkMode);
                           }
                         } else {
                           ShowToastDialog.showToast(
-                              "Your wallet balance must be".tr + Constant().amountShow(amount: Constant.minimumWalletBalance!.toString()) + 'to book ride.'.tr);
+                              "Your wallet balance must be".tr +
+                                  Constant().amountShow(
+                                      amount: Constant.minimumWalletBalance!
+                                          .toString()) +
+                                  'to book ride.'.tr);
                         }
                       });
                     }),
@@ -552,13 +674,16 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
         builder: (context) {
           return Container(
             decoration: BoxDecoration(
-              color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+              color: isDarkMode
+                  ? AppThemeData.surface50Dark
+                  : AppThemeData.surface50,
               borderRadius: const BorderRadius.all(Radius.circular(15)),
             ),
             margin: const EdgeInsets.all(10),
             child: StatefulBuilder(builder: (context, setState) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
                 child: Padding(
                   padding: MediaQuery.of(context).viewInsets,
                   child: Column(
@@ -572,7 +697,12 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                           children: [
                             Text(
                               "Customer Info".tr,
-                              style: TextStyle(fontSize: 18, fontFamily: AppThemeData.medium, color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: AppThemeData.medium,
+                                  color: isDarkMode
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900),
                             ),
                             Visibility(
                               visible: controller.createUser.value,
@@ -590,7 +720,9 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                   "Select user".tr,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: isDarkMode ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: isDarkMode
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                     fontFamily: AppThemeData.medium,
                                   ),
                                 ),
@@ -617,50 +749,86 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                         searchFieldProps: TextFieldProps(
                                           cursorColor: AppThemeData.primary200,
                                           decoration: InputDecoration(
-                                            contentPadding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                            contentPadding:
+                                                const EdgeInsets.fromLTRB(
+                                                    8, 0, 8, 0),
                                             border: const OutlineInputBorder(
-                                              borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: 1.0),
                                             ),
                                             hintText: "Search user".tr,
                                           ),
                                         ),
                                       ),
-                                      dropdownDecoratorProps: DropDownDecoratorProps(
-                                        dropdownSearchDecoration: InputDecoration(
-                                          contentPadding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                      dropdownDecoratorProps:
+                                          DropDownDecoratorProps(
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  8, 0, 8, 0),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(0),
-                                            borderSide: BorderSide(color: isDarkMode ? AppThemeData.grey200Dark : AppThemeData.grey200, width: 1.0),
+                                            borderRadius:
+                                                BorderRadius.circular(0),
+                                            borderSide: BorderSide(
+                                                color: isDarkMode
+                                                    ? AppThemeData.grey200Dark
+                                                    : AppThemeData.grey200,
+                                                width: 1.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(0),
-                                            borderSide: BorderSide(color: isDarkMode ? AppThemeData.grey200Dark : AppThemeData.grey200, width: 1.0),
+                                            borderRadius:
+                                                BorderRadius.circular(0),
+                                            borderSide: BorderSide(
+                                                color: isDarkMode
+                                                    ? AppThemeData.grey200Dark
+                                                    : AppThemeData.grey200,
+                                                width: 1.0),
                                           ),
                                           disabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(0),
-                                            borderSide: BorderSide(color: isDarkMode ? AppThemeData.grey200Dark : AppThemeData.grey200, width: 1.0),
+                                            borderRadius:
+                                                BorderRadius.circular(0),
+                                            borderSide: BorderSide(
+                                                color: isDarkMode
+                                                    ? AppThemeData.grey200Dark
+                                                    : AppThemeData.grey200,
+                                                width: 1.0),
                                           ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(0),
-                                            borderSide: BorderSide(color: isDarkMode ? AppThemeData.grey200Dark : AppThemeData.grey200, width: 1.0),
+                                            borderRadius:
+                                                BorderRadius.circular(0),
+                                            borderSide: BorderSide(
+                                                color: isDarkMode
+                                                    ? AppThemeData.grey200Dark
+                                                    : AppThemeData.grey200,
+                                                width: 1.0),
                                           ),
                                           hintText: "Select user".tr,
                                           hintStyle: TextStyle(
                                             fontSize: 16,
-                                            color: isDarkMode ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                            color: isDarkMode
+                                                ? AppThemeData.grey500Dark
+                                                : AppThemeData.grey500,
                                             fontFamily: AppThemeData.regular,
                                           ),
                                         ),
                                       ),
 
-                                      compareFn: (item1, item2) => item1.fullName() == item2.fullName(),
-                                      itemAsString: (CustomerData u) => u.userAsString(),
+                                      compareFn: (item1, item2) =>
+                                          item1.fullName() == item2.fullName(),
+                                      itemAsString: (CustomerData u) =>
+                                          u.userAsString(),
                                       onChanged: (CustomerData? value) async {
                                         controller.selectedUser = value;
-                                        passengerFirstNameController.text = value!.prenom!;
-                                        passengerLastNameController.text = value.nom!;
-                                        passengerEmailController.text = value.email!;
-                                        passengerNumberController.text = value.phone!;
+                                        passengerFirstNameController.text =
+                                            value!.prenom!;
+                                        passengerLastNameController.text =
+                                            value.nom!;
+                                        passengerEmailController.text =
+                                            value.email!;
+                                        passengerNumberController.text =
+                                            value.phone!;
                                       },
                                       items: controller.userList,
                                       selectedItem: controller.selectedUser,
@@ -749,7 +917,9 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                 children: [
                                   Icon(
                                     Icons.add_circle,
-                                    color: isDarkMode ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: isDarkMode
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                   ),
                                   const SizedBox(
                                     width: 5,
@@ -777,7 +947,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                   child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFieldWidget(
-                                        controller: passengerFirstNameController,
+                                        controller:
+                                            passengerFirstNameController,
                                         hintText: 'First name'.tr,
                                       )),
                                 ),
@@ -799,11 +970,15 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                 )),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: TextFieldWidget(hintText: 'Phone number'.tr, controller: passengerNumberController),
+                              child: TextFieldWidget(
+                                  hintText: 'Phone number'.tr,
+                                  controller: passengerNumberController),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: TextFieldWidget(hintText: 'No. of passenger'.tr, controller: passengerController),
+                              child: TextFieldWidget(
+                                  hintText: 'No. of passenger'.tr,
+                                  controller: passengerController),
                             ),
                           ],
                         ),
@@ -813,15 +988,20 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                         child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: ButtonThem.buildIconButton(context,
                                   icon: Icons.arrow_back_ios,
-                                  iconColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                  iconColor: isDarkMode
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900Dark,
                                   btnHeight: 40,
                                   btnWidthRatio: 0.25,
                                   title: "Back".tr,
                                   btnColor: AppThemeData.primary200,
-                                  txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark, onPress: () {
+                                  txtColor: isDarkMode
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900Dark, onPress: () {
                                 Get.back();
                               }),
                             ),
@@ -831,34 +1011,59 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                   btnHeight: 40,
                                   title: "BOOK NOW".tr,
                                   btnColor: AppThemeData.primary200,
-                                  txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark, onPress: () async {
+                                  txtColor: isDarkMode
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900Dark,
+                                  onPress: () async {
                                 if ((passengerFirstNameController.text.isEmpty ||
-                                        passengerLastNameController.text.isEmpty ||
-                                        passengerNumberController.text.isEmpty ||
-                                        passengerEmailController.text.isEmpty) &&
+                                        passengerLastNameController
+                                            .text.isEmpty ||
+                                        passengerNumberController
+                                            .text.isEmpty ||
+                                        passengerEmailController
+                                            .text.isEmpty) &&
                                     controller.selectedUser == null) {
-                                  ShowToastDialog.showToast("Please Enter Details".tr);
+                                  ShowToastDialog.showToast(
+                                      "Please Enter Details".tr);
                                 } else if (passengerController.text.isEmpty) {
-                                  ShowToastDialog.showToast("Please Enter Details".tr);
+                                  ShowToastDialog.showToast(
+                                      "Please Enter Details".tr);
                                 } else {
                                   double cout = 0.0;
 
-                                  if (controller.distance.value > double.parse(controller.vehicleData!.minimumDeliveryChargesWithin!)) {
-                                    cout = (controller.distance.value * double.parse(controller.vehicleData!.deliveryCharges!)).toDouble();
+                                  if (controller.distance.value >
+                                      double.parse(controller.vehicleData!
+                                          .minimumDeliveryChargesWithin!)) {
+                                    cout = (controller.distance.value *
+                                            double.parse(controller
+                                                .vehicleData!.deliveryCharges!))
+                                        .toDouble();
                                   } else {
-                                    cout = double.parse(controller.vehicleData!.minimumDeliveryCharges.toString());
+                                    cout = double.parse(controller
+                                        .vehicleData!.minimumDeliveryCharges
+                                        .toString());
                                   }
-                                  for (var i = 0; i < Constant.taxList.length; i++) {
+                                  for (var i = 0;
+                                      i < Constant.taxList.length;
+                                      i++) {
                                     if (Constant.taxList[i].statut == 'yes') {
                                       if (Constant.taxList[i].type == "Fixed") {
-                                        controller.taxAmount.value += double.parse(Constant.taxList[i].value.toString());
+                                        controller.taxAmount.value +=
+                                            double.parse(Constant
+                                                .taxList[i].value
+                                                .toString());
                                       } else {
-                                        controller.taxAmount.value += (cout * double.parse(Constant.taxList[i].value!.toString())) / 100;
+                                        controller.taxAmount.value += (cout *
+                                                double.parse(Constant
+                                                    .taxList[i].value!
+                                                    .toString())) /
+                                            100;
                                       }
                                     }
                                   }
                                   Get.back();
-                                  conformDataBottomSheet(context, cout, isDarkMode);
+                                  conformDataBottomSheet(
+                                      context, cout, isDarkMode);
                                 }
                               }),
                             ),
@@ -874,7 +1079,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
         });
   }
 
-  conformDataBottomSheet(BuildContext context, double tripPrice, bool isDarkMode) {
+  conformDataBottomSheet(
+      BuildContext context, double tripPrice, bool isDarkMode) {
     return showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -882,11 +1088,16 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
         backgroundColor: Colors.transparent,
         builder: (context) {
           return Container(
-            decoration: BoxDecoration(color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50, borderRadius: BorderRadius.all(Radius.circular(15))),
+            decoration: BoxDecoration(
+                color: isDarkMode
+                    ? AppThemeData.surface50Dark
+                    : AppThemeData.surface50,
+                borderRadius: BorderRadius.all(Radius.circular(15))),
             margin: const EdgeInsets.all(10),
             child: StatefulBuilder(builder: (context, setState) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
                 child: Obx(
                   () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -896,7 +1107,11 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
                         child: Row(
                           children: [
-                            Expanded(child: buildDetails(isDarkMode: isDarkMode, title: "Cash".tr, value: 'Payment method'.tr)),
+                            Expanded(
+                                child: buildDetails(
+                                    isDarkMode: isDarkMode,
+                                    title: "Cash".tr,
+                                    value: 'Payment method'.tr)),
                             const SizedBox(
                               width: 10,
                             ),
@@ -904,12 +1119,18 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                 child: buildDetails(
                                     isScroll: true,
                                     isDarkMode: isDarkMode,
-                                    title: "${controller.distance.value.toStringAsFixed(int.parse(Constant.decimal!))}${Constant.distanceUnit}",
+                                    title:
+                                        "${controller.distance.value.toStringAsFixed(int.parse(Constant.decimal!))}${Constant.distanceUnit}",
                                     value: 'Distance'.tr)),
                             const SizedBox(
                               width: 10,
                             ),
-                            Expanded(child: buildDetails(isScroll: true, isDarkMode: isDarkMode, title: controller.duration.value, value: 'Duration'.tr)),
+                            Expanded(
+                                child: buildDetails(
+                                    isScroll: true,
+                                    isDarkMode: isDarkMode,
+                                    title: controller.duration.value,
+                                    value: 'Duration'.tr)),
                             const SizedBox(
                               width: 10,
                             ),
@@ -917,7 +1138,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                 child: buildDetails(
                               isScroll: true,
                               isDarkMode: isDarkMode,
-                              title: Constant().amountShow(amount: tripPrice.toString()),
+                              title: Constant()
+                                  .amountShow(amount: tripPrice.toString()),
                               value: 'Trip Price'.tr,
                             )),
                           ],
@@ -931,19 +1153,30 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                         itemBuilder: (context, index) {
                           TaxModel taxModel = Constant.taxList[index];
                           return ListTile(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 0, vertical: 0),
                             title: Text(
                               '${taxModel.libelle.toString()} (${taxModel.type == "Fixed" ? Constant().amountShow(amount: taxModel.value) : "${taxModel.value}%"})',
                               style: TextStyle(
                                 fontFamily: AppThemeData.medium,
-                                color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: isDarkMode
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               ),
                             ),
-                            trailing: Text(Constant().amountShow(amount: controller.calculateTax(taxModel: taxModel, tripPrice: tripPrice).toString()),
+                            trailing: Text(
+                                Constant().amountShow(
+                                    amount: controller
+                                        .calculateTax(
+                                            taxModel: taxModel,
+                                            tripPrice: tripPrice)
+                                        .toString()),
                                 style: TextStyle(
                                   fontFamily: AppThemeData.medium,
-                                  color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: isDarkMode
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                   fontSize: 16,
                                 )),
                           );
@@ -963,14 +1196,22 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                   letterSpacing: 1.0,
                                   fontFamily: AppThemeData.medium,
                                   fontSize: 16,
-                                  color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: isDarkMode
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                 )),
-                            Text(Constant().amountShow(amount: (tripPrice + controller.taxAmount.value).toString()),
+                            Text(
+                                Constant().amountShow(
+                                    amount:
+                                        (tripPrice + controller.taxAmount.value)
+                                            .toString()),
                                 style: TextStyle(
                                   letterSpacing: 1.0,
                                   fontFamily: AppThemeData.medium,
                                   fontSize: 16,
-                                  color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: isDarkMode
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                 ))
                           ],
                         ),
@@ -985,12 +1226,17 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: ButtonThem.buildIconButton(context,
                                 icon: Icons.arrow_back_ios,
-                                iconColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                iconColor: isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark,
                                 btnHeight: 40,
                                 btnWidthRatio: 0.25,
                                 title: "Back".tr,
                                 btnColor: AppThemeData.primary200,
-                                txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark, onPress: () async {
+                                txtColor: isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark,
+                                onPress: () async {
                               Get.back();
                               tripOptionBottomSheet(context, isDarkMode);
                             }),
@@ -1000,30 +1246,49 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                 btnHeight: 40,
                                 title: "BOOK NOW".tr,
                                 btnColor: AppThemeData.primary200,
-                                txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark, onPress: () {
+                                txtColor: isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark, onPress: () {
                               List stopsList = [];
-                              for (var i = 0; i < controller.multiStopListNew.length; i++) {
-                                if (controller.multiStopListNew[i].latitude != '' &&
-                                    controller.multiStopListNew[i].longitude != '' &&
-                                    controller.multiStopListNew[i].editingController.text.isNotEmpty) {
+                              for (var i = 0;
+                                  i < controller.multiStopListNew.length;
+                                  i++) {
+                                if (controller.multiStopListNew[i].latitude !=
+                                        '' &&
+                                    controller.multiStopListNew[i].longitude !=
+                                        '' &&
+                                    controller.multiStopListNew[i]
+                                        .editingController.text.isNotEmpty) {
                                   stopsList.add({
-                                    "latitude": controller.multiStopListNew[i].latitude.toString(),
-                                    "longitude": controller.multiStopListNew[i].longitude.toString(),
-                                    "location": controller.multiStopListNew[i].editingController.text.toString()
+                                    "latitude": controller
+                                        .multiStopListNew[i].latitude
+                                        .toString(),
+                                    "longitude": controller
+                                        .multiStopListNew[i].longitude
+                                        .toString(),
+                                    "location": controller.multiStopListNew[i]
+                                        .editingController.text
+                                        .toString()
                                   });
                                 }
                               }
                               Map<String, dynamic> bodyParams = {
-                                'user_id': controller.selectedUser != null ? controller.selectedUser!.id! : DateTime.now().millisecondsSinceEpoch,
+                                'user_id': controller.selectedUser != null
+                                    ? controller.selectedUser!.id!
+                                    : DateTime.now().millisecondsSinceEpoch,
                                 'lat1': departureLatLong!.latitude.toString(),
                                 'lng1': departureLatLong!.longitude.toString(),
                                 'lat2': destinationLatLong!.latitude.toString(),
-                                'lng2': destinationLatLong!.longitude.toString(),
+                                'lng2':
+                                    destinationLatLong!.longitude.toString(),
                                 'cout': tripPrice.toString(),
                                 'distance': controller.distance.toString(),
-                                'distance_unit': Constant.distanceUnit.toString(),
+                                'distance_unit':
+                                    Constant.distanceUnit.toString(),
                                 'duree': controller.duration.toString(),
-                                'id_conducteur': Preferences.getInt(Preferences.userId).toString(),
+                                'id_conducteur':
+                                    Preferences.getInt(Preferences.userId)
+                                        .toString(),
                                 'id_payment': controller.paymentMethodId.value,
                                 'depart_name': departureController.text,
                                 'destination_name': destinationController.text,
@@ -1033,9 +1298,12 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                 'image': '',
                                 'image_name': "",
                                 'user_detail': {
-                                  'name': "${passengerFirstNameController.text} ${passengerLastNameController.text}",
-                                  'phone': passengerNumberController.text.toString(),
-                                  'email': passengerEmailController.text.toString()
+                                  'name':
+                                      "${passengerFirstNameController.text} ${passengerLastNameController.text}",
+                                  'phone':
+                                      passengerNumberController.text.toString(),
+                                  'email':
+                                      passengerEmailController.text.toString()
                                 },
                                 'ride_type': "driver",
                                 'statut_round': 'no',
@@ -1054,7 +1322,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                     departureController.clear();
                                     destinationController.clear();
                                     mapController.removeLastRoad();
-                                    List<GeoPoint> allGeoPoints = markers.values.toList();
+                                    List<GeoPoint> allGeoPoints =
+                                        markers.values.toList();
                                     mapController.removeMarkers(allGeoPoints);
                                     departureLatLong = null;
                                     destinationLatLong = null;
@@ -1073,12 +1342,14 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
                                           return CustomDialogBox(
                                             text: "Ok".tr,
                                             title: "",
-                                            descriptions: "Your booking is confirmed".tr,
+                                            descriptions:
+                                                "Your booking is confirmed".tr,
                                             onPress: () {
                                               Get.back();
                                               Get.back();
                                             },
-                                            img: Image.asset('assets/images/green_checked.png'),
+                                            img: Image.asset(
+                                                'assets/images/green_checked.png'),
                                           );
                                         });
                                   }
@@ -1097,7 +1368,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
         });
   }
 
-  buildDetails({title, value, required bool isDarkMode, bool? isScroll = false}) {
+  buildDetails(
+      {title, value, required bool isDarkMode, bool? isScroll = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -1125,17 +1397,22 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: AppThemeData.regular,
-              color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+              color:
+                  isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
               fontSize: 12,
             )),
       ],
     );
   }
 
-  Future<void> updateCameraLocation({required GeoPoint source, required GeoPoint destination, required MapController mapController}) async {
+  Future<void> updateCameraLocation(
+      {required GeoPoint source,
+      required GeoPoint destination,
+      required MapController mapController}) async {
     BoundingBox bounds;
 
-    if (source.latitude > destination.latitude && source.longitude > destination.longitude) {
+    if (source.latitude > destination.latitude &&
+        source.longitude > destination.longitude) {
       bounds = BoundingBox(
         north: source.latitude,
         south: destination.latitude,
@@ -1171,7 +1448,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
     await checkCameraLocation(bounds, mapController);
   }
 
-  Future<void> checkCameraLocation(BoundingBox bounds, MapController mapController) async {
+  Future<void> checkCameraLocation(
+      BoundingBox bounds, MapController mapController) async {
     // await mapController.rotateMapCamera(0);
     BoundingBox currentBounds = await mapController.bounds;
 

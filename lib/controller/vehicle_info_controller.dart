@@ -3,18 +3,18 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/brand_model.dart';
-import 'package:cabme_driver/model/get_vehicle_data_model.dart' as prefix;
-import 'package:cabme_driver/model/get_vehicle_getegory.dart';
-import 'package:cabme_driver/model/model.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/model/vehicle_register_model.dart';
-import 'package:cabme_driver/model/zone_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/brand_model.dart';
+import 'package:yumprides_driver/model/get_vehicle_data_model.dart' as prefix;
+import 'package:yumprides_driver/model/get_vehicle_getegory.dart';
+import 'package:yumprides_driver/model/model.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/model/vehicle_register_model.dart';
+import 'package:yumprides_driver/model/zone_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -27,7 +27,8 @@ class VehicleInfoController extends GetxController {
   Rx<TextEditingController> millageController = TextEditingController().obs;
   Rx<TextEditingController> kmDrivenController = TextEditingController().obs;
   Rx<TextEditingController> numberPlateController = TextEditingController().obs;
-  Rx<TextEditingController> numberOfPassengersController = TextEditingController().obs;
+  Rx<TextEditingController> numberOfPassengersController =
+      TextEditingController().obs;
   Rx<TextEditingController> zoneNameController = TextEditingController().obs;
 
   UserModel? userModel;
@@ -53,9 +54,13 @@ class VehicleInfoController extends GetxController {
   Future<dynamic> getVehicleDataAPI() async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.get(Uri.parse("${API.getVehicleData}${Preferences.getInt(Preferences.userId)}"), headers: API.header);
+      final response = await http.get(
+          Uri.parse(
+              "${API.getVehicleData}${Preferences.getInt(Preferences.userId)}"),
+          headers: API.header);
 
-      showLog("API :: URL :: ${API.getVehicleData}${Preferences.getInt(Preferences.userId)} ");
+      showLog(
+          "API :: URL :: ${API.getVehicleData}${Preferences.getInt(Preferences.userId)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
@@ -72,7 +77,8 @@ class VehicleInfoController extends GetxController {
         ShowToastDialog.closeLoader();
         getModel(bodyParams);
         isLoading.value = false;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         await getVehicleCategory();
         await getZone();
         ShowToastDialog.closeLoader();
@@ -80,7 +86,8 @@ class VehicleInfoController extends GetxController {
       } else {
         isLoading.value = false;
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -125,10 +132,12 @@ class VehicleInfoController extends GetxController {
 
   List<VehicleData> vehicleCategoryList = [];
 
-  Future<VehicleRegisterModel?> vehicleRegister(Map<String, String> bodyParams) async {
+  Future<VehicleRegisterModel?> vehicleRegister(
+      Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.vehicleRegister), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.vehicleRegister),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.vehicleRegister} ");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -141,7 +150,8 @@ class VehicleInfoController extends GetxController {
         return VehicleRegisterModel.fromJson(responseBody);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -174,7 +184,8 @@ class VehicleInfoController extends GetxController {
       isLoading.value = false;
       print("====>$responseBody");
       if (response.statusCode == 200) {
-        final VehicleCategoryModel getVehicleCategory = VehicleCategoryModel.fromJson(responseBody);
+        final VehicleCategoryModel getVehicleCategory =
+            VehicleCategoryModel.fromJson(responseBody);
 
         vehicleCategoryList = getVehicleCategory.vehicleData!;
 
@@ -183,7 +194,8 @@ class VehicleInfoController extends GetxController {
         return VehicleData.fromJson(responseBody);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
       }
     } on TimeoutException catch (e) {
       ShowToastDialog.closeLoader();
@@ -203,7 +215,8 @@ class VehicleInfoController extends GetxController {
   Future<List<BrandData>?> getBrand() async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.get(Uri.parse(API.brand), headers: API.header);
+      final response =
+          await http.get(Uri.parse(API.brand), headers: API.header);
       showLog("API :: URL :: ${API.brand} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
@@ -213,16 +226,19 @@ class VehicleInfoController extends GetxController {
         ShowToastDialog.closeLoader();
         BrandModel model = BrandModel.fromJson(responseBody);
         for (int i = 0; i < model.data!.length; i++) {
-          if (selectedBrandID.value.toString() == model.data![i].id.toString()) {
+          if (selectedBrandID.value.toString() ==
+              model.data![i].id.toString()) {
             brandController.value.text = model.data![i].name.toString();
           }
         }
         return model.data!;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
       }
     } on TimeoutException catch (e) {
       ShowToastDialog.closeLoader();
@@ -243,7 +259,8 @@ class VehicleInfoController extends GetxController {
   Future<List<ZoneData>?> getZone() async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.get(Uri.parse(API.getZone), headers: API.authheader);
+      final response =
+          await http.get(Uri.parse(API.getZone), headers: API.authheader);
       showLog("API :: URL :: ${API.getZone} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
@@ -259,11 +276,13 @@ class VehicleInfoController extends GetxController {
         }
         zoneList.value = model.data!;
         return model.data;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -285,7 +304,8 @@ class VehicleInfoController extends GetxController {
   Future<List<ModelData>?> getModel(bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.model), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.model),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.model} ");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -296,17 +316,20 @@ class VehicleInfoController extends GetxController {
         ShowToastDialog.closeLoader();
         Model model = Model.fromJson(responseBody);
         for (int i = 0; i < model.data!.length; i++) {
-          if (selectedModelID.value.toString() == model.data![i].id.toString()) {
+          if (selectedModelID.value.toString() ==
+              model.data![i].id.toString()) {
             modelController.value.text = model.data![i].name.toString();
           }
         }
         return model.data!;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.showToast(responseBody['error']);
         ShowToastDialog.closeLoader();
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {

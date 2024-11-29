@@ -2,15 +2,15 @@
 
 import 'dart:convert';
 
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/sign_up_controller.dart';
-import 'package:cabme_driver/page/auth_screens/login_screen.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/responsive.dart';
-import 'package:cabme_driver/themes/text_field_them.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/sign_up_controller.dart';
+import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/responsive.dart';
+import 'package:yumprides_driver/themes/text_field_them.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -67,7 +67,7 @@ class SignupScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      "Sign up for a personalized CabME experience. Start booking your rides in just a few taps."
+                                      "Sign up for a personalized Yum Rides experience. Start booking your rides in just a few taps."
                                           .tr,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(

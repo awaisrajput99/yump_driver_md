@@ -1,29 +1,29 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/dash_board_controller.dart';
-import 'package:cabme_driver/controller/new_ride_controller.dart';
-import 'package:cabme_driver/model/ride_model.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/page/complaint/add_complaint_screen.dart';
-import 'package:cabme_driver/page/completed/trip_history_screen.dart';
-import 'package:cabme_driver/page/create_ride/create_osm_ride_screen.dart';
-import 'package:cabme_driver/page/create_ride/create_ride_screen.dart';
-import 'package:cabme_driver/page/dash_board.dart';
-import 'package:cabme_driver/page/review_screens/add_review_screen.dart';
-import 'package:cabme_driver/page/route_view_screen/route_osm_view_screen.dart';
-import 'package:cabme_driver/page/route_view_screen/route_view_screen.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/custom_alert_dialog.dart';
-import 'package:cabme_driver/themes/custom_dialog_box.dart';
-import 'package:cabme_driver/themes/custom_widget.dart';
-import 'package:cabme_driver/themes/responsive.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
-import 'package:cabme_driver/widget/StarRating.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/dash_board_controller.dart';
+import 'package:yumprides_driver/controller/new_ride_controller.dart';
+import 'package:yumprides_driver/model/ride_model.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/page/complaint/add_complaint_screen.dart';
+import 'package:yumprides_driver/page/completed/trip_history_screen.dart';
+import 'package:yumprides_driver/page/create_ride/create_osm_ride_screen.dart';
+import 'package:yumprides_driver/page/create_ride/create_ride_screen.dart';
+import 'package:yumprides_driver/page/dash_board.dart';
+import 'package:yumprides_driver/page/review_screens/add_review_screen.dart';
+import 'package:yumprides_driver/page/route_view_screen/route_osm_view_screen.dart';
+import 'package:yumprides_driver/page/route_view_screen/route_view_screen.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/custom_alert_dialog.dart';
+import 'package:yumprides_driver/themes/custom_dialog_box.dart';
+import 'package:yumprides_driver/themes/custom_widget.dart';
+import 'package:yumprides_driver/themes/responsive.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -57,7 +57,7 @@ class NewRideScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'CabMe Driver'.tr,
+                    'Yump Rides Driver'.tr,
                     style: TextStyle(
                       color: themeChange.getThem()
                           ? AppThemeData.grey900Dark
@@ -86,7 +86,7 @@ class NewRideScreen extends StatelessWidget {
                         child: Switch(
                           value: controllerDashBoard.isActive.value,
                           activeColor: AppThemeData.success300,
-                          inactiveTrackColor: AppThemeData.warning200,
+                          inactiveTrackColor: AppThemeData.white90,
                           onChanged: (value) async {
                             await controllerDashBoard.getUsrData();
                             if (controllerDashBoard
@@ -171,7 +171,7 @@ class NewRideScreen extends StatelessWidget {
               height: 50,
               child: FloatingActionButton.extended(
                 backgroundColor: AppThemeData.primary200,
-                foregroundColor: Colors.black,
+                foregroundColor: Colors.white,
                 onPressed: () {
                   if (controller.userModel.value.userData?.isVerified ==
                       "yes") {
@@ -192,8 +192,10 @@ class NewRideScreen extends StatelessWidget {
                 icon: const Icon(Icons.add),
                 label: Text(
                   'Create Ride'.tr,
-                  style:
-                      TextStyle(fontSize: 14, fontFamily: AppThemeData.medium),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: AppThemeData.medium,
+                      color: Colors.white),
                 ),
               ),
             ),

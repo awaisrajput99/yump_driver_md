@@ -2,41 +2,41 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/dash_board_controller.dart';
-import 'package:cabme_driver/controller/payStackURLModel.dart';
-import 'package:cabme_driver/controller/wallet_controller.dart';
-import 'package:cabme_driver/controller/withdrawals_controller.dart';
-import 'package:cabme_driver/model/parcel_model.dart';
-import 'package:cabme_driver/model/payment_setting_model.dart';
-import 'package:cabme_driver/model/razorpay_gen_userid_model.dart';
-import 'package:cabme_driver/model/ride_model.dart';
-import 'package:cabme_driver/model/stripe_failed_model.dart';
-import 'package:cabme_driver/model/trancation_model.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/model/xenditModel.dart';
-import 'package:cabme_driver/page/add_bank_details/add_bank_account.dart';
-import 'package:cabme_driver/page/completed/trip_history_screen.dart';
-import 'package:cabme_driver/page/parcel_service/parcel_details_screen.dart';
-import 'package:cabme_driver/page/wallet/mercadopago_screen.dart';
-import 'package:cabme_driver/page/wallet/midtrans_screen.dart';
-import 'package:cabme_driver/page/wallet/orangePayScreen.dart';
-import 'package:cabme_driver/page/wallet/payStackScreen.dart';
-import 'package:cabme_driver/page/wallet/payfast_screen.dart';
-import 'package:cabme_driver/page/wallet/paystack_url_generator.dart';
-import 'package:cabme_driver/page/wallet/xenditScreen.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/themes/app_bar_custom.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/custom_widget.dart';
-import 'package:cabme_driver/themes/radio_button.dart';
-import 'package:cabme_driver/themes/responsive.dart';
-import 'package:cabme_driver/themes/text_field_them.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/dash_board_controller.dart';
+import 'package:yumprides_driver/controller/payStackURLModel.dart';
+import 'package:yumprides_driver/controller/wallet_controller.dart';
+import 'package:yumprides_driver/controller/withdrawals_controller.dart';
+import 'package:yumprides_driver/model/parcel_model.dart';
+import 'package:yumprides_driver/model/payment_setting_model.dart';
+import 'package:yumprides_driver/model/razorpay_gen_userid_model.dart';
+import 'package:yumprides_driver/model/ride_model.dart';
+import 'package:yumprides_driver/model/stripe_failed_model.dart';
+import 'package:yumprides_driver/model/trancation_model.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/model/xenditModel.dart';
+import 'package:yumprides_driver/page/add_bank_details/add_bank_account.dart';
+import 'package:yumprides_driver/page/completed/trip_history_screen.dart';
+import 'package:yumprides_driver/page/parcel_service/parcel_details_screen.dart';
+import 'package:yumprides_driver/page/wallet/mercadopago_screen.dart';
+import 'package:yumprides_driver/page/wallet/midtrans_screen.dart';
+import 'package:yumprides_driver/page/wallet/orangePayScreen.dart';
+import 'package:yumprides_driver/page/wallet/payStackScreen.dart';
+import 'package:yumprides_driver/page/wallet/payfast_screen.dart';
+import 'package:yumprides_driver/page/wallet/paystack_url_generator.dart';
+import 'package:yumprides_driver/page/wallet/xenditScreen.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/themes/app_bar_custom.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/custom_widget.dart';
+import 'package:yumprides_driver/themes/radio_button.dart';
+import 'package:yumprides_driver/themes/responsive.dart';
+import 'package:yumprides_driver/themes/text_field_them.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1720,7 +1720,7 @@ class WalletScreen extends StatelessWidget {
                   primary: AppThemeData.primary200,
                 ),
               ),
-              merchantDisplayName: 'Cabme',
+              merchantDisplayName: 'Yump Rides',
             ))
             .then((value) {});
 
@@ -1802,7 +1802,7 @@ class WalletScreen extends StatelessWidget {
     var options = {
       'key': walletController.paymentSettingModel.value.razorpay!.key,
       'amount': amount * 100,
-      'name': 'Cabme',
+      'name': 'Yump Rides',
       'order_id': orderId,
       "currency": "INR",
       'description': 'wallet Topup',
@@ -1845,7 +1845,7 @@ class WalletScreen extends StatelessWidget {
     //initiate payPal plugin
     await _flutterPaypalNativePlugin.init(
       //your app id !!! No Underscore!!! see readme.md for help
-      returnUrl: "com.cabme.driver://paypalpay",
+      returnUrl: "com.yumprides.driver://paypalpay",
       //client id from developer dashboard
       clientID: walletController.paymentSettingModel.value.payPal!.appId!,
       //sandbox, staging, live etc

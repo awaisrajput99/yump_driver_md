@@ -2,8 +2,8 @@
 
 import 'dart:async';
 
-import 'package:cabme_driver/controller/wallet_controller.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/controller/wallet_controller.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -53,7 +53,11 @@ class _PayStackScreenState extends State<PayStackScreen> {
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest navigation) async {
             if (navigation.url.contains('/success')) {
-              final isDone = await widget.walletController.payStackVerifyTransaction(secretKey: widget.secretKey, reference: widget.reference, amount: widget.amount);
+              final isDone = await widget.walletController
+                  .payStackVerifyTransaction(
+                      secretKey: widget.secretKey,
+                      reference: widget.reference,
+                      amount: widget.amount);
               Get.back(result: isDone);
             } else {
               Get.back(result: false);

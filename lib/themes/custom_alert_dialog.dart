@@ -1,6 +1,6 @@
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,13 +42,17 @@ class CustomAlertDialogState extends State<CustomAlertDialog> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
+          padding:
+              const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+              color: themeChange.getThem()
+                  ? AppThemeData.surface50Dark
+                  : AppThemeData.surface50,
               borderRadius: BorderRadius.circular(20),
               boxShadow: const [
-                BoxShadow(color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
+                BoxShadow(
+                    color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
               ]),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -57,7 +61,9 @@ class CustomAlertDialogState extends State<CustomAlertDialog> {
                 widget.title.toString(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey500Dark
+                      : AppThemeData.grey500,
                   fontSize: 16,
                   fontFamily: AppThemeData.medium,
                 ),
@@ -90,9 +96,15 @@ class CustomAlertDialogState extends State<CustomAlertDialog> {
                             title: widget.negativeButtonText,
                             btnHeight: 45,
                             btnWidthRatio: 0.8,
-                            btnColor: themeChange.getThem() ? AppThemeData.grey800 : AppThemeData.grey100,
-                            txtColor: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
-                            btnBorderColor: themeChange.getThem() ? AppThemeData.grey800 : AppThemeData.grey100,
+                            btnColor: themeChange.getThem()
+                                ? AppThemeData.grey800
+                                : AppThemeData.grey100,
+                            txtColor: themeChange.getThem()
+                                ? AppThemeData.grey900Dark
+                                : AppThemeData.grey900,
+                            btnBorderColor: themeChange.getThem()
+                                ? AppThemeData.grey800
+                                : AppThemeData.grey100,
                             onPress: widget.onPressNegative!,
                           ),
                         )

@@ -2,17 +2,17 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:cabme_driver/controller/dash_board_controller.dart';
-import 'package:cabme_driver/controller/login_conroller.dart';
-import 'package:cabme_driver/controller/settings_controller.dart';
-import 'package:cabme_driver/firebase_options.dart';
-import 'package:cabme_driver/on_boarding_screen.dart';
-import 'package:cabme_driver/page/auth_screens/login_screen.dart';
-import 'package:cabme_driver/page/auth_screens/signup_screen.dart';
-import 'package:cabme_driver/page/dash_board.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/themes/styles.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/controller/dash_board_controller.dart';
+import 'package:yumprides_driver/controller/login_conroller.dart';
+import 'package:yumprides_driver/controller/settings_controller.dart';
+import 'package:yumprides_driver/firebase_options.dart';
+import 'package:yumprides_driver/on_boarding_screen.dart';
+import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/page/auth_screens/signup_screen.dart';
+import 'package:yumprides_driver/page/dash_board.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/themes/styles.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -133,7 +133,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   Future<void> setupInteractedMessage(BuildContext context) async {
     initialize(context);
-    await FirebaseMessaging.instance.subscribeToTopic("cabme_driver");
+    await FirebaseMessaging.instance.subscribeToTopic("yumprides_driver");
 
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
@@ -201,7 +201,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       const NotificationDetails notificationDetails = NotificationDetails(
           android: AndroidNotificationDetails(
         "01",
-        "cabme-driver",
+        "yumprides-driver",
         importance: Importance.max,
         priority: Priority.high,
       ));
@@ -225,7 +225,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       return themeChangeProvider;
     }, child: Consumer<DarkThemeProvider>(builder: (context, value, child) {
       return GetMaterialApp(
-        title: 'CabMe Driver'.tr,
+        title: 'Yump Rides Driver'.tr,
         debugShowCheckedModeBanner: false,
         theme: Styles.themeData(
             themeChangeProvider.darkTheme == 0

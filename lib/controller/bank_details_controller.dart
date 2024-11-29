@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/bank_details_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/bank_details_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -27,12 +27,18 @@ class BankDetailsController extends GetxController {
   }
 
   iniData() {
-    bankNameController.value = TextEditingController(text: bankDetails.value.bankName);
-    branchNameController.value = TextEditingController(text: bankDetails.value.branchName);
-    holderNameController.value = TextEditingController(text: bankDetails.value.holderName);
-    accountNumberController.value = TextEditingController(text: bankDetails.value.accountNo);
-    otherInformationController.value = TextEditingController(text: bankDetails.value.otherInfo);
-    ifscCodeController.value = TextEditingController(text: bankDetails.value.ifscCode);
+    bankNameController.value =
+        TextEditingController(text: bankDetails.value.bankName);
+    branchNameController.value =
+        TextEditingController(text: bankDetails.value.branchName);
+    holderNameController.value =
+        TextEditingController(text: bankDetails.value.holderName);
+    accountNumberController.value =
+        TextEditingController(text: bankDetails.value.accountNo);
+    otherInformationController.value =
+        TextEditingController(text: bankDetails.value.otherInfo);
+    ifscCodeController.value =
+        TextEditingController(text: bankDetails.value.ifscCode);
     ShowToastDialog.closeLoader();
   }
 
@@ -42,8 +48,12 @@ class BankDetailsController extends GetxController {
   Future<dynamic> getBankDetails() async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.get(Uri.parse("${API.bankDetails}?driver_id=${Preferences.getInt(Preferences.userId)}"), headers: API.header);
-      showLog("API :: URL :: ${API.bankDetails}?driver_id=${Preferences.getInt(Preferences.userId)} ");
+      final response = await http.get(
+          Uri.parse(
+              "${API.bankDetails}?driver_id=${Preferences.getInt(Preferences.userId)}"),
+          headers: API.header);
+      showLog(
+          "API :: URL :: ${API.bankDetails}?driver_id=${Preferences.getInt(Preferences.userId)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
@@ -55,13 +65,15 @@ class BankDetailsController extends GetxController {
         BankDetailsModel model = BankDetailsModel.fromJson(responseBody);
         bankDetails.value = model.data!;
         iniData();
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         isLoading.value = false;
         ShowToastDialog.closeLoader();
       } else {
         isLoading.value = false;
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -86,7 +98,8 @@ class BankDetailsController extends GetxController {
   Future<dynamic> setBankDetails(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.addBankDetails), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.addBankDetails),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Body :: ${API.addBankDetails} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -97,12 +110,14 @@ class BankDetailsController extends GetxController {
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         ShowToastDialog.closeLoader();
         return responseBody;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error']);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {

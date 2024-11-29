@@ -1,4 +1,4 @@
-import 'package:cabme_driver/model/tax_model.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
 
 class SettingsModel {
   String? success;
@@ -136,9 +136,12 @@ class Data {
     googleMapApiKey = json['google_map_api_key'].toString();
     isSocialMedia = json['is_social_media'].toString();
     driverRadios = json['driver_radios'].toString();
-    userRideScheduleTimeMinute = json['user_ride_schedule_time_minute'].toString();
-    tripAcceptRejectDriverTimeSec = json['trip_accept_reject_driver_time_sec'].toString();
-    showRideWithoutDestination = json['show_ride_without_destination'].toString();
+    userRideScheduleTimeMinute =
+        json['user_ride_schedule_time_minute'].toString();
+    tripAcceptRejectDriverTimeSec =
+        json['trip_accept_reject_driver_time_sec'].toString();
+    showRideWithoutDestination =
+        json['show_ride_without_destination'].toString();
     showRideOtp = json['show_ride_otp'].toString();
     showRideLater = json['show_ride_later'].toString();
     deliveryDistance = json['delivery_distance'].toString();

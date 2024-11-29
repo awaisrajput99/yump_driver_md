@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/settings_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/settings_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -38,9 +38,12 @@ class SettingsController extends GetxController {
 
         SettingsModel model = SettingsModel.fromJson(responseBody);
         Constant.liveTrackingMapType = model.data?.mapType ?? '';
-        Constant.selectedMapType = model.data?.mapForApplication != null ? '${model.data?.mapForApplication?.toLowerCase()}' : '';
+        Constant.selectedMapType = model.data?.mapForApplication != null
+            ? '${model.data?.mapForApplication?.toLowerCase()}'
+            : '';
         Constant.parcelActive = model.data!.parcelActive!;
-        ConstantColors.primary = Color(int.parse(model.data!.driverappColor!.replaceFirst("#", "0xff")));
+        ConstantColors.primary = Color(
+            int.parse(model.data!.driverappColor!.replaceFirst("#", "0xff")));
         // AppThemeData.primary200 = Color(int.parse(model.data!.driverappColor!.replaceFirst("#", "0xff")));
         Constant.distanceUnit = model.data!.deliveryDistance!;
         Constant.appVersion = model.data!.appVersion.toString();
@@ -52,7 +55,8 @@ class SettingsController extends GetxController {
 
         // Constant.taxValue = model.data!.taxValue!;
         Constant.currency = model.data!.currency!;
-        Constant.symbolAtRight = model.data!.symbolAtRight! == 'true' ? true : false;
+        Constant.symbolAtRight =
+            model.data!.symbolAtRight! == 'true' ? true : false;
         Constant.kGoogleApiKey = model.data!.googleMapApiKey!;
         Constant.contactUsEmail = model.data!.contactUsEmail!;
         Constant.contactUsAddress = model.data!.contactUsAddress!;
@@ -67,12 +71,14 @@ class SettingsController extends GetxController {
         Constant.allTaxList = model.data!.taxModel!;
         Constant.senderId = model.data!.senderId!;
         Constant.jsonNotificationFileURL = model.data!.serviceJson!;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error']);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {

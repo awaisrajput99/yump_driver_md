@@ -1,6 +1,6 @@
-import 'package:cabme_driver/model/car_service_book_model.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/model/car_service_book_model.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -22,7 +22,9 @@ class ShowServiceDocScreen extends StatelessWidget {
       body: SfPdfViewerTheme(
         data: SfPdfViewerThemeData(
           progressBarColor: AppThemeData.primary200,
-          backgroundColor: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50, //<----
+          backgroundColor: themeChange.getThem()
+              ? AppThemeData.surface50Dark
+              : AppThemeData.surface50, //<----
         ),
         child: SizedBox(
           width: size.width,

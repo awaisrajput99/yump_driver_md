@@ -3,9 +3,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/model/payment_setting_model.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/model/payment_setting_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,7 +46,12 @@ class _OrangeMoneyScreenState extends State<OrangeMoneyScreen> {
 
   callTransaction() {
     Timer.periodic(const Duration(seconds: 3), (Timer t) {
-      transactionstatus(accessToken: widget.accessToken, amount: widget.amount, orderId: widget.orderId, payToken: widget.payToken).then((value) {
+      transactionstatus(
+              accessToken: widget.accessToken,
+              amount: widget.amount,
+              orderId: widget.orderId,
+              payToken: widget.payToken)
+          .then((value) {
         if (value == 'SUCCESS') {
           Navigator.of(context).pop(true);
         } else if (value == 'FAILED') {

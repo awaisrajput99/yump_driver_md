@@ -1,7 +1,7 @@
 // Flutter Packages
-import 'package:cabme_driver/widget/firebase_pagination/src/models/page_options.dart';
-import 'package:cabme_driver/widget/firebase_pagination/src/models/view_type.dart';
-import 'package:cabme_driver/widget/firebase_pagination/src/models/wrap_options.dart';
+import 'package:yumprides_driver/widget/firebase_pagination/src/models/page_options.dart';
+import 'package:yumprides_driver/widget/firebase_pagination/src/models/view_type.dart';
+import 'package:yumprides_driver/widget/firebase_pagination/src/models/wrap_options.dart';
 import 'package:flutter/material.dart';
 
 /// A [ScrollView] to use for the provided [items].

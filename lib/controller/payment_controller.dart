@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/ride_details_model.dart';
-import 'package:cabme_driver/model/ride_model.dart';
-import 'package:cabme_driver/model/tax_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/ride_details_model.dart';
+import 'package:yumprides_driver/model/ride_model.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,11 +47,19 @@ class PaymentController extends GetxController {
     }
     if (data.value.statutPaiement == "yes") {
       getRideDetailsData(data.value.id.toString());
-      adminCommission.value = double.parse(data.value.adminCommission.toString());
+      adminCommission.value =
+          double.parse(data.value.adminCommission.toString());
     } else {
-      adminCommission.value = (Preferences.getString(Preferences.admincommissiontype).toString() == 'Percentage')
-          ? ((subTotalAmount.value - discountAmount.value) * double.parse(Preferences.getString(Preferences.admincommission).toString())) / 100
-          : double.parse(Preferences.getString(Preferences.admincommission).toString());
+      adminCommission.value =
+          (Preferences.getString(Preferences.admincommissiontype).toString() ==
+                  'Percentage')
+              ? ((subTotalAmount.value - discountAmount.value) *
+                      double.parse(
+                          Preferences.getString(Preferences.admincommission)
+                              .toString())) /
+                  100
+              : double.parse(Preferences.getString(Preferences.admincommission)
+                  .toString());
     }
 
     update();
@@ -59,7 +67,9 @@ class PaymentController extends GetxController {
 
   Future<dynamic> getRideDetailsData(String id) async {
     try {
-      final response = await http.get(Uri.parse("${API.rideDetails}?ride_id=$id"), headers: API.header);
+      final response = await http.get(
+          Uri.parse("${API.rideDetails}?ride_id=$id"),
+          headers: API.header);
       showLog("API :: URL :: ${API.rideDetails}?ride_id=$id");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
@@ -68,23 +78,40 @@ class PaymentController extends GetxController {
       Map<String, dynamic> responseBody = json.decode(response.body);
 
       if (response.statusCode == 200 && responseBody['success'] == "success") {
-        RideDetailsModel parcelDetailsModel = RideDetailsModel.fromJson(responseBody);
+        RideDetailsModel parcelDetailsModel =
+            RideDetailsModel.fromJson(responseBody);
 
-        subTotalAmount.value = double.parse(parcelDetailsModel.rideDetailsdata!.montant.toString());
-        tipAmount.value = double.parse(parcelDetailsModel.rideDetailsdata!.tipAmount.toString());
-        discountAmount.value = double.parse(parcelDetailsModel.rideDetailsdata!.discount.toString());
-        for (var i = 0; i < parcelDetailsModel.rideDetailsdata!.taxModel!.length; i++) {
-          if (parcelDetailsModel.rideDetailsdata!.taxModel![i].statut! == 'yes') {
-            if (parcelDetailsModel.rideDetailsdata!.taxModel![i].type == "Fixed") {
-              taxAmount.value += double.parse(parcelDetailsModel.rideDetailsdata!.taxModel![i].value.toString());
+        subTotalAmount.value = double.parse(
+            parcelDetailsModel.rideDetailsdata!.montant.toString());
+        tipAmount.value = double.parse(
+            parcelDetailsModel.rideDetailsdata!.tipAmount.toString());
+        discountAmount.value = double.parse(
+            parcelDetailsModel.rideDetailsdata!.discount.toString());
+        for (var i = 0;
+            i < parcelDetailsModel.rideDetailsdata!.taxModel!.length;
+            i++) {
+          if (parcelDetailsModel.rideDetailsdata!.taxModel![i].statut! ==
+              'yes') {
+            if (parcelDetailsModel.rideDetailsdata!.taxModel![i].type ==
+                "Fixed") {
+              taxAmount.value += double.parse(parcelDetailsModel
+                  .rideDetailsdata!.taxModel![i].value
+                  .toString());
             } else {
-              taxAmount.value += ((subTotalAmount.value - discountAmount.value) * double.parse(parcelDetailsModel.rideDetailsdata!.taxModel![i].value!.toString())) / 100;
+              taxAmount.value +=
+                  ((subTotalAmount.value - discountAmount.value) *
+                          double.parse(parcelDetailsModel
+                              .rideDetailsdata!.taxModel![i].value!
+                              .toString())) /
+                      100;
             }
           }
         }
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
       } else {
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -106,7 +133,9 @@ class PaymentController extends GetxController {
       if (taxModel.type.toString() == "Fixed") {
         tax = double.parse(taxModel.value.toString());
       } else {
-        tax = ((subTotalAmount.value - discountAmount.value) * double.parse(taxModel.value!.toString())) / 100;
+        tax = ((subTotalAmount.value - discountAmount.value) *
+                double.parse(taxModel.value!.toString())) /
+            100;
       }
     }
     return tax;
@@ -138,6 +167,8 @@ class PaymentController extends GetxController {
     //       : 0.0;
     // }
 
-    return (subTotalAmount.value - discountAmount.value) + tipAmount.value + taxAmount.value;
+    return (subTotalAmount.value - discountAmount.value) +
+        tipAmount.value +
+        taxAmount.value;
   }
 }

@@ -5,15 +5,15 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/dash_board_controller.dart';
-import 'package:cabme_driver/model/customer_model.dart';
-import 'package:cabme_driver/model/tax_model.dart';
-import 'package:cabme_driver/model/trancation_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/dash_board_controller.dart';
+import 'package:yumprides_driver/model/customer_model.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
+import 'package:yumprides_driver/model/trancation_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
@@ -49,17 +49,21 @@ class CreateRideController extends GetxController {
 
   Future<dynamic> getPaymentSettingData() async {
     try {
-      final response = await http.get(Uri.parse(API.paymentSetting), headers: API.header);
+      final response =
+          await http.get(Uri.parse(API.paymentSetting), headers: API.header);
       showLog("API :: URL :: ${API.paymentSetting}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (response.statusCode == 200 && responseBody['success'] == "success") {
-        paymentMethodId.value = responseBody['Cash']['id_payment_method'].toString();
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+        paymentMethodId.value =
+            responseBody['Cash']['id_payment_method'].toString();
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
       } else {
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -77,8 +81,12 @@ class CreateRideController extends GetxController {
 
   Future<dynamic> getVehicleDataAPI() async {
     try {
-      final response = await http.get(Uri.parse("${API.getVehicleData}${Preferences.getInt(Preferences.userId)}"), headers: API.header);
-      showLog("API :: URL :: ${API.getVehicleData}${Preferences.getInt(Preferences.userId)}");
+      final response = await http.get(
+          Uri.parse(
+              "${API.getVehicleData}${Preferences.getInt(Preferences.userId)}"),
+          headers: API.header);
+      showLog(
+          "API :: URL :: ${API.getVehicleData}${Preferences.getInt(Preferences.userId)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
@@ -86,9 +94,11 @@ class CreateRideController extends GetxController {
 
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         vehicleData = VehicleData.fromJson(responseBody['data']);
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
       } else {
-        ShowToastDialog.showToast('Something want wrong. Please try again later'.tr);
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later'.tr);
         throw Exception('Failed to load album'.tr);
       }
     } on TimeoutException catch (e) {
@@ -106,7 +116,8 @@ class CreateRideController extends GetxController {
 
   Future<dynamic> getUserDataAPI() async {
     try {
-      final response = await http.get(Uri.parse(API.getCustomer), headers: API.header);
+      final response =
+          await http.get(Uri.parse(API.getCustomer), headers: API.header);
       showLog("API :: URL :: ${API.getCustomer}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
@@ -117,7 +128,8 @@ class CreateRideController extends GetxController {
           userList.add(CustomerData.fromJson(value));
         });
       } else {
-        ShowToastDialog.showToast('Something want wrong. Please try again later'.tr);
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later'.tr);
         throw Exception('Failed to load album'.tr);
       }
     } on TimeoutException catch (e) {
@@ -158,14 +170,16 @@ class CreateRideController extends GetxController {
         apiKey: Constant.kGoogleApiKey,
         apiHeaders: await const GoogleApiHeaders().getHeaders(),
       );
-      PlacesDetailsResponse? detail = await places.getDetailsByPlaceId(p.placeId.toString());
+      PlacesDetailsResponse? detail =
+          await places.getDetailsByPlaceId(p.placeId.toString());
 
       return detail;
     }
     return null;
   }
 
-  Future<dynamic> getDurationDistance(LatLng departureLatLong, LatLng destinationLatLong) async {
+  Future<dynamic> getDurationDistance(
+      LatLng departureLatLong, LatLng destinationLatLong) async {
     ShowToastDialog.showLoader("Please wait".tr);
     double originLat, originLong, destLat, destLong;
     originLat = departureLatLong.latitude;
@@ -174,7 +188,8 @@ class CreateRideController extends GetxController {
     destLong = destinationLatLong.longitude;
 
     String url = 'https://maps.googleapis.com/maps/api/distancematrix/json';
-    http.Response response = await http.get(Uri.parse('$url?units=metric&origins=$originLat,'
+    http.Response response = await http.get(Uri.parse(
+        '$url?units=metric&origins=$originLat,'
         '$originLong&destinations=$destLat,$destLong&key=${Constant.kGoogleApiKey}'));
     showLog("API :: URL :: ${'$url?units=metric&origins=$originLat,'
         '$originLong&destinations=$destLat,$destLong&key=${Constant.kGoogleApiKey}'}");
@@ -183,7 +198,8 @@ class CreateRideController extends GetxController {
     showLog("API :: responseBody :: ${response.body} ");
     var decodedResponse = jsonDecode(response.body);
 
-    if (decodedResponse['status'] == 'OK' && decodedResponse['rows'].first['elements'].first['status'] == 'OK') {
+    if (decodedResponse['status'] == 'OK' &&
+        decodedResponse['rows'].first['elements'].first['status'] == 'OK') {
       ShowToastDialog.closeLoader();
       return decodedResponse;
       //   estimatedTime = decodedResponse['rows'].first['elements'].first['distance']['value'] / 1000.00;
@@ -198,7 +214,8 @@ class CreateRideController extends GetxController {
   Future<dynamic> bookRide(Map<String, dynamic> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.bookRides), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.bookRides),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.bookRides}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -211,7 +228,8 @@ class CreateRideController extends GetxController {
         return responseBody;
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -236,10 +254,16 @@ class CreateRideController extends GetxController {
 
   addStops() async {
     ShowToastDialog.showLoader("Please wait".tr);
-    multiStopList.add(AddStopModel(editingController: TextEditingController(), latitude: "", longitude: ""));
+    multiStopList.add(AddStopModel(
+        editingController: TextEditingController(),
+        latitude: "",
+        longitude: ""));
     multiStopListNew = List<AddStopModel>.generate(
       multiStopList.length,
-      (int index) => AddStopModel(editingController: multiStopList[index].editingController, latitude: multiStopList[index].latitude, longitude: multiStopList[index].longitude),
+      (int index) => AddStopModel(
+          editingController: multiStopList[index].editingController,
+          latitude: multiStopList[index].latitude,
+          longitude: multiStopList[index].longitude),
     );
     ShowToastDialog.closeLoader();
     update();
@@ -250,7 +274,10 @@ class CreateRideController extends GetxController {
     multiStopList.removeAt(index);
     multiStopListNew = List<AddStopModel>.generate(
       multiStopList.length,
-      (int index) => AddStopModel(editingController: multiStopList[index].editingController, latitude: multiStopList[index].latitude, longitude: multiStopList[index].longitude),
+      (int index) => AddStopModel(
+          editingController: multiStopList[index].editingController,
+          latitude: multiStopList[index].latitude,
+          longitude: multiStopList[index].longitude),
     );
     ShowToastDialog.closeLoader();
     update();
@@ -270,8 +297,12 @@ class CreateRideController extends GetxController {
 
   Future<bool> checkBalance() async {
     ShowToastDialog.showLoader("Please wait");
-    final response = await http.get(Uri.parse("${API.walletHistory}?id_diver=${Preferences.getInt(Preferences.userId)}"), headers: API.header);
-    showLog("API :: URL :: ${API.walletHistory}?id_diver=${Preferences.getInt(Preferences.userId)}");
+    final response = await http.get(
+        Uri.parse(
+            "${API.walletHistory}?id_diver=${Preferences.getInt(Preferences.userId)}"),
+        headers: API.header);
+    showLog(
+        "API :: URL :: ${API.walletHistory}?id_diver=${Preferences.getInt(Preferences.userId)}");
     showLog("API :: Request Header :: ${API.header.toString()} ");
     showLog("API :: responseStatus :: ${response.statusCode} ");
     showLog("API :: responseBody :: ${response.body} ");
@@ -280,15 +311,18 @@ class CreateRideController extends GetxController {
     if (response.statusCode == 200 && responseBody['success'] == "success") {
       TruncationModel model = TruncationModel.fromJson(responseBody);
 
-      if (double.parse(model.totalEarnings!.toString()) >= double.parse(Constant.minimumWalletBalance!)) {
+      if (double.parse(model.totalEarnings!.toString()) >=
+          double.parse(Constant.minimumWalletBalance!)) {
         ShowToastDialog.closeLoader();
         return true;
       } else {
         ShowToastDialog.closeLoader();
         return false;
       }
-    } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
-      if (double.parse('0'.toString()) >= double.parse(Constant.minimumWalletBalance!)) {
+    } else if (response.statusCode == 200 &&
+        responseBody['success'] == "Failed") {
+      if (double.parse('0'.toString()) >=
+          double.parse(Constant.minimumWalletBalance!)) {
         ShowToastDialog.closeLoader();
         return true;
       } else {

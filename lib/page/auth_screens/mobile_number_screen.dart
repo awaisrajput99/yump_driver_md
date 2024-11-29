@@ -1,11 +1,11 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/phone_number_controller.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/responsive.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/phone_number_controller.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/responsive.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -54,9 +54,9 @@ class MobileNumberScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         Text(
                           isLogin == true
-                              ? "Enter your mobile number to log in securely and get access to your CabME account."
+                              ? "Enter your mobile number to log in securely and get access to your Yum Rides account."
                                   .tr
-                              : "Register using your mobile number for a fast and simple CabME sign-up process."
+                              : "Register using your mobile number for a fast and simple Yum Rides sign-up process."
                                   .tr,
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -236,7 +236,7 @@ class MobileNumberScreen extends StatelessWidget {
               child: Text.rich(
                 textAlign: TextAlign.center,
                 TextSpan(
-                  text: 'First time in CabMe?'.tr,
+                  text: 'First time in Yum Rides?'.tr,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: AppThemeData.regular,

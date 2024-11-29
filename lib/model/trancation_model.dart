@@ -1,7 +1,7 @@
 // ignore_for_file: collection_methods_unrelated_type
 
-import 'package:cabme_driver/model/ride_model.dart';
-import 'package:cabme_driver/model/tax_model.dart';
+import 'package:yumprides_driver/model/ride_model.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
 
 class TruncationModel {
   String? success;
@@ -10,7 +10,8 @@ class TruncationModel {
   List<TansactionData>? data;
   String? totalEarnings;
 
-  TruncationModel({this.success, this.error, this.message, this.data, this.totalEarnings});
+  TruncationModel(
+      {this.success, this.error, this.message, this.data, this.totalEarnings});
 
   TruncationModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
@@ -212,7 +213,9 @@ class TansactionData {
 
   TansactionData.fromJson(Map<String, dynamic> json) {
     List<TaxModel>? taxList = [];
-    if (json['tax'] != null && json['tax'] != [] && json['tax'].toString().isNotEmpty) {
+    if (json['tax'] != null &&
+        json['tax'] != [] &&
+        json['tax'].toString().isNotEmpty) {
       taxList = <TaxModel>[];
       json['tax'].forEach((v) {
         taxList!.add(TaxModel.fromJson(v));
@@ -261,7 +264,9 @@ class TansactionData {
     if (json['user_info'] != null) {
       userInfo = UserInfo.fromJson(json['user_info']);
     }
-    if (json['stops'] != null && json['stops'] != [] && json[stops].toString().isNotEmpty) {
+    if (json['stops'] != null &&
+        json['stops'] != [] &&
+        json[stops].toString().isNotEmpty) {
       stops = <Stops>[];
       json['stops'].forEach((v) {
         stops!.add(Stops.fromJson(v));
@@ -419,7 +424,13 @@ class Tax {
   String? country;
   String? libelle;
 
-  Tax({this.id, this.type, this.value, this.statut, this.country, this.libelle});
+  Tax(
+      {this.id,
+      this.type,
+      this.value,
+      this.statut,
+      this.country,
+      this.libelle});
 
   Tax.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -1,11 +1,11 @@
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/controller/parcel_payment_controller.dart';
-import 'package:cabme_driver/model/tax_model.dart';
-import 'package:cabme_driver/page/chats_screen/FullScreenImageViewer.dart';
-import 'package:cabme_driver/page/parcel_service/all_parcel_screen.dart';
-import 'package:cabme_driver/themes/app_bar_custom.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/controller/parcel_payment_controller.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
+import 'package:yumprides_driver/page/chats_screen/FullScreenImageViewer.dart';
+import 'package:yumprides_driver/page/parcel_service/all_parcel_screen.dart';
+import 'package:yumprides_driver/themes/app_bar_custom.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -49,13 +49,16 @@ class ParcelDetailsScreen extends StatelessWidget {
                                     maxLines: 1,
                                     style: TextStyle(
                                       fontFamily: AppThemeData.regular,
-                                      color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                      color: themeChange.getThem()
+                                          ? AppThemeData.grey900Dark
+                                          : AppThemeData.grey900,
                                       fontSize: 16,
                                     )),
                               ),
                               Expanded(
                                 flex: 1,
-                                child: Text("(-${Constant().amountShow(amount: controller.adminCommission.value.toString())})",
+                                child: Text(
+                                    "(-${Constant().amountShow(amount: controller.adminCommission.value.toString())})",
                                     textAlign: TextAlign.end,
                                     maxLines: 1,
                                     style: TextStyle(
@@ -70,7 +73,8 @@ class ParcelDetailsScreen extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            "Note : Admin commission will be debited from your wallet balance. \nAdmin commission will apply on parcel Amount minus Discount(If applicable).".tr,
+                            "Note : Admin commission will be debited from your wallet balance. \nAdmin commission will apply on parcel Amount minus Discount(If applicable)."
+                                .tr,
                             style: TextStyle(color: AppThemeData.error50),
                           )
                         ],
@@ -90,7 +94,9 @@ class ParcelDetailsScreen extends StatelessWidget {
       onTap: () {},
       child: Container(
         decoration: BoxDecoration(
-          color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+          color: themeChange.getThem()
+              ? AppThemeData.surface50Dark
+              : AppThemeData.surface50,
           borderRadius: const BorderRadius.all(
             Radius.circular(0),
           ),
@@ -101,11 +107,14 @@ class ParcelDetailsScreen extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200,
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey200Dark
+                      : AppThemeData.grey200,
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -129,7 +138,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                                   Container(
                                     width: 2,
                                     height: 40,
-                                    color: themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey200Dark
+                                        : AppThemeData.grey200,
                                   )
                                 ],
                               ),
@@ -141,13 +152,16 @@ class ParcelDetailsScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      controller.data.value.senderName.toString(),
+                                      controller.data.value.senderName
+                                          .toString(),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: AppThemeData.medium,
-                                        color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                        color: themeChange.getThem()
+                                            ? AppThemeData.grey900Dark
+                                            : AppThemeData.grey900,
                                       ),
                                     ),
                                     Text(
@@ -157,21 +171,48 @@ class ParcelDetailsScreen extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: AppThemeData.regular,
-                                        color: themeChange.getThem() ? AppThemeData.grey400 : AppThemeData.grey300Dark,
+                                        color: themeChange.getThem()
+                                            ? AppThemeData.grey400
+                                            : AppThemeData.grey300Dark,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               controller.data.value.status == "new"
-                                  ? statusTile(title: 'New', bgColor: AppThemeData.new200.withAlpha(200), txtColor: AppThemeData.primary200)
+                                  ? statusTile(
+                                      title: 'New',
+                                      bgColor:
+                                          AppThemeData.new200.withAlpha(200),
+                                      txtColor: AppThemeData.primary200)
                                   : controller.data.value.status == "onride"
-                                      ? statusTile(title: 'Active', bgColor: AppThemeData.new200.withAlpha(200), txtColor: AppThemeData.primary200)
-                                      : controller.data.value.status == "confirmed"
-                                          ? statusTile(title: 'Confirmed', bgColor: AppThemeData.new200.withAlpha(200), txtColor: AppThemeData.primary200)
-                                          : controller.data.value.status == "completed"
-                                              ? statusTile(title: 'Completed', bgColor: AppThemeData.success50.withAlpha(200), txtColor: AppThemeData.success300)
-                                              : statusTile(title: 'Rejected', bgColor: AppThemeData.error50.withAlpha(200), txtColor: AppThemeData.error200),
+                                      ? statusTile(
+                                          title: 'Active',
+                                          bgColor: AppThemeData.new200
+                                              .withAlpha(200),
+                                          txtColor: AppThemeData.primary200)
+                                      : controller.data.value.status ==
+                                              "confirmed"
+                                          ? statusTile(
+                                              title: 'Confirmed',
+                                              bgColor: AppThemeData.new200
+                                                  .withAlpha(200),
+                                              txtColor: AppThemeData.primary200)
+                                          : controller.data.value.status ==
+                                                  "completed"
+                                              ? statusTile(
+                                                  title: 'Completed',
+                                                  bgColor: AppThemeData
+                                                      .success50
+                                                      .withAlpha(200),
+                                                  txtColor:
+                                                      AppThemeData.success300)
+                                              : statusTile(
+                                                  title: 'Rejected',
+                                                  bgColor: AppThemeData.error50
+                                                      .withAlpha(200),
+                                                  txtColor:
+                                                      AppThemeData.error200),
                               const Divider(),
                             ],
                           ),
@@ -194,23 +235,29 @@ class ParcelDetailsScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      controller.data.value.receiverName.toString(),
+                                      controller.data.value.receiverName
+                                          .toString(),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontFamily: AppThemeData.medium,
-                                        color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                        color: themeChange.getThem()
+                                            ? AppThemeData.grey900Dark
+                                            : AppThemeData.grey900,
                                       ),
                                     ),
                                     Text(
-                                      controller.data.value.destination.toString(),
+                                      controller.data.value.destination
+                                          .toString(),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontFamily: AppThemeData.regular,
-                                        color: themeChange.getThem() ? AppThemeData.grey400 : AppThemeData.grey300Dark,
+                                        color: themeChange.getThem()
+                                            ? AppThemeData.grey400
+                                            : AppThemeData.grey300Dark,
                                       ),
                                     ),
                                   ],
@@ -229,7 +276,9 @@ class ParcelDetailsScreen extends StatelessWidget {
             Text("Parcel Details".tr,
                 style: TextStyle(
                   fontFamily: AppThemeData.semiBold,
-                  color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey900Dark
+                      : AppThemeData.grey900,
                   fontSize: 16,
                 )),
             SizedBox(
@@ -255,10 +304,15 @@ class ParcelDetailsScreen extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 8),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                            color: themeChange.getThem()
+                                ? AppThemeData.grey300Dark
+                                : AppThemeData.grey300,
                             width: 1,
                           ),
-                          image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(controller.data.value.parcelImage![index])),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  controller.data.value.parcelImage![index])),
                         ),
                       ),
                     );
@@ -268,7 +322,9 @@ class ParcelDetailsScreen extends StatelessWidget {
             Text("Sender and Receiver Details".tr,
                 style: TextStyle(
                   fontFamily: AppThemeData.semiBold,
-                  color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey900Dark
+                      : AppThemeData.grey900,
                   fontSize: 16,
                 )),
             const SizedBox(
@@ -276,15 +332,20 @@ class ParcelDetailsScreen extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                  color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                  color: themeChange.getThem()
+                      ? AppThemeData.surface50Dark
+                      : AppThemeData.surface50,
                   border: Border.all(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     width: 1,
                   )),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -293,7 +354,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -304,7 +367,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey500Dark
+                                    : AppThemeData.grey500,
                                 fontSize: 16,
                               )),
                         ),
@@ -312,11 +377,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -325,7 +393,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -339,14 +409,18 @@ class ParcelDetailsScreen extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.medium,
-                                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                     fontSize: 16,
                                   )),
                               const SizedBox(width: 5),
                               InkWell(
                                 splashColor: Colors.transparent,
                                 onTap: () {
-                                  Constant.makePhoneCall(controller.data.value.driverPhone.toString());
+                                  Constant.makePhoneCall(controller
+                                      .data.value.driverPhone
+                                      .toString());
                                 },
                                 child: SvgPicture.asset(
                                   'assets/icons/ic_phone.svg',
@@ -363,11 +437,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -376,7 +453,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -387,7 +466,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey500Dark
+                                    : AppThemeData.grey500,
                                 fontSize: 16,
                               )),
                         ),
@@ -395,11 +476,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -408,7 +492,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -422,7 +508,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.medium,
-                                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                     fontSize: 16,
                                   )),
                               const SizedBox(
@@ -431,7 +519,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               InkWell(
                                 splashColor: Colors.transparent,
                                 onTap: () {
-                                  Constant.makePhoneCall(controller.data.value.driverPhone.toString());
+                                  Constant.makePhoneCall(controller
+                                      .data.value.driverPhone
+                                      .toString());
                                 },
                                 child: SvgPicture.asset(
                                   'assets/icons/ic_phone.svg',
@@ -448,11 +538,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -461,7 +554,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -472,7 +567,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey500Dark
+                                    : AppThemeData.grey500,
                                 fontSize: 16,
                               )),
                         ),
@@ -480,11 +577,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -493,7 +593,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -507,7 +609,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.medium,
-                                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                     fontSize: 16,
                                   )),
                             ],
@@ -517,11 +621,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -530,30 +637,38 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
                         Expanded(
                           flex: 1,
-                          child: Text("${controller.data.value.parcelDimension}",
-                              textAlign: TextAlign.end,
-                              maxLines: 1,
-                              style: TextStyle(
-                                fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
-                                fontSize: 16,
-                              )),
+                          child:
+                              Text("${controller.data.value.parcelDimension}",
+                                  textAlign: TextAlign.end,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontFamily: AppThemeData.medium,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
+                                    fontSize: 16,
+                                  )),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -562,7 +677,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -576,7 +693,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.medium,
-                                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                     fontSize: 16,
                                   )),
                             ],
@@ -586,11 +705,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -599,7 +721,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 2,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -608,12 +732,15 @@ class ParcelDetailsScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text("${controller.data.value.parcelDate} ${controller.data.value.parcelTime}",
+                              Text(
+                                  "${controller.data.value.parcelDate} ${controller.data.value.parcelTime}",
                                   textAlign: TextAlign.end,
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.medium,
-                                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                     fontSize: 16,
                                   )),
                             ],
@@ -623,11 +750,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -636,7 +766,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 2,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -645,12 +777,15 @@ class ParcelDetailsScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text("${controller.data.value.receiveDate} ${controller.data.value.receiveTime}",
+                              Text(
+                                  "${controller.data.value.receiveDate} ${controller.data.value.receiveTime}",
                                   textAlign: TextAlign.end,
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.medium,
-                                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                     fontSize: 16,
                                   )),
                             ],
@@ -666,7 +801,9 @@ class ParcelDetailsScreen extends StatelessWidget {
             Text("Bill Details".tr,
                 style: TextStyle(
                   fontFamily: AppThemeData.semiBold,
-                  color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey900Dark
+                      : AppThemeData.grey900,
                   fontSize: 16,
                 )),
             const SizedBox(
@@ -674,15 +811,20 @@ class ParcelDetailsScreen extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                  color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                  color: themeChange.getThem()
+                      ? AppThemeData.surface50Dark
+                      : AppThemeData.surface50,
                   border: Border.all(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     width: 1,
                   )),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -691,18 +833,24 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
                         Expanded(
                           flex: 1,
-                          child: Text(Constant().amountShow(amount: controller.subTotalAmount.toString()),
+                          child: Text(
+                              Constant().amountShow(
+                                  amount: controller.subTotalAmount.toString()),
                               textAlign: TextAlign.end,
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey500Dark
+                                    : AppThemeData.grey500,
                                 fontSize: 16,
                               )),
                         ),
@@ -710,11 +858,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -723,7 +874,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -732,12 +885,15 @@ class ParcelDetailsScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text("(-${Constant().amountShow(amount: controller.discountAmount.toString())})",
+                              Text(
+                                  "(-${Constant().amountShow(amount: controller.discountAmount.toString())})",
                                   textAlign: TextAlign.end,
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.medium,
-                                    color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey500Dark
+                                        : AppThemeData.grey500,
                                     fontSize: 16,
                                   )),
                             ],
@@ -747,7 +903,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     height: 1,
                   ),
                   ListView.builder(
@@ -760,27 +918,37 @@ class ParcelDetailsScreen extends StatelessWidget {
                       return Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
                             child: Row(
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: Text('${taxModel.libelle.toString()} (${taxModel.type == "Fixed" ? Constant().amountShow(amount: taxModel.value) : "${taxModel.value}%"})',
+                                  child: Text(
+                                      '${taxModel.libelle.toString()} (${taxModel.type == "Fixed" ? Constant().amountShow(amount: taxModel.value) : "${taxModel.value}%"})',
                                       maxLines: 1,
                                       style: TextStyle(
                                         fontFamily: AppThemeData.regular,
-                                        color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                        color: themeChange.getThem()
+                                            ? AppThemeData.grey900Dark
+                                            : AppThemeData.grey900,
                                         fontSize: 16,
                                       )),
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: Text(Constant().amountShow(amount: controller.calculateTax(taxModel: taxModel).toString()),
+                                  child: Text(
+                                      Constant().amountShow(
+                                          amount: controller
+                                              .calculateTax(taxModel: taxModel)
+                                              .toString()),
                                       textAlign: TextAlign.end,
                                       maxLines: 1,
                                       style: TextStyle(
                                         fontFamily: AppThemeData.medium,
-                                        color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                        color: themeChange.getThem()
+                                            ? AppThemeData.grey500Dark
+                                            : AppThemeData.grey500,
                                         fontSize: 16,
                                       )),
                                 ),
@@ -788,7 +956,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                            color: themeChange.getThem()
+                                ? AppThemeData.grey300Dark
+                                : AppThemeData.grey300,
                             height: 1,
                           ),
                         ],
@@ -796,7 +966,8 @@ class ParcelDetailsScreen extends StatelessWidget {
                     },
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -805,18 +976,25 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
                         Expanded(
                           flex: 1,
-                          child: Text(Constant().amountShow(amount: controller.getTotalAmount().toString()),
+                          child: Text(
+                              Constant().amountShow(
+                                  amount:
+                                      controller.getTotalAmount().toString()),
                               textAlign: TextAlign.end,
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey500Dark
+                                    : AppThemeData.grey500,
                                 fontSize: 16,
                               )),
                         ),
@@ -830,7 +1008,9 @@ class ParcelDetailsScreen extends StatelessWidget {
             Text("Order Details".tr,
                 style: TextStyle(
                   fontFamily: AppThemeData.semiBold,
-                  color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                  color: themeChange.getThem()
+                      ? AppThemeData.grey900Dark
+                      : AppThemeData.grey900,
                   fontSize: 16,
                 )),
             const SizedBox(
@@ -838,15 +1018,20 @@ class ParcelDetailsScreen extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                  color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                  color: themeChange.getThem()
+                      ? AppThemeData.surface50Dark
+                      : AppThemeData.surface50,
                   border: Border.all(
-                    color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                    color: themeChange.getThem()
+                        ? AppThemeData.grey300Dark
+                        : AppThemeData.grey300,
                     width: 1,
                   )),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -855,7 +1040,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 16,
                               )),
                         ),
@@ -866,7 +1053,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.medium,
-                                color: themeChange.getThem() ? AppThemeData.grey500Dark : AppThemeData.grey500,
+                                color: themeChange.getThem()
+                                    ? AppThemeData.grey500Dark
+                                    : AppThemeData.grey500,
                                 fontSize: 16,
                               )),
                         ),
@@ -876,11 +1065,14 @@ class ParcelDetailsScreen extends StatelessWidget {
                   Column(
                     children: [
                       Container(
-                        color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+                        color: themeChange.getThem()
+                            ? AppThemeData.grey300Dark
+                            : AppThemeData.grey300,
                         height: 1,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 16),
                         child: Row(
                           children: [
                             Expanded(
@@ -889,7 +1081,9 @@ class ParcelDetailsScreen extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.regular,
-                                    color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                    color: themeChange.getThem()
+                                        ? AppThemeData.grey900Dark
+                                        : AppThemeData.grey900,
                                     fontSize: 16,
                                   )),
                             ),
@@ -898,7 +1092,8 @@ class ParcelDetailsScreen extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text("${"Paid using".tr} ${controller.data.value.libelle ?? ''}",
+                                  Text(
+                                      "${"Paid using".tr} ${controller.data.value.libelle ?? ''}",
                                       textAlign: TextAlign.end,
                                       maxLines: 1,
                                       style: TextStyle(
@@ -932,17 +1127,26 @@ class ParcelDetailsScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(title, style: TextStyle(color: ConstantColors.subTitleTextColor, fontWeight: FontWeight.w500)),
+          Text(title,
+              style: TextStyle(
+                  color: ConstantColors.subTitleTextColor,
+                  fontWeight: FontWeight.w500)),
           const SizedBox(
             height: 5,
           ),
-          Text(value, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: ConstantColors.titleTextColor, fontWeight: FontWeight.w600)),
+          Text(value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 14,
+                  color: ConstantColors.titleTextColor,
+                  fontWeight: FontWeight.w600)),
         ],
       ),
     );
   }
 
-  buildUsersDetails(context, ParcelPaymentController controller, {bool isSender = false}) {
+  buildUsersDetails(context, ParcelPaymentController controller,
+      {bool isSender = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
@@ -955,10 +1159,16 @@ class ParcelDetailsScreen extends StatelessWidget {
             children: [
               Text(
                 isSender ? "${"Sender".tr} " : "${"Receiver".tr} ",
-                style: TextStyle(fontSize: 16, color: isSender ? AppThemeData.primary200 : const Color(0xffd17e19)),
+                style: TextStyle(
+                    fontSize: 16,
+                    color: isSender
+                        ? AppThemeData.primary200
+                        : const Color(0xffd17e19)),
               ),
               Text(
-                isSender ? controller.data.value.senderName.toString() : controller.data.value.receiverName.toString(),
+                isSender
+                    ? controller.data.value.senderName.toString()
+                    : controller.data.value.receiverName.toString(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -968,12 +1178,18 @@ class ParcelDetailsScreen extends StatelessWidget {
             ],
           ),
           Text(
-            isSender ? controller.data.value.senderPhone.toString() : controller.data.value.receiverPhone.toString(),
-            style: TextStyle(fontSize: 16, color: ConstantColors.subTitleTextColor),
+            isSender
+                ? controller.data.value.senderPhone.toString()
+                : controller.data.value.receiverPhone.toString(),
+            style: TextStyle(
+                fontSize: 16, color: ConstantColors.subTitleTextColor),
           ),
           Text(
-            isSender ? controller.data.value.source.toString() : controller.data.value.destination.toString(),
-            style: TextStyle(fontSize: 16, color: ConstantColors.subTitleTextColor),
+            isSender
+                ? controller.data.value.source.toString()
+                : controller.data.value.destination.toString(),
+            style: TextStyle(
+                fontSize: 16, color: ConstantColors.subTitleTextColor),
           ),
         ],
       ),
@@ -1042,10 +1258,18 @@ class ParcelDetailsScreen extends StatelessWidget {
                   Expanded(
                       child: Text(
                     "Sub Total".tr,
-                    style: TextStyle(letterSpacing: 1.0, color: ConstantColors.subTitleTextColor, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        letterSpacing: 1.0,
+                        color: ConstantColors.subTitleTextColor,
+                        fontWeight: FontWeight.w600),
                   )),
-                  Text(Constant().amountShow(amount: controller.data.value.amount.toString()),
-                      style: TextStyle(letterSpacing: 1.0, color: ConstantColors.titleTextColor, fontWeight: FontWeight.w800)),
+                  Text(
+                      Constant().amountShow(
+                          amount: controller.data.value.amount.toString()),
+                      style: TextStyle(
+                          letterSpacing: 1.0,
+                          color: ConstantColors.titleTextColor,
+                          fontWeight: FontWeight.w800)),
                 ],
               ),
               Padding(
@@ -1059,10 +1283,17 @@ class ParcelDetailsScreen extends StatelessWidget {
                   Expanded(
                       child: Text(
                     "Discount".tr,
-                    style: TextStyle(letterSpacing: 1.0, color: ConstantColors.subTitleTextColor, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        letterSpacing: 1.0,
+                        color: ConstantColors.subTitleTextColor,
+                        fontWeight: FontWeight.w600),
                   )),
-                  Text("(-${Constant().amountShow(amount: controller.data.value.discount.toString())})",
-                      style: const TextStyle(letterSpacing: 1.0, color: Colors.red, fontWeight: FontWeight.w800)),
+                  Text(
+                      "(-${Constant().amountShow(amount: controller.data.value.discount.toString())})",
+                      style: const TextStyle(
+                          letterSpacing: 1.0,
+                          color: Colors.red,
+                          fontWeight: FontWeight.w800)),
                 ],
               ),
               Padding(
@@ -1072,12 +1303,17 @@ class ParcelDetailsScreen extends StatelessWidget {
                 ),
               ),
               ListView.builder(
-                itemCount: controller.data.value.paymentStatus == "yes" ? controller.data.value.taxModel!.length : Constant.taxList.length,
+                itemCount: controller.data.value.paymentStatus == "yes"
+                    ? controller.data.value.taxModel!.length
+                    : Constant.taxList.length,
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  TaxModel taxModel = controller.data.value.paymentStatus == "yes" ? controller.data.value.taxModel![index] : Constant.taxList[index];
+                  TaxModel taxModel =
+                      controller.data.value.paymentStatus == "yes"
+                          ? controller.data.value.taxModel![index]
+                          : Constant.taxList[index];
                   return Column(
                     children: [
                       Row(
@@ -1085,10 +1321,20 @@ class ParcelDetailsScreen extends StatelessWidget {
                         children: [
                           Text(
                             '${taxModel.libelle.toString()} (${taxModel.type == "Fixed" ? Constant().amountShow(amount: taxModel.value) : "${taxModel.value}%"})',
-                            style: TextStyle(letterSpacing: 1.0, color: ConstantColors.subTitleTextColor, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                                letterSpacing: 1.0,
+                                color: ConstantColors.subTitleTextColor,
+                                fontWeight: FontWeight.w600),
                           ),
-                          Text(Constant().amountShow(amount: controller.calculateTax(taxModel: taxModel).toString()),
-                              style: TextStyle(letterSpacing: 1.0, color: ConstantColors.titleTextColor, fontWeight: FontWeight.w800)),
+                          Text(
+                              Constant().amountShow(
+                                  amount: controller
+                                      .calculateTax(taxModel: taxModel)
+                                      .toString()),
+                              style: TextStyle(
+                                  letterSpacing: 1.0,
+                                  color: ConstantColors.titleTextColor,
+                                  fontWeight: FontWeight.w800)),
                         ],
                       ),
                       Padding(
@@ -1110,10 +1356,18 @@ class ParcelDetailsScreen extends StatelessWidget {
                         Expanded(
                             child: Text(
                           "Driver Tip".tr,
-                          style: TextStyle(letterSpacing: 1.0, color: ConstantColors.subTitleTextColor, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              letterSpacing: 1.0,
+                              color: ConstantColors.subTitleTextColor,
+                              fontWeight: FontWeight.w600),
                         )),
-                        Text(Constant().amountShow(amount: controller.tipAmount.toString()),
-                            style: TextStyle(letterSpacing: 1.0, color: ConstantColors.titleTextColor, fontWeight: FontWeight.w800)),
+                        Text(
+                            Constant().amountShow(
+                                amount: controller.tipAmount.toString()),
+                            style: TextStyle(
+                                letterSpacing: 1.0,
+                                color: ConstantColors.titleTextColor,
+                                fontWeight: FontWeight.w800)),
                       ],
                     ),
                     Padding(
@@ -1130,10 +1384,18 @@ class ParcelDetailsScreen extends StatelessWidget {
                   Expanded(
                       child: Text(
                     "Total".tr,
-                    style: TextStyle(letterSpacing: 1.0, color: ConstantColors.titleTextColor, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        letterSpacing: 1.0,
+                        color: ConstantColors.titleTextColor,
+                        fontWeight: FontWeight.w600),
                   )),
-                  Text(Constant().amountShow(amount: controller.getTotalAmount().toString()),
-                      style: TextStyle(letterSpacing: 1.0, color: AppThemeData.primary200, fontWeight: FontWeight.w800)),
+                  Text(
+                      Constant().amountShow(
+                          amount: controller.getTotalAmount().toString()),
+                      style: TextStyle(
+                          letterSpacing: 1.0,
+                          color: AppThemeData.primary200,
+                          fontWeight: FontWeight.w800)),
                 ],
               ),
             ],

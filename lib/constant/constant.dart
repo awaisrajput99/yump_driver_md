@@ -3,14 +3,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cabme_driver/model/parcel_model.dart';
-import 'package:cabme_driver/model/payment_setting_model.dart';
-import 'package:cabme_driver/model/ride_model.dart';
-import 'package:cabme_driver/model/tax_model.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/page/chats_screen/conversation_screen.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/model/parcel_model.dart';
+import 'package:yumprides_driver/model/payment_setting_model.dart';
+import 'package:yumprides_driver/model/ride_model.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/page/chats_screen/conversation_screen.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';

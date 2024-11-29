@@ -1,4 +1,4 @@
-import 'package:cabme_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +17,12 @@ Widget dividerCustHeight({required bool isDarkMode}) {
   );
 }
 
-Widget listTile({required bool isDarkMode, required String lbl, required String value, Color? lblColor, Color? valueColor}) {
+Widget listTile(
+    {required bool isDarkMode,
+    required String lbl,
+    required String value,
+    Color? lblColor,
+    Color? valueColor}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     child: Row(
@@ -26,7 +31,8 @@ Widget listTile({required bool isDarkMode, required String lbl, required String 
             child: Text(
           lbl.tr,
           style: TextStyle(
-            color: lblColor ?? (isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900),
+            color: lblColor ??
+                (isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900),
             fontSize: 16,
             fontFamily: AppThemeData.regular,
           ),
@@ -34,7 +40,10 @@ Widget listTile({required bool isDarkMode, required String lbl, required String 
         const SizedBox(width: 10),
         Text(value,
             style: TextStyle(
-              color: valueColor ?? (isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900),
+              color: valueColor ??
+                  (isDarkMode
+                      ? AppThemeData.grey900Dark
+                      : AppThemeData.grey900),
               fontSize: 16,
               fontFamily: AppThemeData.medium,
             )),

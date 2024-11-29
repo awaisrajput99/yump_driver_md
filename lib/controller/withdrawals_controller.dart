@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/withdrawals_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/withdrawals_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,8 +23,12 @@ class WithdrawalsController extends GetxController {
   Future<dynamic> getWithdrawals() async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.get(Uri.parse("${API.withdrawalsList}?driver_id=${Preferences.getInt(Preferences.userId)}"), headers: API.header);
-      showLog("API :: URL :: ${API.withdrawalsList}?driver_id=${Preferences.getInt(Preferences.userId)}");
+      final response = await http.get(
+          Uri.parse(
+              "${API.withdrawalsList}?driver_id=${Preferences.getInt(Preferences.userId)}"),
+          headers: API.header);
+      showLog(
+          "API :: URL :: ${API.withdrawalsList}?driver_id=${Preferences.getInt(Preferences.userId)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");

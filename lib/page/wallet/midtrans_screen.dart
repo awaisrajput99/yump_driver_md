@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:cabme_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -37,7 +37,8 @@ class _MidtransScreenState extends State<MidtransScreen> {
           }),
           onNavigationRequest: (NavigationRequest navigation) async {
             log("URL :: ${navigation.url}");
-            String? orderId = Uri.parse(navigation.url).queryParameters['merchant_order_id'];
+            String? orderId =
+                Uri.parse(navigation.url).queryParameters['merchant_order_id'];
             await Future.delayed(const Duration(seconds: 2));
             if (orderId != null) {
               Navigator.of(context).pop(true);
@@ -72,9 +73,12 @@ class _MidtransScreenState extends State<MidtransScreen> {
                     color: Colors.white,
                   ),
                 )),
-            body: Stack(
-                alignment: Alignment.center,
-                children: [WebViewWidget(controller: controller), Visibility(visible: isLoading, child: Constant.loader(context, isDarkMode: false))])));
+            body: Stack(alignment: Alignment.center, children: [
+              WebViewWidget(controller: controller),
+              Visibility(
+                  visible: isLoading,
+                  child: Constant.loader(context, isDarkMode: false))
+            ])));
   }
 
   Future<void> _showMyDialog() async {

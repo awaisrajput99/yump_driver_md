@@ -1,11 +1,11 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/forgot_password_controller.dart';
-import 'package:cabme_driver/page/auth_screens/login_screen.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/text_field_them.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/forgot_password_controller.dart';
+import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -45,7 +45,11 @@ class ForgotPasswordOtpScreen extends StatelessWidget {
                       children: [
                         Text(
                           "Enter OTP".tr,
-                          style: const TextStyle(letterSpacing: 0.60, fontSize: 22, color: Colors.black, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              letterSpacing: 0.60,
+                              fontSize: 22,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
                             width: 80,
@@ -54,19 +58,26 @@ class ForgotPasswordOtpScreen extends StatelessWidget {
                               thickness: 3,
                             )),
                         Padding(
-                          padding: const EdgeInsets.only(top: 30, right: 50, left: 50),
+                          padding: const EdgeInsets.only(
+                              top: 30, right: 50, left: 50),
                           child: Pinput(
                             controller: textEditingController,
                             defaultPinTheme: PinTheme(
                               height: 50,
                               width: 50,
-                              textStyle: const TextStyle(letterSpacing: 0.60, fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
+                              textStyle: const TextStyle(
+                                  letterSpacing: 0.60,
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
                               // margin: EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 shape: BoxShape.rectangle,
                                 color: Colors.white,
-                                border: Border.all(color: ConstantColors.textFieldBoarderColor, width: 0.7),
+                                border: Border.all(
+                                    color: ConstantColors.textFieldBoarderColor,
+                                    width: 0.7),
                               ),
                             ),
                             keyboardType: TextInputType.phone,
@@ -112,7 +123,8 @@ class ForgotPasswordOtpScreen extends StatelessWidget {
                               if (value!.length >= 6) {
                                 return null;
                               } else {
-                                return 'Password required at least 6 characters'.tr;
+                                return 'Password required at least 6 characters'
+                                    .tr;
                               }
                             },
                           ),
@@ -126,7 +138,8 @@ class ForgotPasswordOtpScreen extends StatelessWidget {
                             obscureText: false,
                             contentPadding: EdgeInsets.zero,
                             validators: (String? value) {
-                              if (_passwordController.text.trim() != value!.toString().trim()) {
+                              if (_passwordController.text.trim() !=
+                                  value!.toString().trim()) {
                                 return 'Confirm password is invalid'.tr;
                               } else {
                                 return null;
@@ -148,19 +161,27 @@ class ForgotPasswordOtpScreen extends StatelessWidget {
                                   Map<String, String> bodyParams = {
                                     'email': email.toString(),
                                     'otp': textEditingController.text.trim(),
-                                    'new_password': _passwordController.text.trim(),
-                                    'confirm_password': _passwordController.text.trim(),
+                                    'new_password':
+                                        _passwordController.text.trim(),
+                                    'confirm_password':
+                                        _passwordController.text.trim(),
                                     'user_cat': "driver",
                                   };
-                                  controller.resetPassword(bodyParams).then((value) {
+                                  controller
+                                      .resetPassword(bodyParams)
+                                      .then((value) {
                                     if (value != null) {
                                       if (value == true) {
                                         Get.offAll(const LoginScreen(),
-                                            duration: const Duration(milliseconds: 400), //duration of transitions, default 1 sec
+                                            duration: const Duration(
+                                                milliseconds:
+                                                    400), //duration of transitions, default 1 sec
                                             transition: Transition.rightToLeft);
-                                        ShowToastDialog.showToast("Password change successfully!");
+                                        ShowToastDialog.showToast(
+                                            "Password change successfully!");
                                       } else {
-                                        ShowToastDialog.showToast("Please try again later");
+                                        ShowToastDialog.showToast(
+                                            "Please try again later");
                                       }
                                     }
                                   });

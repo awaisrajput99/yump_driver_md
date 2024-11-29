@@ -1,4 +1,4 @@
-import 'package:cabme_driver/model/tax_model.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
 
 class RideModel {
   String? success;

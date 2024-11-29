@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/page/auth_screens/otp_screen.dart';
-import 'package:cabme_driver/service/api.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/page/auth_screens/otp_screen.dart';
+import 'package:yumprides_driver/service/api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -41,7 +41,8 @@ class PhoneNumberController extends GetxController {
   Future<bool?> phoneNumberIsExit(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.getExistingUserOrNot), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.getExistingUserOrNot),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.getExistingUserOrNot} ");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -55,12 +56,14 @@ class PhoneNumberController extends GetxController {
         } else {
           return false;
         }
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error']);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -79,10 +82,12 @@ class PhoneNumberController extends GetxController {
     return null;
   }
 
-  Future<UserModel?> getDataByPhoneNumber(Map<String, String> bodyParams) async {
+  Future<UserModel?> getDataByPhoneNumber(
+      Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.getProfileByPhone), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.getProfileByPhone),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.getProfileByPhone} ");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -92,12 +97,14 @@ class PhoneNumberController extends GetxController {
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         ShowToastDialog.closeLoader();
         return UserModel.fromJson(responseBody);
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error']);
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {

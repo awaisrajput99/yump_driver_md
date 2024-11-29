@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/car_service_book_model.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/car_service_book_model.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -44,8 +44,11 @@ class CarServiceHistoryController extends GetxController {
       );
       request.headers.addAll(API.header);
 
-      request.files.add(http.MultipartFile.fromBytes('image', File(carServiceBook.value).readAsBytesSync(), filename: File(carServiceBook.value).path.split('/').last));
-      request.fields['id_driver'] = Preferences.getInt(Preferences.userId).toString();
+      request.files.add(http.MultipartFile.fromBytes(
+          'image', File(carServiceBook.value).readAsBytesSync(),
+          filename: File(carServiceBook.value).path.split('/').last));
+      request.fields['id_driver'] =
+          Preferences.getInt(Preferences.userId).toString();
       request.fields['km_driven'] = kmDriven.toString();
 
       var res = await request.send();
@@ -54,14 +57,16 @@ class CarServiceHistoryController extends GetxController {
       showLog("API :: Request Body :: ${jsonEncode(request.fields)} ");
       showLog("API :: Response Status :: ${res.statusCode} ");
       showLog("API :: Response Body :: ${String.fromCharCodes(responseData)} ");
-      Map<String, dynamic> response = jsonDecode(String.fromCharCodes(responseData));
+      Map<String, dynamic> response =
+          jsonDecode(String.fromCharCodes(responseData));
       if (res.statusCode == 200) {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast("Uploaded!");
         return response;
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -82,24 +87,31 @@ class CarServiceHistoryController extends GetxController {
   Future<dynamic> getCarServiceBooks() async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.get(Uri.parse("${API.getCarServiceBook}${Preferences.getInt(Preferences.userId)}"), headers: API.header);
-      showLog("API :: URL :: ${API.getCarServiceBook}${Preferences.getInt(Preferences.userId)} ");
+      final response = await http.get(
+          Uri.parse(
+              "${API.getCarServiceBook}${Preferences.getInt(Preferences.userId)}"),
+          headers: API.header);
+      showLog(
+          "API :: URL :: ${API.getCarServiceBook}${Preferences.getInt(Preferences.userId)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         isLoading.value = false;
-        CarServiceHistoryModel model = CarServiceHistoryModel.fromJson(responseBody);
+        CarServiceHistoryModel model =
+            CarServiceHistoryModel.fromJson(responseBody);
         serviceList.value = model.data!;
         ShowToastDialog.closeLoader();
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         isLoading.value = false;
       } else {
         isLoading.value = false;
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {

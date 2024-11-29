@@ -5,24 +5,25 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/payStackURLModel.dart';
-import 'package:cabme_driver/model/bank_details_model.dart';
-import 'package:cabme_driver/model/payment_method_model.dart';
-import 'package:cabme_driver/model/payment_setting_model.dart';
-import 'package:cabme_driver/model/razorpay_gen_userid_model.dart';
-import 'package:cabme_driver/model/trancation_model.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/payStackURLModel.dart';
+import 'package:yumprides_driver/model/bank_details_model.dart';
+import 'package:yumprides_driver/model/payment_method_model.dart';
+import 'package:yumprides_driver/model/payment_setting_model.dart';
+import 'package:yumprides_driver/model/razorpay_gen_userid_model.dart';
+import 'package:yumprides_driver/model/trancation_model.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' as stripePrefix;
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class WalletController extends GetxController with GetSingleTickerProviderStateMixin {
+class WalletController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   RxString ref = "".obs;
 
   RxString totalEarn = "0".obs;
@@ -57,7 +58,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
     selectedRadioTile = "".obs;
     paymentSettingModel.value = Constant.getPaymentSetting();
 
-    stripePrefix.Stripe.publishableKey = paymentSettingModel.value.strip!.clientpublishableKey!;
+    stripePrefix.Stripe.publishableKey =
+        paymentSettingModel.value.strip!.clientpublishableKey!;
     stripePrefix.Stripe.merchantIdentifier = "Cabme";
     // await stripePrefix.Stripe.instance.applySettings();
 
@@ -84,7 +86,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
     try {
       isLoading.value = true;
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.get(Uri.parse(API.getPaymentMethod), headers: API.header);
+      final response =
+          await http.get(Uri.parse(API.getPaymentMethod), headers: API.header);
       showLog("API :: URL :: ${API.getPaymentMethod} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
@@ -123,8 +126,12 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
   Future<dynamic> getBankDetails() async {
     ShowToastDialog.showLoader("Please wait");
     try {
-      final response = await http.get(Uri.parse("${API.bankDetails}?driver_id=${Preferences.getInt(Preferences.userId)}"), headers: API.header);
-      showLog("API :: URL :: ${API.bankDetails}?driver_id=${Preferences.getInt(Preferences.userId)} ");
+      final response = await http.get(
+          Uri.parse(
+              "${API.bankDetails}?driver_id=${Preferences.getInt(Preferences.userId)}"),
+          headers: API.header);
+      showLog(
+          "API :: URL :: ${API.bankDetails}?driver_id=${Preferences.getInt(Preferences.userId)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
@@ -135,12 +142,14 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
         BankDetailsModel model = BankDetailsModel.fromJson(responseBody);
         bankDetails = model.data!;
         return bankDetails;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error'].toString());
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -163,8 +172,12 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
 
   Future<dynamic> getTrancation() async {
     try {
-      final response = await http.get(Uri.parse("${API.walletHistory}?id_diver=${Preferences.getInt(Preferences.userId)}"), headers: API.header);
-      showLog("API :: URL :: ${API.walletHistory}?id_diver=${Preferences.getInt(Preferences.userId)}");
+      final response = await http.get(
+          Uri.parse(
+              "${API.walletHistory}?id_diver=${Preferences.getInt(Preferences.userId)}"),
+          headers: API.header);
+      showLog(
+          "API :: URL :: ${API.walletHistory}?id_diver=${Preferences.getInt(Preferences.userId)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
@@ -177,12 +190,14 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
         transactionList.value = model.data!;
         totalEarn.value = model.totalEarnings!.toString();
         update();
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         transactionList.clear();
         isLoading.value = false;
       } else {
         isLoading.value = false;
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -204,7 +219,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
   Future<bool?> setWithdrawals(Map<String, dynamic> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.withdrawalsRequest), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.withdrawalsRequest),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.withdrawalsRequest}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -214,13 +230,15 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         ShowToastDialog.closeLoader();
         return true;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast(responseBody['error']);
         return null;
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -250,7 +268,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
         'transaction_id': DateTime.now().microsecondsSinceEpoch.toString(),
         'paymethod': selectedRadioTile!.value,
       };
-      final response = await http.post(Uri.parse(API.amount), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.amount),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.amount}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -261,11 +280,13 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         ShowToastDialog.closeLoader();
         return responseBody;
-      } else if (response.statusCode == 200 && responseBody['success'] == "failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "failed") {
         ShowToastDialog.closeLoader();
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -292,7 +313,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
         'currency': "USD",
         'payment_method_types[]': 'card',
         "description": "${Preferences.getInt(Preferences.userId)} Wallet Topup",
-        "shipping[name]": "${Preferences.getInt(Preferences.userId)} ${Preferences.getInt(Preferences.userId)}",
+        "shipping[name]":
+            "${Preferences.getInt(Preferences.userId)} ${Preferences.getInt(Preferences.userId)}",
         "shipping[address][line1]": "510 Townsend St",
         "shipping[address][postal_code]": "98140",
         "shipping[address][city]": "San Francisco",
@@ -302,11 +324,19 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
       var stripeSecret = paymentSettingModel.value.strip!.secretKey;
 
       await stripePrefix.Stripe.instance.applySettings();
-      var response = await http.post(Uri.parse('https://api.stripe.com/v1/payment_intents'),
-          body: body, headers: {'Authorization': 'Bearer $stripeSecret', 'Content-Type': 'application/x-www-form-urlencoded'});
+      var response = await http.post(
+          Uri.parse('https://api.stripe.com/v1/payment_intents'),
+          body: body,
+          headers: {
+            'Authorization': 'Bearer $stripeSecret',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          });
       showLog("API :: URL :: https://api.stripe.com/v1/payment_intents");
       showLog("API :: Request Body :: ${jsonEncode(body)} ");
-      showLog("API :: Request Header :: ${{'Authorization': 'Bearer $stripeSecret', 'Content-Type': 'application/x-www-form-urlencoded'}.toString()} ");
+      showLog("API :: Request Header :: ${{
+        'Authorization': 'Bearer $stripeSecret',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
       return jsonDecode(response.body);
@@ -316,8 +346,10 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
   }
 
   ///razorPay
-  Future<CreateRazorPayOrderModel?> createOrderRazorPay({required int amount, bool isTopup = false}) async {
-    final String orderId = "${Preferences.getInt(Preferences.userId)}_${DateTime.now().microsecondsSinceEpoch}";
+  Future<CreateRazorPayOrderModel?> createOrderRazorPay(
+      {required int amount, bool isTopup = false}) async {
+    final String orderId =
+        "${Preferences.getInt(Preferences.userId)}_${DateTime.now().microsecondsSinceEpoch}";
 
     const url = "${API.baseUrl}payments/razorpay/createorder";
 
@@ -334,7 +366,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
           "currency": "INR",
           "razorpaykey": paymentSettingModel.value.razorpay!.key,
           "razorPaySecret": paymentSettingModel.value.razorpay!.secretKey,
-          "isSandBoxEnabled": paymentSettingModel.value.razorpay!.isSandboxEnabled,
+          "isSandBoxEnabled":
+              paymentSettingModel.value.razorpay!.isSandboxEnabled,
         },
       );
       showLog("API :: URL :: $url");
@@ -344,7 +377,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
             "currency": "INR",
             "razorpaykey": paymentSettingModel.value.razorpay!.key,
             "razorPaySecret": paymentSettingModel.value.razorpay!.secretKey,
-            "isSandBoxEnabled": paymentSettingModel.value.razorpay!.isSandboxEnabled,
+            "isSandBoxEnabled":
+                paymentSettingModel.value.razorpay!.isSandboxEnabled,
           })} ");
       showLog("API :: Request Header :: ${{
         'apikey': API.apiKey,
@@ -361,7 +395,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
         isLoading.value = false;
       } else {
         isLoading.value = false;
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -381,7 +416,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
   }
 
   ///payStack
-  Future<dynamic> payStackURLGen({required String amount, required secretKey}) async {
+  Future<dynamic> payStackURLGen(
+      {required String amount, required secretKey}) async {
     const url = "https://api.paystack.co/transaction/initialize";
 
     try {
@@ -413,7 +449,8 @@ class WalletController extends GetxController with GetSingleTickerProviderStateM
         isLoading.value = false;
       } else {
         isLoading.value = false;
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {

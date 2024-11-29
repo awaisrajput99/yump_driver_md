@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:cabme_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:flutter/material.dart';
 
 class Styles {

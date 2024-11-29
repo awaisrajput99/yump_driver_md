@@ -1,6 +1,6 @@
-import 'package:cabme_driver/controller/search_address_controller.dart';
-import 'package:cabme_driver/themes/app_bar_custom.dart';
-import 'package:cabme_driver/themes/text_field_them.dart';
+import 'package:yumprides_driver/controller/search_address_controller.dart';
+import 'package:yumprides_driver/themes/app_bar_custom.dart';
+import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,13 +20,15 @@ class AddressSearchScreen extends StatelessWidget {
             body: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: Row(
                     children: [
                       Expanded(
                         child: TextFieldWidget(
                             onChanged: (v) {
-                              controller.debouncer(() => controller.fetchAddress(v));
+                              controller
+                                  .debouncer(() => controller.fetchAddress(v));
                               return null;
                             },
                             radius: BorderRadius.circular(8.0),
@@ -43,7 +45,8 @@ class AddressSearchScreen extends StatelessWidget {
                     itemCount: controller.suggestionsList.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(controller.suggestionsList[index].address.toString()),
+                        title: Text(controller.suggestionsList[index].address
+                            .toString()),
                         onTap: () {
                           Get.back(result: controller.suggestionsList[index]);
                         },

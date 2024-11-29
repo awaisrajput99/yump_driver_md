@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/model/payment_setting_model.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/model/payment_setting_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class PayStackURLGen {
-  static Future payStackURLGen({required String amount, required String secretKey, required String currency}) async {
+  static Future payStackURLGen(
+      {required String amount,
+      required String secretKey,
+      required String currency}) async {
     const url = "https://api.paystack.co/transaction/initialize";
     final response = await http.post(Uri.parse(url), body: {
       "email": "email@deom.com",
@@ -60,8 +63,12 @@ class PayStackURLGen {
     //PayPalClientSettleModel.fromJson(data);
   }
 
-  static Future<String> getPayHTML({required String amount, required PayFast payFastSettingData, String itemName = "wallet Topup"}) async {
-    String newUrl = 'https://${payFastSettingData.isSandboxEnabled == "true" ? "sandbox" : "www"}.payfast.co.za/eng/process';
+  static Future<String> getPayHTML(
+      {required String amount,
+      required PayFast payFastSettingData,
+      String itemName = "wallet Topup"}) async {
+    String newUrl =
+        'https://${payFastSettingData.isSandboxEnabled == "true" ? "sandbox" : "www"}.payfast.co.za/eng/process';
     Map body = {
       'merchant_id': payFastSettingData.merchantId,
       'merchant_key': payFastSettingData.merchantKey,

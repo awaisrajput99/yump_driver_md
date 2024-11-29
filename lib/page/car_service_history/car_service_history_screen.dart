@@ -1,10 +1,10 @@
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/controller/car_service_history_controller.dart';
-import 'package:cabme_driver/model/car_service_book_model.dart';
-import 'package:cabme_driver/page/car_service_history/show_service_doc_screen.dart';
-import 'package:cabme_driver/page/car_service_history/upload_car_service_book.dart';
-import 'package:cabme_driver/themes/app_bar_custom.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/controller/car_service_history_controller.dart';
+import 'package:yumprides_driver/model/car_service_book_model.dart';
+import 'package:yumprides_driver/page/car_service_history/show_service_doc_screen.dart';
+import 'package:yumprides_driver/page/car_service_history/upload_car_service_book.dart';
+import 'package:yumprides_driver/themes/app_bar_custom.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -24,7 +24,8 @@ class CarServiceBookHistory extends StatelessWidget {
           return RefreshIndicator(
             onRefresh: () => controller.getCarServiceBooks(),
             child: Scaffold(
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
               floatingActionButton: FloatingActionButton.extended(
                 onPressed: () {
                   controller.carServiceBook.value = '';
@@ -37,13 +38,17 @@ class CarServiceBookHistory extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.add,
-                      color: themeChange.getThem() ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                      color: themeChange.getThem()
+                          ? AppThemeData.grey900
+                          : AppThemeData.grey900Dark,
                     ),
                     const SizedBox(width: 10),
                     Text(
                       'Add Service History'.tr,
                       style: TextStyle(
-                        color: themeChange.getThem() ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                        color: themeChange.getThem()
+                            ? AppThemeData.grey900
+                            : AppThemeData.grey900Dark,
                         fontSize: 16,
                         fontFamily: AppThemeData.medium,
                       ),
@@ -55,18 +60,23 @@ class CarServiceBookHistory extends StatelessWidget {
               body: controller.isLoading.value
                   ? SizedBox()
                   : controller.serviceList.isEmpty
-                      ? Center(child: Text('No car service history not available'.tr))
+                      ? Center(
+                          child:
+                              Text('No car service history not available'.tr))
                       : ListView.builder(
                           itemCount: controller.serviceList.length,
                           itemBuilder: (context, index) {
-                            return showServiceBookDetails(serviceData: controller.serviceList[index], isDarkMode: themeChange.getThem());
+                            return showServiceBookDetails(
+                                serviceData: controller.serviceList[index],
+                                isDarkMode: themeChange.getThem());
                           }),
             ),
           );
         });
   }
 
-  showServiceBookDetails({required ServiceData serviceData, required bool isDarkMode}) {
+  showServiceBookDetails(
+      {required ServiceData serviceData, required bool isDarkMode}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
       child: GestureDetector(
@@ -75,7 +85,9 @@ class CarServiceBookHistory extends StatelessWidget {
             )),
         child: Container(
           decoration: BoxDecoration(
-            color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+            color: isDarkMode
+                ? AppThemeData.surface50Dark
+                : AppThemeData.surface50,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
@@ -93,7 +105,9 @@ class CarServiceBookHistory extends StatelessWidget {
                           child: SvgPicture.asset(
                             'assets/icons/ic_calendar.svg',
                             colorFilter: ColorFilter.mode(
-                              isDarkMode ? AppThemeData.success300 : AppThemeData.success300,
+                              isDarkMode
+                                  ? AppThemeData.success300
+                                  : AppThemeData.success300,
                               BlendMode.srcIn,
                             ),
                           ),
@@ -102,7 +116,9 @@ class CarServiceBookHistory extends StatelessWidget {
                           serviceData.modifier.toString(),
                           style: TextStyle(
                             fontSize: 16,
-                            color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                            color: isDarkMode
+                                ? AppThemeData.grey900Dark
+                                : AppThemeData.grey900,
                             fontFamily: AppThemeData.medium,
                           ),
                         ),

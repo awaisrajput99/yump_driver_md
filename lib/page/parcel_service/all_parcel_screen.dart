@@ -1,21 +1,21 @@
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/parcel_order_controller.dart';
-import 'package:cabme_driver/model/parcel_model.dart';
-import 'package:cabme_driver/page/complaint/add_complaint_screen.dart';
-import 'package:cabme_driver/page/parcel_service/parcel_details_screen.dart';
-import 'package:cabme_driver/page/parcel_service/parcel_osm_route_view_screen.dart';
-import 'package:cabme_driver/page/parcel_service/parcel_route_view_screen.dart';
-import 'package:cabme_driver/page/parcel_service/search_parcel_screen.dart';
-import 'package:cabme_driver/themes/app_bar_custom.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/custom_alert_dialog.dart';
-import 'package:cabme_driver/themes/custom_dialog_box.dart';
-import 'package:cabme_driver/themes/custom_widget.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
-import 'package:cabme_driver/widget/StarRating.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/parcel_order_controller.dart';
+import 'package:yumprides_driver/model/parcel_model.dart';
+import 'package:yumprides_driver/page/complaint/add_complaint_screen.dart';
+import 'package:yumprides_driver/page/parcel_service/parcel_details_screen.dart';
+import 'package:yumprides_driver/page/parcel_service/parcel_osm_route_view_screen.dart';
+import 'package:yumprides_driver/page/parcel_service/parcel_route_view_screen.dart';
+import 'package:yumprides_driver/page/parcel_service/search_parcel_screen.dart';
+import 'package:yumprides_driver/themes/app_bar_custom.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/custom_alert_dialog.dart';
+import 'package:yumprides_driver/themes/custom_dialog_box.dart';
+import 'package:yumprides_driver/themes/custom_widget.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,13 +40,18 @@ class AllParcelScreen extends StatelessWidget {
               body: controller.isLoading.value
                   ? SizedBox()
                   : controller.parcelList.isEmpty
-                      ? Constant.emptyView("You don't have any parcel confirmed.")
+                      ? Constant.emptyView(
+                          "You don't have any parcel confirmed.")
                       : ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           itemCount: controller.parcelList.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return buildHistory(context, controller.parcelList[index], controller, themeChange.getThem());
+                            return buildHistory(
+                                context,
+                                controller.parcelList[index],
+                                controller,
+                                themeChange.getThem());
                           },
                         ),
             ),
@@ -54,7 +59,8 @@ class AllParcelScreen extends StatelessWidget {
         });
   }
 
-  buildHistory(context, ParcelData data, ParcelOrderController controller, bool isDarkMode) {
+  buildHistory(context, ParcelData data, ParcelOrderController controller,
+      bool isDarkMode) {
     return GestureDetector(
       onTap: () async {
         if (data.status == "completed") {
@@ -86,7 +92,8 @@ class AllParcelScreen extends StatelessWidget {
         margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+          color:
+              isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -100,7 +107,9 @@ class AllParcelScreen extends StatelessWidget {
                     margin: EdgeInsets.only(right: 16, left: 16),
                     width: 110,
                     height: 34,
-                    decoration: BoxDecoration(color: Constant.statusParcelColor(data), borderRadius: BorderRadius.circular(6)),
+                    decoration: BoxDecoration(
+                        color: Constant.statusParcelColor(data),
+                        borderRadius: BorderRadius.circular(6)),
                     child: Center(
                       child: Text(
                         Constant().capitalizeWords(data.status.toString()),
@@ -160,7 +169,8 @@ class AllParcelScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextScroll("${double.parse(data.distance.toString()).toStringAsFixed(int.parse(Constant.decimal!))} ${data.distanceUnit}",
+                          TextScroll(
+                              "${double.parse(data.distance.toString()).toStringAsFixed(int.parse(Constant.decimal!))} ${data.distanceUnit}",
                               mode: TextScrollMode.bouncing,
                               pauseBetween: const Duration(seconds: 2),
                               style: TextStyle(
@@ -175,7 +185,9 @@ class AllParcelScreen extends StatelessWidget {
                               maxLines: 1,
                               style: TextStyle(
                                 fontFamily: AppThemeData.regular,
-                                color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                color: isDarkMode
+                                    ? AppThemeData.grey900Dark
+                                    : AppThemeData.grey900,
                                 fontSize: 12,
                               )),
                         ],
@@ -183,7 +195,8 @@ class AllParcelScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 16),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -202,7 +215,9 @@ class AllParcelScreen extends StatelessWidget {
                                 maxLines: 1,
                                 style: TextStyle(
                                   fontFamily: AppThemeData.regular,
-                                  color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: isDarkMode
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                   fontSize: 12,
                                 )),
                           ],
@@ -215,7 +230,9 @@ class AllParcelScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(Constant().amountShow(amount: data.amount.toString()),
+                            Text(
+                                Constant()
+                                    .amountShow(amount: data.amount.toString()),
                                 maxLines: 1,
                                 style: TextStyle(
                                   fontFamily: AppThemeData.semiBold,
@@ -228,7 +245,9 @@ class AllParcelScreen extends StatelessWidget {
                             Text("Amount".tr,
                                 style: TextStyle(
                                   fontFamily: AppThemeData.regular,
-                                  color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: isDarkMode
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                   fontSize: 12,
                                 )),
                           ],
@@ -248,7 +267,8 @@ class AllParcelScreen extends StatelessWidget {
                           height: 60,
                           width: 60,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Constant.loader(context, isDarkMode: isDarkMode),
+                          placeholder: (context, url) =>
+                              Constant.loader(context, isDarkMode: isDarkMode),
                           errorWidget: (context, url, error) => Image.asset(
                             "assets/images/appIcon.png",
                           ),
@@ -263,12 +283,16 @@ class AllParcelScreen extends StatelessWidget {
                                 child: Text(data.userName.toString(),
                                     style: TextStyle(
                                       fontFamily: AppThemeData.semiBold,
-                                      color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                      color: isDarkMode
+                                          ? AppThemeData.grey900Dark
+                                          : AppThemeData.grey900,
                                       fontSize: 16,
                                     ))),
                             StarRating(
                               size: 18,
-                              rating: data.moyenneDriver != null ? double.parse(data.moyenneDriver.toString()) : 0.0,
+                              rating: data.moyenneDriver != null
+                                  ? double.parse(data.moyenneDriver.toString())
+                                  : 0.0,
                               color: AppThemeData.warning200,
                             ),
                           ],
@@ -284,7 +308,8 @@ class AllParcelScreen extends StatelessWidget {
                                 Constant.makePhoneCall("${data.userPhone}");
                               },
                               child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
                                 decoration: BoxDecoration(
                                   color: AppThemeData.primary400,
                                   borderRadius: BorderRadius.circular(40),
@@ -294,7 +319,9 @@ class AllParcelScreen extends StatelessWidget {
                                   height: 20,
                                   width: 20,
                                   colorFilter: ColorFilter.mode(
-                                    isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                                    isDarkMode
+                                        ? AppThemeData.surface50Dark
+                                        : AppThemeData.surface50,
                                     BlendMode.srcIn,
                                   ),
                                 ),
@@ -308,7 +335,9 @@ class AllParcelScreen extends StatelessWidget {
                             child: Text(data.parcelDate.toString(),
                                 style: TextStyle(
                                   fontFamily: AppThemeData.medium,
-                                  color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: isDarkMode
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                   fontSize: 14,
                                 )),
                           ),
@@ -344,30 +373,39 @@ class AllParcelScreen extends StatelessWidget {
                                   btnHeight: 45,
                                   btnWidthRatio: 1,
                                   btnColor: AppThemeData.warning200,
-                                  txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                  txtColor: isDarkMode
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900Dark,
                                   onPress: () async {
-                                    buildShowBottomSheet(context, data, controller, isDarkMode);
+                                    buildShowBottomSheet(
+                                        context, data, controller, isDarkMode);
                                   },
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: 20, left: 10),
+                                padding:
+                                    const EdgeInsets.only(bottom: 20, left: 10),
                                 child: ButtonThem.buildButton(
                                   context,
                                   title: 'On Ride'.tr,
                                   btnHeight: 45,
                                   btnWidthRatio: 0.8,
                                   btnColor: AppThemeData.primary200,
-                                  txtColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                  txtColor: isDarkMode
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900Dark,
                                   onPress: () async {
                                     showDialog(
-                                      barrierColor: const Color.fromARGB(66, 20, 14, 14),
+                                      barrierColor:
+                                          const Color.fromARGB(66, 20, 14, 14),
                                       context: context,
                                       builder: (context) {
                                         return CustomAlertDialog(
-                                          title: "Do you want to on ride this parcel?".tr,
+                                          title:
+                                              "Do you want to on ride this parcel?"
+                                                  .tr,
                                           negativeButtonText: 'No'.tr,
                                           positiveButtonText: 'Yes'.tr,
                                           onPressNegative: () {
@@ -376,82 +414,152 @@ class AllParcelScreen extends StatelessWidget {
                                           onPressPositive: () {
                                             // Get.back();
 
-                                            if (Constant.rideOtp.toString() != 'yes') {
+                                            if (Constant.rideOtp.toString() !=
+                                                'yes') {
                                               Map<String, String> bodyParams = {
                                                 'id_parcel': data.id.toString(),
-                                                'id_user': data.idUserApp.toString(),
-                                                'driver_name': '${data.driverName}',
-                                                'driver_id': Preferences.getInt(Preferences.userId).toString(),
+                                                'id_user':
+                                                    data.idUserApp.toString(),
+                                                'driver_name':
+                                                    '${data.driverName}',
+                                                'driver_id': Preferences.getInt(
+                                                        Preferences.userId)
+                                                    .toString(),
                                               };
-                                              controller.onRideParcel(bodyParams).then((value) {
+                                              controller
+                                                  .onRideParcel(bodyParams)
+                                                  .then((value) {
                                                 if (value != null) {
                                                   Get.back();
                                                   showDialog(
                                                       context: context,
-                                                      builder: (BuildContext context) {
+                                                      builder: (BuildContext
+                                                          context) {
                                                         return CustomDialogBox(
-                                                          title: "On ride Successfully".tr,
-                                                          descriptions: "Parcel Successfully On ride.".tr,
+                                                          title:
+                                                              "On ride Successfully"
+                                                                  .tr,
+                                                          descriptions:
+                                                              "Parcel Successfully On ride."
+                                                                  .tr,
                                                           text: "Ok".tr,
                                                           onPress: () async {
-                                                            ShowToastDialog.showLoader("Please wait");
-                                                            await controller.getParcel().then((v) {
-                                                              ShowToastDialog.closeLoader();
+                                                            ShowToastDialog
+                                                                .showLoader(
+                                                                    "Please wait");
+                                                            await controller
+                                                                .getParcel()
+                                                                .then((v) {
+                                                              ShowToastDialog
+                                                                  .closeLoader();
                                                               Get.back();
                                                             });
                                                           },
-                                                          img: Image.asset('assets/images/green_checked.png'),
+                                                          img: Image.asset(
+                                                              'assets/images/green_checked.png'),
                                                         );
                                                       });
                                                 }
                                               });
                                             } else {
-                                              controller.otpController.value = TextEditingController();
+                                              controller.otpController.value =
+                                                  TextEditingController();
                                               showDialog(
                                                 barrierColor: Colors.black26,
                                                 context: context,
                                                 builder: (context) {
                                                   return Dialog(
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(20),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
                                                     ),
                                                     elevation: 0,
-                                                    backgroundColor: Colors.transparent,
+                                                    backgroundColor:
+                                                        Colors.transparent,
                                                     child: Container(
                                                       height: 180,
-                                                      padding: const EdgeInsets.only(left: 10, top: 20, right: 10, bottom: 10),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              top: 20,
+                                                              right: 10,
+                                                              bottom: 10),
                                                       decoration: BoxDecoration(
-                                                          shape: BoxShape.rectangle,
-                                                          color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
-                                                          borderRadius: BorderRadius.circular(20),
+                                                          shape: BoxShape
+                                                              .rectangle,
+                                                          color: isDarkMode
+                                                              ? AppThemeData
+                                                                  .surface50Dark
+                                                              : AppThemeData
+                                                                  .surface50,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
                                                           boxShadow: const [
-                                                            BoxShadow(color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
+                                                            BoxShadow(
+                                                                color: Colors
+                                                                    .black,
+                                                                offset: Offset(
+                                                                    0, 10),
+                                                                blurRadius: 10),
                                                           ]),
                                                       child: Column(
                                                         children: [
                                                           Text(
                                                             "Enter OTP".tr,
-                                                            style: const TextStyle(fontSize: 16),
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        16),
                                                           ),
                                                           const SizedBox(
                                                             height: 20,
                                                           ),
                                                           Pinput(
-                                                            controller: controller.otpController.value,
-                                                            defaultPinTheme: PinTheme(
+                                                            controller: controller
+                                                                .otpController
+                                                                .value,
+                                                            defaultPinTheme:
+                                                                PinTheme(
                                                               height: 50,
                                                               width: 50,
-                                                              textStyle: const TextStyle(letterSpacing: 0.60, fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
+                                                              textStyle: const TextStyle(
+                                                                  letterSpacing:
+                                                                      0.60,
+                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
                                                               // margin: EdgeInsets.all(10),
-                                                              decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(10),
-                                                                shape: BoxShape.rectangle,
-                                                                color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
-                                                                border: Border.all(color: AppThemeData.textFieldBoarderColor, width: 0.7),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                shape: BoxShape
+                                                                    .rectangle,
+                                                                color: isDarkMode
+                                                                    ? AppThemeData
+                                                                        .surface50Dark
+                                                                    : AppThemeData
+                                                                        .surface50,
+                                                                border: Border.all(
+                                                                    color: AppThemeData
+                                                                        .textFieldBoarderColor,
+                                                                    width: 0.7),
                                                               ),
                                                             ),
-                                                            keyboardType: TextInputType.phone,
-                                                            textInputAction: TextInputAction.done,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .phone,
+                                                            textInputAction:
+                                                                TextInputAction
+                                                                    .done,
                                                             length: 6,
                                                           ),
                                                           const SizedBox(
@@ -460,31 +568,63 @@ class AllParcelScreen extends StatelessWidget {
                                                           Row(
                                                             children: [
                                                               Expanded(
-                                                                child: ButtonThem.buildButton(
+                                                                child: ButtonThem
+                                                                    .buildButton(
                                                                   context,
-                                                                  title: 'done'.tr,
+                                                                  title:
+                                                                      'done'.tr,
                                                                   btnHeight: 45,
-                                                                  btnWidthRatio: 0.8,
-                                                                  btnColor: AppThemeData.primary200,
-                                                                  txtColor: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                                                  btnWidthRatio:
+                                                                      0.8,
+                                                                  btnColor:
+                                                                      AppThemeData
+                                                                          .primary200,
+                                                                  txtColor: isDarkMode
+                                                                      ? AppThemeData
+                                                                          .grey900Dark
+                                                                      : AppThemeData
+                                                                          .grey900,
                                                                   onPress: () {
-                                                                    if (controller.otpController.value.text.toString().length == 6) {
+                                                                    if (controller
+                                                                            .otpController
+                                                                            .value
+                                                                            .text
+                                                                            .toString()
+                                                                            .length ==
+                                                                        6) {
                                                                       controller
                                                                           .verifyOTP(
-                                                                        userId: data.idUserApp!.toString(),
-                                                                        rideId: data.id!.toString(),
+                                                                        userId: data
+                                                                            .idUserApp!
+                                                                            .toString(),
+                                                                        rideId: data
+                                                                            .id!
+                                                                            .toString(),
                                                                       )
-                                                                          .then((value) {
-                                                                        if (value != null && value['success'] == "success") {
-                                                                          Map<String, String> bodyParams = {
-                                                                            'id_parcel': data.id.toString(),
-                                                                            'id_user': data.idUserApp.toString(),
-                                                                            'driver_name': '${data.driverName}',
-                                                                            'driver_id': Preferences.getInt(Preferences.userId).toString(),
+                                                                          .then(
+                                                                              (value) {
+                                                                        if (value !=
+                                                                                null &&
+                                                                            value['success'] ==
+                                                                                "success") {
+                                                                          Map<String, String>
+                                                                              bodyParams =
+                                                                              {
+                                                                            'id_parcel':
+                                                                                data.id.toString(),
+                                                                            'id_user':
+                                                                                data.idUserApp.toString(),
+                                                                            'driver_name':
+                                                                                '${data.driverName}',
+                                                                            'driver_id':
+                                                                                Preferences.getInt(Preferences.userId).toString(),
                                                                           };
 
-                                                                          controller.onRideParcel(bodyParams).then((value) {
-                                                                            if (value != null) {
+                                                                          controller
+                                                                              .onRideParcel(bodyParams)
+                                                                              .then((value) {
+                                                                            if (value !=
+                                                                                null) {
                                                                               showDialog(
                                                                                   context: context,
                                                                                   builder: (BuildContext context) {
@@ -504,7 +644,9 @@ class AllParcelScreen extends StatelessWidget {
                                                                         }
                                                                       });
                                                                     } else {
-                                                                      ShowToastDialog.showToast('Please Enter OTP');
+                                                                      ShowToastDialog
+                                                                          .showToast(
+                                                                              'Please Enter OTP');
                                                                     }
                                                                   },
                                                                 ),
@@ -513,14 +655,30 @@ class AllParcelScreen extends StatelessWidget {
                                                                 width: 8,
                                                               ),
                                                               Expanded(
-                                                                child: ButtonThem.buildBorderButton(
+                                                                child: ButtonThem
+                                                                    .buildBorderButton(
                                                                   context,
-                                                                  title: 'cancel'.tr,
+                                                                  title:
+                                                                      'cancel'
+                                                                          .tr,
                                                                   btnHeight: 45,
-                                                                  btnWidthRatio: 1,
-                                                                  btnColor: isDarkMode ? AppThemeData.grey800 : AppThemeData.grey100,
-                                                                  txtColor: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
-                                                                  btnBorderColor: isDarkMode ? AppThemeData.grey800 : AppThemeData.grey100,
+                                                                  btnWidthRatio:
+                                                                      1,
+                                                                  btnColor: isDarkMode
+                                                                      ? AppThemeData
+                                                                          .grey800
+                                                                      : AppThemeData
+                                                                          .grey100,
+                                                                  txtColor: isDarkMode
+                                                                      ? AppThemeData
+                                                                          .grey900Dark
+                                                                      : AppThemeData
+                                                                          .grey900,
+                                                                  btnBorderColor: isDarkMode
+                                                                      ? AppThemeData
+                                                                          .grey800
+                                                                      : AppThemeData
+                                                                          .grey100,
                                                                   onPress: () {
                                                                     Get.back();
                                                                   },
@@ -563,7 +721,8 @@ class AllParcelScreen extends StatelessWidget {
                             'id_parcel': data.id.toString(),
                             'id_user': data.idUserApp.toString(),
                             'driver_name': '${data.driverName}',
-                            'from_id': Preferences.getInt(Preferences.userId).toString(),
+                            'from_id': Preferences.getInt(Preferences.userId)
+                                .toString(),
                           };
 
                           controller.completeParcel(bodyParams).then((value) {
@@ -573,13 +732,15 @@ class AllParcelScreen extends StatelessWidget {
                                   builder: (BuildContext context) {
                                     return CustomDialogBox(
                                       title: "Completed Successfully".tr,
-                                      descriptions: "Parcel Successfully completed.".tr,
+                                      descriptions:
+                                          "Parcel Successfully completed.".tr,
                                       text: "Ok".tr,
                                       onPress: () {
                                         Get.back();
                                         controller.getParcel();
                                       },
-                                      img: Image.asset('assets/images/green_checked.png'),
+                                      img: Image.asset(
+                                          'assets/images/green_checked.png'),
                                     );
                                   });
                             }
@@ -593,8 +754,12 @@ class AllParcelScreen extends StatelessWidget {
                       title: 'Add Complaint'.tr,
                       btnWidthRatio: 1,
                       btnHeight: 45,
-                      btnColor: isDarkMode ? AppThemeData.grey800 : AppThemeData.grey800Dark,
-                      txtColor: isDarkMode ? AppThemeData.grey500Dark : AppThemeData.grey300Dark,
+                      btnColor: isDarkMode
+                          ? AppThemeData.grey800
+                          : AppThemeData.grey800Dark,
+                      txtColor: isDarkMode
+                          ? AppThemeData.grey500Dark
+                          : AppThemeData.grey300Dark,
                       onPress: () async {
                         Get.to(AddComplaintScreen(), arguments: {
                           "isReviewScreen": false,
@@ -613,16 +778,20 @@ class AllParcelScreen extends StatelessWidget {
     );
   }
 
-  buildShowBottomSheet(BuildContext context, ParcelData data, ParcelOrderController controller, bool isDarkMode) {
+  buildShowBottomSheet(BuildContext context, ParcelData data,
+      ParcelOrderController controller, bool isDarkMode) {
     return showModalBottomSheet(
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15), topLeft: Radius.circular(15))),
         context: context,
         isDismissible: true,
         isScrollControlled: true,
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Column(
@@ -653,10 +822,12 @@ class AllParcelScreen extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         decoration: const InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
                           ),
                         ),
                       ),
@@ -676,15 +847,20 @@ class AllParcelScreen extends StatelessWidget {
                                 btnHeight: 45,
                                 btnWidthRatio: 0.8,
                                 btnColor: AppThemeData.primary200,
-                                txtColor: !isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                txtColor: !isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark,
                                 onPress: () async {
-                                  if (controller.resonController.value.text.isNotEmpty) {
+                                  if (controller
+                                      .resonController.value.text.isNotEmpty) {
                                     showDialog(
                                       barrierColor: Colors.black26,
                                       context: context,
                                       builder: (context) {
                                         return CustomAlertDialog(
-                                          title: "Do you want to reject this booking?".tr,
+                                          title:
+                                              "Do you want to reject this booking?"
+                                                  .tr,
                                           onPressNegative: () {
                                             Get.back();
                                           },
@@ -693,31 +869,52 @@ class AllParcelScreen extends StatelessWidget {
                                           onPressPositive: () {
                                             Map<String, String> bodyParams = {
                                               'id_parcel': data.id.toString(),
-                                              'id_user': data.idUserApp.toString(),
-                                              'name': data.driverName.toString(),
-                                              'from_id': Preferences.getInt(Preferences.userId).toString(),
-                                              'user_cat': controller.userModel.value.userData!.userCat.toString(),
-                                              'reason': controller.resonController.value.text.toString(),
+                                              'id_user':
+                                                  data.idUserApp.toString(),
+                                              'name':
+                                                  data.driverName.toString(),
+                                              'from_id': Preferences.getInt(
+                                                      Preferences.userId)
+                                                  .toString(),
+                                              'user_cat': controller.userModel
+                                                  .value.userData!.userCat
+                                                  .toString(),
+                                              'reason': controller
+                                                  .resonController.value.text
+                                                  .toString(),
                                             };
-                                            controller.cancelParcel(bodyParams).then((value) {
+                                            controller
+                                                .cancelParcel(bodyParams)
+                                                .then((value) {
                                               if (value != null) {
                                                 Get.back();
                                                 Get.back();
                                                 showDialog(
                                                     context: context,
-                                                    builder: (BuildContext context) {
+                                                    builder:
+                                                        (BuildContext context) {
                                                       return CustomDialogBox(
-                                                        title: "Reject Successfully".tr,
-                                                        descriptions: "Parcel Successfully rejected.".tr,
+                                                        title:
+                                                            "Reject Successfully"
+                                                                .tr,
+                                                        descriptions:
+                                                            "Parcel Successfully rejected."
+                                                                .tr,
                                                         text: "Ok".tr,
                                                         onPress: () async {
-                                                          ShowToastDialog.showLoader("Please wait");
-                                                          await controller.getParcel().then((v) {
-                                                            ShowToastDialog.closeLoader();
+                                                          ShowToastDialog
+                                                              .showLoader(
+                                                                  "Please wait");
+                                                          await controller
+                                                              .getParcel()
+                                                              .then((v) {
+                                                            ShowToastDialog
+                                                                .closeLoader();
                                                             Get.back();
                                                           });
                                                         },
-                                                        img: Image.asset('assets/images/green_checked.png'),
+                                                        img: Image.asset(
+                                                            'assets/images/green_checked.png'),
                                                       );
                                                     });
                                               }
@@ -727,7 +924,8 @@ class AllParcelScreen extends StatelessWidget {
                                       },
                                     );
                                   } else {
-                                    ShowToastDialog.showToast("Please enter a reason");
+                                    ShowToastDialog.showToast(
+                                        "Please enter a reason");
                                   }
                                 },
                               ),
@@ -745,8 +943,12 @@ class AllParcelScreen extends StatelessWidget {
                                 title: 'Close'.tr,
                                 btnHeight: 45,
                                 btnWidthRatio: 1,
-                                btnColor: isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
-                                txtColor: !isDarkMode ? AppThemeData.grey900 : AppThemeData.grey900Dark,
+                                btnColor: isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark,
+                                txtColor: !isDarkMode
+                                    ? AppThemeData.grey900
+                                    : AppThemeData.grey900Dark,
                                 btnBorderColor: AppThemeData.primary200,
                                 onPress: () async {
                                   Get.back();
@@ -778,7 +980,8 @@ Widget statusTile({required String title, Color? bgColor, Color? txtColor}) {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Text(
         title.tr,
-        style: TextStyle(fontSize: 14, color: txtColor, fontFamily: AppThemeData.medium),
+        style: TextStyle(
+            fontSize: 14, color: txtColor, fontFamily: AppThemeData.medium),
       ),
     ),
   );

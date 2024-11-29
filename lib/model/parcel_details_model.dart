@@ -1,4 +1,4 @@
-import 'package:cabme_driver/model/tax_model.dart';
+import 'package:yumprides_driver/model/tax_model.dart';
 
 class ParcelDetailsModel {
   String? success;
@@ -6,13 +6,15 @@ class ParcelDetailsModel {
   String? message;
   ParcelDetailsData? rideDetailsdata;
 
-  ParcelDetailsModel({this.success, this.error, this.message, this.rideDetailsdata});
+  ParcelDetailsModel(
+      {this.success, this.error, this.message, this.rideDetailsdata});
 
   ParcelDetailsModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     error = json['error'];
     message = json['message'];
-    rideDetailsdata = json['data'] != null ? ParcelDetailsData.fromJson(json['data']) : null;
+    rideDetailsdata =
+        json['data'] != null ? ParcelDetailsData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {

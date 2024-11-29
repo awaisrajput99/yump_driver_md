@@ -1,5 +1,5 @@
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +51,8 @@ class RadioButtonCustom extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 16),
                     child: FittedBox(
                       fit: BoxFit.cover,
                       child: Image.asset(
@@ -85,7 +86,9 @@ class RadioButtonCustom extends StatelessWidget {
           Visibility(
             visible: isBottomborderRemove == false,
             child: Container(
-              color: themeChange.getThem() ? AppThemeData.grey300Dark : AppThemeData.grey300,
+              color: themeChange.getThem()
+                  ? AppThemeData.grey300Dark
+                  : AppThemeData.grey300,
               height: 1,
             ),
           ),

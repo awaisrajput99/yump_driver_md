@@ -1,6 +1,6 @@
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/controller/withdrawals_controller.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/controller/withdrawals_controller.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,11 +18,13 @@ class WithdrawalsScreen extends StatelessWidget {
               child: RefreshIndicator(
                 onRefresh: () => controller.getWithdrawals(),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: controller.isLoading.value
                       ? SizedBox()
                       : controller.rideList.isEmpty
-                          ? Constant.emptyView("Your don't have any Withdrawals request")
+                          ? Constant.emptyView(
+                              "Your don't have any Withdrawals request")
                           : ListView.builder(
                               itemCount: controller.rideList.length,
                               shrinkWrap: true,
@@ -39,12 +41,14 @@ class WithdrawalsScreen extends StatelessWidget {
                                           offset: const Offset(2, 2),
                                         ),
                                       ],
-                                      borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(15.0)),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Image.asset(
                                             'assets/icons/walltet_icons.png',
@@ -53,69 +57,135 @@ class WithdrawalsScreen extends StatelessWidget {
                                           ),
                                           Expanded(
                                               child: Padding(
-                                            padding: const EdgeInsets.only(left: 10),
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Row(
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        controller.rideList[index].creer.toString(),
-                                                        style: TextStyle(color: Colors.black.withOpacity(0.80), fontSize: 16, fontWeight: FontWeight.w600),
+                                                        controller
+                                                            .rideList[index]
+                                                            .creer
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    0.80),
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
                                                       ),
                                                     ),
                                                     Text(
-                                                      Constant().amountShow(amount: controller.rideList[index].amount.toString()),
+                                                      Constant().amountShow(
+                                                          amount: controller
+                                                              .rideList[index]
+                                                              .amount
+                                                              .toString()),
                                                       style: TextStyle(
-                                                          color: controller.rideList[index].statut.toString() == "success" ? Colors.green : Colors.red,
+                                                          color: controller
+                                                                      .rideList[
+                                                                          index]
+                                                                      .statut
+                                                                      .toString() ==
+                                                                  "success"
+                                                              ? Colors.green
+                                                              : Colors.red,
                                                           fontSize: 16,
                                                           letterSpacing: 1.5,
-                                                          fontWeight: FontWeight.bold),
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                   ],
                                                 ),
                                                 Text(
-                                                  controller.rideList[index].statut.toString(),
+                                                  controller
+                                                      .rideList[index].statut
+                                                      .toString(),
                                                   style: TextStyle(
-                                                      color: controller.rideList[index].statut.toString() == "success" ? Colors.green : Colors.red,
+                                                      color: controller
+                                                                  .rideList[
+                                                                      index]
+                                                                  .statut
+                                                                  .toString() ==
+                                                              "success"
+                                                          ? Colors.green
+                                                          : Colors.red,
                                                       fontSize: 16,
                                                       letterSpacing: 1,
-                                                      fontWeight: FontWeight.bold),
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical: 3.0),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 3.0),
                                                   child: Divider(
-                                                    color: Colors.black.withOpacity(0.40),
+                                                    color: Colors.black
+                                                        .withOpacity(0.40),
                                                   ),
                                                 ),
                                                 Text(
-                                                  controller.rideList[index].bankName.toString(),
-                                                  style: TextStyle(color: Colors.black.withOpacity(0.80), fontSize: 16, fontWeight: FontWeight.w600),
+                                                  controller
+                                                      .rideList[index].bankName
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.80),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                                 ),
                                                 const SizedBox(
                                                   height: 2,
                                                 ),
                                                 Text(
-                                                  controller.rideList[index].accountNo.toString(),
-                                                  style: TextStyle(color: ConstantColors.subTitleTextColor, fontSize: 16, letterSpacing: 1.5, fontWeight: FontWeight.bold),
+                                                  controller
+                                                      .rideList[index].accountNo
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      color: ConstantColors
+                                                          .subTitleTextColor,
+                                                      fontSize: 16,
+                                                      letterSpacing: 1.5,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical: 3.0),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 3.0),
                                                   child: Divider(
-                                                    color: Colors.black.withOpacity(0.40),
+                                                    color: Colors.black
+                                                        .withOpacity(0.40),
                                                   ),
                                                 ),
                                                 Text(
                                                   "Note".tr,
-                                                  style: TextStyle(color: Colors.black.withOpacity(0.80), fontSize: 16, fontWeight: FontWeight.w600),
+                                                  style: TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.80),
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                                 ),
                                                 const SizedBox(
                                                   height: 2,
                                                 ),
                                                 Text(
-                                                  controller.rideList[index].note.toString(),
-                                                  style: TextStyle(color: ConstantColors.subTitleTextColor, fontSize: 16, letterSpacing: 1.5, fontWeight: FontWeight.bold),
+                                                  controller
+                                                      .rideList[index].note
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      color: ConstantColors
+                                                          .subTitleTextColor,
+                                                      fontSize: 16,
+                                                      letterSpacing: 1.5,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                               ],
                                             ),

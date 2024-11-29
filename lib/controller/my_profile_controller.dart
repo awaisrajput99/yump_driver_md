@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/model/zone_model.dart';
-import 'package:cabme_driver/service/api.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/model/zone_model.dart';
+import 'package:yumprides_driver/service/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -58,7 +58,9 @@ class MyProfileController extends GetxController {
       );
       request.headers.addAll(API.header);
 
-      request.files.add(http.MultipartFile.fromBytes('image', image.readAsBytesSync(), filename: image.path.split('/').last));
+      request.files.add(http.MultipartFile.fromBytes(
+          'image', image.readAsBytesSync(),
+          filename: image.path.split('/').last));
       request.fields['id_user'] = userID.value;
       request.fields['user_cat'] = userCat.value;
 
@@ -68,14 +70,16 @@ class MyProfileController extends GetxController {
       showLog("API :: Request Body :: ${jsonEncode(request.fields)} ");
       showLog("API :: Response Status :: ${res.statusCode} ");
       showLog("API :: Response Body :: ${String.fromCharCodes(responseData)} ");
-      Map<String, dynamic> response = jsonDecode(String.fromCharCodes(responseData));
+      Map<String, dynamic> response =
+          jsonDecode(String.fromCharCodes(responseData));
       if (res.statusCode == 200) {
         ShowToastDialog.closeLoader();
         ShowToastDialog.showToast("Uploaded!");
         return response;
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -96,7 +100,8 @@ class MyProfileController extends GetxController {
   Future<dynamic> updateFirstName(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.updatePreName), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.updatePreName),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.updatePreName}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -108,7 +113,8 @@ class MyProfileController extends GetxController {
         return responseBody;
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -130,7 +136,8 @@ class MyProfileController extends GetxController {
   Future<dynamic> updateLastName(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.updateLastName), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.updateLastName),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.updateLastName}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -142,7 +149,8 @@ class MyProfileController extends GetxController {
         return responseBody;
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -164,7 +172,8 @@ class MyProfileController extends GetxController {
   Future<dynamic> updatePhone(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.updateUserPhone), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.updateUserPhone),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.updateUserPhone}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -176,12 +185,14 @@ class MyProfileController extends GetxController {
         UserModel userData = UserModel.fromJson(responseBody);
         phoneController.value.text = userData.userData!.phone!;
         return true;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         return false;
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -203,7 +214,8 @@ class MyProfileController extends GetxController {
   Future<dynamic> updateEmail(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.updateUserEmail), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.updateUserEmail),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.updateUserEmail}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -215,12 +227,14 @@ class MyProfileController extends GetxController {
         UserModel userData = UserModel.fromJson(responseBody);
         emailController.value.text = userData.userData!.email!;
         return responseBody;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         return false;
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
@@ -242,7 +256,8 @@ class MyProfileController extends GetxController {
   Future<dynamic> updatePassword(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.changePassword), headers: API.header, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.changePassword),
+          headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.changePassword}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)}");
       showLog("API :: Request Header :: ${API.header.toString()} ");
@@ -252,12 +267,14 @@ class MyProfileController extends GetxController {
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         ShowToastDialog.closeLoader();
         return true;
-      } else if (response.statusCode == 200 && responseBody['success'] == "Failed") {
+      } else if (response.statusCode == 200 &&
+          responseBody['success'] == "Failed") {
         ShowToastDialog.closeLoader();
         return responseBody['error'];
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {

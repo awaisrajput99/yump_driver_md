@@ -1,16 +1,16 @@
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/dash_board_controller.dart';
-import 'package:cabme_driver/controller/parcel_details_controller.dart';
-import 'package:cabme_driver/model/driver_location_update.dart';
-import 'package:cabme_driver/model/parcel_model.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/custom_alert_dialog.dart';
-import 'package:cabme_driver/themes/custom_dialog_box.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
-import 'package:cabme_driver/widget/StarRating.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/dash_board_controller.dart';
+import 'package:yumprides_driver/controller/parcel_details_controller.dart';
+import 'package:yumprides_driver/model/driver_location_update.dart';
+import 'package:yumprides_driver/model/parcel_model.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/custom_alert_dialog.dart';
+import 'package:yumprides_driver/themes/custom_dialog_box.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -66,29 +66,47 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
       type = argumentData['type'];
       parcelData = argumentData['data'];
 
-      departureLatLong = LatLng(double.parse(parcelData!.latSource.toString()), double.parse(parcelData!.lngSource.toString()));
-      destinationLatLong = LatLng(double.parse(parcelData!.latDestination.toString()), double.parse(parcelData!.lngDestination.toString()));
+      departureLatLong = LatLng(double.parse(parcelData!.latSource.toString()),
+          double.parse(parcelData!.lngSource.toString()));
+      destinationLatLong = LatLng(
+          double.parse(parcelData!.latDestination.toString()),
+          double.parse(parcelData!.lngDestination.toString()));
       // await getDriver();
 
       if (parcelData!.status == "onride" || parcelData!.status == 'confirmed') {
-        Constant.driverLocationUpdate.doc(parcelData!.idConducteur).snapshots().listen((event) async {
-          DriverLocationUpdate driverLocationUpdate = DriverLocationUpdate.fromJson(event.data() as Map<String, dynamic>);
+        Constant.driverLocationUpdate
+            .doc(parcelData!.idConducteur)
+            .snapshots()
+            .listen((event) async {
+          DriverLocationUpdate driverLocationUpdate =
+              DriverLocationUpdate.fromJson(
+                  event.data() as Map<String, dynamic>);
 
           Dio dio = Dio();
           dynamic response = await dio.get(
               "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${parcelData!.latSource},${parcelData!.lngSource}&destinations=${double.parse(driverLocationUpdate.driverLatitude.toString())},${double.parse(driverLocationUpdate.driverLongitude.toString())}&key=${Constant.kGoogleApiKey}");
 
-          driverEstimateArrivalTime = response.data['rows'][0]['elements'][0]['duration']['text'].toString();
+          driverEstimateArrivalTime = response.data['rows'][0]['elements'][0]
+                  ['duration']['text']
+              .toString();
 
           setState(() {
-            departureLatLong = LatLng(double.parse(driverLocationUpdate.driverLatitude.toString()), double.parse(driverLocationUpdate.driverLongitude.toString()));
+            departureLatLong = LatLng(
+                double.parse(driverLocationUpdate.driverLatitude.toString()),
+                double.parse(driverLocationUpdate.driverLongitude.toString()));
             _markers[parcelData!.id.toString()] = Marker(
                 markerId: MarkerId(parcelData!.id.toString()),
-                infoWindow: InfoWindow(title: parcelData!.prenomConducteur.toString()),
+                infoWindow:
+                    InfoWindow(title: parcelData!.prenomConducteur.toString()),
                 position: departureLatLong,
                 icon: taxiIcon!,
-                rotation: double.parse(driverLocationUpdate.rotation.toString()));
-            getDirections(dLat: double.parse(driverLocationUpdate.driverLatitude.toString()), dLng: double.parse(driverLocationUpdate.driverLongitude.toString()));
+                rotation:
+                    double.parse(driverLocationUpdate.rotation.toString()));
+            getDirections(
+                dLat: double.parse(
+                    driverLocationUpdate.driverLatitude.toString()),
+                dLng: double.parse(
+                    driverLocationUpdate.driverLongitude.toString()));
           });
         });
       } else {
@@ -98,18 +116,30 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
   }
 
   setIcons() async {
-    BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(10, 10)), "assets/icons/pickup.png").then((value) {
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(size: Size(10, 10)),
+            "assets/icons/pickup.png")
+        .then((value) {
       departureIcon = value;
     });
 
-    BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(10, 10)), "assets/icons/dropoff.png").then((value) {
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(size: Size(10, 10)),
+            "assets/icons/dropoff.png")
+        .then((value) {
       destinationIcon = value;
     });
 
-    BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(10, 10)), "assets/images/ic_taxi.png").then((value) {
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(size: Size(10, 10)),
+            "assets/images/ic_taxi.png")
+        .then((value) {
       taxiIcon = value;
     });
-    BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(10, 10)), "assets/icons/location.png").then((value) {
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(size: Size(10, 10)),
+            "assets/icons/location.png")
+        .then((value) {
       stopIcon = value;
     });
   }
@@ -128,12 +158,14 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
             zoomControlsEnabled: true,
             myLocationButtonEnabled: false,
             initialCameraPosition: CameraPosition(
-              target: LatLng(double.parse(parcelData!.latSource!), double.parse(parcelData!.lngSource!)),
+              target: LatLng(double.parse(parcelData!.latSource!),
+                  double.parse(parcelData!.lngSource!)),
               zoom: 14.0,
             ),
             onMapCreated: (GoogleMapController controller) {
               _mapcontroller = controller;
-              _mapcontroller!.moveCamera(CameraUpdate.newLatLngZoom(departureLatLong, 12));
+              _mapcontroller!
+                  .moveCamera(CameraUpdate.newLatLngZoom(departureLatLong, 12));
             },
             polylines: Set<Polyline>.of(polyLines.values),
             myLocationEnabled: false,
@@ -152,7 +184,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(4.0),
-                      child: Icon(Icons.arrow_back_ios_outlined, color: Colors.black),
+                      child: Icon(Icons.arrow_back_ios_outlined,
+                          color: Colors.black),
                     ),
                   ),
                 ),
@@ -171,11 +204,14 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                   child: Container(
                     margin: const EdgeInsets.only(left: 4, right: 4, top: 16),
                     decoration: BoxDecoration(
-                      color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                      color: themeChange.getThem()
+                          ? AppThemeData.surface50Dark
+                          : AppThemeData.surface50,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 12),
                       child: Column(
                         children: [
                           Padding(
@@ -189,7 +225,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                     height: 60,
                                     width: 60,
                                     fit: BoxFit.cover,
-                                    errorWidget: (context, url, error) => Image.asset(
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
                                       "assets/images/appIcon.png",
                                     ),
                                   ),
@@ -198,17 +235,25 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(parcelData!.userName.toString(),
                                             style: TextStyle(
                                               fontFamily: AppThemeData.semiBold,
-                                              color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                              color: themeChange.getThem()
+                                                  ? AppThemeData.grey900Dark
+                                                  : AppThemeData.grey900,
                                               fontSize: 16,
                                             )),
                                         StarRating(
                                             size: 18,
-                                            rating: parcelData!.moyenneDriver != null ? double.parse(parcelData!.moyenneDriver.toString()) : 0.0,
+                                            rating: parcelData!.moyenneDriver !=
+                                                    null
+                                                ? double.parse(parcelData!
+                                                    .moyenneDriver
+                                                    .toString())
+                                                : 0.0,
                                             color: AppThemeData.primary200),
                                       ],
                                     ),
@@ -221,20 +266,25 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                       padding: const EdgeInsets.only(left: 10),
                                       child: InkWell(
                                         onTap: () {
-                                          Constant.makePhoneCall(parcelData!.userPhone.toString());
+                                          Constant.makePhoneCall(
+                                              parcelData!.userPhone.toString());
                                         },
                                         child: Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 10),
                                           decoration: BoxDecoration(
                                             color: AppThemeData.primary200,
-                                            borderRadius: BorderRadius.circular(40),
+                                            borderRadius:
+                                                BorderRadius.circular(40),
                                           ),
                                           child: SvgPicture.asset(
                                             'assets/icons/call_icon.svg',
                                             height: 20,
                                             width: 20,
                                             colorFilter: ColorFilter.mode(
-                                              themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                                              themeChange.getThem()
+                                                  ? AppThemeData.surface50Dark
+                                                  : AppThemeData.surface50,
                                               BlendMode.srcIn,
                                             ),
                                           ),
@@ -243,10 +293,13 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 5.0),
-                                      child: Text(parcelData!.parcelDate.toString(),
+                                      child: Text(
+                                          parcelData!.parcelDate.toString(),
                                           style: TextStyle(
                                             fontFamily: AppThemeData.medium,
-                                            color: themeChange.getThem() ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                            color: themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
                                             fontSize: 14,
                                           )),
                                     ),
@@ -265,7 +318,9 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                   child: Row(
                     children: [
                       Visibility(
-                        visible: parcelData!.status.toString() == "confirmed" ? true : false,
+                        visible: parcelData!.status.toString() == "confirmed"
+                            ? true
+                            : false,
                         child: Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5),
@@ -285,7 +340,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                         ),
                       ),
                       Visibility(
-                        visible: parcelData!.status == "confirmed" ? true : false,
+                        visible:
+                            parcelData!.status == "confirmed" ? true : false,
                         child: Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5, left: 10),
@@ -302,7 +358,9 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                   context: context,
                                   builder: (context) {
                                     return CustomAlertDialog(
-                                      title: "Do you want to on ride this parcel?".tr,
+                                      title:
+                                          "Do you want to on ride this parcel?"
+                                              .tr,
                                       negativeButtonText: 'No'.tr,
                                       positiveButtonText: 'Yes'.tr,
                                       onPressNegative: () {
@@ -310,72 +368,130 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                       },
                                       onPressPositive: () {
                                         Get.back();
-                                        if (Constant.rideOtp.toString() != 'yes') {
+                                        if (Constant.rideOtp.toString() !=
+                                            'yes') {
                                           Map<String, String> bodyParams = {
-                                            'id_parcel': parcelData!.id.toString(),
-                                            'id_user': parcelData!.idUserApp.toString(),
-                                            'driver_name': '${parcelData!.driverName}',
-                                            'driver_id': Preferences.getInt(Preferences.userId).toString(),
+                                            'id_parcel':
+                                                parcelData!.id.toString(),
+                                            'id_user': parcelData!.idUserApp
+                                                .toString(),
+                                            'driver_name':
+                                                '${parcelData!.driverName}',
+                                            'driver_id': Preferences.getInt(
+                                                    Preferences.userId)
+                                                .toString(),
                                           };
-                                          controllerParcelDetails.onRideParcel(bodyParams).then((value) {
+                                          controllerParcelDetails
+                                              .onRideParcel(bodyParams)
+                                              .then((value) {
                                             if (value != null) {
                                               Get.back();
                                               showDialog(
                                                   context: context,
-                                                  builder: (BuildContext context) {
+                                                  builder:
+                                                      (BuildContext context) {
                                                     return CustomDialogBox(
-                                                      title: "On ride Successfully".tr,
-                                                      descriptions: "Parcel Successfully On ride.".tr,
+                                                      title:
+                                                          "On ride Successfully"
+                                                              .tr,
+                                                      descriptions:
+                                                          "Parcel Successfully On ride."
+                                                              .tr,
                                                       text: "Ok".tr,
                                                       onPress: () {
                                                         Get.back();
                                                       },
-                                                      img: Image.asset('assets/images/green_checked.png'),
+                                                      img: Image.asset(
+                                                          'assets/images/green_checked.png'),
                                                     );
                                                   });
                                             }
                                           });
                                         } else {
-                                          controllerParcelDetails.otpController = TextEditingController();
+                                          controllerParcelDetails
+                                                  .otpController =
+                                              TextEditingController();
                                           showDialog(
                                             barrierColor: Colors.black26,
                                             context: context,
                                             builder: (context) {
                                               return Dialog(
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(20),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
                                                 ),
                                                 elevation: 0,
-                                                backgroundColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
                                                 child: Container(
                                                   height: 180,
-                                                  padding: const EdgeInsets.only(left: 10, top: 20, right: 10, bottom: 10),
-                                                  decoration:
-                                                      BoxDecoration(shape: BoxShape.rectangle, color: Colors.white, borderRadius: BorderRadius.circular(20), boxShadow: const [
-                                                    BoxShadow(color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
-                                                  ]),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10,
+                                                          top: 20,
+                                                          right: 10,
+                                                          bottom: 10),
+                                                  decoration: BoxDecoration(
+                                                      shape: BoxShape.rectangle,
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                            color: Colors.black,
+                                                            offset:
+                                                                Offset(0, 10),
+                                                            blurRadius: 10),
+                                                      ]),
                                                   child: Column(
                                                     children: [
                                                       Text(
                                                         "Enter OTP".tr,
-                                                        style: TextStyle(color: Colors.black.withOpacity(0.60)),
+                                                        style: TextStyle(
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    0.60)),
                                                       ),
                                                       Pinput(
-                                                        controller: controllerParcelDetails.otpController,
-                                                        defaultPinTheme: PinTheme(
+                                                        controller:
+                                                            controllerParcelDetails
+                                                                .otpController,
+                                                        defaultPinTheme:
+                                                            PinTheme(
                                                           height: 50,
                                                           width: 50,
-                                                          textStyle: const TextStyle(letterSpacing: 0.60, fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
+                                                          textStyle:
+                                                              const TextStyle(
+                                                                  letterSpacing:
+                                                                      0.60,
+                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
                                                           // margin: EdgeInsets.all(10),
-                                                          decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(10),
-                                                            shape: BoxShape.rectangle,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            shape: BoxShape
+                                                                .rectangle,
                                                             color: Colors.white,
-                                                            border: Border.all(color: ConstantColors.textFieldBoarderColor, width: 0.7),
+                                                            border: Border.all(
+                                                                color: ConstantColors
+                                                                    .textFieldBoarderColor,
+                                                                width: 0.7),
                                                           ),
                                                         ),
-                                                        keyboardType: TextInputType.phone,
-                                                        textInputAction: TextInputAction.done,
+                                                        keyboardType:
+                                                            TextInputType.phone,
+                                                        textInputAction:
+                                                            TextInputAction
+                                                                .done,
                                                         length: 6,
                                                       ),
                                                       // ignore: prefer_const_constructors
@@ -385,30 +501,62 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                                       Row(
                                                         children: [
                                                           Expanded(
-                                                            child: ButtonThem.buildButton(
+                                                            child: ButtonThem
+                                                                .buildButton(
                                                               context,
                                                               title: 'done'.tr,
                                                               btnHeight: 45,
-                                                              btnWidthRatio: 0.8,
-                                                              btnColor: AppThemeData.primary200,
-                                                              txtColor: Colors.white,
+                                                              btnWidthRatio:
+                                                                  0.8,
+                                                              btnColor:
+                                                                  AppThemeData
+                                                                      .primary200,
+                                                              txtColor:
+                                                                  Colors.white,
                                                               onPress: () {
-                                                                if (controllerParcelDetails.otpController.text.toString().length == 6) {
+                                                                if (controllerParcelDetails
+                                                                        .otpController
+                                                                        .text
+                                                                        .toString()
+                                                                        .length ==
+                                                                    6) {
                                                                   controllerParcelDetails
                                                                       .verifyOTP(
-                                                                    userId: parcelData!.idUserApp!.toString(),
-                                                                    rideId: parcelData!.id!.toString(),
+                                                                    userId: parcelData!
+                                                                        .idUserApp!
+                                                                        .toString(),
+                                                                    rideId: parcelData!
+                                                                        .id!
+                                                                        .toString(),
                                                                   )
-                                                                      .then((value) {
-                                                                    if (value != null && value['success'] == "success") {
-                                                                      Map<String, String> bodyParams = {
-                                                                        'id_parcel': parcelData!.id.toString(),
-                                                                        'id_user': parcelData!.idUserApp.toString(),
-                                                                        'driver_name': '${parcelData!.driverName}',
-                                                                        'driver_id': Preferences.getInt(Preferences.userId).toString(),
+                                                                      .then(
+                                                                          (value) {
+                                                                    if (value !=
+                                                                            null &&
+                                                                        value['success'] ==
+                                                                            "success") {
+                                                                      Map<String,
+                                                                              String>
+                                                                          bodyParams =
+                                                                          {
+                                                                        'id_parcel': parcelData!
+                                                                            .id
+                                                                            .toString(),
+                                                                        'id_user': parcelData!
+                                                                            .idUserApp
+                                                                            .toString(),
+                                                                        'driver_name':
+                                                                            '${parcelData!.driverName}',
+                                                                        'driver_id':
+                                                                            Preferences.getInt(Preferences.userId).toString(),
                                                                       };
-                                                                      controllerParcelDetails.onRideParcel(bodyParams).then((value) {
-                                                                        if (value != null) {
+                                                                      controllerParcelDetails
+                                                                          .onRideParcel(
+                                                                              bodyParams)
+                                                                          .then(
+                                                                              (value) {
+                                                                        if (value !=
+                                                                            null) {
                                                                           Get.back();
                                                                           showDialog(
                                                                               context: context,
@@ -429,7 +577,9 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                                                     }
                                                                   });
                                                                 } else {
-                                                                  ShowToastDialog.showToast('Please Enter OTP');
+                                                                  ShowToastDialog
+                                                                      .showToast(
+                                                                          'Please Enter OTP');
                                                                 }
                                                               },
                                                             ),
@@ -438,14 +588,25 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                                             width: 8,
                                                           ),
                                                           Expanded(
-                                                            child: ButtonThem.buildBorderButton(
+                                                            child: ButtonThem
+                                                                .buildBorderButton(
                                                               context,
-                                                              title: 'cancel'.tr,
+                                                              title:
+                                                                  'cancel'.tr,
                                                               btnHeight: 45,
-                                                              btnWidthRatio: 0.8,
-                                                              btnColor: Colors.white,
-                                                              txtColor: Colors.black.withOpacity(0.60),
-                                                              btnBorderColor: Colors.black.withOpacity(0.20),
+                                                              btnWidthRatio:
+                                                                  0.8,
+                                                              btnColor:
+                                                                  Colors.white,
+                                                              txtColor: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.60),
+                                                              btnBorderColor:
+                                                                  Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.20),
                                                               onPress: () {
                                                                 Get.back();
                                                               },
@@ -522,7 +683,9 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                   context: context,
                                   builder: (context) {
                                     return CustomAlertDialog(
-                                      title: "Do you want to complete this parcel?".tr,
+                                      title:
+                                          "Do you want to complete this parcel?"
+                                              .tr,
                                       onPressNegative: () {
                                         Get.back();
                                       },
@@ -530,26 +693,40 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                       positiveButtonText: 'Yes'.tr,
                                       onPressPositive: () {
                                         Map<String, String> bodyParams = {
-                                          'id_pracel': parcelData!.id.toString(),
-                                          'id_user': parcelData!.idUserApp.toString(),
-                                          'driver_name': '${parcelData!.prenomConducteur.toString()} ${parcelData!.nomConducteur.toString()}',
-                                          'from_id': Preferences.getInt(Preferences.userId).toString(),
+                                          'id_pracel':
+                                              parcelData!.id.toString(),
+                                          'id_user':
+                                              parcelData!.idUserApp.toString(),
+                                          'driver_name':
+                                              '${parcelData!.prenomConducteur.toString()} ${parcelData!.nomConducteur.toString()}',
+                                          'from_id': Preferences.getInt(
+                                                  Preferences.userId)
+                                              .toString(),
                                         };
-                                        controllerParcelDetails.setCompletedRequest(bodyParams, parcelData!).then((value) {
+                                        controllerParcelDetails
+                                            .setCompletedRequest(
+                                                bodyParams, parcelData!)
+                                            .then((value) {
                                           if (value != null) {
                                             Get.back();
                                             showDialog(
                                                 context: context,
-                                                builder: (BuildContext context) {
+                                                builder:
+                                                    (BuildContext context) {
                                                   return CustomDialogBox(
-                                                    title: "Completed Successfully".tr,
-                                                    descriptions: "Parcel Successfully completed.".tr,
+                                                    title:
+                                                        "Completed Successfully"
+                                                            .tr,
+                                                    descriptions:
+                                                        "Parcel Successfully completed."
+                                                            .tr,
                                                     text: "Ok".tr,
                                                     onPress: () {
                                                       Get.back();
                                                       Get.back();
                                                     },
-                                                    img: Image.asset('assets/images/green_checked.png'),
+                                                    img: Image.asset(
+                                                        'assets/images/green_checked.png'),
                                                   );
                                                 });
                                           }
@@ -578,14 +755,17 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
 
   buildShowBottomSheet(BuildContext context) {
     return showModalBottomSheet(
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15), topLeft: Radius.circular(15))),
         context: context,
         isDismissible: true,
         isScrollControlled: true,
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
               child: Padding(
                 padding: MediaQuery.of(context).viewInsets,
                 child: Column(
@@ -596,7 +776,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
                         "Cancel Trip".tr,
-                        style: const TextStyle(fontSize: 18, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
                     Padding(
@@ -614,10 +795,12 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                         textInputAction: TextInputAction.done,
                         decoration: const InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
                           ),
                         ),
                       ),
@@ -644,7 +827,9 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                       context: context,
                                       builder: (context) {
                                         return CustomAlertDialog(
-                                          title: "Do you want to reject this booking?".tr,
+                                          title:
+                                              "Do you want to reject this booking?"
+                                                  .tr,
                                           onPressNegative: () {
                                             Get.back();
                                           },
@@ -652,28 +837,47 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                           positiveButtonText: 'Yes'.tr,
                                           onPressPositive: () {
                                             Map<String, String> bodyParams = {
-                                              'id_parcel': parcelData!.id.toString(),
-                                              'id_user': parcelData!.idUserApp.toString(),
-                                              'name': parcelData!.driverName.toString(),
-                                              'from_id': Preferences.getInt(Preferences.userId).toString(),
-                                              'user_cat': controllerParcelDetails.userModel!.userData!.userCat.toString(),
-                                              'reason': resonController.text.toString(),
+                                              'id_parcel':
+                                                  parcelData!.id.toString(),
+                                              'id_user': parcelData!.idUserApp
+                                                  .toString(),
+                                              'name': parcelData!.driverName
+                                                  .toString(),
+                                              'from_id': Preferences.getInt(
+                                                      Preferences.userId)
+                                                  .toString(),
+                                              'user_cat':
+                                                  controllerParcelDetails
+                                                      .userModel!
+                                                      .userData!
+                                                      .userCat
+                                                      .toString(),
+                                              'reason': resonController.text
+                                                  .toString(),
                                             };
-                                            controllerParcelDetails.canceledParcel(bodyParams).then((value) {
+                                            controllerParcelDetails
+                                                .canceledParcel(bodyParams)
+                                                .then((value) {
                                               Get.back();
                                               if (value != null) {
                                                 showDialog(
                                                     context: context,
-                                                    builder: (BuildContext context) {
+                                                    builder:
+                                                        (BuildContext context) {
                                                       return CustomDialogBox(
-                                                        title: "Reject Successfully".tr,
-                                                        descriptions: "Parcel Successfully rejected.".tr,
+                                                        title:
+                                                            "Reject Successfully"
+                                                                .tr,
+                                                        descriptions:
+                                                            "Parcel Successfully rejected."
+                                                                .tr,
                                                         text: "Ok".tr,
                                                         onPress: () {
                                                           Get.back();
                                                           Get.back();
                                                         },
-                                                        img: Image.asset('assets/images/green_checked.png'),
+                                                        img: Image.asset(
+                                                            'assets/images/green_checked.png'),
                                                       );
                                                     });
                                               }
@@ -683,7 +887,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                                       },
                                     );
                                   } else {
-                                    ShowToastDialog.showToast("Please enter a reason");
+                                    ShowToastDialog.showToast(
+                                        "Please enter a reason");
                                   }
                                 },
                               ),
@@ -691,7 +896,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 5, left: 10),
+                              padding:
+                                  const EdgeInsets.only(bottom: 5, left: 10),
                               child: ButtonThem.buildBorderButton(
                                 context,
                                 title: 'Close'.tr,
@@ -724,7 +930,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
     if (parcelData!.status.toString() == "confirmed") {
       PolylineRequest resultdata = PolylineRequest(
         origin: PointLatLng(dLat, dLng),
-        destination: PointLatLng(double.parse(parcelData!.latSource.toString()), double.parse(parcelData!.lngSource.toString())),
+        destination: PointLatLng(double.parse(parcelData!.latSource.toString()),
+            double.parse(parcelData!.lngSource.toString())),
         mode: TravelMode.driving,
         optimizeWaypoints: true,
       );
@@ -735,7 +942,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
     } else if (parcelData!.status == "on ride") {
       PolylineRequest resultdata = PolylineRequest(
         origin: PointLatLng(dLat, dLng),
-        destination: PointLatLng(destinationLatLong.latitude, destinationLatLong.longitude),
+        destination: PointLatLng(
+            destinationLatLong.latitude, destinationLatLong.longitude),
         mode: TravelMode.driving,
         optimizeWaypoints: true,
       );
@@ -745,8 +953,10 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
       );
     } else {
       PolylineRequest resultdata = PolylineRequest(
-        origin: PointLatLng(departureLatLong.latitude, departureLatLong.longitude),
-        destination: PointLatLng(destinationLatLong.latitude, destinationLatLong.longitude),
+        origin:
+            PointLatLng(departureLatLong.latitude, departureLatLong.longitude),
+        destination: PointLatLng(
+            destinationLatLong.latitude, destinationLatLong.longitude),
         mode: TravelMode.driving,
         optimizeWaypoints: true,
       );
@@ -759,7 +969,8 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
     _markers['Departure'] = Marker(
       markerId: const MarkerId('Departure'),
       infoWindow: const InfoWindow(title: "Departure"),
-      position: LatLng(double.parse(parcelData!.latSource.toString()), double.parse(parcelData!.lngSource.toString())),
+      position: LatLng(double.parse(parcelData!.latSource.toString()),
+          double.parse(parcelData!.lngSource.toString())),
       icon: departureIcon!,
     );
 
@@ -802,7 +1013,10 @@ class _ParcelRouteViewScreenState extends State<ParcelRouteViewScreen> {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: source,
-          zoom: parcelData!.status == "on ride" || parcelData!.status == "confirmed" ? 20 : 16,
+          zoom: parcelData!.status == "on ride" ||
+                  parcelData!.status == "confirmed"
+              ? 20
+              : 16,
         ),
       ),
     );

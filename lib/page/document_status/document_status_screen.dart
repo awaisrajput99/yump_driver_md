@@ -1,12 +1,12 @@
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/document_status_contoller.dart';
-import 'package:cabme_driver/themes/app_bar_custom.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/custom_alert_dialog.dart';
-import 'package:cabme_driver/themes/responsive.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/document_status_contoller.dart';
+import 'package:yumprides_driver/themes/app_bar_custom.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/custom_alert_dialog.dart';
+import 'package:yumprides_driver/themes/responsive.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +17,13 @@ import 'package:provider/provider.dart';
 
 class DocumentStatusScreen extends StatelessWidget {
   DocumentStatusScreen({super.key});
-
+  // final List<String> requiredDocuments = [
+  //   "Vehicle Ownership",
+  //   "Car Safety Inspection",
+  //   "Driving Licence (G)",
+  //   "Proof of Eligibility to Work in Canada",
+  //   "Vehicle Insurance",
+  // ];
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
@@ -64,6 +70,39 @@ class DocumentStatusScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
+                      // ListView.builder(
+                      //   shrinkWrap: true,
+                      //   physics: const NeverScrollableScrollPhysics(),
+                      //   itemCount: requiredDocuments.length,
+                      //   itemBuilder: (context, index) {
+                      //     return Padding(
+                      //       padding: const EdgeInsets.symmetric(vertical: 4),
+                      //       child: Row(
+                      //         children: [
+                      //           Icon(Icons.check_circle_outline,
+                      //               size: 20,
+                      //               color: themeChange.getThem()
+                      //                   ? Colors.black54
+                      //                   : Colors.black54),
+                      //           const SizedBox(width: 10),
+                      //           Expanded(
+                      //             child: Text(
+                      //               requiredDocuments[index],
+                      //               style: TextStyle(
+                      //                 fontSize: 14,
+                      //                 fontFamily: AppThemeData.regular,
+                      //                 color: themeChange.getThem()
+                      //                     ? AppThemeData.grey900Dark
+                      //                     : AppThemeData.grey900,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
+                      const SizedBox(height: 20),
                       Expanded(
                         child: RefreshIndicator(
                           onRefresh: () => controller.getCarServiceBooks(),
@@ -361,8 +400,8 @@ class DocumentStatusScreen extends StatelessWidget {
                                   fontSize: 14,
                                   fontFamily: AppThemeData.medium,
                                   color: isDarkMode
-                                      ? AppThemeData.white90
-                                      : AppThemeData.grey80Dark,
+                                      ? AppThemeData.secondary200
+                                      : AppThemeData.secondary200,
                                 ),
                               ),
                             ),
@@ -384,9 +423,9 @@ class DocumentStatusScreen extends StatelessWidget {
                                 icon: Icon(
                                   Icons.photo_library_sharp,
                                   size: 32,
-                                  color: isDarkMode
-                                      ? AppThemeData.white90
-                                      : AppThemeData.grey80Dark,
+                                  // color: isDarkMode
+                                  //     ? AppThemeData.white90
+                                  //     : AppThemeData.grey80Dark,
                                 )),
                             Padding(
                               padding: const EdgeInsets.only(top: 3),
@@ -396,8 +435,8 @@ class DocumentStatusScreen extends StatelessWidget {
                                   fontSize: 14,
                                   fontFamily: AppThemeData.medium,
                                   color: isDarkMode
-                                      ? AppThemeData.white90
-                                      : AppThemeData.grey80Dark,
+                                      ? AppThemeData.secondary200
+                                      : AppThemeData.secondary200,
                                 ),
                               ),
                             ),

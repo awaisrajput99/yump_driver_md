@@ -23,6 +23,7 @@ class AppThemeData {
   static Color primary300 = const Color(0XFF184A8B);
   static Color primary400 = const Color(0XFF2F89FC);
   static Color white90 = Colors.white.withOpacity(0.9);
+  static Color white100 = Colors.white;
   static Color grey80Dark = Colors.white.withOpacity(0.9);
   static Color grey300 = const Color.fromARGB(255, 245, 245, 245);
   static Color grey300Dark = const Color.fromARGB(255, 245, 245, 245);

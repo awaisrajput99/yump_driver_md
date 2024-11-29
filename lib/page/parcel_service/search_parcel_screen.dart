@@ -1,20 +1,20 @@
 import 'package:bottom_picker/bottom_picker.dart';
-import 'package:cabme_driver/constant/constant.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/dash_board_controller.dart';
-import 'package:cabme_driver/controller/parcel_service_controller.dart';
-import 'package:cabme_driver/model/parcel_model.dart';
-import 'package:cabme_driver/page/parcel_service/parcel_osm_route_view_screen.dart';
-import 'package:cabme_driver/page/parcel_service/parcel_route_view_screen.dart';
-import 'package:cabme_driver/page/search_location_screen.dart';
-import 'package:cabme_driver/themes/app_bar_custom.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/custom_widget.dart';
-import 'package:cabme_driver/themes/text_field_them.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
-import 'package:cabme_driver/widget/StarRating.dart';
+import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/dash_board_controller.dart';
+import 'package:yumprides_driver/controller/parcel_service_controller.dart';
+import 'package:yumprides_driver/model/parcel_model.dart';
+import 'package:yumprides_driver/page/parcel_service/parcel_osm_route_view_screen.dart';
+import 'package:yumprides_driver/page/parcel_service/parcel_route_view_screen.dart';
+import 'package:yumprides_driver/page/search_location_screen.dart';
+import 'package:yumprides_driver/themes/app_bar_custom.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/custom_widget.dart';
+import 'package:yumprides_driver/themes/text_field_them.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
@@ -40,18 +40,29 @@ class SearchParcelScreen extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(4.0),
-                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                   decoration: BoxDecoration(
-                      color: themeChange.getThem() ? AppThemeData.surface50Dark : AppThemeData.surface50,
-                      border: Border.all(color: themeChange.getThem() ? AppThemeData.grey200Dark : AppThemeData.grey200, width: 1),
-                      borderRadius: const BorderRadius.all(Radius.circular(12))),
+                      color: themeChange.getThem()
+                          ? AppThemeData.surface50Dark
+                          : AppThemeData.surface50,
+                      border: Border.all(
+                          color: themeChange.getThem()
+                              ? AppThemeData.grey200Dark
+                              : AppThemeData.grey200,
+                          width: 1),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12))),
                   child: Column(
                     children: [
-                      if (double.parse(controller.totalEarn.value.toString()) < double.parse(Constant.minimumWalletBalance!))
+                      if (double.parse(controller.totalEarn.value.toString()) <
+                          double.parse(Constant.minimumWalletBalance!))
                         Container(
                           padding: const EdgeInsets.all(5),
                           margin: const EdgeInsets.only(bottom: 10),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppThemeData.primary200),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppThemeData.primary200),
                           child: Text(
                             "${"Your wallet balance must be".tr} ${Constant().amountShow(amount: Constant.minimumWalletBalance!.toString())} ${"to get parcel.".tr}",
                           ),
@@ -59,18 +70,29 @@ class SearchParcelScreen extends StatelessWidget {
                       InkWell(
                           onTap: () async {
                             if (Constant.selectedMapType == 'osm') {
-                              Get.to(const AddressSearchScreen())?.then((value) {
+                              Get.to(const AddressSearchScreen())
+                                  ?.then((value) {
                                 if (value != null) {
                                   SearchInfo searchInfoData = value;
-                                  controller.sourceLatLng = LatLng(searchInfoData.point!.latitude, searchInfoData.point!.longitude);
-                                  controller.sourceCityController.value.text = searchInfoData.address?.city ?? searchInfoData.address?.name ?? '';
+                                  controller.sourceLatLng = LatLng(
+                                      searchInfoData.point!.latitude,
+                                      searchInfoData.point!.longitude);
+                                  controller.sourceCityController.value.text =
+                                      searchInfoData.address?.city ??
+                                          searchInfoData.address?.name ??
+                                          '';
                                 }
                               });
                             } else {
-                              await Constant().handlePressButton(context).then((value) {
+                              await Constant()
+                                  .handlePressButton(context)
+                                  .then((value) {
                                 if (value != null) {
-                                  controller.sourceLatLng = LatLng(value.result.geometry!.location.lat, value.result.geometry!.location.lng);
-                                  controller.sourceCityController.value.text = value.result.vicinity.toString();
+                                  controller.sourceLatLng = LatLng(
+                                      value.result.geometry!.location.lat,
+                                      value.result.geometry!.location.lng);
+                                  controller.sourceCityController.value.text =
+                                      value.result.vicinity.toString();
                                 }
                               });
                             }
@@ -85,7 +107,9 @@ class SearchParcelScreen extends StatelessWidget {
                                 height: 25,
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
-                                  themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                  themeChange.getThem()
+                                      ? AppThemeData.grey200
+                                      : AppThemeData.grey500Dark,
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -99,18 +123,30 @@ class SearchParcelScreen extends StatelessWidget {
                       InkWell(
                           onTap: () async {
                             if (Constant.selectedMapType == 'osm') {
-                              Get.to(const AddressSearchScreen())?.then((value) {
+                              Get.to(const AddressSearchScreen())
+                                  ?.then((value) {
                                 if (value != null) {
                                   SearchInfo data = value;
-                                  controller.destinationLatLng = LatLng(data.point!.latitude, data.point!.longitude);
-                                  controller.destinationCityController.value.text = data.address?.city ?? data.address?.name ?? '';
+                                  controller.destinationLatLng = LatLng(
+                                      data.point!.latitude,
+                                      data.point!.longitude);
+                                  controller.destinationCityController.value
+                                          .text =
+                                      data.address?.city ??
+                                          data.address?.name ??
+                                          '';
                                 }
                               });
                             } else {
-                              await Constant().handlePressButton(context).then((value) {
+                              await Constant()
+                                  .handlePressButton(context)
+                                  .then((value) {
                                 if (value != null) {
-                                  controller.destinationLatLng = LatLng(value.result.geometry!.location.lat, value.result.geometry!.location.lng);
-                                  controller.destinationCityController.value.text = value.result.vicinity.toString();
+                                  controller.destinationLatLng = LatLng(
+                                      value.result.geometry!.location.lat,
+                                      value.result.geometry!.location.lng);
+                                  controller.destinationCityController.value
+                                      .text = value.result.vicinity.toString();
                                 }
                               });
                             }
@@ -125,14 +161,17 @@ class SearchParcelScreen extends StatelessWidget {
                                 height: 25,
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
-                                  themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                  themeChange.getThem()
+                                      ? AppThemeData.grey200
+                                      : AppThemeData.grey500Dark,
                                   BlendMode.srcIn,
                                 ),
                               ),
                             ),
                             isBorderEnable: false,
                             hintText: 'To'.tr,
-                            controller: controller.destinationCityController.value,
+                            controller:
+                                controller.destinationCityController.value,
                             enabled: false,
                           )),
                       dividerCust(isDarkMode: themeChange.getThem()),
@@ -141,7 +180,8 @@ class SearchParcelScreen extends StatelessWidget {
                             BottomPicker.date(
                               onSubmit: (index) {
                                 controller.dateAndTime = index;
-                                DateFormat dateFormat = DateFormat("dd-MMM-yyyy");
+                                DateFormat dateFormat =
+                                    DateFormat("dd-MMM-yyyy");
                                 String string = dateFormat.format(index);
 
                                 controller.whenController.value.text = string;
@@ -163,7 +203,9 @@ class SearchParcelScreen extends StatelessWidget {
                                 height: 25,
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
-                                  themeChange.getThem() ? AppThemeData.grey200 : AppThemeData.grey500Dark,
+                                  themeChange.getThem()
+                                      ? AppThemeData.grey200
+                                      : AppThemeData.grey500Dark,
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -182,9 +224,15 @@ class SearchParcelScreen extends StatelessWidget {
                         title: "Search".tr,
                         btnHeight: 48,
                         btnColor: AppThemeData.primary200,
-                        txtColor: themeChange.getThem() ? AppThemeData.grey900 : AppThemeData.grey900Dark, onPress: () {
-                      if (controller.sourceCityController.value.text.isNotEmpty && controller.whenController.value.text.isNotEmpty) {
-                        if (double.parse(controller.totalEarn.value.toString()) < double.parse(Constant.minimumWalletBalance!)) {
+                        txtColor: themeChange.getThem()
+                            ? AppThemeData.grey900
+                            : AppThemeData.grey900Dark, onPress: () {
+                      if (controller
+                              .sourceCityController.value.text.isNotEmpty &&
+                          controller.whenController.value.text.isNotEmpty) {
+                        if (double.parse(
+                                controller.totalEarn.value.toString()) <
+                            double.parse(Constant.minimumWalletBalance!)) {
                           ShowToastDialog.showToast(
                               "${"Your wallet balance must be".tr} ${Constant().amountShow(amount: Constant.minimumWalletBalance!.toString())} ${"to get parcel.".tr}");
                         } else {
@@ -194,7 +242,8 @@ class SearchParcelScreen extends StatelessWidget {
                           controller.searchParcel(url);
                         }
                       } else {
-                        ShowToastDialog.showToast("Please enter source city and date.");
+                        ShowToastDialog.showToast(
+                            "Please enter source city and date.");
                       }
                     })),
                 Expanded(
@@ -203,7 +252,11 @@ class SearchParcelScreen extends StatelessWidget {
                   itemCount: controller.searchParcelList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return buildHistory(context, controller.searchParcelList[index], controller, themeChange.getThem());
+                    return buildHistory(
+                        context,
+                        controller.searchParcelList[index],
+                        controller,
+                        themeChange.getThem());
                   },
                 ))
               ],
@@ -212,7 +265,8 @@ class SearchParcelScreen extends StatelessWidget {
         });
   }
 
-  buildHistory(context, ParcelData data, ParcelServiceController controller, bool isDarkMode) {
+  buildHistory(context, ParcelData data, ParcelServiceController controller,
+      bool isDarkMode) {
     return GestureDetector(
       onTap: () async {
         // var isDone = await Get.to(const ParcelDetailsScreen(), arguments: {
@@ -238,7 +292,8 @@ class SearchParcelScreen extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
         decoration: BoxDecoration(
-          color: isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+          color:
+              isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -288,7 +343,8 @@ class SearchParcelScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            TextScroll("${double.parse(data.distance.toString()).toStringAsFixed(int.parse(Constant.decimal!))} ${data.distanceUnit}",
+                            TextScroll(
+                                "${double.parse(data.distance.toString()).toStringAsFixed(int.parse(Constant.decimal!))} ${data.distanceUnit}",
                                 mode: TextScrollMode.bouncing,
                                 pauseBetween: const Duration(seconds: 2),
                                 style: TextStyle(
@@ -303,7 +359,9 @@ class SearchParcelScreen extends StatelessWidget {
                                 maxLines: 1,
                                 style: TextStyle(
                                   fontFamily: AppThemeData.regular,
-                                  color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                  color: isDarkMode
+                                      ? AppThemeData.grey900Dark
+                                      : AppThemeData.grey900,
                                   fontSize: 12,
                                 )),
                           ],
@@ -311,7 +369,8 @@ class SearchParcelScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 16),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -330,7 +389,9 @@ class SearchParcelScreen extends StatelessWidget {
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.regular,
-                                    color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                    color: isDarkMode
+                                        ? AppThemeData.grey900Dark
+                                        : AppThemeData.grey900,
                                     fontSize: 12,
                                   )),
                             ],
@@ -343,7 +404,9 @@ class SearchParcelScreen extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(Constant().amountShow(amount: data.amount.toString()),
+                              Text(
+                                  Constant().amountShow(
+                                      amount: data.amount.toString()),
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.semiBold,
@@ -356,7 +419,9 @@ class SearchParcelScreen extends StatelessWidget {
                               Text("Amount".tr,
                                   style: TextStyle(
                                     fontFamily: AppThemeData.regular,
-                                    color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                    color: isDarkMode
+                                        ? AppThemeData.grey900Dark
+                                        : AppThemeData.grey900,
                                     fontSize: 12,
                                   )),
                             ],
@@ -376,7 +441,9 @@ class SearchParcelScreen extends StatelessWidget {
                             height: 60,
                             width: 60,
                             fit: BoxFit.cover,
-                            placeholder: (context, url) => Constant.loader(context, isDarkMode: isDarkMode),
+                            placeholder: (context, url) => Constant.loader(
+                                context,
+                                isDarkMode: isDarkMode),
                             errorWidget: (context, url, error) => Image.asset(
                               "assets/images/appIcon.png",
                               height: 60,
@@ -394,10 +461,18 @@ class SearchParcelScreen extends StatelessWidget {
                                   child: Text(data.userName.toString(),
                                       style: TextStyle(
                                         fontFamily: AppThemeData.semiBold,
-                                        color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                        color: isDarkMode
+                                            ? AppThemeData.grey900Dark
+                                            : AppThemeData.grey900,
                                         fontSize: 16,
                                       ))),
-                              StarRating(size: 18, rating: data.moyenneDriver != null ? double.parse(data.moyenneDriver.toString()) : 0.0, color: AppThemeData.primary200),
+                              StarRating(
+                                  size: 18,
+                                  rating: data.moyenneDriver != null
+                                      ? double.parse(
+                                          data.moyenneDriver.toString())
+                                      : 0.0,
+                                  color: AppThemeData.primary200),
                             ],
                           ),
                         ),
@@ -411,7 +486,8 @@ class SearchParcelScreen extends StatelessWidget {
                                   Constant.makePhoneCall("${data.userPhone}");
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
                                   decoration: BoxDecoration(
                                     color: AppThemeData.new200,
                                     borderRadius: BorderRadius.circular(40),
@@ -421,7 +497,9 @@ class SearchParcelScreen extends StatelessWidget {
                                     height: 20,
                                     width: 20,
                                     colorFilter: ColorFilter.mode(
-                                      isDarkMode ? AppThemeData.surface50Dark : AppThemeData.surface50,
+                                      isDarkMode
+                                          ? AppThemeData.surface50Dark
+                                          : AppThemeData.surface50,
                                       BlendMode.srcIn,
                                     ),
                                   ),
@@ -435,7 +513,9 @@ class SearchParcelScreen extends StatelessWidget {
                               child: Text(data.parcelDate.toString(),
                                   style: TextStyle(
                                     fontFamily: AppThemeData.medium,
-                                    color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                                    color: isDarkMode
+                                        ? AppThemeData.grey900Dark
+                                        : AppThemeData.grey900,
                                     fontSize: 14,
                                   )),
                             ),
@@ -457,14 +537,18 @@ class SearchParcelScreen extends StatelessWidget {
                 title: 'Accept'.tr,
                 btnHeight: 50,
                 btnColor: AppThemeData.primary200,
-                txtColor: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                txtColor: isDarkMode
+                    ? AppThemeData.grey900Dark
+                    : AppThemeData.grey900,
                 btnBorderColor: AppThemeData.primary200,
                 onPress: () async {
                   Map<String, String> bodyParams = {
                     "id_parcel": data.id.toString(),
                     "id_user": data.idUserApp.toString(),
-                    "driver_name": "${controller.userModel!.userData!.prenom} ${controller.userModel!.userData!.nom}",
-                    "driver_id": Preferences.getInt(Preferences.userId).toString(),
+                    "driver_name":
+                        "${controller.userModel!.userData!.prenom} ${controller.userModel!.userData!.nom}",
+                    "driver_id":
+                        Preferences.getInt(Preferences.userId).toString(),
                   };
                   controller.confirmedParcel(bodyParams).then((value) {
                     if (value != null) {
@@ -482,7 +566,8 @@ class SearchParcelScreen extends StatelessWidget {
   }
 }
 
-buildUsersDetails(context, ParcelData data, {required bool isDarkMode, bool isSender = false}) {
+buildUsersDetails(context, ParcelData data,
+    {required bool isDarkMode, bool isSender = false}) {
   return Padding(
     padding: const EdgeInsets.symmetric(
       horizontal: 8.0,
@@ -497,25 +582,33 @@ buildUsersDetails(context, ParcelData data, {required bool isDarkMode, bool isSe
               Row(
                 children: [
                   Text(
-                    isSender ? data.senderName.toString() : data.receiverName.toString(),
+                    isSender
+                        ? data.senderName.toString()
+                        : data.receiverName.toString(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: AppThemeData.medium,
-                      color: isDarkMode ? AppThemeData.grey900Dark : AppThemeData.grey900,
+                      color: isDarkMode
+                          ? AppThemeData.grey900Dark
+                          : AppThemeData.grey900,
                     ),
                   ),
                 ],
               ),
               Text(
-                isSender ? data.senderPhone.toString() : data.receiverPhone.toString(),
+                isSender
+                    ? data.senderPhone.toString()
+                    : data.receiverPhone.toString(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 14,
                   fontFamily: AppThemeData.regular,
-                  color: isDarkMode ? AppThemeData.grey400 : AppThemeData.grey300Dark,
+                  color: isDarkMode
+                      ? AppThemeData.grey400
+                      : AppThemeData.grey300Dark,
                 ),
               ),
               Text(
@@ -525,7 +618,9 @@ buildUsersDetails(context, ParcelData data, {required bool isDarkMode, bool isSe
                 style: TextStyle(
                   fontSize: 14,
                   fontFamily: AppThemeData.regular,
-                  color: isDarkMode ? AppThemeData.grey400 : AppThemeData.grey300Dark,
+                  color: isDarkMode
+                      ? AppThemeData.grey400
+                      : AppThemeData.grey300Dark,
                 ),
               ),
             ],

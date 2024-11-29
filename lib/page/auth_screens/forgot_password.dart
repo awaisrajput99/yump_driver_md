@@ -1,11 +1,11 @@
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/controller/forgot_password_controller.dart';
-import 'package:cabme_driver/page/auth_screens/forgot_password_otp_screen.dart';
-import 'package:cabme_driver/themes/button_them.dart';
-import 'package:cabme_driver/themes/constant_colors.dart';
-import 'package:cabme_driver/themes/responsive.dart';
-import 'package:cabme_driver/themes/text_field_them.dart';
-import 'package:cabme_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/forgot_password_controller.dart';
+import 'package:yumprides_driver/page/auth_screens/forgot_password_otp_screen.dart';
+import 'package:yumprides_driver/themes/button_them.dart';
+import 'package:yumprides_driver/themes/constant_colors.dart';
+import 'package:yumprides_driver/themes/responsive.dart';
+import 'package:yumprides_driver/themes/text_field_them.dart';
+import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,7 +43,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               child: Text.rich(
                 textAlign: TextAlign.center,
                 TextSpan(
-                  text: 'First time in CabMe?'.tr,
+                  text: 'First time in Yum Rides?'.tr,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: AppThemeData.regular,

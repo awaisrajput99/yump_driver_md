@@ -2,16 +2,17 @@
 
 import 'dart:convert';
 
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/model/payment_setting_model.dart';
-import 'package:cabme_driver/model/paypalClientToken_model.dart';
-import 'package:cabme_driver/service/api.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/model/payment_setting_model.dart';
+import 'package:yumprides_driver/model/paypalClientToken_model.dart';
+import 'package:yumprides_driver/service/api.dart';
 import 'package:http/http.dart' as http;
 
 import '../../utils/Preferences.dart';
 
 class PayPalClientTokenGen {
-  static Future<PayPalClientTokenModel> paypalClientToken(PayPal? payPal) async {
+  static Future<PayPalClientTokenModel> paypalClientToken(
+      PayPal? payPal) async {
     // final String userId = UserPreference.getUserId();
     // final String orderId = isTopup ? UserPreference.getPaymentId() : UserPreference.getOrderId();
 
@@ -24,7 +25,8 @@ class PayPalClientTokenGen {
         'accesstoken': Preferences.getString(Preferences.accesstoken),
       },
       body: {
-        "environment": payPal!.isLive.toString() == "true" ? "production" : "sandbox",
+        "environment":
+            payPal!.isLive.toString() == "true" ? "production" : "sandbox",
         "merchant_id": payPal.merchantId.toString(),
         "public_key": payPal.publicKey.toString(),
         "private_key": payPal.privateKey.toString(),
@@ -32,7 +34,8 @@ class PayPalClientTokenGen {
     );
     showLog("API :: URL :: $url");
     showLog("API :: Request Body :: ${jsonEncode({
-          "environment": payPal.isLive.toString() == "true" ? "production" : "sandbox",
+          "environment":
+              payPal.isLive.toString() == "true" ? "production" : "sandbox",
           "merchant_id": payPal.merchantId.toString(),
           "public_key": payPal.publicKey.toString(),
           "private_key": payPal.privateKey.toString(),
@@ -63,7 +66,8 @@ class PayPalClientTokenGen {
         'accesstoken': Preferences.getString(Preferences.accesstoken),
       },
       body: {
-        "environment": payPal!.isLive.toString() == "true" ? "production" : "sandbox",
+        "environment":
+            payPal!.isLive.toString() == "true" ? "production" : "sandbox",
         "merchant_id": payPal.merchantId.toString(),
         "public_key": payPal.publicKey.toString(),
         "private_key": payPal.privateKey.toString(),
@@ -74,7 +78,8 @@ class PayPalClientTokenGen {
     );
     showLog("API :: URL :: $url");
     showLog("API :: Request Body :: ${jsonEncode({
-          "environment": payPal!.isLive.toString() == "true" ? "production" : "sandbox",
+          "environment":
+              payPal!.isLive.toString() == "true" ? "production" : "sandbox",
           "merchant_id": payPal.merchantId.toString(),
           "public_key": payPal.publicKey.toString(),
           "private_key": payPal.privateKey.toString(),

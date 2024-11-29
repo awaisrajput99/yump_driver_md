@@ -2,7 +2,7 @@
 
 import 'dart:developer';
 
-import 'package:cabme_driver/model/payment_setting_model.dart';
+import 'package:yumprides_driver/model/payment_setting_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,8 @@ class PayFastScreen extends StatefulWidget {
   final String htmlData;
   final PayFast payFastSettingData;
 
-  const PayFastScreen({super.key, required this.htmlData, required this.payFastSettingData});
+  const PayFastScreen(
+      {super.key, required this.htmlData, required this.payFastSettingData});
 
   @override
   State<PayFastScreen> createState() => _PayFastScreenState();

@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:cabme_driver/constant/logdata.dart';
-import 'package:cabme_driver/constant/show_toast_dialog.dart';
-import 'package:cabme_driver/model/user_model.dart';
-import 'package:cabme_driver/service/api.dart';
-import 'package:cabme_driver/utils/Preferences.dart';
+import 'package:yumprides_driver/constant/logdata.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/model/user_model.dart';
+import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +22,6 @@ class SignUpController extends GetxController {
   final conformPasswordController = TextEditingController().obs;
 
   RxString loginType = "".obs;
-
 
   @override
   void onInit() {
@@ -43,7 +42,8 @@ class SignUpController extends GetxController {
   Future<UserModel?> signUp(Map<String, String> bodyParams) async {
     try {
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.post(Uri.parse(API.userSignUP), headers: API.authheader, body: jsonEncode(bodyParams));
+      final response = await http.post(Uri.parse(API.userSignUP),
+          headers: API.authheader, body: jsonEncode(bodyParams));
 
       showLog("API :: URL :: ${API.userSignUP} ");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
@@ -56,14 +56,17 @@ class SignUpController extends GetxController {
         if (responseBody['success'] == "Failed") {
           ShowToastDialog.showToast(responseBody['error']);
         } else {
-          Preferences.setString(Preferences.accesstoken, responseBody['data']['accesstoken'].toString());
-          API.header['accesstoken'] = Preferences.getString(Preferences.accesstoken);
+          Preferences.setString(Preferences.accesstoken,
+              responseBody['data']['accesstoken'].toString());
+          API.header['accesstoken'] =
+              Preferences.getString(Preferences.accesstoken);
 
           return UserModel.fromJson(responseBody);
         }
       } else {
         ShowToastDialog.closeLoader();
-        ShowToastDialog.showToast('Something want wrong. Please try again later');
+        ShowToastDialog.showToast(
+            'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
       }
     } on TimeoutException catch (e) {
