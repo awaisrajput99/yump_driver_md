@@ -35,7 +35,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="CabMe driver"
+        android:label="Yump Rides Driver"
         tools:replace="android:label">
         <service
             android:name=".MyService"
