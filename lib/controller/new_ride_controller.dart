@@ -80,7 +80,7 @@ class NewRideController extends GetxController {
       Map<String, dynamic> responseBody = json.decode(response.body);
 
       showLog(
-          "API :: URL :: ${API.driverAllRides}?id_driver=${Preferences.getInt(Preferences.userId)}}");
+          "API :: URL :: ${API.driverAllRides}?id_driver=${Preferences.getInt(Preferences.userId)}");
       showLog("API :: Request Body :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");

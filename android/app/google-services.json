@@ -134,6 +134,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "600457798477-296opvq042op61nkd9g9tbv8u6m10pqk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yumprides.driver",
+            "certificate_hash": "c827775be07e5151edcd9aa02e3dd052f863302e"
+          }
+        },
+        {
+          "client_id": "600457798477-qbmmq4b9s0i52p06ugm81ieot0s1ld4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yumprides.driver",
+            "certificate_hash": "a6d2f5c87bf8580919096e01322827ac892ad74a"
+          }
+        },
+        {
+          "client_id": "600457798477-vh3vhjgefqhbc8s9b8b8c5r8eil3oaln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yumprides.driver",
+            "certificate_hash": "1cce2eb92af86b9b2bc3b17ba2ca50d6ac7d0eb2"
+          }
+        },
+        {
           "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
           "client_type": 3
         }
