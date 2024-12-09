@@ -212,14 +212,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       return GetMaterialApp(
         title: 'Yump Rides Driver'.tr,
         debugShowCheckedModeBanner: false,
-        theme: Styles.themeData(
-            themeChangeProvider.darkTheme == 0
-                ? true
-                : themeChangeProvider.darkTheme == 1
-                    ? false
-                    : themeChangeProvider.getSystemThem(),
-            context),
-        themeMode: ThemeMode.light,
+        //         theme: lightTheme, // Define your light theme here
+        // darkTheme: darkTheme, // Define your dark theme here
+        themeMode: ThemeMode.light, // Force light theme
+
+        // theme: Styles.themeData(
+        //     themeChangeProvider.darkTheme == 0
+        //         ? true
+        //         : themeChangeProvider.darkTheme == 1
+        //             ? false
+        //             : themeChangeProvider.getSystemThem(),
+        //     context),
+        // themeMode: ThemeMode.light,
         locale: LocalizationService.locale,
         fallbackLocale: LocalizationService.locale,
         translations: LocalizationService(),
