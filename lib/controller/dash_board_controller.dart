@@ -94,7 +94,7 @@ class DashBoardController extends GetxController {
           section: 'Settings & Support:'.tr),
       DrawerItem('Terms of Service'.tr, 'assets/icons/ic_terms.svg'),
       DrawerItem('Privacy Policy'.tr, 'assets/icons/ic_privacy.svg'),
-      DrawerItem('Dark Mode'.tr, 'assets/icons/ic_dark.svg', isSwitch: true),
+      // DrawerItem('Dark Mode'.tr, 'assets/icons/ic_dark.svg', isSwitch: true),
       DrawerItem('Rate the App'.tr, 'assets/icons/ic_star_line.svg',
           section: 'Feedback & Support'.tr),
       DrawerItem('Log Out'.tr, 'assets/icons/ic_logout.svg'),

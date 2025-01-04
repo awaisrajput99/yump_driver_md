@@ -218,7 +218,9 @@ class OnBoardingScreen extends StatelessWidget {
                       if (controller.selectedPageIndex.value ==
                           (controller.onboardingModel.value.data!.length - 1))
                         Center(
-                          heightFactor: 1,
+                          heightFactor
+                          
+                          : 1,
                           child: ButtonThem.buildButton(
                             context,
                             title: 'Start Your Journey'.tr,

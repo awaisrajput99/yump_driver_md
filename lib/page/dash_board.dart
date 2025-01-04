@@ -73,100 +73,103 @@ buildAppDrawer(BuildContext context, DashBoardController controller) {
                 child: Text(
                   d.section ?? '',
                   style: TextStyle(
-                    color: themeChange.getThem()
-                        ? AppThemeData.grey500Dark
-                        : AppThemeData.grey300Dark,
+                    color: themeChange.getThem() ? Colors.black : Colors.black,
                     fontSize: 14,
                     fontFamily: AppThemeData.regular,
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: (i == (controller.drawerItems.length - 1))
-                            ? 16
-                            : 0),
+            d.isSwitch == true
+                ? SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            d.icon,
-                            width: 24,
-                            height: 24,
-                            colorFilter: ColorFilter.mode(
-                              i == (controller.drawerItems.length - 1)
-                                  ? AppThemeData.error50
-                                  : i == 0
-                                      ? AppThemeData.primary200
-                                      : themeChange.getThem()
-                                          ? AppThemeData.grey900Dark
-                                          : AppThemeData.grey900,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          Text(
-                            d.title,
-                            style: TextStyle(
-                              color: i == (controller.drawerItems.length - 1)
-                                  ? AppThemeData.error50
-                                  : i == 0
-                                      ? AppThemeData.primary200
-                                      : themeChange.getThem()
-                                          ? AppThemeData.grey900Dark
-                                          : AppThemeData.grey900,
-                              fontSize: 16,
-                              fontFamily: AppThemeData.medium,
-                            ),
-                          ),
-                        ]),
-                  ),
-                  d.isSwitch == true
-                      ? SizedBox(
-                          height: 25,
-                          child: Switch(
-                            trackOutlineColor:
-                                WidgetStateProperty.resolveWith<Color>(
-                                    (Set<WidgetState> states) {
-                              return Colors.transparent;
-                            }),
-                            inactiveTrackColor: themeChange.getThem()
-                                ? AppThemeData.grey300Dark
-                                : AppThemeData.grey300,
-                            activeTrackColor: AppThemeData.primary200,
-                            thumbColor: WidgetStateProperty.resolveWith<Color>(
-                                (Set<WidgetState> states) {
-                              return themeChange.getThem()
-                                  ? AppThemeData.white90
-                                  : AppThemeData.grey80Dark;
-                            }),
-                            value: themeChange.getThem(),
-                            onChanged: (value) =>
-                                (themeChange.darkTheme = value == true ? 0 : 1),
-                          ),
-                        )
-                      : SvgPicture.asset(
-                          'assets/icons/ic_right_arrow.svg',
-                          width: 20,
-                          height: 20,
-                          colorFilter: ColorFilter.mode(
-                            themeChange.getThem()
-                                ? AppThemeData.grey400Dark
-                                : AppThemeData.grey400,
-                            BlendMode.srcIn,
-                          ),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  (i == (controller.drawerItems.length - 1))
+                                      ? 16
+                                      : 0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(
+                                  d.icon,
+                                  width: 24,
+                                  height: 24,
+                                  colorFilter: ColorFilter.mode(
+                                    i == (controller.drawerItems.length - 1)
+                                        ? AppThemeData.error50
+                                        : i == 0
+                                            ? AppThemeData.primary200
+                                            : themeChange.getThem()
+                                                ? AppThemeData.grey900Dark
+                                                : AppThemeData.grey900,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Text(
+                                  d.title,
+                                  style: TextStyle(
+                                    color:
+                                        i == (controller.drawerItems.length - 1)
+                                            ? AppThemeData.error50
+                                            : i == 0
+                                                ? AppThemeData.primary200
+                                                : themeChange.getThem()
+                                                    ? AppThemeData.grey900Dark
+                                                    : AppThemeData.grey900,
+                                    fontSize: 16,
+                                    fontFamily: AppThemeData.medium,
+                                  ),
+                                ),
+                              ]),
                         ),
-                ],
-              ),
-            ),
+                        d.isSwitch == true
+                            ? SizedBox(
+                                // height: 25,
+                                // child: Switch(
+                                //   trackOutlineColor:
+                                //       WidgetStateProperty.resolveWith<Color>(
+                                //           (Set<WidgetState> states) {
+                                //     return Colors.transparent;
+                                //   }),
+                                //   inactiveTrackColor: themeChange.getThem()
+                                //       ? AppThemeData.grey300Dark
+                                //       : AppThemeData.grey300,
+                                //   activeTrackColor: AppThemeData.primary200,
+                                //   thumbColor: WidgetStateProperty.resolveWith<Color>(
+                                //       (Set<WidgetState> states) {
+                                //     return themeChange.getThem()
+                                //         ? AppThemeData.white90
+                                //         : AppThemeData.grey80Dark;
+                                //   }),
+                                //   value: themeChange.getThem(),
+                                //   onChanged: (value) =>
+                                //       (themeChange.darkTheme = value == true ? 0 : 1),
+                                // ),
+                                )
+                            : SvgPicture.asset(
+                                'assets/icons/ic_right_arrow.svg',
+                                width: 20,
+                                height: 20,
+                                colorFilter: ColorFilter.mode(
+                                  themeChange.getThem()
+                                      ? AppThemeData.grey400Dark
+                                      : AppThemeData.grey400,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
             if ((controller.drawerItems.length - 2) > i)
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),

@@ -280,34 +280,34 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 40),
-                                    child: ButtonThem.buildIconButtonWidget(
-                                      context,
-                                      title: 'Mobile Number'.tr,
-                                      btnHeight: 50,
-                                      btnColor: themeChange.getThem()
-                                          ? AppThemeData.grey300Dark
-                                          : AppThemeData.grey300,
-                                      txtColor: themeChange.getThem()
-                                          ? AppThemeData.grey900Dark
-                                          : AppThemeData.grey900,
-                                      iconColor: themeChange.getThem()
-                                          ? AppThemeData.grey900Dark
-                                          : AppThemeData.grey900,
-                                      icon: SvgPicture.asset(
-                                          "assets/icons/ic_phone_line.svg"),
-                                      onPress: () {
-                                        FocusScope.of(context).unfocus();
-                                        Get.to(
-                                            MobileNumberScreen(isLogin: true),
-                                            duration: const Duration(
-                                                milliseconds:
-                                                    400), //duration of transitions, default 1 sec
-                                            transition: Transition.rightToLeft);
-                                      },
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(top: 40),
+                                  //   child: ButtonThem.buildIconButtonWidget(
+                                  //     context,
+                                  //     title: 'Mobile Number'.tr,
+                                  //     btnHeight: 50,
+                                  //     btnColor: themeChange.getThem()
+                                  //         ? AppThemeData.grey300Dark
+                                  //         : AppThemeData.grey300,
+                                  //     txtColor: themeChange.getThem()
+                                  //         ? AppThemeData.grey900Dark
+                                  //         : AppThemeData.grey900,
+                                  //     iconColor: themeChange.getThem()
+                                  //         ? AppThemeData.grey900Dark
+                                  //         : AppThemeData.grey900,
+                                  //     icon: SvgPicture.asset(
+                                  //         "assets/icons/ic_phone_line.svg"),
+                                  //     onPress: () {
+                                  //       FocusScope.of(context).unfocus();
+                                  //       Get.to(
+                                  //           MobileNumberScreen(isLogin: true),
+                                  //           duration: const Duration(
+                                  //               milliseconds:
+                                  //                   400), //duration of transitions, default 1 sec
+                                  //           transition: Transition.rightToLeft);
+                                  //     },
+                                  //   ),
+                                  // ),
                                   SizedBox(
                                     height: 10,
                                   ),

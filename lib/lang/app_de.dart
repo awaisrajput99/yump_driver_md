@@ -1,18 +1,22 @@
 const Map<String, String> deGR = {
-  'into_dec_one': "Erstellen Sie ein Konto, wählen Sie eine Fahrt aus, erhalten Sie eine Bestätigung Ihrer Fahrt, machen Sie Ihre Fahrt, bezahlen Sie und notieren Sie den Fahrer!",
+  'into_dec_one':
+      "Erstellen Sie ein Konto, wählen Sie eine Fahrt aus, erhalten Sie eine Bestätigung Ihrer Fahrt, machen Sie Ihre Fahrt, bezahlen Sie und notieren Sie den Fahrer!",
   'intro_title_one': "Reservieren Sie ein Taxi",
   'intro_title_two': "BERUFUNG",
   'intro_title_three': "Geld verdienen",
   'into_dec_two': "Kommunizieren Sie mit jedem Fahrer \ndurch Anruf",
-  'into_dec_three': "Nimm mehr Jobs an und verdiene mehr und steigere dein Einkommen weiter",
+  'into_dec_three':
+      "Nimm mehr Jobs an und verdiene mehr und steigere dein Einkommen weiter",
   'select_profile_photo': "Wählen Sie ein Foto für Ihr Profil aus",
-  'profile_message': "Sie müssen Ihr Gesicht und Ihre Schultern auf dem Bild hervorheben. Kurz gesagt, wir müssen erkennen, dass Sie auf dem Foto dachten",
+  'profile_message':
+      "Sie müssen Ihr Gesicht und Ihre Schultern auf dem Bild hervorheben. Kurz gesagt, wir müssen erkennen, dass Sie auf dem Foto dachten",
   'select_photo': "WÄHLE EIN FOTO AUS",
   'please_select': "Bitte auswählen",
   'gallery': "Galerie",
   'camera': "Kamera",
   'select_identity_photo': "Wählen Sie ein Foto für Ihren Personalausweis aus",
-  'identity_message': "Machen Sie ein gutes Foto von Ihrem Perso  nalausweis. Alle notwendigen Informationen müssen auf dem Foto zu sehen sein",
+  'identity_message':
+      "Machen Sie ein gutes Foto von Ihrem Perso  nalausweis. Alle notwendigen Informationen müssen auf dem Foto zu sehen sein",
   'select_language': "Wählen Sie Ihre Sprache",
   'next': "Nächste",
   'done': "Erledigt",

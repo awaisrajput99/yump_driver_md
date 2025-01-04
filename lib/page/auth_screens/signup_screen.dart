@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
+import 'package:yumprides_driver/controller/login_conroller.dart';
 import 'package:yumprides_driver/controller/sign_up_controller.dart';
 import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
@@ -412,8 +413,10 @@ class SignupScreen extends StatelessWidget {
                                                     Preferences.setString(
                                                         Preferences.user,
                                                         jsonEncode(value));
-                                                    Get.offAll(
-                                                        const LoginScreen());
+                                                    LoginController()
+                                                        .loginWithGoogle();
+                                                    // Get.offAll(
+                                                    //     const LoginScreen());
                                                   } else {
                                                     ShowToastDialog.showToast(
                                                         value.error);

@@ -166,39 +166,39 @@ class NewRideScreen extends StatelessWidget {
                 : AppThemeData.white90,
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: SizedBox(
-              width: Responsive.width(50, context),
-              height: 50,
-              child: FloatingActionButton.extended(
-                backgroundColor: AppThemeData.primary200,
-                foregroundColor: Colors.white,
-                onPressed: () {
-                  if (controller.userModel.value.userData?.isVerified ==
-                      "yes") {
-                    if (Constant.selectedMapType == 'osm') {
-                      Get.to(() => const CreateOsmRideScreen())?.then((v) {
-                        controller.getNewRide();
-                      });
-                    } else {
-                      Get.to(() => const CreateRideScreen())?.then((v) {
-                        controller.getNewRide();
-                      });
-                    }
-                  } else {
-                    ShowToastDialog.showToast(
-                        'Your document is not verified by admin');
-                  }
-                },
-                icon: const Icon(Icons.add),
-                label: Text(
-                  'Create Ride'.tr,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: AppThemeData.medium,
-                      color: Colors.white),
-                ),
-              ),
-            ),
+            // floatingActionButton: SizedBox(
+            //   width: Responsive.width(50, context),
+            //   height: 50,
+            //   child: FloatingActionButton.extended(
+            //     backgroundColor: AppThemeData.primary200,
+            //     foregroundColor: Colors.white,
+            //     onPressed: () {
+            //       if (controller.userModel.value.userData?.isVerified ==
+            //           "yes") {
+            //         if (Constant.selectedMapType == 'osm') {
+            //           Get.to(() => const CreateOsmRideScreen())?.then((v) {
+            //             controller.getNewRide();
+            //           });
+            //         } else {
+            //           Get.to(() => const CreateRideScreen())?.then((v) {
+            //             controller.getNewRide();
+            //           });
+            //         }
+            //       } else {
+            //         ShowToastDialog.showToast(
+            //             'Your document is not verified by admin');
+            //       }
+            //     },
+            //     icon: const Icon(Icons.add),
+            //     label: Text(
+            //       'Create Ride'.tr,
+            //       style: TextStyle(
+            //           fontSize: 14,
+            //           fontFamily: AppThemeData.medium,
+            //           color: Colors.white),
+            //     ),
+            //   ),
+            // ),
             // floatingActionButton: FloatingActionButton(
             //   backgroundColor: AppThemeData.primary200,
             //   onPressed: () {

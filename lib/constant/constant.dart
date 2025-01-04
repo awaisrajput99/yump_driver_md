@@ -34,7 +34,7 @@ class Constant {
   static String? appVersion = "0.0";
   static String? minimumWalletBalance = "0";
   static String? decimal = "2";
-  static String appName = "MapleridesX";
+  static String appName = "Yump Rides Driver";
   static String? currency = "\$";
   static bool symbolAtRight = false;
   static List<TaxModel> taxList = [];

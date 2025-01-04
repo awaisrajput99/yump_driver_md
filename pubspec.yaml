@@ -149,6 +149,42 @@ flutter:
     - family: Switzer-Thin
       fonts:
         - asset: assets/fonts/Switzer-Thin.otf
+
+    - family: Roboto-Black
+      fonts:
+        - asset: assets/fonts/Roboto-Black.ttf
+
+    - family: Roboto-Bold
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+
+    - family: Roboto-BoldCondensed
+      fonts:
+        - asset: assets/fonts/Roboto-BoldCondensed.ttf
+
+    - family: Roboto-Thin
+      fonts:
+        - asset: assets/fonts/Roboto-Thin.ttf
+
+    - family: Roboto-Italic
+      fonts:
+        - asset: assets/fonts/Roboto-Italic.ttf
+
+    - family: Roboto-Medium
+      fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf
+
+    - family: Roboto-Regular
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+
+    - family: Roboto-Medium
+      fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf
+
+    - family: Roboto-Thin
+      fonts:
+        - asset: assets/fonts/Roboto-Thin.ttf
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

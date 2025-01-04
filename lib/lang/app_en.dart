@@ -80,13 +80,13 @@ const Map<String, String> enUS = {
   'Forgot Your Password?': 'Forgot Your Password?',
   "Don’t worry! Enter your email or mobile number, and we’ll help you reset your password.":
       "Don’t worry! Enter your email or mobile number, and we’ll help you reset your password.",
-  'email address': 'email address',
+  'email address': 'Email address',
   'Send': 'Send',
   'Welcome Back!': 'Welcome Back!',
   'Sign up for a personalized Yum Rides experience. Start booking your rides in just a few taps.':
       'Sign up for a personalized Yum Rides experience. Start booking your rides in just a few taps.',
-  'enter password': 'enter password',
-  'forgot password': 'forgot password',
+  'enter password': 'Enter password',
+  'forgot password': 'Forgot password',
   'Log in': 'Log in',
   'or continue with': 'or continue with',
   'Log in with mobile number': 'Log in with mobile number',

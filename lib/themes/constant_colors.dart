@@ -142,13 +142,13 @@ class AppThemeData {
   static Color success300Light = const Color(0XFFB3F9AB);
   static Color primary50 = const Color(0XFF000B19);
 
-  static const String black = 'Switzer-Black';
-  static const String bold = 'Switzer-Bold';
-  static const String extraBold = 'Switzer-Extrabold';
-  static const String extraLight = 'Switzer-Extralight';
-  static const String light = 'Switzer-Italic';
-  static const String medium = 'Switzer-Medium';
-  static const String regular = 'Switzer-Regular';
-  static const String semiBold = 'Switzer-Semibold';
-  static const String thin = 'Switzer-Thin';
+  static const String black = 'Roboto-Black';
+  static const String bold = 'Roboto-Bold';
+  static const String extraBold = 'Roboto-BoldCondensed';
+  static const String extraLight = 'Roboto-Thin';
+  static const String light = 'Roboto-Italic';
+  static const String medium = 'Roboto-Medium';
+  static const String regular = 'Roboto-Regular';
+  static const String semiBold = 'Roboto-Medium';
+  static const String thin = 'Roboto-Thin';
 }

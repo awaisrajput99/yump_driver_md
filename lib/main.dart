@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
 import 'package:yumprides_driver/controller/settings_controller.dart';
@@ -212,36 +213,69 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       return GetMaterialApp(
         title: 'Yump Rides Driver'.tr,
         debugShowCheckedModeBanner: false,
-        //         theme: lightTheme, // Define your light theme here
-        // darkTheme: darkTheme, // Define your dark theme here
-        themeMode: ThemeMode.light, // Force light theme
-
-        // theme: Styles.themeData(
-        //     themeChangeProvider.darkTheme == 0
-        //         ? true
-        //         : themeChangeProvider.darkTheme == 1
-        //             ? false
-        //             : themeChangeProvider.getSystemThem(),
-        //     context),
-        // themeMode: ThemeMode.light,
+        themeMode:
+            ThemeMode.light, // Force the app to always use the light theme
+        darkTheme: ThemeData.light(),
+        theme: Styles.themeData(
+            false, context), // Pass 'false' to set the light theme
         locale: LocalizationService.locale,
         fallbackLocale: LocalizationService.locale,
         translations: LocalizationService(),
         builder: EasyLoading.init(),
         home: GetBuilder(
-            init: SettingsController(),
-            builder: (controller) {
-              return Preferences.getString(Preferences.languageCodeKey)
-                      .toString()
-                      .isEmpty
-                  ? const LocalizationScreens(intentType: "main")
-                  : Preferences.getBoolean(Preferences.isFinishOnBoardingKey)
-                      ? Preferences.getBoolean(Preferences.isLogin)
-                          ? DashBoard()
-                          : const LoginScreen()
-                      : const OnBoardingScreen();
-            }),
+          init: SettingsController(),
+          builder: (controller) {
+            return Preferences.getString(Preferences.languageCodeKey)
+                    .toString()
+                    .isEmpty
+                ? const LocalizationScreens(intentType: "main")
+                : Preferences.getBoolean(Preferences.isFinishOnBoardingKey)
+                    ? Preferences.getBoolean(Preferences.isLogin)
+                        ? DashBoard()
+                        : const LoginScreen()
+                    : const OnBoardingScreen();
+          },
+        ),
       );
+
+      // GetMaterialApp(
+      //   title: 'Yump Rides Driver'.tr,
+      //   debugShowCheckedModeBanner: false,
+
+      //   //         theme: lightTheme, // Define your light theme here
+      //   // darkTheme: darkTheme, // Define your dark theme here
+      //   // theme: ThemeData(
+      //   //   fontFamily: 'roboto', // Set the app-wide font to Roboto
+      //   // ), // Define your light theme here
+      //   // Remove the dark theme or ignore it
+      //   themeMode: ThemeMode.light, // Force the app to use light them
+      //   theme: Styles.themeData(
+      //       // themeChangeProvider.darkTheme == 0
+      //       //     ? true
+      //       //     : themeChangeProvider.darkTheme == 1
+      //       //         ? false
+      //       //         : themeChangeProvider.getSystemThem(),
+      //       false,
+      //       context),
+      //   // themeMode: ThemeMode.light,
+      //   locale: LocalizationService.locale,
+      //   fallbackLocale: LocalizationService.locale,
+      //   translations: LocalizationService(),
+      //   builder: EasyLoading.init(),
+      //   home: GetBuilder(
+      //       init: SettingsController(),
+      //       builder: (controller) {
+      //         return Preferences.getString(Preferences.languageCodeKey)
+      //                 .toString()
+      //                 .isEmpty
+      //             ? const LocalizationScreens(intentType: "main")
+      //             : Preferences.getBoolean(Preferences.isFinishOnBoardingKey)
+      //                 ? Preferences.getBoolean(Preferences.isLogin)
+      //                     ? DashBoard()
+      //                     : const LoginScreen()
+      //                 : const OnBoardingScreen();
+      //       }),
+      // );
     }));
   }
 }
