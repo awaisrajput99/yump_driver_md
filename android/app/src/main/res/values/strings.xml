@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PodzterApp</string>
+    <string name="facebook_app_id">1706949493471089</string>
+    <string name="fb_login_protocol_scheme">fb1706949493471089</string>
+    <string name="facebook_client_token">2843ba28ead4ae34f9b79cf053f9252a</string>
+</resources>
+
+<!-- https://insta-clone-a7798.firebaseapp.com/__/auth/handler -->
