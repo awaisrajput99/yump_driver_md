@@ -92,10 +92,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.14.2
+
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/app_icon.png"  # Replace with your icon file path
+  image_path: "assets/images/appIcon.png"  # Replace with your icon file path
 
 
 # For information on the generic Dart part of this file, see the

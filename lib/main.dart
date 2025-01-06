@@ -113,8 +113,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void getCurrentAppTheme() async {
-    themeChangeProvider.darkTheme =
-        await themeChangeProvider.darkThemePreference.getTheme();
+    // themeChangeProvider.darkTheme = await themeChangeProvider.getTheme();
+    // // themeChangeProvider.darkTheme =
+    //     await themeChangeProvider.darkThemePreference.getTheme();
   }
 
   Future<void> setupInteractedMessage(BuildContext context) async {
@@ -213,11 +214,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       return GetMaterialApp(
         title: 'Yump Rides Driver'.tr,
         debugShowCheckedModeBanner: false,
-        themeMode:
-            ThemeMode.light, // Force the app to always use the light theme
-        darkTheme: ThemeData.light(),
-        theme: Styles.themeData(
-            false, context), // Pass 'false' to set the light theme
+        themeMode: ThemeMode.light,
+        theme: ThemeData.light(),
         locale: LocalizationService.locale,
         fallbackLocale: LocalizationService.locale,
         translations: LocalizationService(),

@@ -406,10 +406,12 @@ class SignupScreen extends StatelessWidget {
                                                   if (value.success ==
                                                       "success") {
                                                     Preferences.setInt(
-                                                        Preferences.userId,
-                                                        int.parse(value
-                                                            .userData!.id
-                                                            .toString()));
+                                                      Preferences.userId,
+                                                      int.parse(
+                                                        value.userData!.id
+                                                            .toString(),
+                                                      ),
+                                                    );
                                                     Preferences.setString(
                                                         Preferences.user,
                                                         jsonEncode(value));
