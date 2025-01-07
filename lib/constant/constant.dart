@@ -64,7 +64,7 @@ class Constant {
   static String driverLocationUpdateUnit = "10";
 
   static String? jsonNotificationFileURL = "";
-  static String? senderId = "";
+  static String? senderId = "maple-rides";
   static String? placeholderUrl = "";
 
   static PaymentSettingModel getPaymentSetting() {
