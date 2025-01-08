@@ -89,7 +89,7 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
       var addressData = <String, dynamic>{};
       var package = Platform.isAndroid
           ? 'com.yumprides.driver'
-          : 'com.yumprides.driver.ios';
+          : 'com.yumprides.driver.ios'; //ok
       http.Response response = await http.get(
         Uri.parse(url),
         headers: {
