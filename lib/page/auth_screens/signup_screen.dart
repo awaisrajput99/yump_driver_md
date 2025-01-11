@@ -415,8 +415,17 @@ class SignupScreen extends StatelessWidget {
                                                     Preferences.setString(
                                                         Preferences.user,
                                                         jsonEncode(value));
-                                                    LoginController()
-                                                        .loginWithGoogle();
+                                                    ShowToastDialog.showToast(
+                                                        "You have been successfully registered, now you can login");
+                                                    Navigator.pushAndRemoveUntil(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                LoginScreen()),
+                                                        (route) => false);
+
+                                                    // LoginController()
+                                                    //     .loginWithGoogle();
                                                     // Get.offAll(
                                                     //     const LoginScreen());
                                                   } else {

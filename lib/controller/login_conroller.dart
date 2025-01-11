@@ -301,6 +301,7 @@ class LoginController extends GetxController {
       // Create an `OAuthCredential` from the credential returned by Apple.
       final oauthCredential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode,
       );
 
       // Sign in the user with Firebase. If the nonce we generated earlier does

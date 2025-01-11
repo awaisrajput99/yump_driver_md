@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/constant/logdata.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
@@ -95,6 +96,7 @@ class DashBoardController extends GetxController {
       DrawerItem('Terms of Service'.tr, 'assets/icons/ic_terms.svg'),
       DrawerItem('Privacy Policy'.tr, 'assets/icons/ic_privacy.svg'),
       // DrawerItem('Dark Mode'.tr, 'assets/icons/ic_dark.svg', isSwitch: true),
+      // SizedBox(height: 0),
       DrawerItem('Rate the App'.tr, 'assets/icons/ic_star_line.svg',
           section: 'Feedback & Support'.tr),
       DrawerItem('Log Out'.tr, 'assets/icons/ic_logout.svg'),
@@ -196,8 +198,9 @@ class DashBoardController extends GetxController {
     log("INDEX :: $index");
     if (userModel.value.userData!.parcelDelivery.toString() != "yes" ||
         Constant.parcelActive != "yes") {
+      // if (index == 9) {
+      // } else
       if (index == 9) {
-      } else if (index == 10) {
         try {
           if (await inAppReview.isAvailable()) {
             inAppReview.requestReview();
@@ -207,7 +210,7 @@ class DashBoardController extends GetxController {
         } catch (e) {
           log("Error triggering in-app review: $e");
         }
-      } else if (index == 11) {
+      } else if (index == 10) {
         Preferences.clearKeyData(Preferences.isLogin);
         Preferences.clearKeyData(Preferences.user);
         Preferences.clearKeyData(Preferences.userId);
@@ -216,8 +219,8 @@ class DashBoardController extends GetxController {
         getDrawerItemWidget(index);
       }
     } else {
-      if (index == 12) {
-      } else if (index == 13) {
+      if (index == 11) {
+      } else if (index == 12) {
         try {
           if (await inAppReview.isAvailable()) {
             inAppReview.requestReview();
@@ -227,7 +230,7 @@ class DashBoardController extends GetxController {
         } catch (e) {
           log("Error triggering in-app review: $e");
         }
-      } else if (index == 14) {
+      } else if (index == 13) {
         Preferences.clearKeyData(Preferences.isLogin);
         Preferences.clearKeyData(Preferences.user);
         Preferences.clearKeyData(Preferences.userId);

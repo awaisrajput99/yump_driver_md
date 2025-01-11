@@ -73,7 +73,7 @@ void main() async {
       AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
   }
-
+  // await FirebaseAuth.instance.signOut();
   // await clearAppData();
   // print("Here is the user id: ${Preferences.getInt(Preferences.userId)}");
   runApp(MyApp());
