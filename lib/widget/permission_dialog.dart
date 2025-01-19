@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,16 +33,22 @@ class LocationPermissionDisclosureDialog extends StatelessWidget {
             _requestLocationPermission();
           },
           child: const Text(
-            'Accept',
+            'Continue',
             style: TextStyle(color: Colors.green),
           ),
         ),
-        MaterialButton(
-          onPressed: () {
-            SystemNavigator.pop();
-          },
-          child: const Text('Decline', style: TextStyle(color: Colors.red)),
-        ),
+        // MaterialButton(
+        //   onPressed: () {
+        //     if (Platform.isAndroid) {
+        //       // For Android, close the app
+        //       SystemNavigator.pop();
+        //     } else if (Platform.isIOS) {
+        //       // For iOS, pop the navigation stack until the first screen
+        //       Navigator.of(context).popUntil((route) => route.isFirst);
+        //     }
+        //   },
+        //   child: const Text('Decline', style: TextStyle(color: Colors.red)),
+        // ),
       ],
     );
   }
@@ -51,7 +59,9 @@ class LocationPermissionDisclosureDialog extends StatelessWidget {
     if (location == PermissionStatus.granted) {
       Get.back();
     } else {
-      ShowToastDialog.showToast("Permission Denied");
+      Get.back();
+      ShowToastDialog.showToast(
+          "Location access denied. Please enable it in settings to continue.");
     }
   }
 }

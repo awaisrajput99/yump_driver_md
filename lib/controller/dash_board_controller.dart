@@ -66,7 +66,6 @@ class DashBoardController extends GetxController {
         Constant.taxList.add(Constant.allTaxList[i]);
       }
     }
-    print(Constant.taxList.length);
     setCurrentLocation(
         location.latitude.toString(), location.longitude.toString());
   }
@@ -173,8 +172,6 @@ class DashBoardController extends GetxController {
       Map<String, dynamic> responseBodyPhone = json.decode(response.body);
       if (response.statusCode == 200 &&
           responseBodyPhone['success'] == "success") {
-        print(
-            "userModel.value.userData!.online :: ${response.body.toString()}");
         ShowToastDialog.closeLoader();
         UserModel? value = UserModel.fromJson(responseBodyPhone);
         Preferences.setString(Preferences.user, jsonEncode(value));
@@ -220,6 +217,7 @@ class DashBoardController extends GetxController {
       }
     } else {
       if (index == 11) {
+        getDrawerItemWidget(index);
       } else if (index == 12) {
         try {
           if (await inAppReview.isAvailable()) {
@@ -400,9 +398,7 @@ class DashBoardController extends GetxController {
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
       Map<String, dynamic> responseBody = json.decode(response.body);
-      print("====>");
-      print(response.statusCode);
-      print(response.body);
+
       if (response.statusCode == 200) {
         ShowToastDialog.closeLoader();
         updateCurrentLocation();

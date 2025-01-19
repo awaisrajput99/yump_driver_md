@@ -14,6 +14,8 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We use this data to provide personalized content and ads.</string>
 	<key>CFBundleName</key>
 	<string>Yump Rides Driver</string>
 	<key>CFBundlePackageType</key>
@@ -40,19 +42,26 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Camera access is necessary to review order and also for profile picture.</string>
+	<string>Yump driver requires camera access to enable users to upload profile pictures and to scan documents for ride verification purposes.</string>
+
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Your location is required for map benefits for you</string>
+	<string>Yump driver needs access to your location to provide accurate ride matching, real-time tracking, and location-based services, ensuring a seamless ride experience.</string>
+
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location is required for map benefits for you</string>
+	<string>Yump driver uses your location even when the app is not in use to improve ride tracking, ensure accurate pick-up and drop-off points, and provide location-based features like ride history and notifications.</string>
+
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is required for map benefits for you</string>
+	<string>Yump driver requires your location while the app is in use to provide real-time ride updates, accurate navigation, and ensure a smooth ride experience.</string>
+
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We need this to provide voice communication.</string>
+	<string>Yump driver uses the microphone to enable voice communication between riders and drivers for enhanced safety and convenience during rides.</string>
+
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Access to the Photos is required to review order as well as to set a profile picture.</string>
+	<string>Yump driver needs access to your photo library to allow users to upload images for profile customization and document verification for ride security.</string>
+
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Access to the Photos is required to review order as well as to set a profile picture.</string>
+	<string>Yump driver requires access to your photo library to enable uploading of profile pictures and to facilitate document uploads for ride verification and enhanced user profile features.</string>
+
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

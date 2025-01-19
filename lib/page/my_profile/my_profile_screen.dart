@@ -464,9 +464,10 @@ class MyProfileScreen extends StatelessWidget {
           return StatefulBuilder(builder: (context, setState) {
             return Container(
               height: Responsive.height(22, context),
-              color: isDarkMode
-                  ? AppThemeData.surface50Dark
-                  : AppThemeData.surface50,
+              color: Colors.black,
+              // isDarkMode
+              //     ? AppThemeData.surface50Dark
+              //     : AppThemeData.surface50,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
