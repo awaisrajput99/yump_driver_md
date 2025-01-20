@@ -306,44 +306,69 @@ class WalletController extends GetxController
   }
 
   ///Stripe
-  createStripeIntent({required String amount}) async {
+  createStripeIntent(String amount, String currency) async {
     try {
-      Map<String, dynamic> body = {
-        'amount': ((double.parse(amount) * 100).round()).toString(),
-        'currency': "USD",
+      Map<String, String> body = {
+        'amount': amount, // Ensure this is a string
+        'currency': currency,
         'payment_method_types[]': 'card',
-        "description": "${Preferences.getInt(Preferences.userId)} Wallet Topup",
-        "shipping[name]":
-            "${Preferences.getInt(Preferences.userId)} ${Preferences.getInt(Preferences.userId)}",
-        "shipping[address][line1]": "510 Townsend St",
-        "shipping[address][postal_code]": "98140",
-        "shipping[address][city]": "San Francisco",
-        "shipping[address][state]": "CA",
-        "shipping[address][country]": "US",
       };
-      var stripeSecret = paymentSettingModel.value.strip!.secretKey;
 
-      await stripePrefix.Stripe.instance.applySettings();
       var response = await http.post(
-          Uri.parse('https://api.stripe.com/v1/payment_intents'),
-          body: body,
-          headers: {
-            'Authorization': 'Bearer $stripeSecret',
-            'Content-Type': 'application/x-www-form-urlencoded'
-          });
-      showLog("API :: URL :: https://api.stripe.com/v1/payment_intents");
-      showLog("API :: Request Body :: ${jsonEncode(body)} ");
-      showLog("API :: Request Header :: ${{
-        'Authorization': 'Bearer $stripeSecret',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }.toString()} ");
-      showLog("API :: responseStatus :: ${response.statusCode} ");
-      showLog("API :: responseBody :: ${response.body} ");
-      return jsonDecode(response.body);
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        body: body,
+        headers: {
+          'Authorization':
+              'Bearer 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',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      );
+
+      print("Donee..eee..ee");
+
+      return jsonDecode(response.body.toString());
     } catch (e) {
-      print("=====$e");
+      debugPrint("exception$e");
     }
   }
+  // createStripeIntent({required String amount}) async {
+  //   try {
+  //     Map<String, dynamic> body = {
+  //       'amount': ((double.parse(amount) * 100).round()).toString(),
+  //       'currency': "USD",
+  //       'payment_method_types[]': 'card',
+  //       "description": "${Preferences.getInt(Preferences.userId)} Wallet Topup",
+  //       "shipping[name]":
+  //           "${Preferences.getInt(Preferences.userId)} ${Preferences.getInt(Preferences.userId)}",
+  //       "shipping[address][line1]": "510 Townsend St",
+  //       "shipping[address][postal_code]": "98140",
+  //       "shipping[address][city]": "San Francisco",
+  //       "shipping[address][state]": "CA",
+  //       "shipping[address][country]": "US",
+  //     };
+  //     var stripeSecret = paymentSettingModel.value.strip!.secretKey;
+
+  //     await stripePrefix.Stripe.instance.applySettings();
+  //     var response = await http.post(
+  //         Uri.parse('https://api.stripe.com/v1/payment_intents'),
+  //         body: body,
+  //         headers: {
+  //           'Authorization': 'Bearer $stripeSecret',
+  //           'Content-Type': 'application/x-www-form-urlencoded'
+  //         });
+  //     showLog("API :: URL :: https://api.stripe.com/v1/payment_intents");
+  //     showLog("API :: Request Body :: ${jsonEncode(body)} ");
+  //     showLog("API :: Request Header :: ${{
+  //       'Authorization': 'Bearer $stripeSecret',
+  //       'Content-Type': 'application/x-www-form-urlencoded'
+  //     }.toString()} ");
+  //     showLog("API :: responseStatus :: ${response.statusCode} ");
+  //     showLog("API :: responseBody :: ${response.body} ");
+  //     return jsonDecode(response.body);
+  //   } catch (e) {
+  //     print("=====$e");
+  //   }
+  // }
 
   ///razorPay
   Future<CreateRazorPayOrderModel?> createOrderRazorPay(

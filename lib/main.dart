@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
@@ -73,6 +74,12 @@ void main() async {
       AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
   }
+  Stripe.publishableKey =
+      'pk_live_51QT6NuFCZA829IV4efUVvxXyEBw6Ugx0UpnsA72trVbiHwOT5LS3V9ukp5jgk9GawAXbE1ZHIUHc4cl1cvfk0qF300qEAmMSKT';
+  // Stripe.merchantIdentifier = 'Yump';
+
+  // await Stripe.instance.applySettings();
+
   // await FirebaseAuth.instance.signOut();
   // await clearAppData();
   // print("Here is the user id: ${Preferences.getInt(Preferences.userId)}");

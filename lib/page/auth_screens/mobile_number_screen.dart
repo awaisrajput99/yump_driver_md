@@ -230,93 +230,93 @@ class MobileNumberScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: isLogin == true
-          ? Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Text.rich(
-                textAlign: TextAlign.center,
-                TextSpan(
-                  text: 'First time in Yum Rides?'.tr,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: AppThemeData.regular,
-                    color: themeChange.getThem()
-                        ? AppThemeData.grey800Dark
-                        : AppThemeData.grey800,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: ' '.tr,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: AppThemeData.medium,
-                        color: AppThemeData.primary200,
-                      ),
-                    ),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Get.back();
-                          FocusScope.of(context).unfocus();
-                          Get.to(MobileNumberScreen(isLogin: false),
-                              duration: const Duration(
-                                  milliseconds:
-                                      400), //duration of transitions, default 1 sec
-                              transition: Transition.rightToLeft);
-                        }, //transition effect);,
-                      text: 'Create an account'.tr,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: AppThemeData.medium,
-                        color: AppThemeData.primary200,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppThemeData.primary200,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Text.rich(
-                textAlign: TextAlign.center,
-                TextSpan(
-                  text: 'Already book rides?'.tr,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: AppThemeData.regular,
-                    color: themeChange.getThem()
-                        ? AppThemeData.grey800Dark
-                        : AppThemeData.grey800,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: ' '.tr,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: AppThemeData.medium,
-                        color: AppThemeData.primary200,
-                      ),
-                    ),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Get.back();
-                        }, //transition effect);,
-                      text: 'Login'.tr,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: AppThemeData.medium,
-                        color: AppThemeData.primary200,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppThemeData.primary200,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+      // bottomNavigationBar: isLogin == true
+      //     ? Padding(
+      //         padding: const EdgeInsets.only(bottom: 20),
+      //         child: Text.rich(
+      //           textAlign: TextAlign.center,
+      //           TextSpan(
+      //             text: 'First time in Yum Rides?'.tr,
+      //             style: TextStyle(
+      //               fontSize: 16,
+      //               fontFamily: AppThemeData.regular,
+      //               color: themeChange.getThem()
+      //                   ? AppThemeData.grey800Dark
+      //                   : AppThemeData.grey800,
+      //             ),
+      //             children: <TextSpan>[
+      //               TextSpan(
+      //                 text: ' '.tr,
+      //                 style: TextStyle(
+      //                   fontSize: 16,
+      //                   fontFamily: AppThemeData.medium,
+      //                   color: AppThemeData.primary200,
+      //                 ),
+      //               ),
+      //               TextSpan(
+      //                 recognizer: TapGestureRecognizer()
+      //                   ..onTap = () {
+      //                     Get.back();
+      //                     FocusScope.of(context).unfocus();
+      //                     Get.to(MobileNumberScreen(isLogin: false),
+      //                         duration: const Duration(
+      //                             milliseconds:
+      //                                 400), //duration of transitions, default 1 sec
+      //                         transition: Transition.rightToLeft);
+      //                   }, //transition effect);,
+      //                 text: 'Create an account'.tr,
+      //                 style: TextStyle(
+      //                   fontSize: 16,
+      //                   fontFamily: AppThemeData.medium,
+      //                   color: AppThemeData.primary200,
+      //                   decoration: TextDecoration.underline,
+      //                   decorationColor: AppThemeData.primary200,
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       )
+      //     : Padding(
+      //         padding: const EdgeInsets.only(bottom: 20),
+      //         child: Text.rich(
+      //           textAlign: TextAlign.center,
+      //           TextSpan(
+      //             text: 'Already book rides?'.tr,
+      //             style: TextStyle(
+      //               fontSize: 16,
+      //               fontFamily: AppThemeData.regular,
+      //               color: themeChange.getThem()
+      //                   ? AppThemeData.grey800Dark
+      //                   : AppThemeData.grey800,
+      //             ),
+      //             children: <TextSpan>[
+      //               TextSpan(
+      //                 text: ' '.tr,
+      //                 style: TextStyle(
+      //                   fontSize: 16,
+      //                   fontFamily: AppThemeData.medium,
+      //                   color: AppThemeData.primary200,
+      //                 ),
+      //               ),
+      //               TextSpan(
+      //                 recognizer: TapGestureRecognizer()
+      //                   ..onTap = () {
+      //                     Get.back();
+      //                   }, //transition effect);,
+      //                 text: 'Login'.tr,
+      //                 style: TextStyle(
+      //                   fontSize: 16,
+      //                   fontFamily: AppThemeData.medium,
+      //                   color: AppThemeData.primary200,
+      //                   decoration: TextDecoration.underline,
+      //                   decorationColor: AppThemeData.primary200,
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ),
     );
   }
 }

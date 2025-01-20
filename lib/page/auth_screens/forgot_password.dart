@@ -38,46 +38,46 @@ class ForgotPasswordScreen extends StatelessWidget {
               width: double.infinity,
               fit: BoxFit.cover,
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Text.rich(
-                textAlign: TextAlign.center,
-                TextSpan(
-                  text: 'First time in Yum Rides?'.tr,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: AppThemeData.regular,
-                    color: isDarkMode
-                        ? AppThemeData.grey800Dark
-                        : AppThemeData.grey800,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: ' '.tr,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: AppThemeData.medium,
-                        color: AppThemeData.primary200,
-                      ),
-                    ),
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Get.back();
-                        }, //transition effect);,
-                      text: 'Create an account'.tr,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: AppThemeData.medium,
-                        color: AppThemeData.primary200,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppThemeData.primary200,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 20),
+            //   child: Text.rich(
+            //     textAlign: TextAlign.center,
+            //     TextSpan(
+            //       text: 'First time in Yum Rides?'.tr,
+            //       style: TextStyle(
+            //         fontSize: 16,
+            //         fontFamily: AppThemeData.regular,
+            //         color: isDarkMode
+            //             ? AppThemeData.grey800Dark
+            //             : AppThemeData.grey800,
+            //       ),
+            //       children: <TextSpan>[
+            //         TextSpan(
+            //           text: ' '.tr,
+            //           style: TextStyle(
+            //             fontSize: 16,
+            //             fontFamily: AppThemeData.medium,
+            //             color: AppThemeData.primary200,
+            //           ),
+            //         ),
+            //         TextSpan(
+            //           recognizer: TapGestureRecognizer()
+            //             ..onTap = () {
+            //               Get.back();
+            //             }, //transition effect);,
+            //           text: 'Create an account'.tr,
+            //           style: TextStyle(
+            //             fontSize: 16,
+            //             fontFamily: AppThemeData.medium,
+            //             color: AppThemeData.primary200,
+            //             decoration: TextDecoration.underline,
+            //             decorationColor: AppThemeData.primary200,
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
