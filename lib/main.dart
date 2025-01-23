@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yumprides_driver/calling_module/backend/call_notifications.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
 import 'package:yumprides_driver/controller/settings_controller.dart';
@@ -215,6 +216,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(
+        "Here is the user id: ${FirebaseAuth.instance.currentUser?.uid ?? ""}");
     return ChangeNotifierProvider(create: (_) {
       return themeChangeProvider;
     }, child: Consumer<DarkThemeProvider>(builder: (context, value, child) {
@@ -227,6 +230,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         fallbackLocale: LocalizationService.locale,
         translations: LocalizationService(),
         builder: EasyLoading.init(),
+        navigatorKey: callNavigatorKey,
         home: GetBuilder(
           init: SettingsController(),
           builder: (controller) {

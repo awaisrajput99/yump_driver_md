@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:yumprides_driver/calling_module/backend/call_notifications.dart';
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/page/auth_screens/vehicle_info_screen.dart';
@@ -14,10 +15,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-class DashBoard extends StatelessWidget {
+class DashBoard extends StatefulWidget {
   DashBoard({super.key});
 
+  @override
+  State<DashBoard> createState() => _DashBoardState();
+}
+
+class _DashBoardState extends State<DashBoard> {
   DateTime backPress = DateTime.now();
+  @override
+  void initState() {
+    super.initState();
+    listenForInvitations(context);
+  }
 
   @override
   Widget build(BuildContext context) {

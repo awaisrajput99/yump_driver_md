@@ -1726,7 +1726,7 @@ class WalletScreen extends StatelessWidget {
           });
     } on StripeException catch (e) {
       // ignore: avoid_print
-      print(e.toString());
+      print("Error whilte displaying payment sheat ${e.toString()}");
     }
   }
 
@@ -1750,7 +1750,7 @@ class WalletScreen extends StatelessWidget {
 
       return jsonDecode(response.body.toString());
     } catch (e) {
-      debugPrint("exception$e");
+      debugPrint("exception,,,....e  ee  e $e");
     }
   }
 

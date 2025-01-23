@@ -45,6 +45,8 @@ class Constant {
   // static String? taxName = 'Tax';
   static String? distanceUnit = "KM";
   static String? contactUsEmail = "";
+  static String agoraId = "8a7e2df835e24a1e9f1864c6b4176617";
+
   static String? minimumWithdrawalAmount = "0";
   static String? contactUsAddress = "";
   static String? contactUsPhone = "";

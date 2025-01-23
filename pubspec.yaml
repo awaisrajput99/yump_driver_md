@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  agora_rtc_engine: ^6.5.0
   bottom_picker: ^2.8.0
   cached_network_image: ^3.4.1
   cloud_firestore: ^5.4.4
@@ -73,14 +74,12 @@ dependencies:
   shared_preferences: ^2.3.2
   sign_in_with_apple: ^6.1.3
   syncfusion_flutter_core: ^26.2.13
+  syncfusion_flutter_pdfviewer: ^26.2.13
   text_scroll: ^0.2.0
   url_launcher: ^6.3.1
   video_compress: ^3.1.3
   video_player: ^2.9.2
   video_thumbnail: ^0.5.3
-  syncfusion_flutter_pdfviewer: ^26.2.13
-
-  
 
 dependency_overrides:
   webview_flutter: ^4.10.0
@@ -90,16 +89,15 @@ dependency_overrides:
   js: ^0.7.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.14.2
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.14.2
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/appIcon.png"  # Replace with your icon file path
-
+  image_path: "assets/images/appIcon.png" # Replace with your icon file path
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
