@@ -452,7 +452,7 @@ class _RouteOsmViewScreenState extends State<RouteOsmViewScreen> {
                                         padding:
                                             const EdgeInsets.only(top: 5.0),
                                         child: Text(
-                                          rideData!.dateRetour.toString(),
+                                          rideData!.rideDate.toString(),
                                         )),
                                   ],
                                 )

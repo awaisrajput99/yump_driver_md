@@ -175,6 +175,7 @@ class VehicleInfoController extends GetxController {
       final response = await http.get(
         Uri.parse(API.vehicleCategory),
         headers: API.header,
+        
       );
       showLog("API :: URL :: ${API.vehicleRegister} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");

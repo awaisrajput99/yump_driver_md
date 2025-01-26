@@ -55,7 +55,7 @@ class TripHistoryScreen extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        controller.data.value.dateRetour
+                                        controller.data.value.rideDate
                                             .toString(),
                                         style: const TextStyle(
                                           fontSize: 14,

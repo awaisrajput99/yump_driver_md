@@ -416,7 +416,7 @@ class ShowBankDetails extends StatelessWidget {
                                     btnHeight: 50,
                                     title: "Edit bank".tr,
                                     btnColor: AppThemeData.primary200,
-                                    txtColor: Colors.black,
+                            txtColor: AppThemeData.white90,
                                     onPress: () {
                                       showModalBottomSheet(
                                           isDismissible: true,

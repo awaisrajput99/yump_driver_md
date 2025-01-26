@@ -32,6 +32,7 @@ class RideDetailsModel {
 
 class RideDetailsdata {
   String? id;
+  String? riderFbId;
   String? idUserApp;
   String? departName;
   String? destinationName;
@@ -55,6 +56,7 @@ class RideDetailsdata {
   String? creer;
   String? modifier;
   String? dateRetour;
+  String? rideDate;
   String? heureRetour;
   String? statutRound;
   String? statutCourse;
@@ -75,6 +77,7 @@ class RideDetailsdata {
 
   RideDetailsdata(
       {this.id,
+      this.riderFbId,
       this.idUserApp,
       this.departName,
       this.destinationName,
@@ -98,6 +101,7 @@ class RideDetailsdata {
       this.creer,
       this.modifier,
       this.dateRetour,
+      this.rideDate,
       this.heureRetour,
       this.statutRound,
       this.statutCourse,
@@ -125,6 +129,7 @@ class RideDetailsdata {
       });
     }
     id = json['id'].toString();
+    riderFbId = json['rider_firebase_id'].toString();
     idUserApp = json['id_user_app'].toString();
     departName = json['depart_name'].toString();
     destinationName = json['destination_name'].toString();
@@ -148,6 +153,7 @@ class RideDetailsdata {
     creer = json['creer'].toString();
     modifier = json['modifier'].toString();
     dateRetour = json['date_retour'].toString();
+    rideDate = json['ride_date'].toString();
     heureRetour = json['heure_retour'].toString();
     statutRound = json['statut_round'].toString();
     statutCourse = json['statut_course'].toString();
@@ -172,6 +178,7 @@ class RideDetailsdata {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['rider_firebase_id'] = riderFbId;
     data['id_user_app'] = idUserApp;
     data['depart_name'] = departName;
     data['destination_name'] = destinationName;
@@ -195,6 +202,7 @@ class RideDetailsdata {
     data['creer'] = creer;
     data['modifier'] = modifier;
     data['date_retour'] = dateRetour;
+    data['ride_date'] = rideDate;
     data['heure_retour'] = heureRetour;
     data['statut_round'] = statutRound;
     data['statut_course'] = statutCourse;

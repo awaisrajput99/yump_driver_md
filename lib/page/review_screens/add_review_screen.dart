@@ -34,9 +34,10 @@ class AddReviewScreen extends StatelessWidget {
                     ? "Edit Review".tr
                     : "Add review".tr,
                 style: TextStyle(
-                  color: themeChange.getThem()
-                      ? AppThemeData.grey900Dark
-                      : AppThemeData.grey900,
+                  // color: themeChange.getThem()
+                  //     ? AppThemeData.grey900Dark
+                  //     : AppThemeData.grey900,
+                  color: Colors.white,
                   fontSize: 18,
                   fontFamily: AppThemeData.semiBold,
                 ),
@@ -232,7 +233,7 @@ class AddReviewScreen extends StatelessWidget {
                                   btnHeight: 45,
                                   title: "Submit review".tr,
                                   btnColor: AppThemeData.primary200,
-                                  txtColor: Colors.black, onPress: () async {
+                                  txtColor: Colors.white, onPress: () async {
                                 Map<String, String> bodyParams = {
                                   'ride_id':
                                       controller.data.value!.id.toString(),

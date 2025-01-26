@@ -31,12 +31,14 @@ class ButtonThem {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
           ),
-          color: btnColor ?? AppThemeData.primary200,
+          // color: btnColor ?? AppThemeData.primary200,
+          color: AppThemeData.primary200,
           child: Text(
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: txtColor,
+              // color: txtColor,
+              color: AppThemeData.white90,
               fontSize: txtSize,
               fontFamily: AppThemeData.medium,
             ),

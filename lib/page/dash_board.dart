@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:yumprides_driver/calling_module/backend/call_notifications.dart';
+import 'package:yumprides_driver/calling_module/receive_call/backend/call_notifications.dart';
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/page/auth_screens/vehicle_info_screen.dart';

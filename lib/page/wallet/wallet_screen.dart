@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/constant/logdata.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
@@ -1470,10 +1469,9 @@ class WalletScreen extends StatelessWidget {
                                       if (walletController
                                               .selectedRadioTile!.value ==
                                           "Stripe") {
-                                        // stripeMakePayment(
-                                        //     amount: walletController
-                                        //         .amountController.value.text);
-                                        processPayment(1000, 'pId', context);
+                                        stripeMakePayment(
+                                            amount: walletController
+                                                .amountController.value.text);
                                       } else if (walletController
                                               .selectedRadioTile!.value ==
                                           "RazorPay") {
@@ -1687,197 +1685,87 @@ class WalletScreen extends StatelessWidget {
   }
 
   /// Stripe Payment Gateway
-  Map<dynamic, dynamic>? paymentIntentData;
+  Map<String, dynamic>? paymentIntentData;
 
-  Future<void> processPayment(
-      double totalPrice, String pId, BuildContext context) async {
+  Future<void> stripeMakePayment({required String amount}) async {
     try {
-      // Convert the total price to cents and then to a string
-      String amountInCents = (totalPrice * 100).toInt().toString();
-      var paymentIntentData = await createPaymentIntent(amountInCents, "USD");
+      paymentIntentData =
+          await walletController.createStripeIntent(amount: amount);
 
-      if (paymentIntentData != null) {
-        await Stripe.instance.initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-            paymentIntentClientSecret: paymentIntentData['client_secret'],
-            googlePay: const PaymentSheetGooglePay(merchantCountryCode: 'US'),
-            merchantDisplayName: 'Nod2Job',
-          ),
+      if (paymentIntentData != null &&
+          paymentIntentData!.containsKey("error")) {
+        Get.back();
+        showSnackBarAlert(
+          message: "Something went wrong, please contact admin.".tr,
+          color: Colors.red.shade400,
         );
-        await displayPaymentSheet();
+      } else {
+        await stripe1.Stripe.instance
+            .initPaymentSheet(
+                paymentSheetParameters: stripe1.SetupPaymentSheetParameters(
+              paymentIntentClientSecret: paymentIntentData!['client_secret'],
+              allowsDelayedPaymentMethods: false,
+              googlePay: stripe1.PaymentSheetGooglePay(
+                merchantCountryCode: 'US',
+                testEnv: walletController.paymentSettingModel.value.strip!
+                            .isSandboxEnabled ==
+                        'true'
+                    ? true
+                    : false,
+                currencyCode: "USD",
+              ),
+              style: ThemeMode.system,
+              appearance: stripe1.PaymentSheetAppearance(
+                colors: stripe1.PaymentSheetAppearanceColors(
+                  primary: AppThemeData.primary200,
+                ),
+              ),
+              merchantDisplayName: 'Yump Rides',
+            ))
+            .then((value) {});
 
-//Success DO
-        print("Payment done done");
-      } else {}
-    } catch (e) {
-      debugPrint("Payment processing error: $e");
-    }
-  }
+        displayStripePaymentSheet();
+      }
+    } catch (e, s) {
+      Get.back();
 
-  displayPaymentSheet() async {
-    try {
-      await Stripe.instance.presentPaymentSheet().then((value) => {
-            // setState(() {
-            // }),
-            paymentIntentData = null,
-            // print("Payment done done done")
-
-            // placeOrder(),
-          });
-    } on StripeException catch (e) {
-      // ignore: avoid_print
-      print("Error whilte displaying payment sheat ${e.toString()}");
-    }
-  }
-
-  createPaymentIntent(String amount, String currency) async {
-    try {
-      Map<String, String> body = {
-        'amount': amount, // Ensure this is a string
-        'currency': currency,
-        'payment_method_types[]': 'card',
-      };
-
-      var response = await http.post(
-        Uri.parse('https://api.stripe.com/v1/payment_intents'),
-        body: body,
-        headers: {
-          'Authorization':
-              'Bearer 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',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
+      showSnackBarAlert(
+        message: 'exception:$e \n$s',
+        color: Colors.red,
       );
-
-      return jsonDecode(response.body.toString());
-    } catch (e) {
-      debugPrint("exception,,,....e  ee  e $e");
     }
   }
 
-  int calculateAmount(String amount) {
-    final double price = double.parse(amount); // Parse to double
-    final int convertedPrice = (price * 100).toInt(); // Convert to cents
-    return convertedPrice;
+  displayStripePaymentSheet() async {
+    try {
+      await stripe1.Stripe.instance.presentPaymentSheet().then((value) {
+        Get.back();
+        walletController
+            .setAmount(walletController.amountController.value.text)
+            .then((value) {
+          if (value != null) {
+            _refreshAPI();
+          }
+        });
+        paymentIntentData = null;
+      });
+    } on stripe1.StripeException catch (e) {
+      Get.back();
+      var lo1 = jsonEncode(e);
+      var lo2 = jsonDecode(lo1);
+      StripePayFailedModel lom = StripePayFailedModel.fromJson(lo2);
+      showSnackBarAlert(
+        message: lom.error.message,
+        color: Colors.green,
+      );
+    } catch (e) {
+      Get.back();
+      showSnackBarAlert(
+        message: e.toString(),
+        color: Colors.green,
+      );
+    }
   }
-
-  // Map<String, dynamic>? paymentIntentData;
-
-  // Future<void> stripeMakePayment({required String amount}) async {
-  //   try {
-  //     paymentIntentData =
-  //         await walletController.createStripeIntent(amount, 'USD');
-  //     print("HEre is hte intent: $paymentIntentData");
-  //     if (paymentIntentData != null &&
-  //         paymentIntentData!.containsKey("error")) {
-  //       Get.back();
-  //       showSnackBarAlert(
-  //         message: "Something went wrong, please contact admin.".tr,
-  //         color: Colors.red.shade400,
-  //       );
-  //       print("Numbereeee 1 clicked");
-  //     } else {
-  //       print("Numbereeee 22 clicked");
-
-  //       // await stripe1.Stripe.instance
-  //       //     .initPaymentSheet(
-  //       //       paymentSheetParameters: stripe1.SetupPaymentSheetParameters(
-  //       //         paymentIntentClientSecret: paymentIntentData!['client_secret'],
-  //       //         allowsDelayedPaymentMethods: false,
-  //       //         googlePay: stripe1.PaymentSheetGooglePay(
-  //       //           merchantCountryCode: 'CA',
-  //       //           testEnv:false,
-  //       //           //  walletController.paymentSettingModel.value.strip!
-  //       //           //             .isSandboxEnabled ==
-  //       //           //         'true'
-  //       //           //     ? true
-  //       //           //     : false,
-  //       //           currencyCode: "USD",
-  //       //         ),
-  //       //         style: ThemeMode.system,
-  //       //         appearance: stripe1.PaymentSheetAppearance(
-  //       //           colors: stripe1.PaymentSheetAppearanceColors(
-  //       //             primary: AppThemeData.primary200,
-  //       //           ),
-  //       //         ),
-  //       //         merchantDisplayName: 'Yump Rides',
-  //       //       ),
-  //       //     )
-  //       await Stripe.instance.initPaymentSheet(
-  //         paymentSheetParameters: SetupPaymentSheetParameters(
-  //           paymentIntentClientSecret: paymentIntentData!['client_secret'],
-  //           googlePay: const PaymentSheetGooglePay(merchantCountryCode: 'US'),
-  //           merchantDisplayName: 'Yumpdriver',
-  //           allowsDelayedPaymentMethods: true,
-  //           // customFlow: true,
-  //         ),
-  //       );
-  //       print("Numbereeee 2 clicked ${paymentIntentData!['client_secret']}");
-
-  //       await displayStripePaymentSheet();
-  //     }
-  //   } catch (e, s) {
-  //     Get.back();
-
-  //     showSnackBarAlert(
-  //       message: 'exception:$e \n$s',
-  //       color: Colors.red,
-  //     );
-  //   }
-  // }
-
-  // // displayStripePaymentSheet() async {
-  // //   try {
-  // //     print("bottom sheat trying");
-  // //     await stripe1.Stripe.instance.presentPaymentSheet().then((value) {
-  // //       Get.back();
-  // //       print("bottom sheat trying 33");
-
-  // //       walletController
-  // //           .setAmount(walletController.amountController.value.text)
-  // //           .then((value) {
-  // //         if (value != null) {
-  // //           _refreshAPI();
-  // //         }
-  // //       });
-  // //       paymentIntentData = null;
-  // //     });
-  // //     print("bottom sheat trying 1");
-  // //   } on stripe1.StripeException catch (e) {
-  // //     print("bottom sheat trying 2 $e");
-
-  // //     Get.back();
-  // //     var lo1 = jsonEncode(e);
-  // //     var lo2 = jsonDecode(lo1);
-  // //     StripePayFailedModel lom = StripePayFailedModel.fromJson(lo2);
-  // //     showSnackBarAlert(
-  // //       message: lom.error.message,
-  // //       color: Colors.green,
-  // //     );
-  // //   } catch (e) {
-  // //     Get.back();
-  // //     showSnackBarAlert(
-  // //       message: e.toString(),
-  // //       color: Colors.green,
-  // //     );
-  // //   }
-  // // }
-  // displayStripePaymentSheet() async {
-  //   try {
-  //     await Stripe.instance.presentPaymentSheet().then((value) => {
-  //           // setState(() {
-  //           // }),
-  //           paymentIntentData = null,
-  //           // print("Payment done done done")
-
-  //           // placeOrder(),
-  //         });
-  //   } on StripeException catch (e) {
-  //     // ignore: avoid_print
-  //     print("Here is the error ${e.toString()}");
-  //     // Fluttertoast.showToast(msg: "Payment Cancelled");
-  //     // Fluttertoast.showToast(msg: "Couldn't place the order");
-  //   }
-  // }
 
   /// RazorPay Payment Gateway
   startRazorpayPayment() {

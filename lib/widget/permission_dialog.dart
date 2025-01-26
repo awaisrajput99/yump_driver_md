@@ -4,6 +4,8 @@ import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+
 import 'package:location/location.dart';
 
 class LocationPermissionDisclosureDialog extends StatelessWidget {
@@ -63,5 +65,19 @@ class LocationPermissionDisclosureDialog extends StatelessWidget {
       ShowToastDialog.showToast(
           "Location access denied. Please enable it in settings to continue.");
     }
+  }
+}
+
+Future<void> requestTrackingPermission() async {
+  // Ensure the framework is initialized
+  final trackingStatus =
+      await AppTrackingTransparency.trackingAuthorizationStatus;
+
+  if (trackingStatus == TrackingStatus.notDetermined) {
+    // Show the ATT prompt
+    final status = await AppTrackingTransparency.requestTrackingAuthorization();
+    print("Tracking permission status: $status");
+  } else {
+    print("Tracking already authorized or denied: $trackingStatus");
   }
 }

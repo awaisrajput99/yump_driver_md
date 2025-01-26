@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:yumprides_driver/calling_module/make_call/backend/firestoremethods.dart';
+import 'package:yumprides_driver/calling_module/make_call/call_screen.dart';
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
@@ -38,6 +41,22 @@ class NewRideScreen extends StatelessWidget {
 
   final controllerDashBoard = Get.put(DashBoardController());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  callUser(String userId, String userName, BuildContext context) async {
+    String channelId = await firestoreMethods().callStream(context);
+
+    if (channelId.isNotEmpty) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CallScreen(
+            isBroadcaster: true,
+            channelId: channelId,
+            userId: userId,
+            userName: userName,
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -342,8 +361,9 @@ class NewRideScreen extends StatelessWidget {
                         width: 8,
                       ),
                       Container(
-                        width: 100,
+                        // width: 110,
                         height: 34,
+                        padding: EdgeInsets.symmetric(horizontal: 6),
                         decoration: BoxDecoration(
                             color: Constant.statusColor(data),
                             borderRadius: BorderRadius.circular(10)),
@@ -604,13 +624,20 @@ class NewRideScreen extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              if (data.rideType! == 'driver' &&
-                                  data.existingUserId.toString() == "null") {
-                                Constant.makePhoneCall(
-                                    data.userInfo!.phone.toString());
-                              } else {
-                                Constant.makePhoneCall(data.phone.toString());
-                              }
+                              //   DialCall(
+                              // userId: "8YQErejTK8RaIqz4a813NKMkijo2",
+                              // userName: "Safyan Tariq")
+                              print(
+                                  "Here is the caller id: ${data.riderFbId} & my id ${FirebaseAuth.instance.currentUser!.uid}");
+                              callUser(data.riderFbId!,
+                                  data.userInfo?.name ?? "", context);
+                              // if (data.rideType! == 'driver' &&
+                              //     data.existingUserId.toString() == "null") {
+                              //   Constant.makePhoneCall(
+                              //       data.userInfo!.phone.toString());
+                              // } else {
+                              //   Constant.makePhoneCall(data.phone.toString());
+                              // }
                             },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.blue,
@@ -626,7 +653,7 @@ class NewRideScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            data.dateRetour.toString(),
+                            data.rideDate.toString(),
                           ),
                         ],
                       )
@@ -669,7 +696,7 @@ class NewRideScreen extends StatelessWidget {
                                     btnWidthRatio: 1,
                                     btnHeight: 45,
                                     btnColor: AppThemeData.primary200,
-                                    txtColor: AppThemeData.grey900,
+                                    txtColor: Colors.white,
                                     onPress: () async {
                                       Get.to(const AddReviewScreen(),
                                           arguments: {
@@ -695,9 +722,10 @@ class NewRideScreen extends StatelessWidget {
                           btnColor: themeChange.getThem()
                               ? AppThemeData.grey900
                               : AppThemeData.grey900Dark,
-                          txtColor: themeChange.getThem()
-                              ? AppThemeData.grey500Dark
-                              : AppThemeData.grey300Dark,
+                          // txtColor: themeChange.getThem()
+                          //     ? AppThemeData.grey500Dark
+                          //     : AppThemeData.grey300Dark,
+                          txtColor: Colors.black,
                           onPress: () async {
                             Get.to(AddComplaintScreen(), arguments: {
                               "isReviewScreen": false,
@@ -1334,9 +1362,10 @@ class NewRideScreen extends StatelessWidget {
                                 btnHeight: 45,
                                 btnWidthRatio: 0.8,
                                 btnColor: AppThemeData.primary200,
-                                txtColor: !isDarkMode
-                                    ? AppThemeData.grey900
-                                    : AppThemeData.grey900Dark,
+                                // txtColor: !isDarkMode
+                                //     ? AppThemeData.grey900
+                                //     : AppThemeData.grey900Dark,
+                                txtColor: Colors.white,
                                 onPress: () async {
                                   if (resonController.text.isNotEmpty) {
                                     Get.back();

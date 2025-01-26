@@ -175,10 +175,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                           context,
                           title: 'Send'.tr,
                           btnHeight: 50,
+                          
                           btnColor: AppThemeData.primary200,
-                          txtColor: isDarkMode
-                              ? AppThemeData.white90
-                              : AppThemeData.grey80Dark,
+                                                  txtColor: AppThemeData.white90,
+
                           onPress: () async {
                             FocusScope.of(context).unfocus();
                             if (_formKey.currentState!.validate()) {

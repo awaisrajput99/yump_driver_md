@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:yumprides_driver/calling_module/call_screen.dart';
+import 'package:yumprides_driver/calling_module/receive_call/call_screen.dart';
 
 final GlobalKey<NavigatorState> callNavigatorKey = GlobalKey<NavigatorState>();
 

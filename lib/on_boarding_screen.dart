@@ -226,6 +226,7 @@ class OnBoardingScreen extends StatelessWidget {
                             title: 'Start Your Journey'.tr,
                             btnHeight: 55,
                             btnWidthRatio: 0.6,
+                            
                             txtColor: AppThemeData.white90,
                             onPress: () async {
                               Preferences.setBoolean(

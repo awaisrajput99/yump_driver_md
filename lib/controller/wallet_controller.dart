@@ -58,10 +58,8 @@ class WalletController extends GetxController
     selectedRadioTile = "".obs;
     paymentSettingModel.value = Constant.getPaymentSetting();
 
-    // stripePrefix.Stripe.publishableKey =
-    //     paymentSettingModel.value.strip!.clientpublishableKey!;
     stripePrefix.Stripe.publishableKey =
-        "pk_live_51QT6NuFCZA829IV4efUVvxXyEBw6Ugx0UpnsA72trVbiHwOT5LS3V9ukp5jgk9GawAXbE1ZHIUHc4cl1cvfk0qF300qEAmMSKT";
+        'pk_live_51QT6NuFCZA829IV4efUVvxXyEBw6Ugx0UpnsA72trVbiHwOT5LS3V9ukp5jgk9GawAXbE1ZHIUHc4cl1cvfk0qF300qEAmMSKT';
     stripePrefix.Stripe.merchantIdentifier = "Cabme";
     // await stripePrefix.Stripe.instance.applySettings();
 
@@ -308,69 +306,44 @@ class WalletController extends GetxController
   }
 
   ///Stripe
-  createStripeIntent(String amount, String currency) async {
+  createStripeIntent({required String amount}) async {
     try {
-      Map<String, String> body = {
-        'amount': amount, // Ensure this is a string
-        'currency': currency,
+      Map<String, dynamic> body = {
+        'amount': ((double.parse(amount) * 100).round()).toString(),
+        'currency': "USD",
         'payment_method_types[]': 'card',
+        "description": "${Preferences.getInt(Preferences.userId)} Wallet Topup",
+        "shipping[name]":
+            "${Preferences.getInt(Preferences.userId)} ${Preferences.getInt(Preferences.userId)}",
+        "shipping[address][line1]": "510 Townsend St",
+        "shipping[address][postal_code]": "98140",
+        "shipping[address][city]": "San Francisco",
+        "shipping[address][state]": "CA",
+        "shipping[address][country]": "US",
       };
+      var stripeSecret = paymentSettingModel.value.strip!.secretKey;
 
+      await stripePrefix.Stripe.instance.applySettings();
       var response = await http.post(
-        Uri.parse('https://api.stripe.com/v1/payment_intents'),
-        body: body,
-        headers: {
-          'Authorization':
-              'Bearer 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',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      );
-
-      print("Donee..eee..ee");
-
-      return jsonDecode(response.body.toString());
+          Uri.parse('https://api.stripe.com/v1/payment_intents'),
+          body: body,
+          headers: {
+            'Authorization': 'Bearer $stripeSecret',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          });
+      showLog("API :: URL :: https://api.stripe.com/v1/payment_intents");
+      showLog("API :: Request Body :: ${jsonEncode(body)} ");
+      showLog("API :: Request Header :: ${{
+        'Authorization': 'Bearer $stripeSecret',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }.toString()} ");
+      showLog("API :: responseStatus :: ${response.statusCode} ");
+      showLog("API :: responseBody :: ${response.body} ");
+      return jsonDecode(response.body);
     } catch (e) {
-      debugPrint("exception$e");
+      print("=====$e");
     }
   }
-  // createStripeIntent({required String amount}) async {
-  //   try {
-  //     Map<String, dynamic> body = {
-  //       'amount': ((double.parse(amount) * 100).round()).toString(),
-  //       'currency': "USD",
-  //       'payment_method_types[]': 'card',
-  //       "description": "${Preferences.getInt(Preferences.userId)} Wallet Topup",
-  //       "shipping[name]":
-  //           "${Preferences.getInt(Preferences.userId)} ${Preferences.getInt(Preferences.userId)}",
-  //       "shipping[address][line1]": "510 Townsend St",
-  //       "shipping[address][postal_code]": "98140",
-  //       "shipping[address][city]": "San Francisco",
-  //       "shipping[address][state]": "CA",
-  //       "shipping[address][country]": "US",
-  //     };
-  //     var stripeSecret = paymentSettingModel.value.strip!.secretKey;
-
-  //     await stripePrefix.Stripe.instance.applySettings();
-  //     var response = await http.post(
-  //         Uri.parse('https://api.stripe.com/v1/payment_intents'),
-  //         body: body,
-  //         headers: {
-  //           'Authorization': 'Bearer $stripeSecret',
-  //           'Content-Type': 'application/x-www-form-urlencoded'
-  //         });
-  //     showLog("API :: URL :: https://api.stripe.com/v1/payment_intents");
-  //     showLog("API :: Request Body :: ${jsonEncode(body)} ");
-  //     showLog("API :: Request Header :: ${{
-  //       'Authorization': 'Bearer $stripeSecret',
-  //       'Content-Type': 'application/x-www-form-urlencoded'
-  //     }.toString()} ");
-  //     showLog("API :: responseStatus :: ${response.statusCode} ");
-  //     showLog("API :: responseBody :: ${response.body} ");
-  //     return jsonDecode(response.body);
-  //   } catch (e) {
-  //     print("=====$e");
-  //   }
-  // }
 
   ///razorPay
   Future<CreateRazorPayOrderModel?> createOrderRazorPay(

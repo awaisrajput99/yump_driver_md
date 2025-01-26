@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   agora_rtc_engine: ^6.5.0
+  app_tracking_transparency: ^2.0.6+1
   bottom_picker: ^2.8.0
   cached_network_image: ^3.4.1
   cloud_firestore: ^5.4.4

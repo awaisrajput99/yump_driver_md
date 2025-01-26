@@ -230,7 +230,7 @@ class AddComplaintScreen extends StatelessWidget {
                           context,
                           title: "Submit Complaint".tr,
                           btnColor: AppThemeData.primary200,
-                          txtColor: Colors.black,
+                          txtColor: Colors.white,
                           onPress: () async {
                             if (_formKey.currentState!.validate()) {
                               Map<String, String> bodyParams = {};

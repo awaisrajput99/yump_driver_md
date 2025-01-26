@@ -757,9 +757,11 @@ class AllParcelScreen extends StatelessWidget {
                       btnColor: isDarkMode
                           ? AppThemeData.grey800
                           : AppThemeData.grey800Dark,
-                      txtColor: isDarkMode
-                          ? AppThemeData.grey500Dark
-                          : AppThemeData.grey300Dark,
+                      // txtColor: isDarkMode
+                      //     ? AppThemeData.grey500Dark
+                      //     : AppThemeData.grey300Dark,
+                      txtColor: Colors.black,
+
                       onPress: () async {
                         Get.to(AddComplaintScreen(), arguments: {
                           "isReviewScreen": false,

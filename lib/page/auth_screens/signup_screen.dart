@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
 import 'package:yumprides_driver/controller/sign_up_controller.dart';
@@ -387,6 +388,8 @@ class SignupScreen extends StatelessWidget {
                                                 'phone': controller.phoneNumber
                                                     .value.value.text
                                                     .trim(),
+                                                "fb_id": FirebaseAuth
+                                                    .instance.currentUser!.uid,
                                                 'email': controller
                                                     .emailController.value.text
                                                     .trim(),

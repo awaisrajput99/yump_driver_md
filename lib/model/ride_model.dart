@@ -34,6 +34,7 @@ class RideModel {
 
 class RideData {
   String? id;
+  String? riderFbId;
   String? idUserApp;
   String? distanceUnit;
   String? departName;
@@ -59,6 +60,7 @@ class RideData {
   String? prenomConducteur;
   String? driverPhone;
   String? dateRetour;
+  String? rideDate;
   String? heureRetour;
   String? statutRound;
   String? montant;
@@ -93,6 +95,7 @@ class RideData {
 
   RideData({
     this.id,
+    this.riderFbId,
     this.idUserApp,
     this.distanceUnit,
     this.departName,
@@ -117,6 +120,7 @@ class RideData {
     this.prenomConducteur,
     this.driverPhone,
     this.dateRetour,
+    this.rideDate,
     this.heureRetour,
     this.statutRound,
     this.montant,
@@ -160,6 +164,7 @@ class RideData {
       });
     }
     id = json['id'].toString();
+    riderFbId = json['rider_firebase_id'].toString();
     idUserApp = json['id_user_app'].toString();
     distanceUnit = json['distance_unit'].toString();
     departName = json['depart_name'].toString();
@@ -195,6 +200,7 @@ class RideData {
     prenomConducteur = json['prenomConducteur'].toString();
     driverPhone = json['driverPhone'].toString();
     dateRetour = json['date_retour'].toString();
+    rideDate = json['ride_date'].toString();
     heureRetour = json['heure_retour'].toString();
     statutRound = json['statut_round'].toString();
     montant = json['montant'].toString();
@@ -232,6 +238,7 @@ class RideData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['rider_firebase_id'] = riderFbId;
     data['id_user_app'] = idUserApp;
     data['distance_unit'] = distanceUnit;
     data['depart_name'] = departName;
@@ -256,6 +263,7 @@ class RideData {
     data['prenomConducteur'] = prenomConducteur;
     data['driverPhone'] = driverPhone;
     data['date_retour'] = dateRetour;
+    data['ride_date'] = rideDate;
     data['heure_retour'] = heureRetour;
     data['statut_round'] = statutRound;
     data['montant'] = montant;

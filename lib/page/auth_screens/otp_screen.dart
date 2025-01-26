@@ -190,9 +190,11 @@ class OtpScreen extends StatelessWidget {
                           title: 'Verify OTP'.tr,
                           btnHeight: 50,
                           btnColor: AppThemeData.primary200,
-                          txtColor: themeChange.getThem()
-                              ? AppThemeData.white90
-                              : AppThemeData.grey80Dark,
+                          // txtColor: themeChange.getThem()
+                          //     ? AppThemeData.white90
+                          //     : AppThemeData.grey80Dark,
+                          txtColor: AppThemeData.white90,
+
                           onPress: () async {
                             FocusScope.of(context).unfocus();
 

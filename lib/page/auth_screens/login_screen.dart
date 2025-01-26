@@ -6,8 +6,6 @@ import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
 import 'package:yumprides_driver/model/user_model.dart';
 import 'package:yumprides_driver/page/auth_screens/forgot_password.dart';
-import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
-import 'package:yumprides_driver/page/auth_screens/signup_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
@@ -16,7 +14,6 @@ import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
 import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:yumprides_driver/widget/permission_dialog.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -222,7 +219,9 @@ class LoginScreen extends StatelessWidget {
                                       title: 'Log in'.tr,
                                       btnHeight: 50,
                                       btnColor: AppThemeData.primary200,
-                                      txtColor: AppThemeData.surface50,
+                                      // txtColor: AppThemeData.surface50,
+                                      txtColor: AppThemeData.white90,
+
                                       onPress: () async {
                                         FocusScope.of(context).unfocus();
                                         if (_formKey.currentState!.validate()) {

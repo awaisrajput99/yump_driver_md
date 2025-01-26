@@ -430,7 +430,7 @@ class _RouteViewScreenState extends State<RouteViewScreen> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 5.0),
                                       child: Text(
-                                        rideData!.dateRetour.toString(),
+                                        rideData!.rideDate.toString(),
                                       ),
                                     ),
                                   ],
@@ -1029,9 +1029,11 @@ class _RouteViewScreenState extends State<RouteViewScreen> {
                                 btnHeight: 45,
                                 btnWidthRatio: 0.8,
                                 btnColor: AppThemeData.primary200,
-                                txtColor: !isDarkMode
-                                    ? AppThemeData.grey900
-                                    : AppThemeData.grey900Dark,
+                                // txtColor: !isDarkMode
+                                //     ? AppThemeData.grey900
+                                //     : AppThemeData.grey900Dark,
+                                txtColor: Colors.white,
+
                                 onPress: () async {
                                   if (resonController.text.isNotEmpty) {
                                     Get.back();

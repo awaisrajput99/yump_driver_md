@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yumprides_driver/calling_module/backend/call_notifications.dart';
+import 'package:yumprides_driver/calling_module/receive_call/backend/call_notifications.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
 import 'package:yumprides_driver/controller/settings_controller.dart';
@@ -29,6 +29,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yumprides_driver/widget/permission_dialog.dart';
 import 'page/chats_screen/conversation_screen.dart';
 import 'page/localization_screens/localization_screen.dart';
 import 'service/localization_service.dart';
@@ -84,6 +85,8 @@ void main() async {
   // await FirebaseAuth.instance.signOut();
   // await clearAppData();
   // print("Here is the user id: ${Preferences.getInt(Preferences.userId)}");
+  await requestTrackingPermission();
+
   runApp(MyApp());
 }
 

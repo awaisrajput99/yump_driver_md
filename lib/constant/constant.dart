@@ -317,7 +317,13 @@ class Constant {
           destination: Coords(latitude, longLatitude),
         );
       } else {
-        ShowToastDialog.showToast("Google map is not installed");
+        // ShowToastDialog.showToast("Google map is not installed");
+        await MapLauncher.showDirections(
+          mapType: MapType.apple,
+          directionsMode: DirectionsMode.driving,
+          destinationTitle: name,
+          destination: Coords(latitude, longLatitude),
+        );
       }
     } else if (Constant.liveTrackingMapType == "googleGo") {
       bool? isAvailable = await MapLauncher.isMapAvailable(MapType.googleGo);

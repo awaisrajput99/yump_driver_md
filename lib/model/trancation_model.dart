@@ -41,6 +41,7 @@ class TruncationModel {
 
 class TansactionData {
   String? id;
+  String? riderFbId;
   String? idUserApp;
   String? distanceUnit;
   String? departName;
@@ -68,6 +69,7 @@ class TansactionData {
   String? prenomConducteur;
   String? driverPhone;
   String? dateRetour;
+  String? rideDate;
   String? heureRetour;
   String? statutRound;
   String? montant;
@@ -127,6 +129,7 @@ class TansactionData {
 
   TansactionData(
       {this.id,
+      this.riderFbId,
       this.idUserApp,
       this.distanceUnit,
       this.departName,
@@ -154,6 +157,7 @@ class TansactionData {
       this.prenomConducteur,
       this.driverPhone,
       this.dateRetour,
+      this.rideDate,
       this.heureRetour,
       this.statutRound,
       this.montant,
@@ -222,6 +226,7 @@ class TansactionData {
       });
     }
     id = json['id'];
+    riderFbId = json['rider_firebase_id'];
     idUserApp = json['id_user_app'];
     distanceUnit = json['distance_unit'];
     departName = json['depart_name'];
@@ -249,6 +254,7 @@ class TansactionData {
     prenomConducteur = json['prenomConducteur'];
     driverPhone = json['driverPhone'];
     dateRetour = json['date_retour'];
+    rideDate = json['ride_date'];
     heureRetour = json['heure_retour'];
     statutRound = json['statut_round'];
     montant = json['montant'];
@@ -323,6 +329,7 @@ class TansactionData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['rider_firebase_id'] = riderFbId;
     data['id_user_app'] = idUserApp;
     data['distance_unit'] = distanceUnit;
     data['depart_name'] = departName;
@@ -350,6 +357,7 @@ class TansactionData {
     data['prenomConducteur'] = prenomConducteur;
     data['driverPhone'] = driverPhone;
     data['date_retour'] = dateRetour;
+    data['ride_date'] = rideDate;
     data['heure_retour'] = heureRetour;
     data['statut_round'] = statutRound;
     data['montant'] = montant;
