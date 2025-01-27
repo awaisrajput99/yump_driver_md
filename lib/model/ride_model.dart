@@ -35,6 +35,7 @@ class RideModel {
 class RideData {
   String? id;
   String? riderFbId;
+  String? driverFbId;
   String? idUserApp;
   String? distanceUnit;
   String? departName;
@@ -96,6 +97,7 @@ class RideData {
   RideData({
     this.id,
     this.riderFbId,
+    this.driverFbId,
     this.idUserApp,
     this.distanceUnit,
     this.departName,
@@ -165,6 +167,7 @@ class RideData {
     }
     id = json['id'].toString();
     riderFbId = json['rider_firebase_id'].toString();
+    driverFbId = json['driver_firebase_id'].toString();
     idUserApp = json['id_user_app'].toString();
     distanceUnit = json['distance_unit'].toString();
     departName = json['depart_name'].toString();
@@ -239,6 +242,7 @@ class RideData {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['rider_firebase_id'] = riderFbId;
+    data['driver_firebase_id'] = driverFbId;
     data['id_user_app'] = idUserApp;
     data['distance_unit'] = distanceUnit;
     data['depart_name'] = departName;
@@ -333,13 +337,20 @@ class UserInfo {
   String? name;
   String? email;
   String? phone;
+  // String? fbId;
 
-  UserInfo({this.name, this.email, this.phone});
+  UserInfo({
+    this.name,
+    this.email,
+    this.phone,
+    // this.fbId,
+  });
 
   UserInfo.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
+    // fbId = json['fb_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -347,6 +358,7 @@ class UserInfo {
     data['name'] = name;
     data['email'] = email;
     data['phone'] = phone;
+    // data['fb_id'] = fbId;
     return data;
   }
 }

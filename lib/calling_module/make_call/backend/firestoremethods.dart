@@ -5,18 +5,18 @@ import 'package:provider/provider.dart';
 import 'package:yumprides_driver/calling_module/make_call/backend/callstream.dart';
 
 class firestoreMethods {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final _firestore = FirebaseFirestore.instance;
 
   Future<String> callStream(
     BuildContext context,
+    String driverId,
   ) async {
-    final user = FirebaseAuth.instance.currentUser!;
     String channelId = '';
     try {
-      channelId = '${user.uid}${user.displayName}';
+      channelId = '${driverId}${''}';
       CallStream liveStream = CallStream(
-        uid: user.uid,
-        username: user.displayName ?? user.email ?? "",
+        uid: driverId,
+        username: "",
         startedAt: DateTime.now(),
         channelId: channelId,
       );

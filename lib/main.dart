@@ -85,7 +85,7 @@ void main() async {
   // await FirebaseAuth.instance.signOut();
   // await clearAppData();
   // print("Here is the user id: ${Preferences.getInt(Preferences.userId)}");
-  await requestTrackingPermission();
+  // await requestTrackingPermission();
 
   runApp(MyApp());
 }
@@ -219,8 +219,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print(
-        "Here is the user id: ${FirebaseAuth.instance.currentUser?.uid ?? ""}");
+    // print(
+    //     "Here is the user id: ${FirebaseAuth.instance.currentUser?.uid ?? ""}");
     return ChangeNotifierProvider(create: (_) {
       return themeChangeProvider;
     }, child: Consumer<DarkThemeProvider>(builder: (context, value, child) {

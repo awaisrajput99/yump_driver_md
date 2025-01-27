@@ -27,7 +27,9 @@ class _DashBoardState extends State<DashBoard> {
   @override
   void initState() {
     super.initState();
-    listenForInvitations(context);
+    // listenForInvitations(
+    //   context,
+    // );
   }
 
   @override
@@ -35,6 +37,9 @@ class _DashBoardState extends State<DashBoard> {
     return GetBuilder<DashBoardController>(
       init: DashBoardController(),
       builder: (controller) {
+        listenForInvitations(
+            context, controller.userModel.value.userData!.fbId!);
+
         controller.getDrawerItem();
         return WillPopScope(
           onWillPop: () async {

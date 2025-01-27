@@ -19,13 +19,15 @@ class CallScreen extends StatefulWidget {
   final bool isBroadcaster;
   final String channelId;
   final String userId;
+  final String driverId;
   final String userName;
   const CallScreen(
       {Key? key,
       required this.isBroadcaster,
       required this.channelId,
       required this.userId,
-      required this.userName})
+      required this.userName,
+      required this.driverId})
       : super(key: key);
 
   @override
@@ -84,7 +86,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
   Future<void> getToken() async {
     final res = await http.get(
       Uri.parse(
-          '$baseUrl/rtc/${widget.channelId}/publisher/userAccount/${FirebaseAuth.instance.currentUser!.uid}/'),
+          '$baseUrl/rtc/${widget.channelId}/publisher/userAccount/${widget.driverId}/'),
     );
 
     if (res.statusCode == 200) {
@@ -238,7 +240,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
       await _engine.joinChannelWithUserAccount(
         token: token!,
         channelId: widget.channelId,
-        userAccount: FirebaseAuth.instance.currentUser!.uid,
+        userAccount: widget.driverId,
         options: const ChannelMediaOptions(),
       );
 

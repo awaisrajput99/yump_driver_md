@@ -27,6 +27,7 @@ class UserModel {
 
 class UserData {
   String? id;
+  String? fbId;
   String? nom;
   String? prenom;
   String? cnib;
@@ -76,6 +77,7 @@ class UserData {
 
   UserData({
     this.id,
+    this.fbId,
     this.nom,
     this.prenom,
     this.cnib,
@@ -125,6 +127,7 @@ class UserData {
 
   UserData.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
+    fbId = json['fb_id'].toString();
     nom = json['nom'].toString();
     prenom = json['prenom'].toString();
     cnib = json['cnib'].toString();
@@ -175,6 +178,7 @@ class UserData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['fb_id'] = fbId;
     data['nom'] = nom;
     data['prenom'] = prenom;
     data['cnib'] = cnib;

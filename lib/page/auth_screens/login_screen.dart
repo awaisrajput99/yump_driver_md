@@ -44,6 +44,7 @@ class LoginScreen extends StatelessWidget {
           } on PlatformException catch (e) {
             ShowToastDialog.showToast("${e.message}");
           }
+          await requestTrackingPermission();
         },
         builder: (controller) {
           return Scaffold(

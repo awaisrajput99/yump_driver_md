@@ -41,8 +41,9 @@ class NewRideScreen extends StatelessWidget {
 
   final controllerDashBoard = Get.put(DashBoardController());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  callUser(String userId, String userName, BuildContext context) async {
-    String channelId = await firestoreMethods().callStream(context);
+  callUser(String userId, String userName, BuildContext context,
+      String driverId) async {
+    String channelId = await firestoreMethods().callStream(context, driverId);
 
     if (channelId.isNotEmpty) {
       Navigator.of(context).push(
@@ -52,6 +53,7 @@ class NewRideScreen extends StatelessWidget {
             channelId: channelId,
             userId: userId,
             userName: userName,
+            driverId: driverId,
           ),
         ),
       );
@@ -628,9 +630,13 @@ class NewRideScreen extends StatelessWidget {
                               // userId: "8YQErejTK8RaIqz4a813NKMkijo2",
                               // userName: "Safyan Tariq")
                               print(
-                                  "Here is the caller id: ${data.riderFbId} & my id ${FirebaseAuth.instance.currentUser!.uid}");
-                              callUser(data.riderFbId!,
-                                  data.userInfo?.name ?? "", context);
+                                  "Here is the caller id: ${controller.userModel.value.userData?.fbId ?? "null"}");
+                              callUser(
+                                data.riderFbId!,
+                                data.userInfo?.name ?? "",
+                                context,
+                                controller.userModel.value.userData?.fbId ?? "",
+                              );
                               // if (data.rideType! == 'driver' &&
                               //     data.existingUserId.toString() == "null") {
                               //   Constant.makePhoneCall(
