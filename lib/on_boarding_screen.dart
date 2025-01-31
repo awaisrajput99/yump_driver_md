@@ -2,6 +2,7 @@
 
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/controller/on_boarding_controller.dart';
+import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/themes/app_bar_custom.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
@@ -63,7 +64,9 @@ class OnBoardingScreen extends StatelessWidget {
                   onTap: () {
                     Preferences.setBoolean(
                         Preferences.isFinishOnBoardingKey, true);
-                    Get.offAll(const LoginScreen());
+                    Get.offAll(MobileNumberScreen(
+                      isLogin: true,
+                    ));
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 20),
@@ -218,20 +221,21 @@ class OnBoardingScreen extends StatelessWidget {
                       if (controller.selectedPageIndex.value ==
                           (controller.onboardingModel.value.data!.length - 1))
                         Center(
-                          heightFactor
-                          
-                          : 1,
+                          heightFactor: 1,
                           child: ButtonThem.buildButton(
                             context,
                             title: 'Start Your Journey'.tr,
                             btnHeight: 55,
                             btnWidthRatio: 0.6,
-                            
                             txtColor: AppThemeData.white90,
                             onPress: () async {
                               Preferences.setBoolean(
                                   Preferences.isFinishOnBoardingKey, true);
-                              Get.offAll(const LoginScreen());
+                              Get.offAll(
+                                MobileNumberScreen(
+                                  isLogin: true,
+                                ),
+                              );
                             },
                           ),
                         ),

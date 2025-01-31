@@ -9,6 +9,7 @@ import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/my_profile_controller.dart';
 import 'package:yumprides_driver/model/user_model.dart';
 import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/my_profile/change_password_screen.dart';
 import 'package:yumprides_driver/page/my_profile/edit_profile_screen.dart';
 import 'package:yumprides_driver/themes/app_bar_custom.dart';
@@ -101,7 +102,11 @@ class MyProfileScreen extends StatelessWidget {
                                                 Get.back();
                                                 Preferences
                                                     .clearSharPreference();
-                                                Get.offAll(const LoginScreen());
+                                                Get.offAll(
+                                                  MobileNumberScreen(
+                                                    isLogin: true,
+                                                  ),
+                                                );
                                               }
                                             }
                                           });

@@ -10,6 +10,7 @@ import 'package:yumprides_driver/model/driver_location_update.dart';
 import 'package:yumprides_driver/model/user_model.dart';
 import 'package:yumprides_driver/page/add_bank_details/show_bank_details.dart';
 import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/vehicle_info_screen.dart';
 import 'package:yumprides_driver/page/car_service_history/car_service_history_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
@@ -211,7 +212,11 @@ class DashBoardController extends GetxController {
         Preferences.clearKeyData(Preferences.isLogin);
         Preferences.clearKeyData(Preferences.user);
         Preferences.clearKeyData(Preferences.userId);
-        Get.offAll(const LoginScreen());
+        Get.offAll(
+          MobileNumberScreen(
+            isLogin: true,
+          ),
+        );
       } else {
         getDrawerItemWidget(index);
       }
@@ -232,7 +237,11 @@ class DashBoardController extends GetxController {
         Preferences.clearKeyData(Preferences.isLogin);
         Preferences.clearKeyData(Preferences.user);
         Preferences.clearKeyData(Preferences.userId);
-        Get.offAll(const LoginScreen());
+        Get.offAll(
+          MobileNumberScreen(
+            isLogin: true,
+          ),
+        );
       } else {
         getDrawerItemWidget(index);
       }

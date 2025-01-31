@@ -6,6 +6,7 @@ import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/phone_number_controller.dart';
 import 'package:yumprides_driver/model/user_model.dart';
 import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/service/api.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
@@ -74,7 +75,11 @@ class OtpScreen extends StatelessWidget {
                     ),
                     TextSpan(
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => Get.offAll(const LoginScreen()),
+                        ..onTap = () => Get.offAll(
+                              MobileNumberScreen(
+                                isLogin: true,
+                              ),
+                            ),
                       text: 'Log in'.tr,
                       style: TextStyle(
                         fontSize: 16,

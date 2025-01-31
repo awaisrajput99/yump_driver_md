@@ -11,6 +11,7 @@ import 'package:yumprides_driver/controller/settings_controller.dart';
 import 'package:yumprides_driver/firebase_options.dart';
 import 'package:yumprides_driver/on_boarding_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/signup_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/service/api.dart';
@@ -244,7 +245,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 : Preferences.getBoolean(Preferences.isFinishOnBoardingKey)
                     ? Preferences.getBoolean(Preferences.isLogin)
                         ? DashBoard()
-                        : const LoginScreen()
+                        : MobileNumberScreen(
+                            isLogin: true,
+                          )
                     : const OnBoardingScreen();
           },
         ),

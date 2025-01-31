@@ -3,6 +3,7 @@
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/forgot_password_controller.dart';
 import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/text_field_them.dart';
@@ -172,7 +173,10 @@ class ForgotPasswordOtpScreen extends StatelessWidget {
                                       .then((value) {
                                     if (value != null) {
                                       if (value == true) {
-                                        Get.offAll(const LoginScreen(),
+                                        Get.offAll(
+                                            MobileNumberScreen(
+                                              isLogin: true,
+                                            ),
                                             duration: const Duration(
                                                 milliseconds:
                                                     400), //duration of transitions, default 1 sec

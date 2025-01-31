@@ -7,6 +7,7 @@ import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
 import 'package:yumprides_driver/controller/sign_up_controller.dart';
 import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
+import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
@@ -420,12 +421,16 @@ class SignupScreen extends StatelessWidget {
                                                         jsonEncode(value));
                                                     ShowToastDialog.showToast(
                                                         "You have been successfully registered, now you can login");
-                                                    Navigator.pushAndRemoveUntil(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                LoginScreen()),
-                                                        (route) => false);
+                                                    Navigator
+                                                        .pushAndRemoveUntil(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  MobileNumberScreen(
+                                                                isLogin: true,
+                                                              ),
+                                                            ),
+                                                            (route) => false);
 
                                                     // LoginController()
                                                     //     .loginWithGoogle();
@@ -469,7 +474,9 @@ class SignupScreen extends StatelessWidget {
                                     TextSpan(
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () => Get.offAll(
-                                            const LoginScreen(),
+                                            MobileNumberScreen(
+                                              isLogin: true,
+                                            ),
                                             duration: const Duration(
                                                 milliseconds: 400),
                                             transition: Transition.rightToLeft),
