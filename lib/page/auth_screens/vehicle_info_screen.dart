@@ -610,6 +610,8 @@ class VehicleInfoScreen extends StatelessWidget {
                                   ? AppThemeData.white100
                                   : AppThemeData.white100,
                               onPress: () async {
+                                print("Hello workddd 0000");
+
                                 if (_formKey.currentState!.validate()) {
                                   if (vehicleInfoController
                                       .selectedCategoryID.value.isEmpty) {
@@ -650,6 +652,8 @@ class VehicleInfoScreen extends StatelessWidget {
                                     ShowToastDialog.showToast(
                                         "Please enter number of passenger");
                                   } else {
+                                    print("Hello workddd 111");
+
                                     ShowToastDialog.showLoader("Please wait");
                                     Map<String, String> bodyParams1 = {
                                       "brand": vehicleInfoController
@@ -681,7 +685,8 @@ class VehicleInfoScreen extends StatelessWidget {
                                           .selectedZone
                                           .join(",")
                                     };
-                                    log(bodyParams1.toString());
+                                    print("Hello workddd");
+                                    log("Here is the body param of Vehicle :: :: ${bodyParams1.toString()}");
                                     await vehicleInfoController
                                         .vehicleRegister(bodyParams1)
                                         .then((value) {

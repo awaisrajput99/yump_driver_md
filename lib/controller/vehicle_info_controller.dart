@@ -39,7 +39,7 @@ class VehicleInfoController extends GetxController {
   @override
   void onInit() {
     getUserdata();
-    // getVehicleDataAPI();
+
     getVehicleDataAPI();
     super.onInit();
   }
@@ -79,8 +79,14 @@ class VehicleInfoController extends GetxController {
         isLoading.value = false;
       } else if (response.statusCode == 200 &&
           responseBody['success'] == "Failed") {
+        print("Debug point 1");
         await getVehicleCategory();
+
+        print("Debug point 2");
+
         await getZone();
+        print("Debug point 3");
+
         ShowToastDialog.closeLoader();
         isLoading.value = false;
       } else {
@@ -138,7 +144,8 @@ class VehicleInfoController extends GetxController {
       ShowToastDialog.showLoader("Please wait");
       final response = await http.post(Uri.parse(API.vehicleRegister),
           headers: API.header, body: jsonEncode(bodyParams));
-      showLog("API :: URL :: ${API.vehicleRegister} ");
+      showLog(
+          "API :: URL ---- :: ${API.vehicleRegister} ${jsonEncode(bodyParams)}");
       showLog("API :: Request Body :: ${jsonEncode(bodyParams)} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
@@ -171,14 +178,19 @@ class VehicleInfoController extends GetxController {
 
   Future<VehicleData?> getVehicleCategory() async {
     try {
+      print("Debug point 4");
       ShowToastDialog.showLoader("Please wait");
-      final response = await http.get(
-        Uri.parse(API.vehicleCategory),
-        headers: API.header,
-      );
-      showLog("API :: URL :: ${API.vehicleRegister} ");
+      final response = await http.post(Uri.parse(API.vehicleCategory),
+          headers: API.header,
+          body: jsonEncode({
+            'lat': '0.0',
+            'lng': '0.0',
+          }));
+      print("Debug point 5");
+
+      showLog("API :: URL --- :: ${API.vehicleCategory} ");
       showLog("API :: Request Header :: ${API.header.toString()} ");
-      showLog("API :: responseStatus :: ${response.statusCode} ");
+      showLog("API :: responseStatus :: ${response.statusCode}");
       showLog("API :: responseBody :: ${response.body} ");
       Map<String, dynamic> responseBody = json.decode(response.body);
       isLoading.value = false;
