@@ -282,7 +282,9 @@ class SearchParcelScreen extends StatelessWidget {
             Get.to(const ParcelRouteViewScreen(), arguments: argumentData);
           }
         } else {
-          Constant.redirectMap(
+          print("Hello hello helllo 3");
+
+          Constant.redirectMap2(
             latitude: double.parse(data.latDestination!),
             longLatitude: double.parse(data.lngDestination!),
             name: data.destination!,

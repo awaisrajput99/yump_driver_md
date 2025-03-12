@@ -14,28 +14,33 @@ class PhoneNumberController extends GetxController {
   RxString phoneNumber = ''.obs;
 
   sendCode() async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNumber.value,
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {
-        ShowToastDialog.closeLoader();
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNumber.value,
+        verificationCompleted: (PhoneAuthCredential credential) {},
+        verificationFailed: (FirebaseAuthException e) {
+          ShowToastDialog.closeLoader();
 
-        if (e.code == 'invalid-phone-number') {
-          ShowToastDialog.showToast("The provided phone number is not valid.");
-        } else {
-          print(e.message.toString());
-          ShowToastDialog.showToast(e.message.toString());
-        }
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        ShowToastDialog.closeLoader();
-        Get.to(OtpScreen(
-          phoneNumber: phoneNumber.value,
-          verificationId: verificationId,
-        ));
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
+          if (e.code == 'invalid-phone-number') {
+            ShowToastDialog.showToast(
+                "The provided phone number is not valid.");
+          } else {
+            print(e.message.toString());
+            ShowToastDialog.showToast(e.message.toString() + e.code);
+          }
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          ShowToastDialog.closeLoader();
+          Get.to(OtpScreen(
+            phoneNumber: phoneNumber.value,
+            verificationId: verificationId,
+          ));
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+    } catch (e) {
+      print("This is the error while sending OTP $e");
+    }
   }
 
   Future<bool?> phoneNumberIsExit(Map<String, String> bodyParams) async {

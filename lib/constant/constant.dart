@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:geolocator/geolocator.dart' as geolocator;
 import 'package:yumprides_driver/model/parcel_model.dart';
 import 'package:yumprides_driver/model/payment_setting_model.dart';
 import 'package:yumprides_driver/model/ride_model.dart';
@@ -303,7 +304,167 @@ class Constant {
     return downloadUrl.toString();
   }
 
-  static redirectMap(
+  // static Future<void> redirectMap({
+  //   required String name,
+  //   required double startLatitude,
+  //   required double startLongitude,
+  //   required double endLatitude,
+  //   required double endLongitude,
+  // }) async {
+  //   // Fetch current location
+  //   geolocator.Position currentPosition =
+  //       await geolocator.Geolocator.getCurrentPosition(
+  //     // ignore: deprecated_member_use
+  //     desiredAccuracy: geolocator.LocationAccuracy.high,
+  //   );
+
+  //   // Coordinates for current location, starting point, and ending point
+  //   Coords currentLocation =
+  //       Coords(currentPosition.latitude, currentPosition.longitude);
+  //   Coords startPoint = Coords(startLatitude, startLongitude);
+  //   Coords endPoint = Coords(endLatitude, endLongitude);
+
+  //   // Open the map and draw the route
+  //   if (Constant.liveTrackingMapType == "google") {
+  //     bool? isAvailable = await MapLauncher.isMapAvailable(MapType.google);
+  //     if (isAvailable == true) {
+  //       await MapLauncher.showDirections(
+  //         mapType: MapType.google,
+  //         directionsMode: DirectionsMode.driving,
+  //         origin: currentLocation, // Current location
+  //         destination: startPoint, // Starting point
+  //       );
+  //       await MapLauncher.showDirections(
+  //         mapType: MapType.google,
+  //         directionsMode: DirectionsMode.driving,
+  //         origin: startPoint, // Starting point
+  //         destination: endPoint, // Ending point
+  //       );
+  //     } else {
+  //       // Fallback to Apple Maps if Google Maps is not available
+  //       await MapLauncher.showDirections(
+  //         mapType: MapType.apple,
+  //         directionsMode: DirectionsMode.driving,
+  //         origin: currentLocation,
+  //         destination: startPoint,
+  //       );
+  //       await MapLauncher.showDirections(
+  //         mapType: MapType.apple,
+  //         directionsMode: DirectionsMode.driving,
+  //         origin: startPoint,
+  //         destination: endPoint,
+  //       );
+  //     }
+  //   } else if (Constant.liveTrackingMapType == "waze") {
+  //     bool? isAvailable = await MapLauncher.isMapAvailable(MapType.waze);
+  //     if (isAvailable == true) {
+  //       await MapLauncher.showDirections(
+  //         mapType: MapType.waze,
+  //         directionsMode: DirectionsMode.driving,
+  //         origin: currentLocation,
+  //         destination: startPoint,
+  //       );
+  //       await MapLauncher.showDirections(
+  //         mapType: MapType.waze,
+  //         directionsMode: DirectionsMode.driving,
+  //         origin: startPoint,
+  //         destination: endPoint,
+  //       );
+  //     } else {
+  //       ShowToastDialog.showToast("Waze is not installed");
+  //     }
+  //   }
+  //   // Add other map types (e.g., yandexNavi, yandexMaps, etc.) similarly
+  // }
+
+  static Future<void> redirectMap({
+    required String name,
+    required double startLatitude,
+    required double startLongitude,
+    required double endLatitude,
+    required double endLongitude,
+  }) async {
+    // Fetch current location
+    geolocator.Position currentPosition =
+        await geolocator.Geolocator.getCurrentPosition(
+      desiredAccuracy: geolocator.LocationAccuracy.high,
+    );
+
+    // Coordinates for current location, starting point, and ending point
+    Coords currentLocation =
+        Coords(currentPosition.latitude, currentPosition.longitude);
+    Coords startPoint = Coords(startLatitude, startLongitude);
+    Coords endPoint = Coords(endLatitude, endLongitude);
+
+    // Convert Coords to Waypoint for waypoints (used in Google Maps)
+    Waypoint startWaypoint = Waypoint(
+      startPoint.latitude, // Coords object for the starting point
+      startPoint.longitude, // Coords object for the starting point
+      "Start Point", // Optional: Name for the waypoint
+    );
+
+    // Open the map and show directions
+    if (Constant.liveTrackingMapType == "google") {
+      bool? isAvailable = await MapLauncher.isMapAvailable(MapType.google);
+      if (isAvailable == true) {
+        // Use waypoints if supported (Google Maps)
+        await MapLauncher.showDirections(
+          mapType: MapType.google,
+          directionsMode: DirectionsMode.driving,
+          origin: currentLocation, // Current location
+          destination: endPoint, // End point
+          waypoints: [startWaypoint], // Start point as a waypoint
+        );
+      } else {
+        // Fallback to Apple Maps if Google Maps is not available
+        await _showDirectionsInTwoSteps(
+          mapType: MapType.apple,
+          currentLocation: currentLocation,
+          startPoint: startPoint,
+          endPoint: endPoint,
+        );
+      }
+    } else if (Constant.liveTrackingMapType == "waze") {
+      bool? isAvailable = await MapLauncher.isMapAvailable(MapType.waze);
+      if (isAvailable == true) {
+        // Waze does not support waypoints, so show directions in two steps
+        await _showDirectionsInTwoSteps(
+          mapType: MapType.waze,
+          currentLocation: currentLocation,
+          startPoint: startPoint,
+          endPoint: endPoint,
+        );
+      } else {
+        ShowToastDialog.showToast("Waze is not installed");
+      }
+    }
+    // Add other map types (e.g., yandexNavi, yandexMaps, etc.) similarly
+  }
+
+  static Future<void> _showDirectionsInTwoSteps({
+    required MapType mapType,
+    required Coords currentLocation,
+    required Coords startPoint,
+    required Coords endPoint,
+  }) async {
+    // Step 1: Current Location → Start Point
+    await MapLauncher.showDirections(
+      mapType: mapType,
+      directionsMode: DirectionsMode.driving,
+      origin: currentLocation,
+      destination: startPoint,
+    );
+
+    // Step 2: Start Point → End Point
+    await MapLauncher.showDirections(
+      mapType: mapType,
+      directionsMode: DirectionsMode.driving,
+      origin: startPoint,
+      destination: endPoint,
+    );
+  }
+
+  static redirectMap2(
       {required String name,
       required double latitude,
       required double longLatitude}) async {

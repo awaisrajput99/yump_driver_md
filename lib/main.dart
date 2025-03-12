@@ -245,9 +245,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 : Preferences.getBoolean(Preferences.isFinishOnBoardingKey)
                     ? Preferences.getBoolean(Preferences.isLogin)
                         ? DashBoard()
-                        : MobileNumberScreen(
-                            isLogin: true,
-                          )
+                        : LoginScreen()
+                    // MobileNumberScreen(
+                    //     isLogin: true,
+                    //   )
                     : const OnBoardingScreen();
           },
         ),
@@ -312,3 +313,4 @@ Future<void> clearAppData() async {
 }
 // team id: 859DC4BPTW
 // apn key id: K642C69S95
+

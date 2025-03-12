@@ -35,6 +35,9 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 import 'package:text_scroll/text_scroll.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 
 class NewRideScreen extends StatelessWidget {
   NewRideScreen({super.key});
@@ -306,11 +309,26 @@ class NewRideScreen extends StatelessWidget {
               Get.to(const RouteViewScreen(), arguments: argumentData);
             }
           } else {
+            print(
+                "Hello hello helllo 1 ${data.latitudeArrivee} --- ${data.longitudeArrivee}");
             Constant.redirectMap(
-              latitude: double.parse(data
+              endLatitude: double.parse(data
                   .latitudeArrivee!), //orderModel.destinationLocationLAtLng!.latitude!,
-              longLatitude: double.parse(data
+              endLongitude: double.parse(data
                   .longitudeArrivee!), //orderModel.destinationLocationLAtLng!.longitude!,
+              startLatitude: double.parse(data
+                  .latitudeDepart!), //orderModel.destinationLocationLAtLng!.latitude!,
+              startLongitude: double.parse(data
+                  .longitudeDepart!), //orderModel.destinationLocationLAtLng!.longitude!,
+              //       startLatitude: double.parse(data
+              //     .latitudeArrivee!), //orderModel.destinationLocationLAtLng!.latitude!,
+              // startLongitude: double.parse(data
+              //     .longitudeArrivee!), //orderModel.destinationLocationLAtLng!.longitude!,
+              // endLatitude: double.parse(data
+              //     .latitudeDepart!), //orderModel.destinationLocationLAtLng!.latitude!,
+              // endLongitude: double.parse(data
+              //     .longitudeDepart!), //orderModel.destinationLocationLAtLng!.longitude!,
+
               name: data.destinationName!,
             ); //orderModel.destinationLocationName.toString());
           }
@@ -624,40 +642,40 @@ class NewRideScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              //   DialCall(
-                              // userId: "8YQErejTK8RaIqz4a813NKMkijo2",
-                              // userName: "Safyan Tariq")
-                              print(
-                                  "Here is the caller id: ${controller.userModel.value.userData?.fbId ?? "null"}");
-                              callUser(
-                                data.riderFbId!,
-                                data.userInfo?.name ?? "",
-                                context,
-                                controller.userModel.value.userData?.fbId ?? "",
-                              );
-                              // if (data.rideType! == 'driver' &&
-                              //     data.existingUserId.toString() == "null") {
-                              //   Constant.makePhoneCall(
-                              //       data.userInfo!.phone.toString());
-                              // } else {
-                              //   Constant.makePhoneCall(data.phone.toString());
-                              // }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.blue,
-                              shape: const CircleBorder(),
-                              backgroundColor: Colors.blue,
-                              padding:
-                                  const EdgeInsets.all(6), // <-- Splash color
-                            ),
-                            child: const Icon(
-                              Icons.call,
-                              color: Colors.white,
-                              size: 18,
-                            ),
-                          ),
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     //   DialCall(
+                          //     // userId: "8YQErejTK8RaIqz4a813NKMkijo2",
+                          //     // userName: "Safyan Tariq")
+                          //     print(
+                          //         "Here is the caller id: ${controller.userModel.value.userData?.fbId ?? "null"}");
+                          //     callUser(
+                          //       data.riderFbId!,
+                          //       data.userInfo?.name ?? "",
+                          //       context,
+                          //       controller.userModel.value.userData?.fbId ?? "",
+                          //     );
+                          //     // if (data.rideType! == 'driver' &&
+                          //     //     data.existingUserId.toString() == "null") {
+                          //     //   Constant.makePhoneCall(
+                          //     //       data.userInfo!.phone.toString());
+                          //     // } else {
+                          //     //   Constant.makePhoneCall(data.phone.toString());
+                          //     // }
+                          //   },
+                          //   style: ElevatedButton.styleFrom(
+                          //     foregroundColor: Colors.blue,
+                          //     shape: const CircleBorder(),
+                          //     backgroundColor: Colors.blue,
+                          //     padding:
+                          //         const EdgeInsets.all(6), // <-- Splash color
+                          //   ),
+                          //   child: const Icon(
+                          //     Icons.call,
+                          //     color: Colors.white,
+                          //     size: 18,
+                          //   ),
+                          // ),
                           Text(
                             data.rideDate.toString(),
                           ),
@@ -1476,5 +1494,105 @@ class NewRideScreen extends StatelessWidget {
             );
           });
         });
+  }
+}
+
+class EmbeddedMapScreen extends StatefulWidget {
+  final LatLng startPoint;
+  final LatLng endPoint;
+
+  const EmbeddedMapScreen({
+    Key? key,
+    required this.startPoint,
+    required this.endPoint,
+  }) : super(key: key);
+
+  @override
+  _EmbeddedMapScreenState createState() => _EmbeddedMapScreenState();
+}
+
+class _EmbeddedMapScreenState extends State<EmbeddedMapScreen> {
+  late GoogleMapController _mapController;
+  LatLng? _currentLocation;
+  Set<Marker> _markers = {};
+  Set<Polyline> _polylines = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
+  // Fetch current location
+  Future<void> _getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    setState(() {
+      _currentLocation = LatLng(position.latitude, position.longitude);
+      _addMarkers();
+      _addPolylines();
+    });
+  }
+
+  // Add markers for current location, start point, and end point
+  void _addMarkers() {
+    _markers.add(
+      Marker(
+        markerId: MarkerId("currentLocation"),
+        position: _currentLocation!,
+        infoWindow: InfoWindow(title: "Current Location"),
+      ),
+    );
+    _markers.add(
+      Marker(
+        markerId: MarkerId("startPoint"),
+        position: widget.startPoint,
+        infoWindow: InfoWindow(title: "Start Point"),
+      ),
+    );
+    _markers.add(
+      Marker(
+        markerId: MarkerId("endPoint"),
+        position: widget.endPoint,
+        infoWindow: InfoWindow(title: "End Point"),
+      ),
+    );
+  }
+
+  // Draw polylines for the route
+  void _addPolylines() {
+    _polylines.add(
+      Polyline(
+        polylineId: PolylineId("route"),
+        points: [
+          _currentLocation!, // Current location
+          widget.startPoint, // Start point
+          widget.endPoint, // End point
+        ],
+        color: Colors.blue,
+        width: 5,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Embedded Google Map"),
+      ),
+      body: _currentLocation == null
+          ? Center(child: CircularProgressIndicator())
+          : GoogleMap(
+              onMapCreated: (controller) => _mapController = controller,
+              initialCameraPosition: CameraPosition(
+                target: _currentLocation!, // Focus on current location
+                zoom: 12,
+              ),
+              markers: _markers,
+              polylines: _polylines,
+            ),
+    );
   }
 }

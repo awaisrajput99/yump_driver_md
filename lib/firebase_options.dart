@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '600457798477',
     projectId: 'maple-rides',
     storageBucket: 'maple-rides.firebasestorage.app',
-    androidClientId: '600457798477-3ki13e5k2un5ek1gkqq6cad8ai4j3eqm.apps.googleusercontent.com',
+    androidClientId: '600457798477-296opvq042op61nkd9g9tbv8u6m10pqk.apps.googleusercontent.com',
     iosClientId: '600457798477-r1ugblevs4m1vo8s7rlans8t46oqhdm6.apps.googleusercontent.com',
     iosBundleId: 'com.yumprides.driver.ios',
   );

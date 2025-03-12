@@ -4,8 +4,10 @@ const Map<String, String> enUS = {
   'Skip': 'Skip',
   'Select your language': "Select your language",
   'Language change successfully': 'Language change successfully',
-  'Choose a language to personalize your Yum Rides experience.': "Choose a language to personalize your Yum Rides experience.",
-  'You can skip this steps and change it later in your profile settings.': 'You can skip this steps and change it later in your profile settings.',
+  'Choose a language to personalize your Yum Rides experience.':
+      "Choose a language to personalize your Yum Rides experience.",
+  'You can skip this steps and change it later in your profile settings.':
+      'You can skip this steps and change it later in your profile settings.',
   'Update': 'Update',
   'Continue': 'Continue',
   'Change Password': 'Change Password',
@@ -27,7 +29,8 @@ const Map<String, String> enUS = {
   'YandexNavi is not installed': 'YandexNavi is not installed',
   'yandexMaps map is not installed': 'yandexMaps map is not installed',
   'Unknown error': 'Unknown error',
-  'Something went wrong. Please try again later': 'Something went wrong. Please try again later',
+  'Something went wrong. Please try again later':
+      'Something went wrong. Please try again later',
   'Failed to load album': 'Failed to load album',
   'Please wait': 'Please wait',
   'All Rides': 'All Rides',
@@ -51,8 +54,10 @@ const Map<String, String> enUS = {
   'Log Out': 'Log Out',
   'Feedback & Support': 'Feedback & Support',
   'Successfully completed': 'Successfully completed',
-  'The provided phone number is not valid.': 'The provided phone number is not valid.',
-  'Something want wrong. Please try again later': 'Something want wrong. Please try again later',
+  'The provided phone number is not valid.':
+      'The provided phone number is not valid.',
+  'Something want wrong. Please try again later':
+      'Something want wrong. Please try again later',
   'Verification successful': 'Verification successful',
   'Bank Name': 'Bank Name',
   'required': "*required",
@@ -64,11 +69,13 @@ const Map<String, String> enUS = {
   'Save Bank Details': 'Save Bank Details',
   'Something want wrong': 'Something want wrong',
   'Add Bank Details': 'Add Bank Details',
-  'You have not  added bank account \n please add bank account': 'You have not  added bank account \n please add bank account',
+  'You have not  added bank account \n please add bank account':
+      'You have not  added bank account \n please add bank account',
   'Edit bank': 'Edit bank',
   'Enter OTP': 'Enter OTP',
   'password': 'password',
-  'Password required at least 6 characters': 'Password required at least 6 characters',
+  'Password required at least 6 characters':
+      'Password required at least 6 characters',
   'Confirm Password': 'Confirm Password',
   'Confirm password is invalid': 'Confirm password is invalid',
   'done': "Done",
@@ -92,15 +99,18 @@ const Map<String, String> enUS = {
   'Log in with mobile number': 'Log in with mobile number',
   'Log In with Mobile Number': 'Log In with Mobile Number',
   'Sign Up with Mobile Number': 'Sign Up with Mobile Number',
-  'Enter your mobile number to log in securely and get access to your Yum Rides account.': 'Enter your mobile number to log in securely and get access to your Yum Rides account.',
-  'Register using your mobile number for a fast and simple Yum Rides sign-up process.': 'Register using your mobile number for a fast and simple Yum Rides sign-up process.',
+  'Enter your mobile number to log in securely and get access to your Yum Rides account.':
+      'Enter your mobile number to log in securely and get access to your Yum Rides account.',
+  'Register using your mobile number for a fast and simple Yum Rides sign-up process.':
+      'Register using your mobile number for a fast and simple Yum Rides sign-up process.',
   'Send OTP': 'Send OTP',
   'Code sending': 'Code sending',
   'Log in with email address': 'Log in with email address',
   'Already book rides?': 'Already book rides?',
   'Login': 'Login',
   'Verify Your OTP': 'Verify Your OTP',
-  'Enter the one-time password sent to your mobile number to verify your account.': 'Enter the one-time password sent to your mobile number to verify your account.',
+  'Enter the one-time password sent to your mobile number to verify your account.':
+      'Enter the one-time password sent to your mobile number to verify your account.',
   'Verify OTP': 'Verify OTP',
   'Please Enter OTP': 'Please Enter OTP',
   'Code is Invalid': 'Code is Invalid',
@@ -136,7 +146,8 @@ const Map<String, String> enUS = {
   'Please enter Kilometer driven': 'Please enter Kilometer driven',
   'Please enter number of passenger': 'Please enter number of passenger',
   'Please Wait': 'Please Wait',
-  'Vehicle Information save successfully': 'Vehicle Information save successfully',
+  'Vehicle Information save successfully':
+      'Vehicle Information save successfully',
   'Brand list': 'Brand list',
   'Model list': 'Model list',
   'Cancel': 'Cancel',
@@ -144,7 +155,8 @@ const Map<String, String> enUS = {
   'Zone list': 'Zone list',
   'Add Service History': 'Add Service History',
   'Car Service': 'Car Service',
-  'No car service history not available': 'No car service history not available',
+  'No car service history not available':
+      'No car service history not available',
   'Upload Car Service Book': 'Upload Car Service Book',
   'Upload File': 'Upload File',
   'Take a clear picture of your file or choose an pdf from your gallery to ensure service details.':
@@ -167,7 +179,8 @@ const Map<String, String> enUS = {
   'cancel': 'cancel',
   'Complaint': 'Complaint',
   'Status : ': 'Status : ',
-  'Submit a Complaint Against a Customer': 'Submit a Complaint Against a Customer',
+  'Submit a Complaint Against a Customer':
+      'Submit a Complaint Against a Customer',
   'Review Customer': 'Review Customer',
   'Facing any inconvenience with a customer? File a complaint, and we’ll address the issue to help improve your driving experience.':
       'Facing any inconvenience with a customer? File a complaint, and we’ll address the issue to help improve your driving experience.',
@@ -226,23 +239,28 @@ const Map<String, String> enUS = {
   'Destination': 'Destination',
   'Stop': 'Stop',
   'Upload Your Documents': 'Upload Your Documents',
-  'Securely upload your driving license, vehicle registration, and insurance documents.': 'Securely upload your driving license, vehicle registration, and insurance documents.',
+  'Securely upload your driving license, vehicle registration, and insurance documents.':
+      'Securely upload your driving license, vehicle registration, and insurance documents.',
   'Reason :': 'Reason :',
   'Under Verification': 'Under Verification',
   'Upload': 'Upload',
   'Image': 'Image',
   'Take a clear picture of your': 'Take a clear picture of your',
-  'or choose an image from your gallery to ensure document verify.': 'or choose an image from your gallery to ensure document verify.',
+  'or choose an image from your gallery to ensure document verify.':
+      'or choose an image from your gallery to ensure document verify.',
   'Please Select': 'Please Select',
   'camera': 'Camera',
   'gallery': 'Gallery',
-  'Your information send well. We will treat them and inform you after the treatment.': 'Your information send well. We will treat them and inform you after the treatment.',
-  'Your account will be active after validation of your information.': 'Your account will be active after validation of your information.',
+  'Your information send well. We will treat them and inform you after the treatment.':
+      'Your information send well. We will treat them and inform you after the treatment.',
+  'Your account will be active after validation of your information.':
+      'Your account will be active after validation of your information.',
   'Close': 'Close',
   'Change Information': 'Change Information',
   'Save': 'Save',
   'Delete Account': 'Delete Account',
-  'Are you sure you want to delete account?': 'Are you sure you want to delete account?',
+  'Are you sure you want to delete account?':
+      'Are you sure you want to delete account?',
   'No': 'No',
   'Yes': 'Yes',
   'Edit Profile': 'Edit Profile',
@@ -252,9 +270,11 @@ const Map<String, String> enUS = {
   'Status': 'Status',
   'vehicleInformation': 'vehicleInformation',
   'Information': 'Information',
-  'To start earning with Yum Rides you need to fill in your information': 'To start earning with Yum Rides you need to fill in your information',
+  'To start earning with Yum Rides you need to fill in your information':
+      'To start earning with Yum Rides you need to fill in your information',
   'document': 'document',
-  'Your document is not verified by admin': 'Your document is not verified by admin',
+  'Your document is not verified by admin':
+      'Your document is not verified by admin',
   'Create Ride': 'Create Ride',
   'to get ride.': 'to get ride.',
   'Passangers': 'Passangers',
@@ -262,7 +282,8 @@ const Map<String, String> enUS = {
   'Not Paid': 'Not Paid',
   'REJECT': 'REJECT',
   'ACCEPT': 'ACCEPT',
-  'Do you want to confirm this booking?': 'Do you want to confirm this booking?',
+  'Do you want to confirm this booking?':
+      'Do you want to confirm this booking?',
   'Confirmed Successfully': 'Confirmed Successfully',
   'Ride Successfully confirmed.': 'Ride Successfully confirmed.',
   'On Ride': 'On Ride',
@@ -276,13 +297,16 @@ const Map<String, String> enUS = {
   'Ride Successfully completed.': 'Ride Successfully completed.',
   'Cancel Parcel': 'Cancel Parcel',
   'Cancel Trip': 'Cancel Trip',
-  'Write a reason for Parcel cancellation': 'Write a reason for Parcel cancellation',
-  'Write a reason for trip cancellation': 'Write a reason for trip cancellation',
+  'Write a reason for Parcel cancellation':
+      'Write a reason for Parcel cancellation',
+  'Write a reason for trip cancellation':
+      'Write a reason for trip cancellation',
   'Do you want to reject this booking?': 'Do you want to reject this booking?',
   'Reject Successfully': 'Reject Successfully',
   'Ride Successfully rejected.': 'Ride Successfully rejected.',
   'Please enter a reason': 'Please enter a reason',
-  "You don't have any parcel confirmed.": "You don't have any parcel confirmed.",
+  "You don't have any parcel confirmed.":
+      "You don't have any parcel confirmed.",
   'Amount': 'Amount',
   'Do you want to on ride this parcel?': 'Do you want to on ride this parcel?',
   'Parcel Successfully On ride.': 'Parcel Successfully On ride.',
@@ -316,7 +340,8 @@ const Map<String, String> enUS = {
   'Sender': 'Sender',
   'Receiver': 'Receiver',
   'Sub Total': 'Sub Total',
-  'Do you want to complete this parcel?': 'Do you want to complete this parcel?',
+  'Do you want to complete this parcel?':
+      'Do you want to complete this parcel?',
   'to get parcel.': 'to get parcel.',
   'From': 'From',
   'To': 'To',
@@ -346,7 +371,8 @@ const Map<String, String> enUS = {
   'Transaction History': 'Transaction History',
   'Withdrawal History': 'Withdrawal History',
   'No transaction found': 'No transaction found',
-  "Your don't have any Withdrawals request": "Your don't have any Withdrawals request",
+  "Your don't have any Withdrawals request":
+      "Your don't have any Withdrawals request",
   'Note': 'Note',
   'Admin Commission Debited': 'Admin Commission Debited',
   'Booking Amount credited': 'Booking Amount credited',
@@ -357,8 +383,10 @@ const Map<String, String> enUS = {
   'Bank Details': 'Bank Details',
   'Add bank': 'Add bank',
   'Withdraw': 'Withdraw',
-  'Withdraw amount must be greater or equal to': 'Withdraw amount must be greater or equal to',
-  'Amount Withdrawals request successfully': 'Amount Withdrawals request successfully',
+  'Withdraw amount must be greater or equal to':
+      'Withdraw amount must be greater or equal to',
+  'Amount Withdrawals request successfully':
+      'Amount Withdrawals request successfully',
   'Please enter amount': 'Please enter amount',
   'Please add bank details': 'Please add bank details',
   'Topup Wallet': 'Topup Wallet',
@@ -382,10 +410,12 @@ const Map<String, String> enUS = {
   'Payment Successful!!"': 'Payment Successful!!"',
   'Payment Failed!!': 'Payment Failed!!',
   'Please wait!!': 'Please wait!!',
-  'Please wait!! while completing Transaction': 'Please wait!! while completing Transaction',
+  'Please wait!! while completing Transaction':
+      'Please wait!! while completing Transaction',
   'Payment Successful!!': 'Payment Successful!!',
   'Payment UnSuccessful!!': 'Payment UnSuccessful!!',
-  'Something went wrong, please contact admin.': 'Something went wrong, please contact admin.',
+  'Something went wrong, please contact admin.':
+      'Something went wrong, please contact admin.',
   'Payment canceled': 'Payment canceled',
   'shipping change:': 'shipping change:',
   'error:': 'error:',

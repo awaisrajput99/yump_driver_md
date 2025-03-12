@@ -3,12 +3,8 @@ import 'dart:io';
 import 'package:yumprides_driver/utils/Preferences.dart';
 
 class API {
-  static const baseUrl =
-      "https://www.yumprides.ca/admin/latest/api/v1/"; // live//mine
-  // static const baseUrl = "https://www.yumprides.ca/api/v1/"; // live//mine
-  // static const baseUrl = "https://cabme.siswebapp.com/api/v1/"; // live
-  static const apiKey =
-      "base64:aeL784401bNezQlXmaNNObFA0Lvbypd6TWkNBdbP8ks="; //mine
+  static const baseUrl = "http://www.yumprides.ca/admin/api/v1/"; // live//mine
+  static const apiKey = "base64:Hr/l1wMSgXaGyPvSBWP6cJT+qwTx5Pvzg2QCcnVvjP0=";
   // static const apiKey =
   //     "base64:JugheOBUZ7MRfgiqZHbfrTI66uNMJvnx5xXZz3DxrjI="; //mine
   // static const apiKey = "base64:tq7mTyHl6IUuVbnPZBgAxlzB9lM6QV+zNVpmJcAjs4k=";

@@ -142,6 +142,14 @@
           }
         },
         {
+          "client_id": "600457798477-mlsdfn7849gkfvlv8b9pqfc44l2rl714.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yumprides.driver",
+            "certificate_hash": "9c38dd9439209a4e66cd98f2bd2632b7a4b2b4fe"
+          }
+        },
+        {
           "client_id": "600457798477-qbmmq4b9s0i52p06ugm81ieot0s1ld4j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -155,6 +163,74 @@
           "android_info": {
             "package_name": "com.yumprides.driver",
             "certificate_hash": "1cce2eb92af86b9b2bc3b17ba2ca50d6ac7d0eb2"
+          }
+        },
+        {
+          "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZYivFWS0u-KyAPNh5WqBM2UgpJS5Ogj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "600457798477-4raskjt8tb5j7htdoj56efrv8sc9n0h6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cabme.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600457798477:android:ec35afcbf96babda948d04",
+        "android_client_info": {
+          "package_name": "com.yumprides.rider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600457798477-3ilbivuodl4pt6s17aibgsogd75dsagi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yumprides.rider",
+            "certificate_hash": "1cce2eb92af86b9b2bc3b17ba2ca50d6ac7d0eb2"
+          }
+        },
+        {
+          "client_id": "600457798477-4hoqdtitmpemrbuf16sp08t5anc0act7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yumprides.rider",
+            "certificate_hash": "eaad55a52c87a4a39e62da638fe5a20af5600c44"
+          }
+        },
+        {
+          "client_id": "600457798477-f09a55qam7kdpb856q5jcj4ch38jhq35.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yumprides.rider",
+            "certificate_hash": "c827775be07e5151edcd9aa02e3dd052f863302e"
+          }
+        },
+        {
+          "client_id": "600457798477-so7ll0qdqi37iut9uqdefifvqkrvvsu9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yumprides.rider",
+            "certificate_hash": "a6d2f5c87bf8580919096e01322827ac892ad74a"
           }
         },
         {
