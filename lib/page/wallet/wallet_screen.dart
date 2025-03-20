@@ -40,13 +40,13 @@ import 'package:yumprides_driver/utils/dark_theme_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_paypal_native/flutter_paypal_native.dart';
-import 'package:flutter_paypal_native/models/custom/currency_code.dart';
-import 'package:flutter_paypal_native/models/custom/environment.dart';
-import 'package:flutter_paypal_native/models/custom/order_callback.dart';
-import 'package:flutter_paypal_native/models/custom/purchase_unit.dart';
-import 'package:flutter_paypal_native/models/custom/user_action.dart';
-import 'package:flutter_paypal_native/str_helper.dart';
+// import 'package:flutter_paypal_native/flutter_paypal_native.dart';
+// import 'package:flutter_paypal_native/models/custom/currency_code.dart';
+// import 'package:flutter_paypal_native/models/custom/environment.dart';
+// import 'package:flutter_paypal_native/models/custom/order_callback.dart';
+// import 'package:flutter_paypal_native/models/custom/purchase_unit.dart';
+// import 'package:flutter_paypal_native/models/custom/user_action.dart';
+// import 'package:flutter_paypal_native/str_helper.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'dart:math' as maths;
@@ -69,7 +69,7 @@ class WalletScreen extends StatelessWidget {
     return GetX<WalletController>(
         init: WalletController(),
         initState: (state) {
-          initPayPal();
+          // initPayPal();
           walletController.getTrancation();
         },
         builder: (walletController) {
@@ -1828,101 +1828,101 @@ class WalletScreen extends StatelessWidget {
     required double amount,
   }) async {}
 
-  ///MercadoPago Payment Method
+  // ///MercadoPago Payment Method
 
-  ///paypal
-  ///
-  final _flutterPaypalNativePlugin = FlutterPaypalNative.instance;
+  // ///paypal
+  // ///
+  // final _flutterPaypalNativePlugin = FlutterPaypalNative.instance;
 
-  void initPayPal() async {
-    //set debugMode for error logging
-    FlutterPaypalNative.isDebugMode =
-        walletController.paymentSettingModel.value.payPal!.isLive.toString() ==
-                "false"
-            ? true
-            : false;
+  // void initPayPal() async {
+  //   //set debugMode for error logging
+  //   FlutterPaypalNative.isDebugMode =
+  //       walletController.paymentSettingModel.value.payPal!.isLive.toString() ==
+  //               "false"
+  //           ? true
+  //           : false;
 
-    //initiate payPal plugin
-    await _flutterPaypalNativePlugin.init(
-      //your app id !!! No Underscore!!! see readme.md for help
-      returnUrl: "com.yumprides.driver://paypalpay",
-      //client id from developer dashboard
-      clientID: walletController.paymentSettingModel.value.payPal!.appId!,
-      //sandbox, staging, live etc
-      payPalEnvironment: walletController
-                  .paymentSettingModel.value.payPal!.isLive
-                  .toString() ==
-              "true"
-          ? FPayPalEnvironment.live
-          : FPayPalEnvironment.sandbox,
-      //what currency do you plan to use? default is US dollars
-      currencyCode: FPayPalCurrencyCode.usd,
-      //action paynow?
-      action: FPayPalUserAction.payNow,
-    );
+  //   //initiate payPal plugin
+  //   await _flutterPaypalNativePlugin.init(
+  //     //your app id !!! No Underscore!!! see readme.md for help
+  //     returnUrl: "com.yumprides.driver://paypalpay",
+  //     //client id from developer dashboard
+  //     clientID: walletController.paymentSettingModel.value.payPal!.appId!,
+  //     //sandbox, staging, live etc
+  //     payPalEnvironment: walletController
+  //                 .paymentSettingModel.value.payPal!.isLive
+  //                 .toString() ==
+  //             "true"
+  //         ? FPayPalEnvironment.live
+  //         : FPayPalEnvironment.sandbox,
+  //     //what currency do you plan to use? default is US dollars
+  //     currencyCode: FPayPalCurrencyCode.usd,
+  //     //action paynow?
+  //     action: FPayPalUserAction.payNow,
+  //   );
 
-    //call backs for payment
-  }
+  //call backs for payment
+  // }
 
   paypalPaymentSheet(String amount) {
     //add 1 item to cart. Max is 4!
-    if (_flutterPaypalNativePlugin.canAddMorePurchaseUnit) {
-      _flutterPaypalNativePlugin.addPurchaseUnit(
-        FPayPalPurchaseUnit(
-          // random prices
-          amount: double.parse(amount),
+    // if (_flutterPaypalNativePlugin.canAddMorePurchaseUnit) {
+    //   _flutterPaypalNativePlugin.addPurchaseUnit(
+    //     FPayPalPurchaseUnit(
+    //       // random prices
+    //       amount: double.parse(amount),
 
-          ///please use your own algorithm for referenceId. Maybe ProductID?
-          referenceId: FPayPalStrHelper.getRandomString(16),
-        ),
-      );
-    }
-    // initPayPal();
-    _flutterPaypalNativePlugin.makeOrder(
-      action: FPayPalUserAction.payNow,
-    );
-    _flutterPaypalNativePlugin.setPayPalOrderCallback(
-      callback: FPayPalOrderCallback(
-        onCancel: () {
-          //user canceled the payment
-          ShowToastDialog.showToast("Payment canceled");
-        },
-        onSuccess: (data) {
-          //successfully paid
-          //remove all items from queue
-          // _flutterPaypalNativePlugin.removeAllPurchaseItems();
+    //       ///please use your own algorithm for referenceId. Maybe ProductID?
+    //       referenceId: FPayPalStrHelper.getRandomString(16),
+    //     ),
+    //   );
+    // }
+    // // initPayPal();
+    // _flutterPaypalNativePlugin.makeOrder(
+    //   action: FPayPalUserAction.payNow,
+    // );
+    // _flutterPaypalNativePlugin.setPayPalOrderCallback(
+    //   callback: FPayPalOrderCallback(
+    //     onCancel: () {
+    //       //user canceled the payment
+    //       ShowToastDialog.showToast("Payment canceled");
+    //     },
+    //     onSuccess: (data) {
+    //       //successfully paid
+    //       //remove all items from queue
+    //       // _flutterPaypalNativePlugin.removeAllPurchaseItems();
 
-          walletController
-              .setAmount(
-                  walletController.amountController.value.text.toString())
-              .then((value) {
-            Get.back();
-            if (value != null) {
-              showSnackBarAlert(
-                message: "Payment Successful!!".tr,
-                color: Colors.green.shade400,
-              );
-              _refreshAPI();
-            }
-          });
+    //       walletController
+    //           .setAmount(
+    //               walletController.amountController.value.text.toString())
+    //           .then((value) {
+    //         Get.back();
+    //         if (value != null) {
+    //           showSnackBarAlert(
+    //             message: "Payment Successful!!".tr,
+    //             color: Colors.green.shade400,
+    //           );
+    //           _refreshAPI();
+    //         }
+    //       });
 
-          ShowToastDialog.showToast("Payment Successful!!");
-          // transactionAPI();
-          // walletTopUp();
-        },
-        onError: (data) {
-          //an error occured
-          Get.back();
-          ShowToastDialog.showToast("${"error:".tr} ${data.reason}");
-        },
-        onShippingChange: (data) {
-          //the user updated the shipping address
-          Get.back();
-          ShowToastDialog.showToast(
-              "${"shipping change:".tr} ${data.shippingChangeAddress?.adminArea1 ?? ""}");
-        },
-      ),
-    );
+    //       ShowToastDialog.showToast("Payment Successful!!");
+    //       // transactionAPI();
+    //       // walletTopUp();
+    //     },
+    //     onError: (data) {
+    //       //an error occured
+    //       Get.back();
+    //       ShowToastDialog.showToast("${"error:".tr} ${data.reason}");
+    //     },
+    //     onShippingChange: (data) {
+    //       //the user updated the shipping address
+    //       Get.back();
+    //       ShowToastDialog.showToast(
+    //           "${"shipping change:".tr} ${data.shippingChangeAddress?.adminArea1 ?? ""}");
+    //     },
+    //   ),
+    // );
   }
 
   ///PayStack Payment Method

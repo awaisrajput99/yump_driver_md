@@ -18,14 +18,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:get/get.dart';
-import 'package:google_api_headers/google_api_headers.dart';
+// import 'package:google_api_headers/google_api_headers.dart';
 import 'package:location/location.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_compress/video_compress.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
+// import 'package:video_thumbnail/video_thumbnail.dart';
 
 import 'show_toast_dialog.dart';
 
@@ -257,28 +257,76 @@ class Constant {
     var uniqueID = const Uuid().v4();
     Reference upload =
         FirebaseStorage.instance.ref().child('videos/$uniqueID.mp4');
+
+    // Compress the video first.
     File compressedVideo = await _compressVideo(video);
     SettableMetadata metadata = SettableMetadata(contentType: 'video');
     UploadTask uploadTask = upload.putFile(compressedVideo, metadata);
+
     uploadTask.snapshotEvents.listen((event) {
       ShowToastDialog.showLoader(
-          "${"Uploading video".tr} ${(event.bytesTransferred.toDouble() / 1000).toStringAsFixed(2)} /${(event.totalBytes.toDouble() / 1000).toStringAsFixed(2)} KB");
+          "${"Uploading video".tr} ${(event.bytesTransferred.toDouble() / 1000).toStringAsFixed(2)} / "
+          "${(event.totalBytes.toDouble() / 1000).toStringAsFixed(2)} KB");
     });
+
+    // Wait for video upload to complete.
     var storageRef = (await uploadTask.whenComplete(() {})).ref;
     var downloadUrl = await storageRef.getDownloadURL();
     var metaData = await storageRef.getMetadata();
-    final uint8list = await VideoThumbnail.thumbnailFile(
-        video: downloadUrl,
-        thumbnailPath: (await getTemporaryDirectory()).path,
-        imageFormat: ImageFormat.PNG);
-    final file = File(uint8list ?? '');
-    String thumbnailDownloadUrl = await uploadVideoThumbnailToFireStorage(file);
+
+    // Instead of using VideoThumbnail.thumbnailFile, generate the thumbnail using video_compress.
+    // Using the compressed video file's path (you can adjust quality and position as needed).
+    final File? thumbnailFile = await VideoCompress.getFileThumbnail(
+      compressedVideo.path,
+      quality: 50, // adjust quality (0-100)
+      position:
+          0, // time position (in seconds) from which to capture the thumbnail
+    );
+
+    if (thumbnailFile == null) {
+      ShowToastDialog.closeLoader();
+      throw Exception("Thumbnail generation failed");
+    }
+
+    // Upload the generated thumbnail to Firebase Storage.
+    String thumbnailDownloadUrl =
+        await uploadVideoThumbnailToFireStorage(thumbnailFile);
     ShowToastDialog.closeLoader();
+
     return ChatVideoContainer(
         videoUrl: Url(
             url: downloadUrl.toString(), mime: metaData.contentType ?? 'video'),
         thumbnailUrl: thumbnailDownloadUrl);
   }
+
+  // static Future<ChatVideoContainer> uploadChatVideoToFireStorage(
+  //     File video) async {
+  //   ShowToastDialog.showLoader('Uploading video');
+  //   var uniqueID = const Uuid().v4();
+  //   Reference upload =
+  //       FirebaseStorage.instance.ref().child('videos/$uniqueID.mp4');
+  //   File compressedVideo = await _compressVideo(video);
+  //   SettableMetadata metadata = SettableMetadata(contentType: 'video');
+  //   UploadTask uploadTask = upload.putFile(compressedVideo, metadata);
+  //   uploadTask.snapshotEvents.listen((event) {
+  //     ShowToastDialog.showLoader(
+  //         "${"Uploading video".tr} ${(event.bytesTransferred.toDouble() / 1000).toStringAsFixed(2)} /${(event.totalBytes.toDouble() / 1000).toStringAsFixed(2)} KB");
+  //   });
+  //   var storageRef = (await uploadTask.whenComplete(() {})).ref;
+  //   var downloadUrl = await storageRef.getDownloadURL();
+  //   var metaData = await storageRef.getMetadata();
+  //   final uint8list = await VideoThumbnail.thumbnailFile(
+  //       video: downloadUrl,
+  //       thumbnailPath: (await getTemporaryDirectory()).path,
+  //       imageFormat: ImageFormat.PNG);
+  //   final file = File(uint8list ?? '');
+  //   String thumbnailDownloadUrl = await uploadVideoThumbnailToFireStorage(file);
+  //   ShowToastDialog.closeLoader();
+  //   return ChatVideoContainer(
+  //       videoUrl: Url(
+  //           url: downloadUrl.toString(), mime: metaData.contentType ?? 'video'),
+  //       thumbnailUrl: thumbnailDownloadUrl);
+  // }
 
   static Future<File> _compressVideo(File file) async {
     MediaInfo? info = await VideoCompress.compressVideo(file.path,
@@ -572,12 +620,21 @@ class Constant {
     // get detail (lat/lng)
     final places = GoogleMapsPlaces(
       apiKey: Constant.kGoogleApiKey,
-      apiHeaders: await const GoogleApiHeaders().getHeaders(),
+      // apiHeaders: await const GoogleApiHeaders().getHeaders(),
+      apiHeaders: await _createGoogleHeaders(),
     );
 
     final detail = await places.getDetailsByPlaceId(p.placeId!);
 
     return detail;
+  }
+
+  Future<Map<String, String>> _createGoogleHeaders() async {
+    return {
+      'X-Android-Package': 'com.yumprides.driver',
+      'X-Android-Cert':
+          'EA:AD:55:A5:2C:87:A4:A3:9E:62:DA:63:8F:E5:A2:0A:F5:60:0C:44', // Replace with your SHA1
+    };
   }
 
   String capitalizeWords(String input) {

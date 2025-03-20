@@ -5,17 +5,12 @@ allprojects {
     }
 }
 
-rootProject.buildDir = '../build'
+rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
-    configurations.configureEach {
-        resolutionStrategy {
-            force 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
-        }
-    }
+    project.evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {

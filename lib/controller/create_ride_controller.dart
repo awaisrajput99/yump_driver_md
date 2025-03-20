@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:get/get.dart';
-import 'package:google_api_headers/google_api_headers.dart';
+// import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -168,7 +168,8 @@ class CreateRideController extends GetxController {
     if (p != null) {
       GoogleMapsPlaces? places = GoogleMapsPlaces(
         apiKey: Constant.kGoogleApiKey,
-        apiHeaders: await const GoogleApiHeaders().getHeaders(),
+        // apiHeaders: await const GoogleApiHeaders().getHeaders(),
+        apiHeaders: await _createGoogleHeaders(),
       );
       PlacesDetailsResponse? detail =
           await places.getDetailsByPlaceId(p.placeId.toString());
@@ -176,6 +177,13 @@ class CreateRideController extends GetxController {
       return detail;
     }
     return null;
+  }
+
+  Future<Map<String, String>> _createGoogleHeaders() async {
+    return {
+      'X-Android-Package': 'com.yumprides.driver',
+      'X-Android-Cert': 'EA:AD:55:A5:2C:87:A4:A3:9E:62:DA:63:8F:E5:A2:0A:F5:60:0C:44', // Replace with your SHA1
+    };
   }
 
   Future<dynamic> getDurationDistance(
