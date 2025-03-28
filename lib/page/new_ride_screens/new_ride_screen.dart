@@ -15,6 +15,7 @@ import 'package:yumprides_driver/page/completed/trip_history_screen.dart';
 import 'package:yumprides_driver/page/create_ride/create_osm_ride_screen.dart';
 import 'package:yumprides_driver/page/create_ride/create_ride_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
+import 'package:yumprides_driver/page/home_screen/home_screen.dart';
 import 'package:yumprides_driver/page/review_screens/add_review_screen.dart';
 import 'package:yumprides_driver/page/route_view_screen/route_osm_view_screen.dart';
 import 'package:yumprides_driver/page/route_view_screen/route_view_screen.dart';

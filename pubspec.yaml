@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # version: 1.0.0+8
-version: 1.0.4+0
+version: 4.0.0+4
 
 environment:
   sdk: ">=3.0.5 <4.0.0"
@@ -28,13 +28,13 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  agora_rtc_engine: ^6.5.0
+#  agora_rtc_engine: ^6.5.1
   app_tracking_transparency: ^2.0.6+1
   bottom_picker: ^2.8.0
   cached_network_image: ^3.4.1
   cloud_firestore: ^5.4.4
   cupertino_icons: ^1.0.8
-  device_info_plus: ^10.1.0
+  device_info_plus: ^11.3.3
   dropdown_search: ^5.0.6
   file_picker: ^8.1.3
   firebase_app_check: ^0.3.1+4
@@ -63,7 +63,7 @@ dependencies:
   google_sign_in: ^6.2.2
   googleapis_auth: ^1.6.0
   image_picker: ^1.1.2
-  in_app_review: ^2.0.9
+  in_app_review: ^2.0.10
   intl: ^0.19.0
   intl_phone_field: ^3.2.0
   location: ^7.0.1
@@ -72,15 +72,15 @@ dependencies:
   photo_view: ^0.15.0
   pinput: ^5.0.0
   provider: ^6.1.2
-  razorpay_flutter: ^1.3.7
+  razorpay_flutter: ^1.4.0
   shared_preferences: ^2.3.2
   sign_in_with_apple: ^6.1.3
-  syncfusion_flutter_core: ^26.2.13
-  syncfusion_flutter_pdfviewer: ^26.2.13
+  syncfusion_flutter_core: ^28.2.12
+  syncfusion_flutter_pdfviewer: ^28.2.12
   text_scroll: ^0.2.0
   url_launcher: ^6.3.1
   video_compress: ^3.1.3
-  video_player: ^2.9.2
+  video_player: ^2.9.3
   # video_thumbnail: ^0.5.3
 
 dependency_overrides:

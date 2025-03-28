@@ -1,0 +1,2 @@
+/Users/awaisrajput/AndroidStudioProjects/tax-driver-app/android/app/.cxx/Debug/4l72582b/x86/CMakeFiles/edit_cache.dir
+/Users/awaisrajput/AndroidStudioProjects/tax-driver-app/android/app/.cxx/Debug/4l72582b/x86/CMakeFiles/rebuild_cache.dir

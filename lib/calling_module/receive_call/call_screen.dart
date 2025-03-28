@@ -3,8 +3,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:agora_rtc_engine/agora_rtc_engine.dart' as agr;
+/*import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart' as agr;*/
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,13 +31,13 @@ class CallScreen extends StatefulWidget {
 }
 
 class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
-  late final RtcEngine _engine;
+  // late final RtcEngine _engine;
   List<int> remoteUid = [];
   // bool switchCamera = true;
   bool isMuted = false;
   bool _isLive = false;
-  ConnectionStateType _connectionState =
-      ConnectionStateType.connectionStateDisconnected;
+/*  ConnectionStateType _connectionState =
+      ConnectionStateType.connectionStateDisconnected;*/
   String _streamStatus = 'Initializing...';
   Timer? _timeoutTimer;
 
@@ -49,10 +49,10 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _initEngine();
+    // _initEngine();
   }
 
-  Future<void> _initEngine() async {
+/*  Future<void> _initEngine() async {
     _engine = createAgoraRtcEngine();
     await _engine.initialize(RtcEngineContext(
       appId: Constant.agoraId,
@@ -69,12 +69,12 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
             : ClientRoleType.clientRoleAudience);
 
     _joinChannel();
-  }
+  }*/
 
   String baseUrl = "https://streaming-app-server-6s95.onrender.com";
   String? token;
 
-  Future<void> getToken() async {
+/*  Future<void> getToken() async {
     final res = await http.get(
       Uri.parse(
           '$baseUrl/rtc/${widget.channelId}/publisher/userAccount/${widget.driverId}/'),
@@ -289,13 +289,13 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
         backgroundColor: color,
       ),
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        await _leaveChannel();
+        // await _leaveChannel();
         return true;
       },
       child: Scaffold(
@@ -305,7 +305,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
           ),
           actions: [
-            _buildConnectionStateIndicator(),
+            // _buildConnectionStateIndicator(),
             const CircleAvatar(
               backgroundColor: Colors.red,
               child: Icon(
@@ -334,7 +334,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
+            /*      Text(
                     _connectionState ==
                             ConnectionStateType.connectionStateDisconnected
                         ? "Calling..."
@@ -343,7 +343,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
                             ? "Connecting..."
                             : "Connected",
                     style: const TextStyle(color: Colors.white),
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -355,7 +355,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     InkWell(
-                      onTap: onToggleMute,
+                      // onTap: onToggleMute,
                       child: Icon(
                         isMuted ? Icons.mic_off_sharp : Icons.mic,
                         color: Colors.white,
@@ -364,7 +364,7 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
                     ),
                     InkWell(
                       onTap: () async {
-                        _leaveChannel();
+                        // _leaveChannel();
                         await firestoreMethods().endCall(widget.channelId);
                         Navigator.pushAndRemoveUntil(
                           context,
@@ -400,8 +400,8 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
   void dispose() {
     _timeoutTimer?.cancel();
     _reconnectionTimer?.cancel();
-    _engine.leaveChannel();
-    _engine.release();
+    // _engine.leaveChannel();
+    // _engine.release();
     super.dispose();
   }
 }

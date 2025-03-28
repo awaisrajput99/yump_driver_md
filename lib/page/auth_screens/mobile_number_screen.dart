@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/phone_number_controller.dart';
+import 'package:yumprides_driver/page/auth_screens/maple_leaf_widget.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
@@ -105,13 +106,14 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                     child: Stack(
                       alignment: AlignmentDirectional.bottomCenter,
                       children: [
-                        Image.asset(
+                        /*Image.asset(
                           themeChange.getThem()
                               ? 'assets/images/ic_bg_signup_dark.png'
                               : 'assets/images/ic_bg_signup_light.png',
                           width: double.infinity,
                           fit: BoxFit.cover,
-                        ),
+                        ),*/
+                        MapleLeafWidget()
                       ],
                     ),
                   ),

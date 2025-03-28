@@ -5,6 +5,7 @@ import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/page/auth_screens/vehicle_info_screen.dart';
 import 'package:yumprides_driver/page/document_status/document_status_screen.dart';
+import 'package:yumprides_driver/page/home_screen/home_screen.dart';
 import 'package:yumprides_driver/page/new_ride_screens/new_ride_screen.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
@@ -61,7 +62,8 @@ class _DashBoardState extends State<DashBoard> {
               return true; // true will exit the app
             }
           },
-          child: Scaffold(body: NewRideScreen()),
+          // child: Scaffold(body: NewRideScreen()),
+          child: HomeScreen(),
         );
       },
     );

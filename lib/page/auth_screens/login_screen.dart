@@ -6,6 +6,7 @@ import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
 import 'package:yumprides_driver/model/user_model.dart';
 import 'package:yumprides_driver/page/auth_screens/forgot_password.dart';
+import 'package:yumprides_driver/page/auth_screens/maple_leaf_widget.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
@@ -101,14 +102,16 @@ class LoginScreen extends StatelessWidget {
                             color: themeChange.getThem()
                                 ? AppThemeData.surface50Dark
                                 : AppThemeData.surface50,
-                            child: Image.asset(
+                       /*     child: Image.asset(
                               themeChange.getThem()
                                   ? 'assets/images/ic_bg_signup_dark.png'
                                   : 'assets/images/ic_bg_signup_light.png',
                               width: double.infinity,
                               fit: BoxFit.cover,
                             ),
-                          ),
+                          ),*/
+                            child: MapleLeafWidget(),
+                            )
                         ),
                       ],
                     ),
@@ -264,7 +267,7 @@ class LoginScreen extends StatelessWidget {
                                       },
                                     ),
                                   ),
-                                  Align(
+                                 /* Align(
                                     alignment: Alignment.center,
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 20),
@@ -279,7 +282,7 @@ class LoginScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ),*/
                                   // Padding(
                                   //   padding: const EdgeInsets.only(top: 40),
                                   //   child: ButtonThem.buildIconButtonWidget(
@@ -311,7 +314,7 @@ class LoginScreen extends StatelessWidget {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  SizedBox(
+                                /*  SizedBox(
                                     width: double.infinity,
                                     child: Row(
                                       children: [
@@ -370,7 +373,7 @@ class LoginScreen extends StatelessWidget {
                                             : SizedBox()
                                       ],
                                     ),
-                                  )
+                                  )*/
                                 ],
                               ),
                             ),

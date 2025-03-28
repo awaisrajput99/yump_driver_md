@@ -15,6 +15,7 @@ import 'package:yumprides_driver/page/auth_screens/vehicle_info_screen.dart';
 import 'package:yumprides_driver/page/car_service_history/car_service_history_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/page/document_status/document_status_screen.dart';
+import 'package:yumprides_driver/page/home_screen/home_screen.dart';
 import 'package:yumprides_driver/page/localization_screens/localization_screen.dart';
 import 'package:yumprides_driver/page/my_profile/my_profile_screen.dart';
 import 'package:yumprides_driver/page/parcel_service/all_parcel_screen.dart';
@@ -30,6 +31,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:in_app_review/in_app_review.dart';
 import 'package:location/location.dart';
+
+import '../page/new_ride_screens/new_ride_screen.dart';
 
 class DashBoardController extends GetxController {
   Location location = Location();
@@ -73,9 +76,11 @@ class DashBoardController extends GetxController {
 
   getDrawerItem() {
     drawerItems = [
-      DrawerItem('All Rides'.tr, 'assets/icons/ic_car.svg',
+      DrawerItem('Home'.tr, 'assets/icons/ic_home.svg',
           section:
-              "${"Rides".tr}${(Constant.parcelActive.toString() == "yes" && userModel.value.userData?.parcelDelivery.toString() == "yes") ? " & Parcels:".tr : ":"}"),
+          "${"Rides".tr}${(Constant.parcelActive.toString() == "yes" && userModel.value.userData?.parcelDelivery.toString() == "yes") ? " & Parcels:".tr : ":"}"),
+      DrawerItem('All Rides'.tr, 'assets/icons/ic_car.svg',
+      ),
       if (Constant.parcelActive.toString() == "yes" &&
           userModel.value.userData?.parcelDelivery.toString() == "yes")
         DrawerItem('Parcel Service'.tr, 'assets/icons/ic_parcel_vehicle.svg'),
@@ -106,47 +111,57 @@ class DashBoardController extends GetxController {
   getDrawerItemWidget(int pos) {
     if (Constant.parcelActive.toString() == "yes" &&
         userModel.value.userData?.parcelDelivery.toString() == "yes") {
-      if (pos == 1) {
+      if(pos == 0){
+        Get.to(HomeScreen());
+      } else if( pos == 1){
+        Get.to(NewRideScreen());
+      }
+      else if (pos == 2) {
         Get.to(SearchParcelScreen());
-      } else if (pos == 2) {
-        Get.to(const AllParcelScreen());
       } else if (pos == 3) {
-        Get.to(DocumentStatusScreen());
+        Get.to(const AllParcelScreen());
       } else if (pos == 4) {
-        Get.to(const VehicleInfoScreen());
+        Get.to(DocumentStatusScreen());
       } else if (pos == 5) {
-        Get.to(const CarServiceBookHistory());
+        Get.to(const VehicleInfoScreen());
       } else if (pos == 6) {
-        Get.to(MyProfileScreen());
+        Get.to(const CarServiceBookHistory());
       } else if (pos == 7) {
-        Get.to(WalletScreen());
+        Get.to(MyProfileScreen());
       } else if (pos == 8) {
-        Get.to(const ShowBankDetails());
+        Get.to(WalletScreen());
       } else if (pos == 9) {
-        Get.to(const LocalizationScreens(intentType: "dashBoard"));
+        Get.to(const ShowBankDetails());
       } else if (pos == 10) {
-        Get.to(const TermsOfServiceScreen());
+        Get.to(const LocalizationScreens(intentType: "dashBoard"));
       } else if (pos == 11) {
+        Get.to(const TermsOfServiceScreen());
+      } else if (pos == 12) {
         Get.to(const PrivacyPolicyScreen());
       }
     } else {
-      if (pos == 1) {
+      if(pos == 0){
+        Get.to(HomeScreen());
+      } else if( pos == 1){
+        Get.to(NewRideScreen());
+      }
+      else if (pos == 2) {
         return Get.to(DocumentStatusScreen());
-      } else if (pos == 2) {
-        Get.to(const VehicleInfoScreen());
       } else if (pos == 3) {
-        Get.to(const CarServiceBookHistory());
+        Get.to(const VehicleInfoScreen());
       } else if (pos == 4) {
-        Get.to(MyProfileScreen());
+        Get.to(const CarServiceBookHistory());
       } else if (pos == 5) {
-        Get.to(WalletScreen());
+        Get.to(MyProfileScreen());
       } else if (pos == 6) {
-        Get.to(const ShowBankDetails());
+        Get.to(WalletScreen());
       } else if (pos == 7) {
-        Get.to(const LocalizationScreens(intentType: "dashBoard"));
+        Get.to(const ShowBankDetails());
       } else if (pos == 8) {
-        Get.to(const TermsOfServiceScreen());
+        Get.to(const LocalizationScreens(intentType: "dashBoard"));
       } else if (pos == 9) {
+        Get.to(const TermsOfServiceScreen());
+      } else if (pos == 10) {
         Get.to(const PrivacyPolicyScreen());
       }
     }
@@ -191,14 +206,16 @@ class DashBoardController extends GetxController {
   RxInt selectedDrawerIndex = 0.obs;
   var drawerItems = [];
   final InAppReview inAppReview = InAppReview.instance;
+
+
   onSelectItem(int index) async {
     Get.back();
     log("INDEX :: $index");
+
     if (userModel.value.userData!.parcelDelivery.toString() != "yes" ||
         Constant.parcelActive != "yes") {
-      // if (index == 9) {
-      // } else
-      if (index == 9) {
+
+      if (index == drawerItems.length - 2) {  // App review button
         try {
           if (await inAppReview.isAvailable()) {
             inAppReview.requestReview();
@@ -208,22 +225,19 @@ class DashBoardController extends GetxController {
         } catch (e) {
           log("Error triggering in-app review: $e");
         }
-      } else if (index == 10) {
+      }
+      else if (index == drawerItems.length - 1) {  // Log Out button
         Preferences.clearKeyData(Preferences.isLogin);
         Preferences.clearKeyData(Preferences.user);
         Preferences.clearKeyData(Preferences.userId);
-        Get.offAll(
-          MobileNumberScreen(
-            isLogin: true,
-          ),
-        );
-      } else {
+        Get.offAll(MobileNumberScreen(isLogin: true));
+      }
+      else {
         getDrawerItemWidget(index);
       }
-    } else {
-      if (index == 11) {
-        getDrawerItemWidget(index);
-      } else if (index == 12) {
+
+    } else {  // Parcel features enabled
+      if (index == drawerItems.length - 2) {  // App review button
         try {
           if (await inAppReview.isAvailable()) {
             inAppReview.requestReview();
@@ -233,16 +247,14 @@ class DashBoardController extends GetxController {
         } catch (e) {
           log("Error triggering in-app review: $e");
         }
-      } else if (index == 13) {
+      }
+      else if (index == drawerItems.length - 1) {  // Log Out button
         Preferences.clearKeyData(Preferences.isLogin);
         Preferences.clearKeyData(Preferences.user);
         Preferences.clearKeyData(Preferences.userId);
-        Get.offAll(
-          MobileNumberScreen(
-            isLogin: true,
-          ),
-        );
-      } else {
+        Get.offAll(MobileNumberScreen(isLogin: true));
+      }
+      else {
         getDrawerItemWidget(index);
       }
     }
