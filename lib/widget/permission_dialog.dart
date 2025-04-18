@@ -1,8 +1,6 @@
-import 'dart:io';
 
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 

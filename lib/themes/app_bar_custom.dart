@@ -1,5 +1,5 @@
 import 'package:yumprides_driver/themes/constant_colors.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +28,7 @@ class AppbarCustom extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final themeChange =
-        Provider.of<DarkThemeProvider>(context); // Example usage of theme
+        Provider.of<ThemeProvider>(context); // Example usage of theme
     return AppBar(
         backgroundColor: bgColor ??
             (themeChange.getThem()

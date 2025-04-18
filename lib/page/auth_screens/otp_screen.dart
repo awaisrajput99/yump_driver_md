@@ -5,14 +5,13 @@ import 'dart:convert';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/phone_number_controller.dart';
 import 'package:yumprides_driver/model/user_model.dart';
-import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/service/api.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,7 @@ class OtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     bool isDarkMode = themeChange.getThem();
     return Scaffold(
       backgroundColor: AppThemeData.primary200,

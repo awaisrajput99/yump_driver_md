@@ -1,7 +1,7 @@
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -171,7 +171,7 @@ class ButtonThem {
     double radius = 10,
     bool isVisible = true,
   }) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Colors.black12),

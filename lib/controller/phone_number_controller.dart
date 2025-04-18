@@ -10,6 +10,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../constant/custom_toast.dart';
+import '../exceptions/otp_sending_failed.dart';
+
 class PhoneNumberController extends GetxController {
   RxString phoneNumber = ''.obs;
 
@@ -19,7 +22,14 @@ class PhoneNumberController extends GetxController {
         phoneNumber: phoneNumber.value,
         verificationCompleted: (PhoneAuthCredential credential) {},
         verificationFailed: (FirebaseAuthException e) {
+          final failure = OtpSendingFailure.code(e.code);
           ShowToastDialog.closeLoader();
+          print("Phone number sent to Firebase: ${phoneNumber.value}");
+          print("❌ Error code: ${e.code}");
+          print("❌ Error message: ${e.message}");
+          print("❌ Mapped failure message: ${failure.message}");
+
+          CustomToast.showErrorToast(failure.message);
 
           if (e.code == 'invalid-phone-number') {
             ShowToastDialog.showToast(

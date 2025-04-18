@@ -1,5 +1,7 @@
 // ignore_for_file: collection_methods_unrelated_type
 
+import 'dart:convert';
+
 import 'package:yumprides_driver/model/ride_model.dart';
 import 'package:yumprides_driver/model/tax_model.dart';
 
@@ -127,6 +129,10 @@ class TansactionData {
   String? userName;
   String? userPhoto;
   String? userPhotoPath;
+  String? baseCost;
+  String? taxAmount;
+  String? netCost;
+  String? driverPayment;
 
   TansactionData(
       {this.id,
@@ -215,7 +221,13 @@ class TansactionData {
       this.libelle,
       this.userName,
       this.userPhoto,
-      this.userPhotoPath});
+      this.userPhotoPath,
+        this.netCost,
+        this.driverPayment,
+        this.taxAmount,
+        this.baseCost
+
+      });
 
   TansactionData.fromJson(Map<String, dynamic> json) {
     List<TaxModel>? taxList = [];
@@ -273,15 +285,19 @@ class TansactionData {
     if (json['user_info'] != null) {
       userInfo = UserInfo.fromJson(json['user_info']);
     }
-    if (json['stops'] != null &&
-        json['stops'] != [] &&
-        json[stops].toString().isNotEmpty) {
-      stops = <Stops>[];
-      json['stops'].forEach((v) {
-        stops!.add(Stops.fromJson(v));
-      });
-    } else {
+    if (json['stops'] is List) {
       stops = [];
+      json['stops'].forEach((v) {
+        stops!.add(v); // or RideStop.fromJson(v) if stops is a list of objects
+      });
+    } else if (json['stops'] is String) {
+      // Try to decode the string to a List if possible
+      try {
+        List<dynamic> parsed = jsonDecode(json['stops']);
+        stops = parsed.cast<Stops>();
+      } catch (e) {
+        stops = [];
+      }
     }
     taxModel = taxList;
     tipAmount = json['tip_amount'];
@@ -327,6 +343,10 @@ class TansactionData {
     userName = json['user_name'];
     userPhoto = json['user_photo'];
     userPhotoPath = json['user_photo_path'];
+    baseCost = json['base_amount'];
+    taxAmount = json['tax_amount'];
+    netCost = json['net_cost'];
+    driverPayment = json['driver_payment'];
   }
 
   Map<String, dynamic> toJson() {
@@ -424,6 +444,10 @@ class TansactionData {
     data['user_name'] = userName;
     data['user_photo'] = userPhoto;
     data['user_photo_path'] = userPhotoPath;
+    data['base_amount'] = baseCost;
+    data['tax_amount'] = taxAmount;
+    data['net_cost'] = netCost;
+    data['driver_payment'] = driverPayment;
     return data;
   }
 }

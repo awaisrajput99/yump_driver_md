@@ -5,7 +5,7 @@ import 'package:yumprides_driver/themes/app_bar_custom.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/custom_widget.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,8 @@ class TripHistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    Size size = MediaQuery.of(context).size;
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<PaymentController>(
         init: PaymentController(),
         builder: (controller) {
@@ -28,88 +29,90 @@ class TripHistoryScreen extends StatelessWidget {
                 ? AppThemeData.grey80Dark
                 : AppThemeData.white90,
             appBar: AppbarCustom(title: "Trip Details".tr),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: themeChange.getThem()
-                            ? AppThemeData.surface50Dark
-                            : AppThemeData.surface50,
-                        borderRadius:
+            body: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: themeChange.getThem()
+                                ? AppThemeData.surface50Dark
+                                : AppThemeData.surface50,
+                            borderRadius:
                             const BorderRadius.all(Radius.circular(15.0)),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 8),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 8),
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        controller.data.value.rideDate
-                                            .toString(),
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: AppThemeData.regular,
-                                        ),
-                                      ),
-                                      ButtonThem.statusButton(
-                                        radius: 6,
-                                        context,
-                                        title: controller.data.value.statut
-                                            .toString(),
-                                        btnHeight: 40,
-                                        btnWidthRatio: 0.30,
-                                        btnColor: Constant.statusTextColor(
-                                            controller.data.value),
-                                        txtColor: Constant.statusTextColor(
-                                            controller.data.value),
-                                        onPress: () async {},
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Column(
                                         children: [
-                                          SvgPicture.asset(
-                                            "assets/icons/ic_source.svg",
-                                            height: 24,
-                                            fit: BoxFit.cover,
+                                          Text(
+                                            controller.data.value.rideDate
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: AppThemeData.regular,
+                                            ),
                                           ),
-                                          Image.asset(
-                                            "assets/icons/line.png",
-                                            height: 30,
-                                            color: AppThemeData.grey400,
-                                            fit: BoxFit.cover,
+                                          ButtonThem.statusButton(
+                                            radius: 6,
+                                            context,
+                                            title: controller.data.value.statut
+                                                .toString(),
+                                            btnHeight: 40,
+                                            btnWidthRatio: 0.30,
+                                            btnColor: Constant.statusTextColor(
+                                                controller.data.value),
+                                            txtColor: Constant.statusTextColor(
+                                                controller.data.value),
+                                            onPress: () async {},
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(
-                                        width: 5,
+                                      Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/icons/ic_source.svg",
+                                                height: 24,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              Image.asset(
+                                                "assets/icons/line.png",
+                                                height: 30,
+                                                color: AppThemeData.grey400,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              controller.data.value.departName
+                                                  .toString(),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          controller.data.value.departName
-                                              .toString(),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  ListView.builder(
+                                      /* ListView.builder(
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -159,72 +162,72 @@ class TripHistoryScreen extends StatelessWidget {
                                             ),
                                           ],
                                         );
-                                      }),
-                                  Row(
-                                    crossAxisAlignment:
+                                      }),*/
+                                      Row(
+                                        crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/icons/ic_destenation.svg",
-                                        height: 24,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          controller.data.value.destinationName
-                                              .toString(),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ]),
-                          ),
-                          dividerCust(isDarkMode: themeChange.getThem()),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0,
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          TextScroll(
-                                            '${double.parse(controller.data.value.distance.toString()).toStringAsFixed(int.parse(Constant.decimal!))} ${Constant.distanceUnit}',
-                                            mode: TextScrollMode.bouncing,
-                                            pauseBetween:
-                                                const Duration(seconds: 2),
-                                            style: TextStyle(
-                                                color: AppThemeData.primary400,
-                                                fontSize: 18,
-                                                fontFamily:
-                                                    AppThemeData.semiBold),
+                                          SvgPicture.asset(
+                                            "assets/icons/ic_destenation.svg",
+                                            height: 24,
                                           ),
-                                          Text("Distance".tr,
-                                              style: TextStyle(
-                                                  color: themeChange.getThem()
-                                                      ? AppThemeData.grey900Dark
-                                                      : AppThemeData.grey900,
-                                                  fontSize: 12,
-                                                  fontFamily:
-                                                      AppThemeData.regular)),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              controller.data.value.destinationName
+                                                  .toString(),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                    ),
-                                    const SizedBox(
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ]),
+                              ),
+                              dividerCust(isDarkMode: themeChange.getThem()),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              TextScroll(
+                                                '${double.parse(controller.data.value.distance.toString()).toStringAsFixed(int.parse(Constant.decimal!))} ${Constant.distanceUnit}',
+                                                mode: TextScrollMode.bouncing,
+                                                pauseBetween:
+                                                const Duration(seconds: 2),
+                                                style: TextStyle(
+                                                    color: AppThemeData.primary400,
+                                                    fontSize: 18,
+                                                    fontFamily:
+                                                    AppThemeData.semiBold),
+                                              ),
+                                              Text("Distance".tr,
+                                                  style: TextStyle(
+                                                      color: themeChange.getThem()
+                                                          ? AppThemeData.grey900Dark
+                                                          : AppThemeData.grey900,
+                                                      fontSize: 12,
+                                                      fontFamily:
+                                                      AppThemeData.regular)),
+                                            ],
+                                          ),
+                                        ),
+                                        /*   const SizedBox(
                                       width: 10,
                                     ),
                                     Expanded(
@@ -249,163 +252,163 @@ class TripHistoryScreen extends StatelessWidget {
                                                       AppThemeData.regular)),
                                         ],
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          TextScroll(
-                                            controller.data.value.duree
-                                                .toString(),
-                                            mode: TextScrollMode.bouncing,
-                                            pauseBetween:
+                                    ),*/
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              TextScroll(
+                                                controller.data.value.duree
+                                                    .toString(),
+                                                mode: TextScrollMode.bouncing,
+                                                pauseBetween:
                                                 const Duration(seconds: 2),
-                                            style: TextStyle(
-                                                color: AppThemeData.primary400,
-                                                fontSize: 18,
-                                                fontFamily:
+                                                style: TextStyle(
+                                                    color: AppThemeData.primary400,
+                                                    fontSize: 18,
+                                                    fontFamily:
                                                     AppThemeData.semiBold),
-                                          ),
-                                          Text("Duration".tr,
-                                              style: TextStyle(
-                                                  color: themeChange.getThem()
-                                                      ? AppThemeData.grey900Dark
-                                                      : AppThemeData.grey900,
-                                                  fontSize: 12,
-                                                  fontFamily:
+                                              ),
+                                              Text("Duration".tr,
+                                                  style: TextStyle(
+                                                      color: themeChange.getThem()
+                                                          ? AppThemeData.grey900Dark
+                                                          : AppThemeData.grey900,
+                                                      fontSize: 12,
+                                                      fontFamily:
                                                       AppThemeData.regular)),
-                                        ],
-                                      ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                Constant().amountShow(
+                                                    amount: controller
+                                                        .data.value.montant
+                                                        .toString()),
+                                                style: TextStyle(
+                                                    color: AppThemeData.primary400,
+                                                    fontSize: 18,
+                                                    fontFamily:
+                                                    AppThemeData.semiBold),
+                                              ),
+                                              Text("Trip Price".tr,
+                                                  style: TextStyle(
+                                                      color: themeChange.getThem()
+                                                          ? AppThemeData.grey900Dark
+                                                          : AppThemeData.grey900,
+                                                      fontSize: 12,
+                                                      fontFamily:
+                                                      AppThemeData.regular)),
+                                            ],
+                                          ),
+                                        )
+                                      ],
                                     ),
                                     const SizedBox(
-                                      width: 10,
+                                      height: 32,
                                     ),
-                                    Expanded(
-                                      child: Column(
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 16),
+                                      child: Row(
                                         children: [
-                                          Text(
-                                            Constant().amountShow(
-                                                amount: controller
-                                                    .data.value.montant
-                                                    .toString()),
-                                            style: TextStyle(
-                                                color: AppThemeData.primary400,
-                                                fontSize: 18,
-                                                fontFamily:
-                                                    AppThemeData.semiBold),
-                                          ),
-                                          Text("Trip Price".tr,
-                                              style: TextStyle(
-                                                  color: themeChange.getThem()
-                                                      ? AppThemeData.grey900Dark
-                                                      : AppThemeData.grey900,
-                                                  fontSize: 12,
-                                                  fontFamily:
-                                                      AppThemeData.regular)),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 32,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 16),
-                                  child: Row(
-                                    children: [
-                                      ClipOval(
-                                        child: CachedNetworkImage(
-                                          imageUrl: controller
-                                              .data.value.photoPath
-                                              .toString(),
-                                          height: 45,
-                                          width: 45,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              Constant.loader(context,
-                                                  isDarkMode:
+                                          ClipOval(
+                                            child: CachedNetworkImage(
+                                              imageUrl: controller
+                                                  .data.value.photoPath
+                                                  .toString(),
+                                              height: 45,
+                                              width: 45,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  Constant.loader(context,
+                                                      isDarkMode:
                                                       themeChange.getThem()),
-                                          errorWidget: (context, url, error) =>
-                                              Image.asset(
-                                            "assets/images/appIcon.png",
+                                              errorWidget: (context, url, error) =>
+                                                  Image.asset(
+                                                    "assets/images/appIcon.png",
+                                                  ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
                                               const EdgeInsets.only(left: 12.0),
-                                          child: controller.data.value
-                                                          .rideType! ==
-                                                      'driver' &&
+                                              child: controller.data.value
+                                                  .rideType! ==
+                                                  'driver' &&
                                                   controller.data.value
-                                                          .existingUserId
-                                                          .toString() ==
+                                                      .existingUserId
+                                                      .toString() ==
                                                       "null"
-                                              ? Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        '${controller.data.value.userInfo!.name}',
-                                                        style: TextStyle(
-                                                          color: themeChange
-                                                                  .getThem()
-                                                              ? AppThemeData
-                                                                  .grey900Dark
-                                                              : AppThemeData
-                                                                  .grey900,
-                                                          fontSize: 16,
-                                                          fontFamily:
-                                                              AppThemeData
-                                                                  .semiBold,
-                                                        )),
-                                                    Text(
-                                                        '${controller.data.value.userInfo!.email}',
-                                                        style: const TextStyle(
-                                                            color:
-                                                                Colors.black87,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400)),
-                                                  ],
-                                                )
-                                              : Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        '${controller.data.value.prenom.toString()} ${controller.data.value.nom.toString()}',
-                                                        style: TextStyle(
-                                                          color: themeChange
-                                                                  .getThem()
-                                                              ? AppThemeData
-                                                                  .grey900Dark
-                                                              : AppThemeData
-                                                                  .grey900,
-                                                          fontSize: 16,
-                                                          fontFamily:
-                                                              AppThemeData
-                                                                  .semiBold,
-                                                        )),
-                                                    StarRating(
-                                                        size: 18,
-                                                        rating: double.parse(
-                                                            controller
-                                                                .data
-                                                                .value
-                                                                .moyenneDriver
-                                                                .toString()),
-                                                        color: AppThemeData
-                                                            .warning200),
-                                                  ],
-                                                ),
-                                        ),
-                                      ),
-                                      Padding(
+                                                  ? Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      '${controller.data.value.userInfo!.name}',
+                                                      style: TextStyle(
+                                                        color: themeChange
+                                                            .getThem()
+                                                            ? AppThemeData
+                                                            .grey900Dark
+                                                            : AppThemeData
+                                                            .grey900,
+                                                        fontSize: 16,
+                                                        fontFamily:
+                                                        AppThemeData
+                                                            .semiBold,
+                                                      )),
+                                                  Text(
+                                                      '${controller.data.value.userInfo!.email}',
+                                                      style: const TextStyle(
+                                                          color:
+                                                          Colors.black87,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w400)),
+                                                ],
+                                              )
+                                                  : Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      '${controller.data.value.prenom.toString()} ${controller.data.value.nom.toString()}',
+                                                      style: TextStyle(
+                                                        color: themeChange
+                                                            .getThem()
+                                                            ? AppThemeData
+                                                            .grey900Dark
+                                                            : AppThemeData
+                                                            .grey900,
+                                                        fontSize: 16,
+                                                        fontFamily:
+                                                        AppThemeData
+                                                            .semiBold,
+                                                      )),
+                                                  StarRating(
+                                                      size: 18,
+                                                      rating: double.parse(
+                                                          controller
+                                                              .data
+                                                              .value
+                                                              .moyenneDriver
+                                                              .toString()),
+                                                      color: AppThemeData
+                                                          .warning200),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          /*Padding(
                                         padding:
                                             const EdgeInsets.only(bottom: 16),
                                         child: Column(
@@ -449,46 +452,53 @@ class TripHistoryScreen extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                      )
-                                    ],
-                                  ),
+                                      )*/
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: themeChange.getThem()
-                              ? AppThemeData.surface50Dark
-                              : AppThemeData.surface50,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(15.0)),
                         ),
-                        child: Column(
-                          children: [
-                            listTile(
-                                isDarkMode: themeChange.getThem(),
-                                lbl: "Sub Total",
-                                value: Constant().amountShow(
-                                  amount:
-                                      controller.data.value.montant!.toString(),
-                                )),
-                            dividerCust(isDarkMode: themeChange.getThem()),
-                            listTile(
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: themeChange.getThem()
+                                  ? AppThemeData.surface50Dark
+                                  : AppThemeData.surface50,
+                              borderRadius:
+                              const BorderRadius.all(Radius.circular(15.0)),
+                            ),
+                            child: Column(
+                              children: [
+                                listTile(
+                                    isDarkMode: themeChange.getThem(),
+                                    lbl: "Ride Cost",
+                                    value: Constant().amountShow(
+                                      amount:
+                                      controller.data.value.baseCost.toString(),
+                                    )),
+                                dividerCust(isDarkMode: themeChange.getThem()),
+                                /*  listTile(
                               isDarkMode: themeChange.getThem(),
                               lbl: "Discount",
                               value:
                                   "(-${Constant().amountShow(amount: controller.discountAmount.value.toString())})",
                               valueColor: AppThemeData.warning200,
-                            ),
-                            dividerCust(isDarkMode: themeChange.getThem()),
+                            ),*/
+                                listTile(
+                                    isDarkMode: themeChange.getThem(),
+                                    lbl: "Tax",
+                                    value: Constant().amountShow(
+                                      amount:
+                                      controller.data.value.taxAmount,
+                                    )),
+                                dividerCust(isDarkMode: themeChange.getThem()),
 
-                            ListView.builder(
+                                /*ListView.builder(
                               itemCount: controller.data.value.taxModel!.length,
                               shrinkWrap: true,
                               padding: EdgeInsets.zero,
@@ -512,54 +522,54 @@ class TripHistoryScreen extends StatelessWidget {
                                   ],
                                 );
                               },
-                            ),
+                            ),*/
 
-                            // Row(
-                            //   children: [
-                            //     Expanded(
-                            //         child: Text(
-                            //       "${Constant.taxName} ${Constant.taxType.toString() == "Percentage" ? "(${Constant.taxValue}%)" : "(${Constant.taxValue})"}",
-                            //       style: TextStyle(
-                            //           letterSpacing: 1.0,
-                            //           color: ConstantColors.subTitleTextColor,
-                            //           fontWeight: FontWeight.w600),
-                            //     )),
-                            //     Text(
-                            //         Constant().amountShow(
-                            //             amount: controller.taxAmount.value
-                            //                 .toString()),
-                            //         style: TextStyle(
-                            //             letterSpacing: 1.0,
-                            //             color: ConstantColors.titleTextColor,
-                            //             fontWeight: FontWeight.w800)),
-                            //   ],
-                            // ),
-                            listTile(
+                                // Row(
+                                //   children: [
+                                //     Expanded(
+                                //         child: Text(
+                                //       "${Constant.taxName} ${Constant.taxType.toString() == "Percentage" ? "(${Constant.taxValue}%)" : "(${Constant.taxValue})"}",
+                                //       style: TextStyle(
+                                //           letterSpacing: 1.0,
+                                //           color: ConstantColors.subTitleTextColor,
+                                //           fontWeight: FontWeight.w600),
+                                //     )),
+                                //     Text(
+                                //         Constant().amountShow(
+                                //             amount: controller.taxAmount.value
+                                //                 .toString()),
+                                //         style: TextStyle(
+                                //             letterSpacing: 1.0,
+                                //             color: ConstantColors.titleTextColor,
+                                //             fontWeight: FontWeight.w800)),
+                                //   ],
+                                // ),
+                                /*         listTile(
                               isDarkMode: themeChange.getThem(),
                               lbl: "Driver Tip",
                               value: Constant().amountShow(
                                   amount:
                                       controller.tipAmount.value.toString()),
+                            ),*/
+                                dividerCust(isDarkMode: themeChange.getThem()),
+                                listTile(
+                                    isDarkMode: themeChange.getThem(),
+                                    lbl: "Total",
+                                    value: Constant().amountShow(
+                                        amount:
+                                        controller.data.value.netCost),
+                                    valueColor: AppThemeData.primary200),
+                              ],
                             ),
-                            dividerCust(isDarkMode: themeChange.getThem()),
-                            listTile(
-                                isDarkMode: themeChange.getThem(),
-                                lbl: "Total",
-                                value: Constant().amountShow(
-                                    amount:
-                                        controller.getTotalAmount().toString()),
-                                valueColor: AppThemeData.primary200),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                    listTile(
+                        /*          listTile(
                         isDarkMode: themeChange.getThem(),
                         lbl: "Admin commission",
                         value:
                             "(-${Constant().amountShow(amount: controller.adminCommission.value.toString())})",
-                        valueColor: AppThemeData.warning200),
-                    Container(
+                        valueColor: AppThemeData.warning200),*/
+                        /* Container(
                       decoration: BoxDecoration(
                         color: themeChange.getThem()
                             ? AppThemeData.surface50Dark
@@ -582,10 +592,21 @@ class TripHistoryScreen extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),*/
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                if(controller.data.value.statutPaiement == 'yes')
+                  Positioned(
+                    left: size.width*0.3,
+                    bottom: 15,
+                    child: Image.asset("assets/images/md_paid_stamp.png",
+                    width: size.width * 0.4,
+                      height: size.width * 0.4,
+                    ),
+                  )
+              ],
             ),
           );
         });

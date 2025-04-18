@@ -5,7 +5,7 @@ import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/conversation_controller.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:yumprides_driver/widget/firebase_pagination/src/firestore_pagination.dart';
 import 'package:yumprides_driver/widget/firebase_pagination/src/models/view_type.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -25,7 +25,7 @@ class ConversationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<ConversationController>(
       init: ConversationController(),
       initState: (controller) {

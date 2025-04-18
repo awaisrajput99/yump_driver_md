@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:geolocator/geolocator.dart' as geolocator;
+import 'package:shimmer/shimmer.dart';
 import 'package:yumprides_driver/model/parcel_model.dart';
 import 'package:yumprides_driver/model/payment_setting_model.dart';
 import 'package:yumprides_driver/model/ride_model.dart';
@@ -227,6 +228,105 @@ class Constant {
     }
   }
 
+  static void showShimmerBottomSheet({
+    required BuildContext context,
+    required String title,
+    required int itemCount, // Dynamic shimmer list length
+    double? maxHeight, // Optional max height
+  }) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        // Calculate dynamic height based on itemCount (Each item ≈ 80px including spacing)
+        double calculatedHeight = (itemCount * 80).toDouble();
+        double finalHeight = maxHeight != null && calculatedHeight > maxHeight
+            ? maxHeight // If calculated height exceeds maxHeight, use maxHeight
+            : calculatedHeight;
+
+        return Container(
+          height: finalHeight,
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Title
+              Text(
+                title,
+                style: TextStyle(fontSize: 20, fontFamily: AppThemeData.bold),
+              ),
+              SizedBox(height: 10),
+              Divider(),
+              SizedBox(height: 10),
+              // Shimmer Effect List
+              Expanded(
+                child: ListView.builder(
+                  itemCount: itemCount,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            height: 70,
+                            width: MediaQuery.of(context).size.width * 0.15,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 10),
+                                height: 30,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(bottom: 10),
+                                height: 20,
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   static Future<Url> uploadChatImageToFireStorage(File image) async {
     ShowToastDialog.showLoader('Uploading image...');
     var uniqueID = const Uuid().v4();
@@ -276,7 +376,7 @@ class Constant {
 
     // Instead of using VideoThumbnail.thumbnailFile, generate the thumbnail using video_compress.
     // Using the compressed video file's path (you can adjust quality and position as needed).
-    final File? thumbnailFile = await VideoCompress.getFileThumbnail(
+    final File thumbnailFile = await VideoCompress.getFileThumbnail(
       compressedVideo.path,
       quality: 50, // adjust quality (0-100)
       position:
@@ -631,7 +731,7 @@ class Constant {
 
   Future<Map<String, String>> _createGoogleHeaders() async {
     return {
-      'X-Android-Package': 'com.yumprides.driver',
+      'X-Android-Package': 'com.yump.driver',
       'X-Android-Cert':
           'EA:AD:55:A5:2C:87:A4:A3:9E:62:DA:63:8F:E5:A2:0A:F5:60:0C:44', // Replace with your SHA1
     };

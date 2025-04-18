@@ -36,7 +36,7 @@ import 'package:yumprides_driver/themes/radio_button.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
 import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,7 +73,7 @@ class WalletScreen extends StatelessWidget {
           walletController.getTrancation();
         },
         builder: (walletController) {
-          final themeChange = Provider.of<DarkThemeProvider>(context);
+          final themeChange = Provider.of<ThemeProvider>(context);
           return Scaffold(
             appBar: AppbarCustom(
               title: 'My Earnings'.tr,
@@ -616,13 +616,19 @@ class WalletScreen extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: Text(
-                      data.amount!.toString().contains('-')
+                      /*data.amount!.toString().contains('-')
                           ? "(-${Constant().amountShow(amount: data.amount!.split("-").last.toString())})"
                           : data.amount!.isNotEmpty
                               ? Constant().amountShow(
                                   amount:
                                       "${double.parse(data.amount!.toString()) + double.parse(data.adminCommission!.isNotEmpty ? data.adminCommission!.toString() : "0.0")}")
-                              : "",
+                              : "",*/
+                      /*data.amount!.toString().contains('-')
+                            ? "(-${Constant().amountShow(amount: data.netCost!*/ /*.split("-").last*/ /*.toString())})"
+                            : data.amount!.isNotEmpty
+                            ? Constant().amountShow(amount: data.netCost!.toString())
+                            : "",*/
+                      Constant().amountShow(amount: data.netCost!.toString()),
                       style: TextStyle(
                           fontFamily: AppThemeData.medium,
                           fontSize: 16,
@@ -1845,7 +1851,7 @@ class WalletScreen extends StatelessWidget {
   //   //initiate payPal plugin
   //   await _flutterPaypalNativePlugin.init(
   //     //your app id !!! No Underscore!!! see readme.md for help
-  //     returnUrl: "com.yumprides.driver://paypalpay",
+  //     returnUrl: "com.yump.driver://paypalpay",
   //     //client id from developer dashboard
   //     clientID: walletController.paymentSettingModel.value.payPal!.appId!,
   //     //sandbox, staging, live etc

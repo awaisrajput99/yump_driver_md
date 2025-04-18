@@ -73,7 +73,6 @@
 //   static const String thin = 'Switzer-Thin';
 // }
 
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -151,4 +150,10 @@ class AppThemeData {
   static const String regular = 'Roboto-Regular';
   static const String semiBold = 'Roboto-Medium';
   static const String thin = 'Roboto-Thin';
+}
+
+class MdConstantColors{
+  static Color lightBorderColor = const Color(0xffD3DDE7);
+  static Color darkBorderColor = const Color(0xff607080);
+  static Color primaryDefault = const Color(0xff2F6FED);
 }

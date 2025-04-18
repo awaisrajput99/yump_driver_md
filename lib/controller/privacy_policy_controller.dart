@@ -6,7 +6,6 @@ import 'package:yumprides_driver/constant/logdata.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/service/api.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
 
 class PrivacyPolicyController extends GetxController {

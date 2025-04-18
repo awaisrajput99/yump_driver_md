@@ -1,0 +1,217 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+
+import '../../controller/map_screen_controller.dart';
+import '../../controller/dash_board_controller.dart';
+import '../../controller/new_ride_controller.dart';
+import '../../themes/constant_colors.dart';
+import '../../utils/theme_provider.dart';
+
+class DriverAvailabilityScreen extends StatefulWidget {
+  const DriverAvailabilityScreen({super.key});
+
+  @override
+  State<DriverAvailabilityScreen> createState() => _DriverAvailabilityScreenState();
+}
+
+class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
+  final DashBoardController dashboardController = Get.put(DashBoardController());
+  final NewRideController newRideController = Get.put(NewRideController());
+  final MapScreenController mapScreenController = Get.put(MapScreenController());
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final themeChange = Provider.of<ThemeProvider>(context);
+
+    return Scaffold(
+      body: GetX<MapScreenController>(
+        builder: (controller) => Column(
+          children: [
+            // Top half with map and back button
+            Expanded(
+              // flex: 1,
+              child: Stack(
+                children: [
+                  GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                      target: controller.center,
+                      zoom: 14.0,
+                    ),
+                    markers: Set<Marker>.of(controller.markers.values),
+                    onMapCreated: (GoogleMapController mapController) {
+                      controller.mapController = mapController;
+                      controller.moveToCurrentLocation();
+                    },
+                    zoomControlsEnabled: false,
+                    myLocationButtonEnabled: false,
+                    compassEnabled: false,
+                    polylines: Set<Polyline>.of(controller.polyLines.values),
+                    myLocationEnabled: true,
+                  ),
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: GestureDetector(
+                        onTap: () => Get.back(),
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 4,
+                              ),
+                            ],
+                          ),
+                          child: Icon(Icons.arrow_back, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+            // Lower half UI
+            Expanded(
+              // flex: 1,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                decoration: BoxDecoration(
+                  color: themeChange.getThem() ? AppThemeData.grey900Dark : Colors.white,
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Departure and Destination
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                            },
+
+                            child: Text("Available", style: TextStyle(
+                              fontFamily: AppThemeData.bold,
+                              fontSize: 18
+                            ),),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                            },
+
+                            child:  Text("Busy",style: TextStyle(
+                                fontFamily: AppThemeData.bold,
+                                fontSize: 18
+                            ),),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+
+                    Text("Departure Location", style: textTheme.labelLarge,),
+                    const SizedBox(height: 4),
+                    Text("123 Main Street, City Name", style: textTheme.headlineLarge),
+
+                    const SizedBox(height: 12),
+
+                    Text("Destination Location", style: textTheme.labelLarge,),
+                    const SizedBox(height: 4),
+                    Text("456 Second Ave, Other City", style: textTheme.headlineLarge),
+
+                    const SizedBox(height: 15),
+                    Row(
+                      children: [
+                        timeAndVehicleContainer('Pickup time', textTheme),
+                        SizedBox(width: 20,),
+                        timeAndVehicleContainer('Vehicle type', textTheme)
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Read-only fields
+                    Text('Passenger name:', style: textTheme.labelLarge,),
+                    SizedBox(height: 4,),
+                    Text("johe doe", style: textTheme.headlineLarge),
+                    Divider()
+
+
+
+
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget timeAndVehicleContainer(String label, TextTheme textTheme){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: textTheme.labelLarge),
+        SizedBox(height: 5,),
+        Container(
+          constraints: BoxConstraints(
+            minWidth: 100
+          ),
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,
+            ),
+            borderRadius: BorderRadius.circular(4)
+          ),
+          child: Text("4:30 pm",style: textTheme.headlineLarge),
+        ),
+      ],
+    );
+  }
+
+  Widget buildReadOnlyField( String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: TextFormField(
+        readOnly: true,
+        initialValue: value,
+        style: valueStyle(),
+        decoration: InputDecoration(
+          border: const UnderlineInputBorder(), // Default border
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey,),
+          ),
+          disabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          contentPadding: const EdgeInsets.symmetric(vertical: 4),
+        ),
+      ),
+    );
+  }
+
+  TextStyle labelStyle() {
+    return  TextStyle(fontSize: 16, fontFamily: AppThemeData.semiBold, color: Colors.grey);
+  }
+
+  TextStyle valueStyle() {
+    return const TextStyle(fontSize: 20, fontFamily: AppThemeData.bold);
+  }
+}

@@ -13,7 +13,7 @@ class firestoreMethods {
   ) async {
     String channelId = '';
     try {
-      channelId = '${driverId}${''}';
+      channelId = '$driverId${''}';
       CallStream liveStream = CallStream(
         uid: driverId,
         username: "",

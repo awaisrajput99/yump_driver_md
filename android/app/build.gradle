@@ -106,7 +106,7 @@ dependencies {
 //     compileSdkVersion ext.flutter.compileSdkVersion.toInteger()
 
 //     defaultConfig {
-//         applicationId "com.yumprides.driver"
+//         applicationId "com.yump.driver"
 //         minSdkVersion ext.flutter.minSdkVersion.toInteger()
 //         targetSdkVersion ext.flutter.targetSdkVersion.toInteger()
 //         versionCode ext.flutter.versionCode.toInteger()
@@ -154,7 +154,7 @@ dependencies {
 //         }
 //     }
 
-//     namespace "com.yumprides.driver"
+//     namespace "com.yump.driver"
 // }
 
 // flutter {

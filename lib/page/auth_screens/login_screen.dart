@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
@@ -13,7 +12,7 @@ import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
 import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:yumprides_driver/widget/permission_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,7 +31,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetBuilder(
         init: LoginController(),
         initState: (state) async {

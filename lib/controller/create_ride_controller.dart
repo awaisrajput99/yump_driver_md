@@ -181,8 +181,9 @@ class CreateRideController extends GetxController {
 
   Future<Map<String, String>> _createGoogleHeaders() async {
     return {
-      'X-Android-Package': 'com.yumprides.driver',
-      'X-Android-Cert': 'EA:AD:55:A5:2C:87:A4:A3:9E:62:DA:63:8F:E5:A2:0A:F5:60:0C:44', // Replace with your SHA1
+      'X-Android-Package': 'com.yump.driver',
+      'X-Android-Cert':
+          'EA:AD:55:A5:2C:87:A4:A3:9E:62:DA:63:8F:E5:A2:0A:F5:60:0C:44', // Replace with your SHA1
     };
   }
 

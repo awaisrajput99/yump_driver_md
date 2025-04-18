@@ -114,7 +114,7 @@ class StartAdvertisementScreen extends StatelessWidget {
   StartAdvertisementScreen({
     super.key,
   });
-  PaymentService _paymentService = PaymentService();
+  final PaymentService _paymentService = PaymentService();
   @override
   Widget build(BuildContext context) {
     final TextEditingController amountController = TextEditingController();

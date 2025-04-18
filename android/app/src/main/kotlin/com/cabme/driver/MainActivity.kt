@@ -1,4 +1,4 @@
-package com.yumprides.driver
+package com.yump.driver
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

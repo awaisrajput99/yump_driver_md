@@ -20,11 +20,11 @@ class CallScreen extends StatefulWidget {
   final String channelId;
   final String driverId;
   const CallScreen({
-    Key? key,
+    super.key,
     required this.isBroadcaster,
     required this.driverId,
     required this.channelId,
-  }) : super(key: key);
+  });
 
   @override
   State<CallScreen> createState() => _CallScreenState();
@@ -35,15 +35,15 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
   List<int> remoteUid = [];
   // bool switchCamera = true;
   bool isMuted = false;
-  bool _isLive = false;
+  final bool _isLive = false;
 /*  ConnectionStateType _connectionState =
       ConnectionStateType.connectionStateDisconnected;*/
-  String _streamStatus = 'Initializing...';
+  final String _streamStatus = 'Initializing...';
   Timer? _timeoutTimer;
 
-  bool _isReconnecting = false;
+  final bool _isReconnecting = false;
   Timer? _reconnectionTimer;
-  int _reconnectionAttempts = 0;
+  final int _reconnectionAttempts = 0;
   final int _maxReconnectionAttempts = 5;
 
   @override

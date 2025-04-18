@@ -5,7 +5,7 @@ import 'package:yumprides_driver/page/chats_screen/FullScreenImageViewer.dart';
 import 'package:yumprides_driver/page/parcel_service/all_parcel_screen.dart';
 import 'package:yumprides_driver/themes/app_bar_custom.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -16,7 +16,7 @@ class ParcelDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<ParcelPaymentController>(
         init: ParcelPaymentController(),
         builder: (controller) {
@@ -89,7 +89,7 @@ class ParcelDetailsScreen extends StatelessWidget {
   }
 
   buildHistory(context, ParcelPaymentController controller) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: () {},
       child: Container(

@@ -69,6 +69,7 @@ class API {
   static const getCompletedRide = "${baseUrl}requete-complete";
   static const setCompleteRequest = "${baseUrl}complete-requete";
   static const getRejectRequest = "${baseUrl}requete-reject";
+  static const payDriverWallet = "${baseUrl}pay-driver-wallet";
 
   static const getVehicleData = "${baseUrl}vehicle-driver?id_driver=";
 

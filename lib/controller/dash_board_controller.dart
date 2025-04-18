@@ -2,19 +2,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/constant/logdata.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/model/driver_location_update.dart';
 import 'package:yumprides_driver/model/user_model.dart';
 import 'package:yumprides_driver/page/add_bank_details/show_bank_details.dart';
-import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/vehicle_info_screen.dart';
 import 'package:yumprides_driver/page/car_service_history/car_service_history_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/page/document_status/document_status_screen.dart';
+import 'package:yumprides_driver/page/home_screen/driver_availability_screen.dart';
 import 'package:yumprides_driver/page/home_screen/home_screen.dart';
 import 'package:yumprides_driver/page/localization_screens/localization_screen.dart';
 import 'package:yumprides_driver/page/my_profile/my_profile_screen.dart';
@@ -77,9 +76,10 @@ class DashBoardController extends GetxController {
   getDrawerItem() {
     drawerItems = [
       DrawerItem('Home'.tr, 'assets/icons/ic_home.svg',
-          section:
-          "${"Rides".tr}${(Constant.parcelActive.toString() == "yes" && userModel.value.userData?.parcelDelivery.toString() == "yes") ? " & Parcels:".tr : ":"}"),
+      ),
       DrawerItem('All Rides'.tr, 'assets/icons/ic_car.svg',
+          section:
+          "${"Rides".tr}${(Constant.parcelActive.toString() == "yes" && userModel.value.userData?.parcelDelivery.toString() == "yes") ? " & Parcels:".tr : ":"}"
       ),
       if (Constant.parcelActive.toString() == "yes" &&
           userModel.value.userData?.parcelDelivery.toString() == "yes")
@@ -112,7 +112,7 @@ class DashBoardController extends GetxController {
     if (Constant.parcelActive.toString() == "yes" &&
         userModel.value.userData?.parcelDelivery.toString() == "yes") {
       if(pos == 0){
-        Get.to(HomeScreen());
+        Get.to(HomeScreen()/*DriverAvailabilityScreen()*/);
       } else if( pos == 1){
         Get.to(NewRideScreen());
       }
@@ -141,7 +141,7 @@ class DashBoardController extends GetxController {
       }
     } else {
       if(pos == 0){
-        Get.to(HomeScreen());
+        Get.to(HomeScreen()/*DriverAvailabilityScreen()*/);
       } else if( pos == 1){
         Get.to(NewRideScreen());
       }

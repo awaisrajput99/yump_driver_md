@@ -1,10 +1,9 @@
-import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/controller/car_service_history_controller.dart';
 import 'package:yumprides_driver/model/car_service_book_model.dart';
 import 'package:yumprides_driver/page/car_service_history/show_service_doc_screen.dart';
 import 'package:yumprides_driver/page/car_service_history/upload_car_service_book.dart';
 import 'package:yumprides_driver/themes/app_bar_custom.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,7 @@ class CarServiceBookHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<CarServiceHistoryController>(
         init: CarServiceHistoryController(),
         builder: (controller) {

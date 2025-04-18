@@ -11,7 +11,7 @@ import 'package:yumprides_driver/themes/custom_dialog_box.dart';
 import 'package:yumprides_driver/themes/custom_widget.dart';
 import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -105,7 +105,7 @@ class _CreateRideScreenState extends State<CreateRideScreen> {
   }
 
   void getCurrentLocation(bool isDepartureSet) async {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     if (isDepartureSet) {
       LocationData location = await currentLocation.getLocation();
       List<get_cord_address.Placemark> placeMarks =
@@ -142,7 +142,7 @@ class _CreateRideScreenState extends State<CreateRideScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return Scaffold(
       // floatingActionButton: FloatingActionButton(
       //   onPressed: (){

@@ -13,7 +13,7 @@ import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/custom_widget.dart';
 import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class SearchParcelScreen extends StatelessWidget {
   final dashboardController = Get.put(DashBoardController());
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<ParcelServiceController>(
         init: ParcelServiceController(),
         builder: (controller) {

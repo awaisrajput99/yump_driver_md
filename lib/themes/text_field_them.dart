@@ -1,5 +1,5 @@
 import 'package:yumprides_driver/themes/constant_colors.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -110,7 +110,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool? isBorderEnable;
   final List<TextInputFormatter>? inputFormatters;
 
-  TextFieldWidget(
+  const TextFieldWidget(
       {super.key,
       required this.hintText,
       required this.controller,
@@ -135,7 +135,7 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return TextFormField(
       readOnly: isReadOnly,
       onTap: onTap,
@@ -291,7 +291,7 @@ class TextFieldWithoutBorderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return TextFormField(
       readOnly: isReadOnly,
       onTap: onTap,

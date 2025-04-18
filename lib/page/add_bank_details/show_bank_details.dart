@@ -1,10 +1,9 @@
-import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/controller/bank_details_controller.dart';
 import 'package:yumprides_driver/page/add_bank_details/add_bank_account.dart';
 import 'package:yumprides_driver/themes/app_bar_custom.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,7 @@ class ShowBankDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<BankDetailsController>(
       init: BankDetailsController(),
       builder: (controller) {

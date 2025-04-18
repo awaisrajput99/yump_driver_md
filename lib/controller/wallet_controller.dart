@@ -22,6 +22,8 @@ import 'package:flutter_stripe/flutter_stripe.dart' as stripePrefix;
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../constant/custom_toast.dart';
+
 class WalletController extends GetxController
     with GetSingleTickerProviderStateMixin {
   RxString ref = "".obs;
@@ -185,8 +187,8 @@ class WalletController extends GetxController
 
       if (response.statusCode == 200 && responseBody['success'] == "success") {
         isLoading.value = false;
-
         TruncationModel model = TruncationModel.fromJson(responseBody);
+
         transactionList.value = model.data!;
         totalEarn.value = model.totalEarnings!.toString();
         update();
@@ -516,6 +518,60 @@ class WalletController extends GetxController
     return data["status"];
 
     //PayPalClientSettleModel.fromJson(data);
+  }
+
+  Future<bool> captureRidePayment({
+    required String paymentIntentId,
+    required String finalAmount,
+  }) async {
+    try {
+      ShowToastDialog.showLoader("Finalizing payment...");
+      final stripeSecret = paymentSettingModel.value.strip!.secretKey;
+
+      final response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents/$paymentIntentId/capture'),
+        body: {
+          'amount_to_capture': ((double.parse(finalAmount) * 100).round()).toString()
+        },
+        headers: {
+          'Authorization': 'Bearer $stripeSecret',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+      );
+
+      final json = jsonDecode(response.body);
+
+      // ✅ Handle already-captured error gracefully
+      if (json['status'] == 'succeeded') {
+        ShowToastDialog.closeLoader();
+        return true;
+      } else if (json['error'] != null &&
+          json['error']['code'] == 'payment_intent_unexpected_state') {
+        // Payment already captured
+        ShowToastDialog.closeLoader();
+        return true;
+      } else {
+        ShowToastDialog.closeLoader();
+        CustomToast.showErrorToast("Failed to capture funds. Try again!");
+        return false;
+      }
+    } catch (e) {
+      ShowToastDialog.closeLoader();
+      showSnackBarAlert(
+        message: e.toString(),
+        color: Colors.red,
+      );
+      return false;
+    }
+  }
+
+  showSnackBarAlert({required String message, Color color = Colors.green}) {
+    return Get.showSnackbar(GetSnackBar(
+      isDismissible: true,
+      message: message,
+      backgroundColor: color,
+      duration: const Duration(seconds: 8),
+    ));
   }
 
   TabController? tabController;

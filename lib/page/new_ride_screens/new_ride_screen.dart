@@ -8,6 +8,7 @@ import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/new_ride_controller.dart';
+import 'package:yumprides_driver/controller/wallet_controller.dart';
 import 'package:yumprides_driver/model/ride_model.dart';
 import 'package:yumprides_driver/model/user_model.dart';
 import 'package:yumprides_driver/page/complaint/add_complaint_screen.dart';
@@ -26,7 +27,7 @@ import 'package:yumprides_driver/themes/custom_dialog_box.dart';
 import 'package:yumprides_driver/themes/custom_widget.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +41,13 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../constant/custom_toast.dart';
+
 class NewRideScreen extends StatelessWidget {
   NewRideScreen({super.key});
 
   final controllerDashBoard = Get.put(DashBoardController());
+  final walletController = Get.put(WalletController());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   callUser(String userId, String userName, BuildContext context,
       String driverId) async {
@@ -66,7 +70,7 @@ class NewRideScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<NewRideController>(
       init: NewRideController(),
       builder: (controller) {
@@ -277,7 +281,7 @@ class NewRideScreen extends StatelessWidget {
                                         context,
                                         controller.rideList[index],
                                         controller,
-                                        themeChange.getThem());
+                                        themeChange.getThem(), walletController);
                                   }),
                     ),
                   ],
@@ -289,8 +293,8 @@ class NewRideScreen extends StatelessWidget {
   }
 
   Widget newRideWidgets(BuildContext context, RideData data,
-      NewRideController controller, bool isDarkMode) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+      NewRideController controller, bool isDarkMode, WalletController walletController) {
+    final themeChange = Provider.of<ThemeProvider>(context);
     return InkWell(
       onTap: () async {
         if (data.statut == "completed") {
@@ -501,7 +505,7 @@ class NewRideScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(
+                 /*     const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -523,7 +527,7 @@ class NewRideScreen extends StatelessWidget {
                                     fontFamily: AppThemeData.regular)),
                           ],
                         ),
-                      ),
+                      ),*/
                       const SizedBox(
                         width: 10,
                       ),
@@ -557,7 +561,7 @@ class NewRideScreen extends StatelessWidget {
                           children: [
                             Text(
                               Constant()
-                                  .amountShow(amount: data.montant.toString()),
+                                  .amountShow(amount: data.netCost.toString()),
                               style: TextStyle(
                                   color: AppThemeData.primary400,
                                   fontSize: 18,
@@ -788,6 +792,35 @@ class NewRideScreen extends StatelessWidget {
                               ),
                             ),
                           ),
+                          Visibility(
+                            visible: data.statut == "confirmed" ? true : false,
+                            child: Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 5, left: 8, right: 8),
+                                child: ButtonThem.buildButton(
+                                  context,
+                                  title: 'To Pickup'.tr,
+                                  btnHeight: 45,
+                                  btnWidthRatio: 1,
+                                  btnColor: AppThemeData.secondary200,
+                                  txtColor: isDarkMode
+                                      ? AppThemeData.grey900
+                                      : AppThemeData.grey900,
+                                  onPress: () async {
+                                    String googleUrl =
+                                        'https://www.google.com/maps/search/?api=1&query=${double.parse(data.latitudeDepart.toString())},${double.parse(data.longitudeDepart.toString())}';
+                                    if (await canLaunch(googleUrl)) {
+                                      await launch(googleUrl);
+                                    } else {
+                                      throw 'Could not open the map.';
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+
                           Visibility(
                             visible: data.statut == "new" ? true : false,
                             child: Expanded(
@@ -1254,46 +1287,67 @@ class NewRideScreen extends StatelessWidget {
                                           },
                                           negativeButtonText: 'No'.tr,
                                           positiveButtonText: 'Yes'.tr,
-                                          onPressPositive: () {
-                                            Map<String, String> bodyParams = {
-                                              'id_ride': data.id.toString(),
-                                              'id_user':
-                                                  data.idUserApp.toString(),
-                                              'driver_name':
-                                                  '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
-                                              'from_id': Preferences.getInt(
-                                                      Preferences.userId)
-                                                  .toString(),
-                                            };
-                                            controller
-                                                .setCompletedRequest(
-                                                    bodyParams, data)
-                                                .then((value) {
-                                              if (value != null) {
-                                                Get.back();
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return CustomDialogBox(
-                                                        title:
-                                                            "Completed Successfully"
-                                                                .tr,
-                                                        descriptions:
-                                                            "Ride Successfully completed."
-                                                                .tr,
-                                                        text: "Ok".tr,
-                                                        onPress: () {
-                                                          Get.back();
-                                                          controller
-                                                              .getNewRide();
-                                                        },
-                                                        img: Image.asset(
-                                                            'assets/images/green_checked.png'),
-                                                      );
-                                                    });
-                                              }
-                                            });
+                                          onPressPositive: () async {
+                                            Get.back();
+                                             if(data.driverPayment == 'no'){
+                                               final bool success = await walletController.captureRidePayment(paymentIntentId: data.payMentIntentId!, finalAmount: data.montant!);
+                                                if(success){
+                                                  final response = await controller.payDriverWallet(
+                                                    idDriver: data.idConducteur!,
+                                                    amount: data.netCost!,
+                                                    paymentMethod: data.payment!,
+                                                    idRide: data.id!,
+                                                    idUserApp: data.idUserApp!,
+                                                  );
+                                                  if (response != null) {
+                                                    CustomToast.showSuccessfulToast('payment transferred to your wallet successfully!');
+                                                  } else {
+                                                    CustomToast.showErrorToast('Transfer failed or was unsuccessful.');
+                                                  }
+                                                }
+                                             }
+                                             if(data.driverPayment == 'yes'){
+                                               Map<String, String> bodyParams = {
+                                                 'id_ride': data.id.toString(),
+                                                 'id_user':
+                                                 data.idUserApp.toString(),
+                                                 'driver_name':
+                                                 '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
+                                                 'from_id': Preferences.getInt(
+                                                     Preferences.userId)
+                                                     .toString(),
+                                               };
+                                               controller
+                                                   .setCompletedRequest(
+                                                   bodyParams, data)
+                                                   .then((value) {
+                                                 if (value != null) {
+                                                   Get.back();
+                                                   showDialog(context: context,
+                                                       builder:
+                                                           (BuildContext context) {
+                                                         return CustomDialogBox(
+                                                           title:
+                                                           "Completed Successfully"
+                                                               .tr,
+                                                           descriptions:
+                                                           "Ride Successfully completed."
+                                                               .tr,
+                                                           text: "Ok".tr,
+                                                           onPress: () {
+                                                             Get.back();
+                                                             controller
+                                                                 .getNewRide();
+                                                           },
+                                                           img: Image.asset(
+                                                               'assets/images/green_checked.png'),
+                                                         );
+                                                       });
+                                                 }
+                                               });
+                                             }
+
+
                                           },
                                         );
                                       },
@@ -1503,10 +1557,10 @@ class EmbeddedMapScreen extends StatefulWidget {
   final LatLng endPoint;
 
   const EmbeddedMapScreen({
-    Key? key,
+    super.key,
     required this.startPoint,
     required this.endPoint,
-  }) : super(key: key);
+  });
 
   @override
   _EmbeddedMapScreenState createState() => _EmbeddedMapScreenState();
@@ -1515,8 +1569,8 @@ class EmbeddedMapScreen extends StatefulWidget {
 class _EmbeddedMapScreenState extends State<EmbeddedMapScreen> {
   late GoogleMapController _mapController;
   LatLng? _currentLocation;
-  Set<Marker> _markers = {};
-  Set<Polyline> _polylines = {};
+  final Set<Marker> _markers = {};
+  final Set<Polyline> _polylines = {};
 
   @override
   void initState() {

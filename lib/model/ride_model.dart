@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:yumprides_driver/model/tax_model.dart';
 
 class RideModel {
@@ -93,6 +95,11 @@ class RideData {
   String? adminCommission;
   UserInfo? userInfo;
   List<TaxModel>? taxModel;
+  String? taxAmount;
+  String? netCost;
+  String? baseCost;
+  String? payMentIntentId;
+  String? driverPayment;
 
   RideData({
     this.id,
@@ -155,6 +162,11 @@ class RideData {
     this.userInfo,
     this.existingUserId,
     this.adminCommission,
+    this.taxAmount,
+    this.netCost,
+    this.baseCost,
+    this.payMentIntentId,
+    this.driverPayment
   });
 
   RideData.fromJson(Map<String, dynamic> json) {
@@ -179,13 +191,19 @@ class RideData {
     numberPoeple = json['number_poeple'].toString();
     place = json['place'].toString();
     statut = json['statut'].toString();
-    if (json['stops'] != null && json['stops'] != []) {
-      stops = <Stops>[];
-      json['stops'].forEach((v) {
-        stops!.add(Stops.fromJson(v));
-      });
-    } else {
+    if (json['stops'] is List) {
       stops = [];
+      json['stops'].forEach((v) {
+        stops!.add(v); // or RideStop.fromJson(v) if stops is a list of objects
+      });
+    } else if (json['stops'] is String) {
+      // Try to decode the string to a List if possible
+      try {
+        List<dynamic> parsed = jsonDecode(json['stops']);
+        stops = parsed.cast<Stops>();
+      } catch (e) {
+        stops = [];
+      }
     }
     if (json['user_info'] != null) {
       userInfo = UserInfo.fromJson(json['user_info']);
@@ -234,8 +252,12 @@ class RideData {
     rideType = json['ride_type'].toString();
     existingUserId = json['existing_user_id'].toString();
     adminCommission = json['admin_commission'].toString();
-
     taxModel = taxList;
+    taxAmount = json['tax_amount'].toString();
+    netCost = json['net_cost'].toString();
+    baseCost = json['base_amount'].toString();
+    payMentIntentId = json['payment_intent_id'].toString();
+    driverPayment = json['driver_payment'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -298,6 +320,11 @@ class RideData {
     data['ride_type'] = rideType;
     data['existing_user_id'] = existingUserId;
     data['admin_commission'] = adminCommission;
+    data['payment_intent_id'] = payMentIntentId;
+    data['base_amount']  = baseCost;
+    data['net_cost'] = netCost;
+    data['tax_amount'] = taxAmount;
+    data['driver_payment'] = driverPayment;
     if (userInfo != null) {
       data['user_info'] = userInfo!.toJson();
     }

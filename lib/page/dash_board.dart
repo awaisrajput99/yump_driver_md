@@ -9,7 +9,7 @@ import 'package:yumprides_driver/page/home_screen/home_screen.dart';
 import 'package:yumprides_driver/page/new_ride_screens/new_ride_screen.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class DashBoard extends StatefulWidget {
-  DashBoard({super.key});
+  const DashBoard({super.key});
 
   @override
   State<DashBoard> createState() => _DashBoardState();
@@ -71,7 +71,7 @@ class _DashBoardState extends State<DashBoard> {
 }
 
 buildAppDrawer(BuildContext context, DashBoardController controller) {
-  final themeChange = Provider.of<DarkThemeProvider>(context);
+  final themeChange = Provider.of<ThemeProvider>(context);
   var drawerOptions = <Widget>[];
   for (var i = 0; i < controller.drawerItems.length; i++) {
     var d = controller.drawerItems[i];

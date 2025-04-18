@@ -2,7 +2,6 @@
 
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/forgot_password_controller.dart';
-import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';

@@ -10,7 +10,7 @@ import 'package:yumprides_driver/themes/constant_colors.dart';
 import 'package:yumprides_driver/themes/custom_alert_dialog.dart';
 import 'package:yumprides_driver/themes/custom_dialog_box.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
@@ -183,7 +183,7 @@ class _RouteViewScreenState extends State<RouteViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,
@@ -384,7 +384,7 @@ class _RouteViewScreenState extends State<RouteViewScreen> {
                                                 fit: BoxFit.cover,
                                               )),
                                         ),
-                                        Padding(
+                                       /* Padding(
                                           padding: const EdgeInsets.only(
                                               left: 10, right: 10),
                                           child: InkWell(
@@ -424,7 +424,7 @@ class _RouteViewScreenState extends State<RouteViewScreen> {
                                               ),
                                             ),
                                           ),
-                                        ),
+                                        ),*/
                                       ],
                                     ),
                                     Padding(
@@ -466,6 +466,32 @@ class _RouteViewScreenState extends State<RouteViewScreen> {
                               onPress: () async {
                                 buildShowBottomSheet(
                                     context, themeChange.getThem());
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: rideData!.statut == "confirmed" ? true : false,
+                        child: Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 5, left: 8, right: 8),
+                            child: ButtonThem.buildButton(
+                              context,
+                              title: 'To Pickup'.tr,
+                              btnHeight: 45,
+                              btnWidthRatio: 1,
+                              btnColor: AppThemeData.secondary200,
+                              txtColor: Colors.black,
+                              onPress: () async {
+                                String googleUrl =
+                                    'https://www.google.com/maps/search/?api=1&query=${double.parse(rideData!.latitudeDepart.toString())},${double.parse(rideData!.longitudeDepart.toString())}';
+                                if (await canLaunch(googleUrl)) {
+                                  await launch(googleUrl);
+                                } else {
+                                  throw 'Could not open the map.';
+                                }
                               },
                             ),
                           ),

@@ -15,7 +15,7 @@ import 'package:yumprides_driver/themes/custom_dialog_box.dart';
 import 'package:yumprides_driver/themes/custom_widget.dart';
 import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
@@ -87,9 +87,8 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
           'https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.latitude}&lon=${location.longitude}&zoom=18&addressdetails=1';
 
       var addressData = <String, dynamic>{};
-      var package = Platform.isAndroid
-          ? 'com.yumprides.driver'
-          : 'com.yumprides.driver.ios'; //ok
+      var package =
+          Platform.isAndroid ? 'com.yump.driver' : 'com.yump.driver.ios'; //ok
       http.Response response = await http.get(
         Uri.parse(url),
         headers: {
@@ -119,7 +118,7 @@ class _CreateOsmRideScreenState extends State<CreateOsmRideScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor: ConstantColors.background,
       body: Stack(

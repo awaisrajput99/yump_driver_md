@@ -14,7 +14,7 @@ import 'package:yumprides_driver/themes/custom_alert_dialog.dart';
 import 'package:yumprides_driver/themes/custom_dialog_box.dart';
 import 'package:yumprides_driver/themes/custom_widget.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:yumprides_driver/widget/StarRating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ class AllParcelScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<ParcelOrderController>(
         init: ParcelOrderController(),
         builder: (controller) {

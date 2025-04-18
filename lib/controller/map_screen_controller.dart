@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:geocoding/geocoding.dart' as get_cord_address;
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-import '../constant/constant.dart';
+import '../utils/Preferences.dart';
 
 class MapScreenController extends GetxController{
   LatLng center = const LatLng(40.7128, -74.0060);
@@ -20,6 +19,7 @@ class MapScreenController extends GetxController{
   void onInit() {
     super.onInit();
     getCurrentLocation();
+    print("current location:=========${Preferences.getString(Preferences.accesstoken)}");
   }
 
 
@@ -67,17 +67,26 @@ class MapScreenController extends GetxController{
     );
   }
 
-  void _addCurrentLocationMarker(LocationData location) {
-    final String markerId = "current_location"; // Use a String key
+  void _addCurrentLocationMarker(LocationData location) async {
+    final String markerId = "current_location";
+    final BitmapDescriptor customIcon = await _getLollipopMarkerIcon();
+
     markers[markerId] = Marker(
-      markerId: MarkerId(markerId), // Use MarkerId inside the Marker
+      markerId: MarkerId(markerId),
       position: LatLng(location.latitude!, location.longitude!),
       infoWindow: const InfoWindow(title: "You are here!"),
+      icon: customIcon,
     );
     update(); // Notify GetX to refresh UI
   }
 
 
+  Future<BitmapDescriptor> _getLollipopMarkerIcon() async {
+    return await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(48, 48)),
+      'assets/icons/ic_lollipop.png',
+    );
+  }
   Rx<LatLng?> currentLatLng = Rx<LatLng?>(null);
 
   void moveToCurrentLocation() {
@@ -88,4 +97,5 @@ class MapScreenController extends GetxController{
     } else {
       print("MapController or currentLatLng is null.");
     }
-  }}
+  }
+}

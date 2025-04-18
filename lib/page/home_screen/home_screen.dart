@@ -1,23 +1,21 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/map_screen_controller.dart';
 import 'package:yumprides_driver/controller/new_ride_controller.dart';
-import 'package:yumprides_driver/page/new_ride_screens/new_ride_screen.dart';
 
 import '../../constant/constant.dart';
+import '../../constant/logdata.dart';
+import '../../constant/send_notification.dart';
 import '../../constant/show_toast_dialog.dart';
 import '../../model/user_model.dart';
-import '../../themes/button_them.dart';
 import '../../themes/constant_colors.dart';
-import '../../themes/text_field_them.dart';
 import '../../utils/Preferences.dart';
-import '../../utils/dark_theme_provider.dart';
+import '../../utils/theme_provider.dart';
 import '../dash_board.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,12 +25,14 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
 
     final controllerDashBoard = Get.put(DashBoardController());
     final newRideCotroller = Get.put(NewRideController());
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       {required NewRideController controller,
       required bool isDarkMode,
       required DashBoardController controllerDashBoard}) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     _scaffoldKey.currentState?.openDrawer();
                     // Scaffold.of(context).openDrawer();
                   },

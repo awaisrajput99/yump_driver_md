@@ -8,7 +8,6 @@ import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/my_profile_controller.dart';
 import 'package:yumprides_driver/model/user_model.dart';
-import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/my_profile/change_password_screen.dart';
 import 'package:yumprides_driver/page/my_profile/edit_profile_screen.dart';
@@ -19,7 +18,7 @@ import 'package:yumprides_driver/themes/custom_widget.dart';
 import 'package:yumprides_driver/themes/responsive.dart';
 import 'package:yumprides_driver/themes/text_field_them.dart';
 import 'package:yumprides_driver/utils/Preferences.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +39,7 @@ class MyProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
     return GetX<MyProfileController>(
         init: MyProfileController(),
         builder: (myProfileController) {

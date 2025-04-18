@@ -79,8 +79,7 @@ class NewRideController extends GetxController {
 
       Map<String, dynamic> responseBody = json.decode(response.body);
 
-      showLog(
-          "API :: URL :: ${API.driverAllRides}?id_driver=${Preferences.getInt(Preferences.userId)}");
+      showLog("API :: URL :: ${API.driverAllRides}?id_driver=${Preferences.getInt(Preferences.userId)}");
       showLog("API :: Request Body :: ${API.header.toString()} ");
       showLog("API :: responseStatus :: ${response.statusCode} ");
       showLog("API :: responseBody :: ${response.body} ");
@@ -99,18 +98,18 @@ class NewRideController extends GetxController {
     } on TimeoutException catch (e) {
       isLoading.value = false;
       ShowToastDialog.closeLoader();
-      ShowToastDialog.showToast(e.message.toString());
+      ShowToastDialog.showToast("first exception: ${e.message}");
     } on SocketException catch (e) {
       isLoading.value = false;
       ShowToastDialog.closeLoader();
-      ShowToastDialog.showToast(e.message.toString());
+      ShowToastDialog.showToast("second exception:${e.message}");
     } on Error catch (e) {
       isLoading.value = false;
       ShowToastDialog.closeLoader();
-      ShowToastDialog.showToast(e.toString());
+      ShowToastDialog.showToast("third exception:$e");
     } catch (e) {
       ShowToastDialog.closeLoader();
-      ShowToastDialog.showToast(e.toString());
+      ShowToastDialog.showToast("fourth exception:$e");
     }
     return null;
   }
@@ -255,6 +254,57 @@ class NewRideController extends GetxController {
         ShowToastDialog.showToast(
             'Something want wrong. Please try again later');
         throw Exception('Failed to load album');
+      }
+    } on TimeoutException catch (e) {
+      ShowToastDialog.closeLoader();
+      ShowToastDialog.showToast(e.message.toString());
+    } on SocketException catch (e) {
+      ShowToastDialog.closeLoader();
+      ShowToastDialog.showToast(e.message.toString());
+    } on Error catch (e) {
+      ShowToastDialog.closeLoader();
+      ShowToastDialog.showToast(e.toString());
+    }
+    ShowToastDialog.closeLoader();
+    return null;
+  }
+
+  Future<dynamic> payDriverWallet({
+    required String idDriver,
+    required String amount,
+    required String paymentMethod,
+    required String idRide,
+    required String idUserApp,
+  }) async {
+    try {
+      ShowToastDialog.showLoader("Transferring payment to your wallet...");
+      final Uri uri = Uri.parse(
+          API.payDriverWallet).replace(
+        queryParameters: {
+          "id_driver": idDriver.toString(),
+          "amount": amount.toString(),
+          "paymethod": paymentMethod,
+          "id_ride": idRide.toString(),
+          "id_user_app": idUserApp.toString(),
+        },
+      );
+
+      final response = await http.post(uri, headers: API.header);
+
+      showLog("API :: URL :: $uri");
+      showLog("API :: Request Header :: ${API.header.toString()} ");
+      showLog("API :: responseStatus :: ${response.statusCode} ");
+      showLog("API :: responseBody :: ${response.body} ");
+
+      Map<String, dynamic> responseBody = json.decode(response.body);
+
+      if (response.statusCode == 200 && (responseBody['success'] == true || responseBody['success'] == "Success")) {
+        ShowToastDialog.closeLoader();
+        return responseBody;
+      } else {
+        ShowToastDialog.closeLoader();
+        ShowToastDialog.showToast(responseBody['error'] ?? "Something went wrong");
+        return null;
       }
     } on TimeoutException catch (e) {
       ShowToastDialog.closeLoader();

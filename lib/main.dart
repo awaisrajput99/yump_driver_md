@@ -15,8 +15,10 @@ import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/signup_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/service/notification_service.dart';
+import 'package:yumprides_driver/themes/md_app_theme.dart';
 import 'package:yumprides_driver/themes/styles.dart';
-import 'package:yumprides_driver/utils/dark_theme_provider.dart';
+import 'package:yumprides_driver/utils/theme_provider.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +33,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yumprides_driver/widget/permission_dialog.dart';
+import 'constant/send_notification.dart';
 import 'page/chats_screen/conversation_screen.dart';
 import 'page/localization_screens/localization_screen.dart';
 import 'service/localization_service.dart';
@@ -92,7 +95,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -100,10 +103,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
-  void initState() {
+  void initState()  {
     WidgetsBinding.instance.addObserver(this);
     getCurrentAppTheme();
-    setupInteractedMessage(context);
+    NotificationService.setupInteractedMessage(context);
     Future.delayed(const Duration(seconds: 3), () {
       if (Preferences.getString(Preferences.languageCodeKey)
           .toString()
@@ -117,7 +120,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
   }
 
-  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
+  ThemeProvider themeChangeProvider = ThemeProvider();
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -218,7 +221,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   // This widget is the root of your application.
-  @override
+/*  @override
   Widget build(BuildContext context) {
     // print(
     //     "Here is the user id: ${FirebaseAuth.instance.currentUser?.uid ?? ""}");
@@ -293,6 +296,52 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       //       }),
       // );
     }));
+  }*/
+
+// by numan ch
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ThemeProvider>(
+      create: (_) {
+        final themeProvider = ThemeProvider();
+        themeProvider.loadTheme(); // Load saved theme preference
+        // themeProvider.darkTheme = 1; // Set to Light Theme
+
+        return themeProvider;
+      },
+      child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
+        return GetMaterialApp(
+          title: 'Yump Rides Driver'.tr,
+          debugShowCheckedModeBanner: false,
+          themeMode: themeProvider.darkTheme == 2
+              ? ThemeMode.system
+              : themeProvider.darkTheme == 0
+              ? ThemeMode.dark
+              : ThemeMode.light,
+          theme: MdAppTheme.lightTheme,
+          darkTheme: MdAppTheme.darkTheme,
+          locale: LocalizationService.locale,
+          fallbackLocale: LocalizationService.locale,
+          translations: LocalizationService(),
+          builder: EasyLoading.init(),
+          navigatorKey: callNavigatorKey,
+          home: GetBuilder(
+            init: SettingsController(),
+            builder: (controller) {
+              return Preferences.getString(Preferences.languageCodeKey)
+                  .toString()
+                  .isEmpty
+                  ? const LocalizationScreens(intentType: "main")
+                  : Preferences.getBoolean(Preferences.isFinishOnBoardingKey)
+                  ? Preferences.getBoolean(Preferences.isLogin)
+                  ? DashBoard()
+                  : LoginScreen()
+                  : const OnBoardingScreen();
+            },
+          ),
+        );
+      }),
+    );
   }
 }
 
