@@ -20,17 +20,16 @@ class RideRequestNotificationModel {
   });
 
   factory RideRequestNotificationModel.fromMap(Map<String, dynamic> map) {
-    final departureLocation = map['departure_location'] ?? {};
-
     return RideRequestNotificationModel(
-      sessionId: map['session_id'] ?? '',
-      destinationName: map['destination_name'] ?? '',
-      departureName: map['departure_name'] ?? '',
-      departureLat: double.tryParse(departureLocation['lat'].toString()) ?? 0.0,
-      departureLng: double.tryParse(departureLocation['lng'].toString()) ?? 0.0,
-      pickupTime: map['pickup_time'] ?? '',
-      passengerName: map['passenger_name'] ?? '',
-      totalDistance: map['total_distance'] ?? '',
+      sessionId: map['session_id']?.toString() ?? '',
+      destinationName: map['destination_name']?.toString() ?? '',
+      departureName: map['departure_name']?.toString() ?? '',
+      departureLat: double.tryParse(map['departure_location_lat']?.toString() ?? '0.0') ?? 0.0,
+      departureLng: double.tryParse(map['departure_location_lng']?.toString() ?? '0.0') ?? 0.0,
+      pickupTime: map['pickup_time']?.toString() ?? '',
+      passengerName: map['passenger_name']?.toString() ?? '',
+      totalDistance: map['total_distance']?.toString() ?? '',
     );
   }
+
 }

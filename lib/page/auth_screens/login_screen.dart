@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:yumprides_driver/constant/constant.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/login_conroller.dart';
@@ -20,6 +21,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
+
+import 'mobile_number_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -373,6 +376,44 @@ class LoginScreen extends StatelessWidget {
                                       ],
                                     ),
                                   )*/
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text.rich(
+                                      TextSpan(
+                                        text: "Don't have an account? "
+                                   ,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: AppThemeData.regular,
+                                          color: themeChange.getThem()
+                                              ? AppThemeData.grey800Dark
+                                              : AppThemeData.grey800,
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text:  "Sign Up" ,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontFamily: AppThemeData.medium,
+                                              color: AppThemeData.primary200,
+                                              decoration: TextDecoration.underline,
+                                              decorationColor: AppThemeData.primary200,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Get.offAll(
+                                                      () => MobileNumberScreen(isLogin: false),
+                                                  duration: const Duration(milliseconds: 400),
+                                                  transition: Transition.rightToLeft,
+                                                );
+                                              },
+
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

@@ -64,7 +64,7 @@ class OnBoardingScreen extends StatelessWidget {
                     Preferences.setBoolean(
                         Preferences.isFinishOnBoardingKey, true);
                     Get.offAll(MobileNumberScreen(
-                      isLogin: true,
+                      isLogin: false,
                     ));
                   },
                   child: Padding(
@@ -232,7 +232,7 @@ class OnBoardingScreen extends StatelessWidget {
                                   Preferences.isFinishOnBoardingKey, true);
                               Get.offAll(
                                 MobileNumberScreen(
-                                  isLogin: true,
+                                  isLogin: false,
                                 ),
                               );
                             },

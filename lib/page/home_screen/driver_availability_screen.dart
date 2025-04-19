@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:yumprides_driver/page/home_screen/home_screen.dart';
 
+import '../../constant/constant.dart';
 import '../../controller/map_screen_controller.dart';
 import '../../controller/dash_board_controller.dart';
 import '../../controller/new_ride_controller.dart';
+import '../../model/ride_request_notification_modal.dart';
+import '../../model/user_model.dart';
 import '../../themes/constant_colors.dart';
+import '../../themes/custom_alert_dialog.dart';
+import '../../themes/custom_dialog_box.dart';
 import '../../utils/theme_provider.dart';
 
 class DriverAvailabilityScreen extends StatefulWidget {
@@ -20,12 +26,16 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
   final DashBoardController dashboardController = Get.put(DashBoardController());
   final NewRideController newRideController = Get.put(NewRideController());
   final MapScreenController mapScreenController = Get.put(MapScreenController());
+  final RideRequestNotificationModel rideRequest = Get.arguments;
+
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final themeChange = Provider.of<ThemeProvider>(context);
-
+   if(rideRequest == null) {
+     return Scaffold();
+   }
     return Scaffold(
       body: GetX<MapScreenController>(
         builder: (controller) => Column(
@@ -96,10 +106,54 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              UserModel userModal = Constant.getUserData();
+                              String id = userModal.userData!.id.toString();
+                              final response = await controller.available(driverId: id, sessionId: rideRequest.sessionId);
+                              if(response['success'] == true){
+                                showDialog(
+                                    context: context,
+                                    builder:
+                                        (BuildContext context) {
+                                      return CustomDialogBox(
+                                        title:
+                                        "Thank you!"
+                                            .tr,
+                                        descriptions:
+                                        "Thanks for letting us know you're available for the ride! Please hold on while the rider completes the payment. You'll receive a notification once the ride is confirmed, and you can view it under the 'All Rides' section."
+                                            .tr,
+                                        text: "Ok".tr,
+                                        onPress: () {
+                                          Get.offAll(()=> HomeScreen());
+                                        },
+                                        img: Image.asset(
+                                            'assets/images/green_checked.png'),
+                                      );
+                                    });
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder:
+                                        (BuildContext context) {
+                                      return CustomDialogBox(
+                                        title:
+                                        "Sorry!"
+                                            .tr,
+                                        descriptions:
+                                        'You responded after the 30-second window, so this ride has been assigned to another driver. Hang tight—more ride opportunities are coming soon!'
+                                            .tr,
+                                        onPress: () {
+                                          Get.offAll(()=> HomeScreen());
+                                        },
+                                        img: Image.asset(
+                                            'assets/images/sorry_image.png'),
+                                        text: 'Ok'.tr,
+                                      );
+                                    });
+                              }
                             },
 
-                            child: Text("Available", style: TextStyle(
+                            child: Text(controller.isAccepting.value ? "Please wait ..":"Available", style: TextStyle(
                               fontFamily: AppThemeData.bold,
                               fontSize: 18
                             ),),
@@ -108,10 +162,52 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
                         const SizedBox(width: 12),
                         Expanded(
                           child: OutlinedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              UserModel userModal = Constant.getUserData();
+                              String id = userModal.userData!.id.toString();
+                              final response =  await controller.busy(driverId: id, sessionId: rideRequest.sessionId);
+                              if(response['success'] != "Failed"){
+                                showDialog(
+                                    context: context,
+                                    builder:
+                                        (BuildContext context) {
+                                      return CustomDialogBox(
+                                        title:
+                                        "Thank you!"
+                                            .tr,
+                                        descriptions:
+                                        "Thank you for your quick response. Since you're currently unavailable, this ride will be forwarded to the next nearby driver. Don't worry—we’ll reach out to you again shortly with another request to confirm your availability."                                            .tr,
+                                        text: "Ok".tr,
+                                        onPress: () {
+                                          Get.offAll(()=> HomeScreen());
+                                        },
+                                        img: Image.asset(
+                                            'assets/images/green_checked.png'),
+                                      );
+                                    });
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder:
+                                        (BuildContext context) {
+                                      return CustomDialogBox(
+                                        title:
+                                        "Sorry!"
+                                            .tr,
+                                        descriptions:
+                                        'You responded after the 30-second window, so this ride has been assigned to another driver. Hang tight—more ride opportunities are coming soon!'
+                                            .tr,
+                                        onPress: () {
+                                          Get.offAll(()=> HomeScreen());
+                                        },
+                                        img: Image.asset(
+                                            'assets/images/sorry_image.png'),
+                                        text: 'Ok'.tr,
+                                      );
+                                    });                              }
                             },
 
-                            child:  Text("Busy",style: TextStyle(
+                            child:  Text(controller.isRejecting.value ? "please wait ..": "Busy",style: TextStyle(
                                 fontFamily: AppThemeData.bold,
                                 fontSize: 18
                             ),),
@@ -123,20 +219,20 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
 
                     Text("Departure Location", style: textTheme.labelLarge,),
                     const SizedBox(height: 4),
-                    Text("123 Main Street, City Name", style: textTheme.headlineLarge),
+                    Text(rideRequest.departureName, style: textTheme.headlineLarge),
 
                     const SizedBox(height: 12),
 
                     Text("Destination Location", style: textTheme.labelLarge,),
                     const SizedBox(height: 4),
-                    Text("456 Second Ave, Other City", style: textTheme.headlineLarge),
+                    Text(rideRequest.destinationName, style: textTheme.headlineLarge),
 
                     const SizedBox(height: 15),
                     Row(
                       children: [
-                        timeAndVehicleContainer('Pickup time', textTheme),
+                        timeAndVehicleContainer('Pickup time', textTheme, rideRequest.pickupTime),
                         SizedBox(width: 20,),
-                        timeAndVehicleContainer('Vehicle type', textTheme)
+                        timeAndVehicleContainer('Distance', textTheme, rideRequest.totalDistance),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -144,7 +240,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
                     // Read-only fields
                     Text('Passenger name:', style: textTheme.labelLarge,),
                     SizedBox(height: 4,),
-                    Text("johe doe", style: textTheme.headlineLarge),
+                    Text(rideRequest.passengerName, style: textTheme.headlineLarge),
                     Divider()
 
 
@@ -160,7 +256,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
     );
   }
 
-  Widget timeAndVehicleContainer(String label, TextTheme textTheme){
+  Widget timeAndVehicleContainer(String label, TextTheme textTheme, String value){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -177,7 +273,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
             ),
             borderRadius: BorderRadius.circular(4)
           ),
-          child: Text("4:30 pm",style: textTheme.headlineLarge),
+          child: Text(value,style: textTheme.headlineLarge),
         ),
       ],
     );

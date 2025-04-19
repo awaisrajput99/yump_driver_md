@@ -38,8 +38,10 @@ class PhoneNumberController extends GetxController {
             print(e.message.toString());
             ShowToastDialog.showToast(e.message.toString() + e.code);
           }
+          
         },
         codeSent: (String verificationId, int? resendToken) {
+          print("Code sent!!!!");
           ShowToastDialog.closeLoader();
           Get.to(OtpScreen(
             phoneNumber: phoneNumber.value,

@@ -3,10 +3,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:yumprides_driver/calling_module/receive_call/backend/call_notifications.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
-import 'package:yumprides_driver/controller/login_conroller.dart';
+
 import 'package:yumprides_driver/controller/settings_controller.dart';
 import 'package:yumprides_driver/firebase_options.dart';
 import 'package:yumprides_driver/on_boarding_screen.dart';
@@ -38,7 +37,10 @@ import 'page/chats_screen/conversation_screen.dart';
 import 'page/localization_screens/localization_screen.dart';
 import 'service/localization_service.dart';
 import 'utils/Preferences.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -49,11 +51,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Preferences.initPref();
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
   await FirebaseAppCheck.instance.activate(
     webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
     androidProvider: AndroidProvider.playIntegrity,
+    // androidProvider: AndroidProvider.playIntegrity,
+
     appleProvider: AppleProvider.appAttest,
   );
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -103,7 +108,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
-  void initState()  {
+  void initState() {
     WidgetsBinding.instance.addObserver(this);
     getCurrentAppTheme();
     NotificationService.setupInteractedMessage(context);
@@ -316,8 +321,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           themeMode: themeProvider.darkTheme == 2
               ? ThemeMode.system
               : themeProvider.darkTheme == 0
-              ? ThemeMode.dark
-              : ThemeMode.light,
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
           theme: MdAppTheme.lightTheme,
           darkTheme: MdAppTheme.darkTheme,
           locale: LocalizationService.locale,
@@ -329,14 +334,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             init: SettingsController(),
             builder: (controller) {
               return Preferences.getString(Preferences.languageCodeKey)
-                  .toString()
-                  .isEmpty
+                      .toString()
+                      .isEmpty
                   ? const LocalizationScreens(intentType: "main")
                   : Preferences.getBoolean(Preferences.isFinishOnBoardingKey)
-                  ? Preferences.getBoolean(Preferences.isLogin)
-                  ? DashBoard()
-                  : LoginScreen()
-                  : const OnBoardingScreen();
+                      ? Preferences.getBoolean(Preferences.isLogin)
+                          ? DashBoard()
+                          : LoginScreen()
+                      : const OnBoardingScreen();
             },
           ),
         );
@@ -362,4 +367,3 @@ Future<void> clearAppData() async {
 }
 // team id: 859DC4BPTW
 // apn key id: K642C69S95
-

@@ -55,10 +55,10 @@
               "client_type": 3
             },
             {
-              "client_id": "600457798477-4raskjt8tb5j7htdoj56efrv8sc9n0h6.apps.googleusercontent.com",
+              "client_id": "600457798477-22j1c6n8pl3lgpqiv21rfular3tt4r4m.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.cabme.ios"
+                "bundle_id": "com.yump.driver.ios"
               }
             }
           ]
@@ -115,10 +115,10 @@
               "client_type": 3
             },
             {
-              "client_id": "600457798477-4raskjt8tb5j7htdoj56efrv8sc9n0h6.apps.googleusercontent.com",
+              "client_id": "600457798477-22j1c6n8pl3lgpqiv21rfular3tt4r4m.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.cabme.ios"
+                "bundle_id": "com.yump.driver.ios"
               }
             }
           ]
@@ -127,12 +127,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:600457798477:android:7eaebb16390d2589948d04",
+        "mobilesdk_app_id": "1:600457798477:android:6e97795338c28e41948d04",
         "android_client_info": {
           "package_name": "com.yump.driver"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "600457798477-0jd3g2a015nnttugbg8v8i82jv3ufb2h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yump.driver",
+            "certificate_hash": "1cce2eb92af86b9b2bc3b17ba2ca50d6ac7d0eb2"
+          }
+        },
         {
           "client_id": "600457798477-5lj1eko6jtsoieoch382f7j5kgf3onmo.apps.googleusercontent.com",
           "client_type": 1,
@@ -142,79 +150,27 @@
           }
         },
         {
-          "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBZYivFWS0u-KyAPNh5WqBM2UgpJS5Ogj0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "600457798477-6fschs1upcpk3h46gvo3odkn4ho3bas4.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "600457798477-4raskjt8tb5j7htdoj56efrv8sc9n0h6.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.cabme.ios"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:600457798477:android:ba80b0ae3af39ac3948d04",
-        "android_client_info": {
-          "package_name": "com.yumprides.driver"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "600457798477-296opvq042op61nkd9g9tbv8u6m10pqk.apps.googleusercontent.com",
+          "client_id": "600457798477-6c081r62pdkladhsvandgef51b3isiaa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.yumprides.driver",
+            "package_name": "com.yump.driver",
             "certificate_hash": "c827775be07e5151edcd9aa02e3dd052f863302e"
           }
         },
         {
-          "client_id": "600457798477-k7prr4okh7l56fmatf6vu1v0su2hhgj2.apps.googleusercontent.com",
+          "client_id": "600457798477-735ud6lfea3lbtqc69l0n53cht62pnk8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.yumprides.driver",
-            "certificate_hash": "c1971a7bb9de3afb6f950f198b09e17dd17f7410"
+            "package_name": "com.yump.driver",
+            "certificate_hash": "eaad55a52c87a4a39e62da638fe5a20af5600c44"
           }
         },
         {
-          "client_id": "600457798477-mlsdfn7849gkfvlv8b9pqfc44l2rl714.apps.googleusercontent.com",
+          "client_id": "600457798477-fdaglmjeqb38vk4lp4dka3hn4msj3hnr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.yumprides.driver",
-            "certificate_hash": "9c38dd9439209a4e66cd98f2bd2632b7a4b2b4fe"
-          }
-        },
-        {
-          "client_id": "600457798477-qbmmq4b9s0i52p06ugm81ieot0s1ld4j.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.yumprides.driver",
+            "package_name": "com.yump.driver",
             "certificate_hash": "a6d2f5c87bf8580919096e01322827ac892ad74a"
-          }
-        },
-        {
-          "client_id": "600457798477-vh3vhjgefqhbc8s9b8b8c5r8eil3oaln.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.yumprides.driver",
-            "certificate_hash": "1cce2eb92af86b9b2bc3b17ba2ca50d6ac7d0eb2"
           }
         },
         {
@@ -235,10 +191,10 @@
               "client_type": 3
             },
             {
-              "client_id": "600457798477-4raskjt8tb5j7htdoj56efrv8sc9n0h6.apps.googleusercontent.com",
+              "client_id": "600457798477-22j1c6n8pl3lgpqiv21rfular3tt4r4m.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.cabme.ios"
+                "bundle_id": "com.yump.driver.ios"
               }
             }
           ]
@@ -303,10 +259,10 @@
               "client_type": 3
             },
             {
-              "client_id": "600457798477-4raskjt8tb5j7htdoj56efrv8sc9n0h6.apps.googleusercontent.com",
+              "client_id": "600457798477-22j1c6n8pl3lgpqiv21rfular3tt4r4m.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.cabme.ios"
+                "bundle_id": "com.yump.driver.ios"
               }
             }
           ]

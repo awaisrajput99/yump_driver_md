@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/controller/phone_number_controller.dart';
+import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/maple_leaf_widget.dart';
 import 'package:yumprides_driver/themes/button_them.dart';
 import 'package:yumprides_driver/themes/constant_colors.dart';
@@ -192,6 +193,49 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                             ),
                           ),
                           const SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text.rich(
+                              TextSpan(
+                                text: /* widget.isLogin == true
+                                    ? "Don't have an account? "
+                                    :*/
+                                    "Already have an account? ",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: AppThemeData.regular,
+                                  color: themeChange.getThem()
+                                      ? AppThemeData.grey800Dark
+                                      : AppThemeData.grey800,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: /*widget.isLogin == true ? "Sign Up" :*/
+                                        "Login",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: AppThemeData.medium,
+                                      color: AppThemeData.primary200,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: AppThemeData.primary200,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Get.offAll(
+                                          () => /*MobileNumberScreen(isLogin: !(widget.isLogin ?? true))*/
+                                              LoginScreen(),
+                                          duration:
+                                              const Duration(milliseconds: 400),
+                                          transition: Transition.rightToLeft,
+                                        );
+                                      },
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+
                           Padding(
                             padding: const EdgeInsets.only(top: 50),
                             child: ButtonThem.buildButton(
@@ -205,10 +249,14 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                               txtColor: AppThemeData.white90,
 
                               onPress: () async {
-                                FocusScope.of(context).unfocus();
-                                if (controller.phoneNumber.value.isNotEmpty) {
-                                  ShowToastDialog.showLoader("Code sending");
-                                  controller.sendCode();
+                                try {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.phoneNumber.value.isNotEmpty) {
+                                    ShowToastDialog.showLoader("Code sending");
+                                    controller.sendCode();
+                                  }
+                                } catch (e) {
+                                  print("❌❌ Error while sending OTP");
                                 }
                               },
                             ),
@@ -356,3 +404,5 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
     );
   }
 }
+
+

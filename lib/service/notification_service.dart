@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:yumprides_driver/constant/constant.dart';
+import 'package:yumprides_driver/constant/custom_toast.dart';
+import 'package:yumprides_driver/page/home_screen/driver_availability_screen.dart';
 import 'package:yumprides_driver/page/new_ride_screens/new_ride_screen.dart';
 
 import '../controller/dash_board_controller.dart';
@@ -29,9 +31,12 @@ class NotificationService {
     }
 
     // when application is running and active
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       if (message.notification != null) {
-        display(message);
+        debugPrint('=========================================');
+        debugPrint("🔔 handleMessage: ${message.data}");
+        displayMd(message);
+        // await handleMessage(message, context);
       }
     });
 
@@ -43,39 +48,49 @@ class NotificationService {
     });
   }
 
-  //message handler
   static Future<void> handleMessage(RemoteMessage message, BuildContext context) async {
     if (message.notification != null) {
-/*
-      Get.to(NewRideScreen());
-      Constant.showShimmerBottomSheet(context: context, title: "Numan ch", itemCount: 10);
-*/
+      debugPrint("🔔 handleMessage: ${message.data}");
 
+      // ✅ Handle message with 'status' == 'done'
       if (message.data['status'] == "done") {
+        final msgData = json.decode(message.data['message']);
         await Get.to(ConversationScreen(), arguments: {
-          'receiverId': int.parse(
-              json.decode(message.data['message'])['senderId'].toString()),
-          'orderId': int.parse(
-              json.decode(message.data['message'])['orderId'].toString()),
-          'receiverName':
-              json.decode(message.data['message'])['senderName'].toString(),
-          'receiverPhoto':
-              json.decode(message.data['message'])['senderPhoto'].toString(),
+          'receiverId': int.parse(msgData['senderId'].toString()),
+          'orderId': int.parse(msgData['orderId'].toString()),
+          'receiverName': msgData['senderName'].toString(),
+          'receiverPhoto': msgData['senderPhoto'].toString(),
         });
-      } else if (message.data['statut'] == "new" ||
-          message.data['statut'] == "rejected") {
+      }
+
+      // ✅ Handle dashboard routing for 'statut'
+      else if (message.data['statut'] == "new" || message.data['statut'] == "rejected") {
         await Get.to(DashBoard());
-      } else if (message.data['type'] == "payment received") {
-        DashBoardController dashBoardController =
-            Get.put(DashBoardController());
+      }
+
+      // ✅ Handle payment type
+      else if (message.data['type'] == "payment received") {
+        DashBoardController dashBoardController = Get.put(DashBoardController());
         dashBoardController.selectedDrawerIndex.value = 4;
         await Get.to(DashBoard());
-      }/* else if (message.data['type'] == "driver_availability") {
-        final rideRequest = RideRequestNotificationModel.fromMap(message.data);
-        await Get.to(() => NewRideScreen(), arguments: rideRequest);
-      }*/
+      }
+
+      // ✅ Handle driver availability separately
+      final clickActionStr = message.data['click_action'];
+      if (clickActionStr != null) {
+        try {
+          final clickActionMap = json.decode(clickActionStr);
+          if (clickActionMap['type'] == 'driver_availability') {
+            final rideRequest = RideRequestNotificationModel.fromMap(clickActionMap);
+            await Get.to(() => DriverAvailabilityScreen(), arguments: rideRequest);
+          }
+        } catch (e) {
+          debugPrint("❌ Error parsing click_action JSON: $e");
+        }
+      }
     }
   }
+
 
 // initialize the local notification
   static Future<void> initialize(BuildContext context) async {
@@ -107,6 +122,7 @@ class NotificationService {
                   'body': '',
                 },
               }), context);
+              debugPrint("📩 Payload data after decoding: $messageData");
             } catch (e) {
               debugPrint('Payload parsing error: $e');
             }
@@ -150,21 +166,32 @@ class NotificationService {
       if (message.notification == null) return;
 
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      final isDriverAvailability =
+          message.data['click_action'] != null &&
+              jsonDecode(message.data['click_action'])['type'] == 'driver_availability';
 
-      const NotificationDetails notificationDetails = NotificationDetails(
-        android: AndroidNotificationDetails(
-          'high_importance_channel', // Match this with initialize()
-          'High Importance Notifications',
-          importance: Importance.max,
-          priority: Priority.high,
-          playSound: true,
-          enableVibration: true,
-        ),
-        iOS: DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-        ),
+      final AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+        'high_importance_channel',
+        'High Importance Notifications',
+        importance: Importance.max,
+        priority: Priority.high,
+        playSound: true,
+        enableVibration: true,
+        sound: isDriverAvailability
+            ? RawResourceAndroidNotificationSound('driver_availability')
+            : null, // Let it use default if not driver availability
+      );
+
+      final DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+        sound: isDriverAvailability ? 'driver_availability.wav' : null,
+      );
+
+      final notificationDetails = NotificationDetails(
+        android: androidDetails,
+        iOS: iosDetails,
       );
 
       await FlutterLocalNotificationsPlugin().show(

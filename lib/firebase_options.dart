@@ -51,19 +51,19 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBZYivFWS0u-KyAPNh5WqBM2UgpJS5Ogj0',
-    appId: '1:600457798477:android:7eaebb16390d2589948d04',
+    appId: '1:600457798477:android:6e97795338c28e41948d04',
     messagingSenderId: '600457798477',
     projectId: 'maple-rides',
     storageBucket: 'maple-rides.firebasestorage.app',
   );
-
+                                                 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyB7_LiEtqRBbzFovVWrJczhmFJTIW6YJwo',
     appId: '1:600457798477:ios:ad6781dcffd85bc8948d04',
     messagingSenderId: '600457798477',
     projectId: 'maple-rides',
     storageBucket: 'maple-rides.firebasestorage.app',
-    androidClientId: '600457798477-296opvq042op61nkd9g9tbv8u6m10pqk.apps.googleusercontent.com',
+    androidClientId: '600457798477-0jd3g2a015nnttugbg8v8i82jv3ufb2h.apps.googleusercontent.com',
     iosClientId: '600457798477-22j1c6n8pl3lgpqiv21rfular3tt4r4m.apps.googleusercontent.com',
     iosBundleId: 'com.yump.driver.ios',
   );

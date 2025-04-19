@@ -8,6 +8,7 @@ import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 import 'package:yumprides_driver/model/driver_location_update.dart';
 import 'package:yumprides_driver/model/user_model.dart';
 import 'package:yumprides_driver/page/add_bank_details/show_bank_details.dart';
+import 'package:yumprides_driver/page/auth_screens/login_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/vehicle_info_screen.dart';
 import 'package:yumprides_driver/page/car_service_history/car_service_history_screen.dart';
@@ -112,7 +113,7 @@ class DashBoardController extends GetxController {
     if (Constant.parcelActive.toString() == "yes" &&
         userModel.value.userData?.parcelDelivery.toString() == "yes") {
       if(pos == 0){
-        Get.to(HomeScreen()/*DriverAvailabilityScreen()*/);
+        Get.to(HomeScreen());
       } else if( pos == 1){
         Get.to(NewRideScreen());
       }
@@ -141,7 +142,7 @@ class DashBoardController extends GetxController {
       }
     } else {
       if(pos == 0){
-        Get.to(HomeScreen()/*DriverAvailabilityScreen()*/);
+        Get.to(HomeScreen());
       } else if( pos == 1){
         Get.to(NewRideScreen());
       }
@@ -230,7 +231,7 @@ class DashBoardController extends GetxController {
         Preferences.clearKeyData(Preferences.isLogin);
         Preferences.clearKeyData(Preferences.user);
         Preferences.clearKeyData(Preferences.userId);
-        Get.offAll(MobileNumberScreen(isLogin: true));
+        Get.offAll(/*MobileNumberScreen(isLogin: false)*/ LoginScreen());
       }
       else {
         getDrawerItemWidget(index);

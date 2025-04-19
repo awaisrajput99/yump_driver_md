@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:yumprides_driver/constant/show_toast_dialog.dart';
 
 import '../utils/Preferences.dart';
 
@@ -11,6 +15,8 @@ class MapScreenController extends GetxController{
   Rx<Location> currentLocation = Location().obs;
   RxMap<PolylineId, Polyline> polyLines = <PolylineId, Polyline>{}.obs;
   final Map<String, Marker> markers = {};
+  RxBool isAccepting = false.obs;
+  RxBool isRejecting = false.obs;
   final TextEditingController currentLocationController =
   TextEditingController();
   TextEditingController departureController = TextEditingController();
@@ -98,4 +104,103 @@ class MapScreenController extends GetxController{
       print("MapController or currentLatLng is null.");
     }
   }
+
+  Future<Map<String, dynamic>> available({
+    required String driverId,
+    required String sessionId,
+  }) async {
+    const String url = "https://yumprides.ca/admin/api/ride/accept";
+
+    final Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
+
+    final Map<String, String> body = {
+      "driver_id": driverId,
+      "session_id": sessionId,
+    };
+
+    try {
+      isAccepting.value = true;
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(body),
+      );
+      debugPrint('API: https://yumprides.ca/admin/api/ride/accept');
+      debugPrint('request: $body');
+      debugPrint("Response status code: ${response.statusCode}");
+      debugPrint("Response: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        isAccepting.value = false;
+        return responseData;
+
+      } else {
+        isAccepting.value = false;
+
+        return {
+          "success": false,
+          "message": "Server error: ${response.statusCode}"
+        };
+      }
+    } catch (e) {
+      isAccepting.value = false;
+
+      return {
+        "success": false,
+        "message": "Something went wrong: $e"
+      };
+    }
+  }
+
+
+
+  Future<Map<String, dynamic>> busy({
+    required String driverId,
+    required String sessionId,
+  }) async {
+    const String url = "https://yumprides.ca/admin/api/ride/reject";
+
+    final Map<String, String> headers = {
+      "Content-Type": "application/json",
+    };
+
+    final Map<String, String> body = {
+      "driver_id": driverId,
+      "session_id": sessionId,
+    };
+
+    try {
+      isRejecting.value = true;
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(body),
+      );
+      debugPrint('API: https://yumprides.ca/admin/api/ride/reject');
+      debugPrint('request: $body');
+      debugPrint("Response status code: ${response.statusCode}");
+      debugPrint("Response: ${response.body}");
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        isRejecting.value = false;
+        return responseData;
+      } else {
+        isRejecting.value = false;
+        return {
+          "success": "Failed",
+          "message": "Server error: ${response.statusCode}"
+        };
+      }
+    } catch (e) {
+      isRejecting.value = false;
+      return {
+        "success": "Failed",
+        "message": "Something went wrong: $e"
+      };
+    }
+  }
+
 }
