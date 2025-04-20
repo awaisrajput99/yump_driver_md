@@ -50,6 +50,8 @@ class MapScreenController extends GetxController{
 
       // ✅ Update currentLatLng before moving the map
       currentLatLng.value = LatLng(location.latitude!, location.longitude!);
+      /// ✅ Set initial map center to current location
+      center = LatLng(location.latitude!, location.longitude!);
 
       // ✅ Move map to current location
       moveToCurrentLocation();

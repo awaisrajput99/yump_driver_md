@@ -106,6 +106,8 @@ class AppThemeData {
   static Color grey500 = const Color(0XFF18181B);
   static Color grey500Dark = const Color(0XFFA1A1AA);
   static Color textFieldBoarderColor = const Color(0xffC8CED8);
+  static Color loadingBgColor = const Color(0XFFF8F9FB);
+
 
   static Color grey100 = const Color(0XFFF4F4F5);
   static Color grey100Dark = const Color(0XFFF4F4F5);

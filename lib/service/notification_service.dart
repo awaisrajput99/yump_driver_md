@@ -33,10 +33,9 @@ class NotificationService {
     // when application is running and active
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       if (message.notification != null) {
-        debugPrint('=========================================');
-        debugPrint("🔔 handleMessage: ${message.data}");
-        displayMd(message);
-        // await handleMessage(message, context);
+        debugPrint('Foreground Message: ${message.data}');
+        // await displayMd(message); // Show local notification
+        await handleMessage(message, context); // Handle any immediate actions
       }
     });
 
@@ -52,41 +51,51 @@ class NotificationService {
     if (message.notification != null) {
       debugPrint("🔔 handleMessage: ${message.data}");
 
-      // ✅ Handle message with 'status' == 'done'
-      if (message.data['status'] == "done") {
-        final msgData = json.decode(message.data['message']);
-        await Get.to(ConversationScreen(), arguments: {
-          'receiverId': int.parse(msgData['senderId'].toString()),
-          'orderId': int.parse(msgData['orderId'].toString()),
-          'receiverName': msgData['senderName'].toString(),
-          'receiverPhoto': msgData['senderPhoto'].toString(),
-        });
-      }
+      try {
+        debugPrint("Handling message data: ${message.data}");
 
-      // ✅ Handle dashboard routing for 'statut'
-      else if (message.data['statut'] == "new" || message.data['statut'] == "rejected") {
-        await Get.to(DashBoard());
-      }
 
-      // ✅ Handle payment type
-      else if (message.data['type'] == "payment received") {
-        DashBoardController dashBoardController = Get.put(DashBoardController());
-        dashBoardController.selectedDrawerIndex.value = 4;
-        await Get.to(DashBoard());
-      }
-
-      // ✅ Handle driver availability separately
-      final clickActionStr = message.data['click_action'];
-      if (clickActionStr != null) {
-        try {
-          final clickActionMap = json.decode(clickActionStr);
-          if (clickActionMap['type'] == 'driver_availability') {
-            final rideRequest = RideRequestNotificationModel.fromMap(clickActionMap);
-            await Get.to(() => DriverAvailabilityScreen(), arguments: rideRequest);
-          }
-        } catch (e) {
-          debugPrint("❌ Error parsing click_action JSON: $e");
+        // ✅ Handle message with 'status' == 'done'
+        if (message.data['status'] == "done") {
+          final msgData = json.decode(message.data['message']);
+          await Get.to(ConversationScreen(), arguments: {
+            'receiverId': int.parse(msgData['senderId'].toString()),
+            'orderId': int.parse(msgData['orderId'].toString()),
+            'receiverName': msgData['senderName'].toString(),
+            'receiverPhoto': msgData['senderPhoto'].toString(),
+          });
         }
+
+        // ✅ Handle dashboard routing for 'statut'
+        else if (message.data['statut'] == "new" ||
+            message.data['statut'] == "rejected") {
+          await Get.to(DashBoard());
+        }
+
+        // ✅ Handle payment type
+        else if (message.data['type'] == "payment received") {
+          DashBoardController dashBoardController = Get.put(
+              DashBoardController());
+          dashBoardController.selectedDrawerIndex.value = 4;
+          await Get.to(DashBoard());
+        }
+
+        // Handle 'click_action' parsing
+        if (message.data.containsKey('click_action')) {
+          final clickActionStr = message.data['click_action'];
+          if (clickActionStr != null) {
+            final clickActionMap = json.decode(clickActionStr);
+            if (clickActionMap['type'] == 'driver_availability') {
+              final rideRequest = RideRequestNotificationModel.fromMap(
+                  clickActionMap);
+              await Get.offAll(() => DriverAvailabilityScreen(),
+                  arguments: rideRequest);
+              return; // Exit after handling
+            }
+          }
+        }
+      }  catch (e) {
+        debugPrint("❌ Error parsing click_action JSON: $e");
       }
     }
   }
@@ -135,6 +144,7 @@ class NotificationService {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
   }
+/*
 
 // display the notification
   static Future<void> display(RemoteMessage message) async {
@@ -159,6 +169,7 @@ class NotificationService {
       debugPrint("Notification display error: $e");
     }
   }
+*/
 
 
   static Future<void> displayMd(RemoteMessage message) async {
@@ -173,20 +184,23 @@ class NotificationService {
       final AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
         'high_importance_channel',
         'High Importance Notifications',
+        // icon: '@drawable/ic_notification', // 👈 Critical line
         importance: Importance.max,
         priority: Priority.high,
         playSound: true,
         enableVibration: true,
         sound: isDriverAvailability
             ? RawResourceAndroidNotificationSound('driver_availability')
-            : null, // Let it use default if not driver availability
+            : null,
       );
 
       final DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
-        sound: isDriverAvailability ? 'driver_availability.wav' : null,
+        sound: isDriverAvailability
+            ? 'driver_availability.wav'
+            : 'default',
       );
 
       final notificationDetails = NotificationDetails(

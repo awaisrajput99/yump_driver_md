@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>ITSAppUsesNonExemptEncryption</key>
-    <false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -14,8 +14,6 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>We use this data to provide personalized content and ads.</string>
 	<key>CFBundleName</key>
 	<string>Yump Rides Driver</string>
 	<key>CFBundlePackageType</key>
@@ -24,8 +22,6 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-    <false/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -39,33 +35,34 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
-		<array>
-			<string>comgooglemaps</string>
-		</array>
+	<array>
+		<string>comgooglemaps</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Yump driver requires camera access to enable users to upload profile pictures and to scan documents for ride verification purposes.</string>
-
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Yump driver needs access to your location to provide accurate ride matching, real-time tracking, and location-based services, ensuring a seamless ride experience.</string>
-
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Yump driver uses your location even when the app is not in use to improve ride tracking, ensure accurate pick-up and drop-off points, and provide location-based features like ride history and notifications.</string>
-
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Yump driver requires your location while the app is in use to provide real-time ride updates, accurate navigation, and ensure a smooth ride experience.</string>
-
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Yump driver uses the microphone to enable voice communication between riders and drivers for enhanced safety and convenience during rides.</string>
-
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Yump driver needs access to your photo library to allow users to upload images for profile customization and document verification for ride security.</string>
-
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Yump driver requires access to your photo library to enable uploading of profile pictures and to facilitate document uploads for ride verification and enhanced user profile features.</string>
-
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We use this data to provide personalized content and ads.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -90,9 +87,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 </dict>
 </plist>

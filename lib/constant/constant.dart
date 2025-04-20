@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:geolocator/geolocator.dart' as geolocator;
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:yumprides_driver/model/parcel_model.dart';
 import 'package:yumprides_driver/model/payment_setting_model.dart';
@@ -28,6 +29,7 @@ import 'package:uuid/uuid.dart';
 import 'package:video_compress/video_compress.dart';
 // import 'package:video_thumbnail/video_thumbnail.dart';
 
+import '../utils/theme_provider.dart';
 import 'show_toast_dialog.dart';
 
 class Constant {
@@ -90,6 +92,30 @@ class Constant {
     Map<String, dynamic> userMap = json.decode(user);
     return UserModel.fromJson(userMap);
   }
+
+/*  static Widget loader(context, {Color? loadingcolor, Color? bgColor}) {
+    final themeChange = Provider.of<ThemeProvider>(context);
+
+    return Center(
+      child: Container(
+        width: 40,
+        height: 40,
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: bgColor ??
+              (themeChange.getThem()
+                  ? AppThemeData.surface50Dark
+                  : AppThemeData.surface50),
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(
+              loadingcolor ?? AppThemeData.primary200),
+          strokeWidth: 3,
+        ),
+      ),
+    );
+  }*/
 
   static Widget emptyView(String msg) {
     return Column(

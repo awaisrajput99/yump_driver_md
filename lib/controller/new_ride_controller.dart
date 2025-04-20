@@ -70,7 +70,7 @@ class NewRideController extends GetxController {
   Future<dynamic> getNewRide({bool isInit = false}) async {
     try {
       if (isInit) {
-        ShowToastDialog.showLoader("Please wait");
+        // ShowToastDialog.showLoader("Please wait");
       }
       final response = await http.get(
           Uri.parse(

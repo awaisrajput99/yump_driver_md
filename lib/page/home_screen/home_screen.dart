@@ -19,7 +19,8 @@ import '../../utils/theme_provider.dart';
 import '../dash_board.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  DashBoardController controller;
+  HomeScreen({super.key, required this.controller});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -39,44 +40,41 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: buildAppDrawer(context, controllerDashBoard),
-      body: GetX<MapScreenController>(
-        init: MapScreenController(),
-        builder: (controller) => Stack(
-          children: [
-            GoogleMap(
-              mapType: MapType.normal,
-              // Set initial camera position (will be updated when location is available)
-              initialCameraPosition: CameraPosition(
-                target: controller.center,
-                zoom: 14.0,
-              ),
-              // Use markers from controller
-              markers: Set<Marker>.of(controller.markers.values),
-              // Handle map creation
-              onMapCreated: (GoogleMapController mapController) {
-                controller.mapController = mapController;
-                // Move to current location if already available
-                controller.moveToCurrentLocation();
-              },
-              // Other map properties
-              zoomControlsEnabled: false,
-              myLocationButtonEnabled: false,
-              compassEnabled: false,
-              polylines: Set<Polyline>.of(controller.polyLines.values),
-              myLocationEnabled: true,
+      body: Stack(
+        children: [
+          GoogleMap(
+            mapType: MapType.normal,
+            // Set initial camera position (will be updated when location is available)
+            initialCameraPosition: CameraPosition(
+              target: widget.controller.center,
+              zoom: 14.0,
             ),
-            SafeArea(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: appBarHome(
-                  controller: newRideCotroller,
-                  isDarkMode: themeChange.getThem(),
-                  controllerDashBoard: controllerDashBoard),
-            )),
+            // Use markers from controller
+            markers: Set<Marker>.of(widget.controller.markers.values),
+            // Handle map creation
+            onMapCreated: (GoogleMapController mapController) {
+              widget.controller.mapController = mapController;
+              // Move to current location if already available
+              widget.controller.moveToCurrentLocation();
+            },
+            // Other map properties
+            zoomControlsEnabled: false,
+            myLocationButtonEnabled: false,
+            compassEnabled: false,
+            polylines: Set<Polyline>.of(widget.controller.polyLines.values),
+            myLocationEnabled: true,
+          ),
+          SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: appBarHome(
+                    controller: newRideCotroller,
+                    isDarkMode: themeChange.getThem(),
+                    controllerDashBoard: controllerDashBoard),
+              )),
 
-          ],
-        ),
-      ),
+        ],
+      )
     );
   }
 

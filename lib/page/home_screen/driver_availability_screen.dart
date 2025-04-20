@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/page/home_screen/home_screen.dart';
 
 import '../../constant/constant.dart';
@@ -24,8 +25,8 @@ class DriverAvailabilityScreen extends StatefulWidget {
 
 class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
   final DashBoardController dashboardController = Get.put(DashBoardController());
-  final NewRideController newRideController = Get.put(NewRideController());
-  final MapScreenController mapScreenController = Get.put(MapScreenController());
+/*  final NewRideController newRideController = Get.put(NewRideController());
+  final MapScreenController mapScreenController = Get.put(MapScreenController());*/
   final RideRequestNotificationModel rideRequest = Get.arguments;
 
 
@@ -37,7 +38,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
      return Scaffold();
    }
     return Scaffold(
-      body: GetX<MapScreenController>(
+      body: GetX<DashBoardController>(
         builder: (controller) => Column(
           children: [
             // Top half with map and back button
@@ -66,7 +67,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: GestureDetector(
-                        onTap: () => Get.back(),
+                        onTap: () => Get.offAll(()=> DashBoard()),
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
@@ -124,7 +125,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
                                             .tr,
                                         text: "Ok".tr,
                                         onPress: () {
-                                          Get.offAll(()=> HomeScreen());
+                                          Get.offAll(()=> DashBoard());
                                         },
                                         img: Image.asset(
                                             'assets/images/green_checked.png'),
@@ -143,7 +144,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
                                         'You responded after the 30-second window, so this ride has been assigned to another driver. Hang tight—more ride opportunities are coming soon!'
                                             .tr,
                                         onPress: () {
-                                          Get.offAll(()=> HomeScreen());
+                                          Get.offAll(()=> DashBoard());
                                         },
                                         img: Image.asset(
                                             'assets/images/sorry_image.png'),
@@ -179,7 +180,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
                                         "Thank you for your quick response. Since you're currently unavailable, this ride will be forwarded to the next nearby driver. Don't worry—we’ll reach out to you again shortly with another request to confirm your availability."                                            .tr,
                                         text: "Ok".tr,
                                         onPress: () {
-                                          Get.offAll(()=> HomeScreen());
+                                          Get.offAll(()=> DashBoard());
                                         },
                                         img: Image.asset(
                                             'assets/images/green_checked.png'),
@@ -198,7 +199,7 @@ class _DriverAvailabilityScreenState extends State<DriverAvailabilityScreen> {
                                         'You responded after the 30-second window, so this ride has been assigned to another driver. Hang tight—more ride opportunities are coming soon!'
                                             .tr,
                                         onPress: () {
-                                          Get.offAll(()=> HomeScreen());
+                                          Get.offAll(()=> DashBoard());
                                         },
                                         img: Image.asset(
                                             'assets/images/sorry_image.png'),
