@@ -64,7 +64,7 @@ class _DashBoardState extends State<DashBoard> {
             }
           },
           // child: Scaffold(body: NewRideScreen()),
-          child: controller.isLoading.value ? LoadingScreen(controller: controller): HomeScreen(controller: controller,) /*LoadingScreen(controller: controller)*/,
+          child: HomeScreen() /*LoadingScreen(controller: controller)*/,
         );
       },
     );

@@ -20,47 +20,75 @@ class MapScreenController extends GetxController{
   final TextEditingController currentLocationController =
   TextEditingController();
   TextEditingController departureController = TextEditingController();
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    getCurrentLocation();
-    print("current location:=========${Preferences.getString(Preferences.accesstoken)}");
+    isLoading.value = true;
+    getCurrentLocation().then((_) {
+      debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
+      isLoading.value = false;
+      update();
+    }).catchError((e) {
+      debugPrint('Location error: $e');
+      isLoading.value = false; // Don’t hang if location fails
+      update();
+    });
   }
 
 
   getCurrentLocation() async {
+    debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
+
     // Check if location service is enabled
     bool serviceEnabled = await currentLocation.value.serviceEnabled();
+    debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
+
     if (!serviceEnabled) {
+      debugPrint("current locakfhjgkjlansdglkjbskjd fgkljsdhglkhsdlfkjghskjdnfvjklation:=========${Preferences.getString(Preferences.accesstoken)}");
+
       serviceEnabled = await currentLocation.value.requestService();
       if (!serviceEnabled) return; // Handle denial
     }
 
     // Check permission
     PermissionStatus permission = await currentLocation.value.hasPermission();
+    debugPrint("permissiion checking:=========${Preferences.getString(Preferences.accesstoken)}");
+
     if (permission == PermissionStatus.denied) {
+      debugPrint("permissiona denied:=========${Preferences.getString(Preferences.accesstoken)}");
+
       permission = await currentLocation.value.requestPermission();
       if (permission != PermissionStatus.granted) return;
     }
 
     try {
+      debugPrint("current location in try block:=========${Preferences.getString(Preferences.accesstoken)}");
+
       // Get current location
       LocationData location = await currentLocation.value.getLocation();
+      debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
 
       // ✅ Update currentLatLng before moving the map
       currentLatLng.value = LatLng(location.latitude!, location.longitude!);
+      debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
+
       /// ✅ Set initial map center to current location
       center = LatLng(location.latitude!, location.longitude!);
+      debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
 
       // ✅ Move map to current location
       moveToCurrentLocation();
+      debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
 
       // ✅ Update map camera immediately
       _updateMapCamera(location);
+      debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
 
       // ✅ Add marker
       _addCurrentLocationMarker(location);
+      debugPrint("current location:=========${Preferences.getString(Preferences.accesstoken)}");
 
     } catch (e) {
       print("Error getting location: $e");
@@ -99,11 +127,11 @@ class MapScreenController extends GetxController{
 
   void moveToCurrentLocation() {
     if (mapController != null && currentLatLng.value != null) {
-      mapController!.animateCamera(
-        CameraUpdate.newLatLngZoom(currentLatLng.value!, 16), // Zoom in more
-      );
-    } else {
-      print("MapController or currentLatLng is null.");
+      Future.delayed(const Duration(milliseconds: 300), () {
+        mapController!.animateCamera(
+          CameraUpdate.newLatLngZoom(currentLatLng.value!, 16),
+        );
+      });
     }
   }
 

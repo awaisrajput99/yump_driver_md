@@ -34,7 +34,7 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       if (message.notification != null) {
         debugPrint('Foreground Message: ${message.data}');
-        // await displayMd(message); // Show local notification
+        await displayMd(message); // Show local notification
         await handleMessage(message, context); // Handle any immediate actions
       }
     });
@@ -83,17 +83,16 @@ class NotificationService {
         // Handle 'click_action' parsing
         if (message.data.containsKey('click_action')) {
           final clickActionStr = message.data['click_action'];
-          if (clickActionStr != null) {
+          if (clickActionStr != null && clickActionStr.startsWith('{')) {
             final clickActionMap = json.decode(clickActionStr);
             if (clickActionMap['type'] == 'driver_availability') {
-              final rideRequest = RideRequestNotificationModel.fromMap(
-                  clickActionMap);
-              await Get.offAll(() => DriverAvailabilityScreen(),
-                  arguments: rideRequest);
-              return; // Exit after handling
+              final rideRequest = RideRequestNotificationModel.fromMap(clickActionMap);
+              await Get.offAll(() => DriverAvailabilityScreen(), arguments: rideRequest);
+              return;
             }
           }
         }
+
       }  catch (e) {
         debugPrint("❌ Error parsing click_action JSON: $e");
       }
@@ -198,9 +197,9 @@ class NotificationService {
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
-        sound: isDriverAvailability
+    /*    sound: isDriverAvailability
             ? 'driver_availability.wav'
-            : 'default',
+            : 'default',*/
       );
 
       final notificationDetails = NotificationDetails(

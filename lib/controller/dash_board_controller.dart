@@ -53,18 +53,15 @@ class DashBoardController extends GetxController {
 
   @override
   void onInit() {
-    isLoading.value = true;
+    debugPrint('loading the dashboard ${isLoading.value}');
     getUsrData();
     locationSubscription = location.onLocationChanged.listen((event) {});
     updateToken();
     updateCurrentLocation();
     getPaymentSettingData();
-
+    // getCurrentLocation();
     /// ✅ Await the getCurrentLocation before proceeding
-    getCurrentLocation().then((_) {
-      isLoading.value = false;
-      update(); // Ensure UI updates after location is ready
-    });    super.onInit();
+    super.onInit();
   }
 
   updateToken() async {

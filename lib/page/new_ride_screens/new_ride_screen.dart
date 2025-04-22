@@ -1291,7 +1291,7 @@ class NewRideScreen extends StatelessWidget {
                                             Get.back();
                                              if(data.driverPayment == 'no'){
                                                final bool success = await walletController.captureRidePayment(paymentIntentId: data.payMentIntentId!, finalAmount: data.montant!);
-                                                if(success){
+                                         /*       if(success){
                                                   final response = await controller.payDriverWallet(
                                                     idDriver: data.idConducteur!,
                                                     amount: data.netCost!,
@@ -1305,46 +1305,57 @@ class NewRideScreen extends StatelessWidget {
                                                     CustomToast.showErrorToast('Transfer failed or was unsuccessful.');
                                                   }
                                                 }
-                                             }
-                                             if(data.driverPayment == 'yes'){
-                                               Map<String, String> bodyParams = {
-                                                 'id_ride': data.id.toString(),
-                                                 'id_user':
-                                                 data.idUserApp.toString(),
-                                                 'driver_name':
-                                                 '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
-                                                 'from_id': Preferences.getInt(
-                                                     Preferences.userId)
-                                                     .toString(),
-                                               };
-                                               controller
-                                                   .setCompletedRequest(
-                                                   bodyParams, data)
-                                                   .then((value) {
-                                                 if (value != null) {
-                                                   Get.back();
-                                                   showDialog(context: context,
-                                                       builder:
-                                                           (BuildContext context) {
-                                                         return CustomDialogBox(
-                                                           title:
-                                                           "Completed Successfully"
-                                                               .tr,
-                                                           descriptions:
-                                                           "Ride Successfully completed."
-                                                               .tr,
-                                                           text: "Ok".tr,
-                                                           onPress: () {
-                                                             Get.back();
-                                                             controller
-                                                                 .getNewRide();
-                                                           },
-                                                           img: Image.asset(
-                                                               'assets/images/green_checked.png'),
-                                                         );
-                                                       });
-                                                 }
-                                               });
+                                             }*/
+                                             // if(data.driverPayment == 'no'){
+
+                                               if(success){
+                                                 Map<String, String> bodyParams = {
+                                                   'id_ride': data.id.toString(),
+                                                   'id_user':
+                                                   data.idUserApp.toString(),
+                                                   'driver_name':
+                                                   '${data.prenomConducteur.toString()} ${data.nomConducteur.toString()}',
+                                                   'from_id': Preferences.getInt(
+                                                       Preferences.userId)
+                                                       .toString(),
+                                                   'id_driver': data.idConducteur!,
+                                                   'id_user_app': data.idUserApp!,
+                                                   'amount': data.netCost!,
+                                                   'paymethod': data.payment!
+
+                                                 };
+                                                 controller
+                                                     .setCompletedRequest(
+                                                     bodyParams, data)
+                                                     .then((value) {
+                                                   if (value != null) {
+                                                     Get.back();
+                                                     showDialog(context: context,
+                                                         builder:
+                                                             (BuildContext context) {
+                                                           return CustomDialogBox(
+                                                             title:
+                                                             "Completed Successfully"
+                                                                 .tr,
+                                                             descriptions:
+                                                             "Ride Successfully completed."
+                                                                 .tr,
+                                                             text: "Ok".tr,
+                                                             onPress: () {
+                                                               Get.back();
+                                                               controller
+                                                                   .getNewRide();
+                                                             },
+                                                             img: Image.asset(
+                                                                 'assets/images/green_checked.png'),
+                                                           );
+                                                         });
+                                                   }
+                                                 });
+                                               }
+
+
+
                                              }
 
 
