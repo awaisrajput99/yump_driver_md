@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:yumprides_driver/constant/custom_toast.dart';
 import 'package:yumprides_driver/controller/dash_board_controller.dart';
 import 'package:yumprides_driver/controller/map_screen_controller.dart';
 import 'package:yumprides_driver/controller/new_ride_controller.dart';
@@ -111,77 +112,82 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    "Status".tr,
-                    style: TextStyle(
-                      color: themeChange.getThem()
-                          ? AppThemeData.grey500Dark
-                          : AppThemeData.grey500,
-                      fontFamily: AppThemeData.regular,
-                      fontSize: 16,
+              Obx(
+                ()=> Row(
+                  children: [
+                    Text(
+                      "Status".tr,
+                      style: TextStyle(
+                        color: themeChange.getThem()
+                            ? AppThemeData.grey500Dark
+                            : AppThemeData.grey500,
+                        fontFamily: AppThemeData.regular,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  Transform.scale(
-                    scale: 0.8,
-                    child: Switch(
-                      value: controllerDashBoard.isActive.value,
-                      activeColor: AppThemeData.success300,
-                      inactiveTrackColor: AppThemeData.white90,
-                      onChanged: (value) async {
-                        await controllerDashBoard.getUsrData();
-                        if (controllerDashBoard
-                                .userModel.value.userData!.statutVehicule ==
-                            "no") {
-                          showAlertDialog(context, "vehicleInformation");
-                        } else if (controllerDashBoard
-                                    .userModel.value.userData!.isVerified ==
-                                "no" ||
-                            controllerDashBoard.userModel.value.userData!
-                                .isVerified!.isEmpty) {
-                          showAlertDialog(context, "document");
-                        } else {
-                          ShowToastDialog.showLoader("Please wait");
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Transform.scale(
+                      scale: 0.8,
+                      child: controllerDashBoard.isLoadingChangeStatus.value? ShowToastDialog.showLoaderMd(47) : Switch(
+                        value: controllerDashBoard.isActive.value,
+                        activeColor: AppThemeData.success300,
+                        inactiveTrackColor: AppThemeData.white90,
+                        onChanged: (value) async {
+                          controllerDashBoard.isLoadingChangeStatus.value = true;
+                          await controllerDashBoard.getUsrData();
+                          if (controllerDashBoard
+                                  .userModel.value.userData!.statutVehicule ==
+                              "no") {
+                            showAlertDialog(context, "vehicleInformation");
+                          } else if (controllerDashBoard
+                                      .userModel.value.userData!.isVerified ==
+                                  "no" ||
+                              controllerDashBoard.userModel.value.userData!
+                                  .isVerified!.isEmpty) {
+                            showAlertDialog(context, "document");
+                          } else {
+                            // ShowToastDialog.showLoader("Please wait");
 
-                          Map<String, dynamic> bodyParams = {
-                            'id_driver': Preferences.getInt(Preferences.userId),
-                            'online': controllerDashBoard.isActive.value
-                                ? 'no'
-                                : 'yes',
-                          };
+                            Map<String, dynamic> bodyParams = {
+                              'id_driver': Preferences.getInt(Preferences.userId),
+                              'online': controllerDashBoard.isActive.value
+                                  ? 'no'
+                                  : 'yes',
+                            };
 
-                          await controllerDashBoard
-                              .changeOnlineStatus(bodyParams)
-                              .then((value) {
-                            if (value != null) {
-                              if (value['success'] == "success") {
-                                UserModel userModel = Constant.getUserData();
-                                userModel.userData!.online =
-                                    value['data']['online'];
-                                controller.userModel.value = userModel;
-                                Preferences.setString(Preferences.user,
-                                    jsonEncode(userModel.toJson()));
-                                controllerDashBoard.isActive.value =
-                                    userModel.userData!.online == 'no'
-                                        ? false
-                                        : true;
-                                ShowToastDialog.showToast(value['message']);
-                              } else {
-                                ShowToastDialog.showToast(value['error']);
+                            await controllerDashBoard
+                                .changeOnlineStatus(bodyParams)
+                                .then((value) {
+                              if (value != null) {
+                                if (value['success'] == "success") {
+                                  UserModel userModel = Constant.getUserData();
+                                  userModel.userData!.online =
+                                      value['data']['online'];
+                                  controller.userModel.value = userModel;
+                                  Preferences.setString(Preferences.user,
+                                      jsonEncode(userModel.toJson()));
+                                  controllerDashBoard.isActive.value =
+                                      userModel.userData!.online == 'no'
+                                          ? false
+                                          : true;
+                                  CustomToast.showSuccessfulToast(value['message']);
+                                  // ShowToastDialog.showToast(value['message']);
+                                } else {
+                                  CustomToast.showErrorToast(value['error']);
+                                  // ShowToastDialog.showToast(value['error']);
+                                }
                               }
-                            }
-                          });
+                            });
 
-                          ShowToastDialog.closeLoader();
-                        }
-                      },
+                            // ShowToastDialog.closeLoader();
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

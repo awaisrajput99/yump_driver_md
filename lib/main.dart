@@ -47,6 +47,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   );
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -316,6 +318,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       },
       child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
         return GetMaterialApp(
+          // navigatorKey: navigatorKey,
           title: 'Yump Rides Driver'.tr,
           debugShowCheckedModeBanner: false,
           themeMode: themeProvider.darkTheme == 2
@@ -330,6 +333,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           translations: LocalizationService(),
           builder: EasyLoading.init(),
           navigatorKey: callNavigatorKey,
+
           home: GetBuilder(
             init: SettingsController(),
             builder: (controller) {

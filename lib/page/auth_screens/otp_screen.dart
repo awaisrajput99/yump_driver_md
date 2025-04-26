@@ -50,7 +50,7 @@ class OtpScreen extends StatelessWidget {
               width: double.infinity,
               fit: BoxFit.cover,
             ),
-            Padding(
+           /*  Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Text.rich(
                 textAlign: TextAlign.center,
@@ -91,7 +91,7 @@ class OtpScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
+            ), */
           ],
         ),
       ),

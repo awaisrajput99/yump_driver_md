@@ -10,6 +10,7 @@ import 'package:yumprides_driver/page/home_screen/driver_availability_screen.dar
 import 'package:yumprides_driver/page/new_ride_screens/new_ride_screen.dart';
 
 import '../controller/dash_board_controller.dart';
+import '../main.dart';
 import '../model/ride_request_notification_modal.dart';
 import '../page/chats_screen/conversation_screen.dart';
 import '../page/dash_board.dart';
@@ -19,31 +20,43 @@ class NotificationService {
   static bool _initialized = false;
   static Future<void> setupInteractedMessage(BuildContext context) async {
     initialize(context);
-    await FirebaseMessaging.instance.subscribeToTopic("yumprides_driver");
 
-    // when application is terminated
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-    if (initialMessage != null) {
-      if (initialMessage.notification != null) {
-        await handleMessage(initialMessage, context);
+    final NotificationAppLaunchDetails? details =
+    await FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails();
+
+    if (details?.didNotificationLaunchApp ?? false) {
+      if (details!.notificationResponse?.payload != null) {
+        try {
+          final messageData = jsonDecode(details.notificationResponse!.payload!);
+
+          RemoteMessage fakeMessage = RemoteMessage(
+            data: Map<String, dynamic>.from(messageData),
+            notification: RemoteNotification(
+              title: messageData['title']?.toString(),
+              body: messageData['body']?.toString(),
+            ),
+          );
+
+          await handleMessage(fakeMessage, context);
+        } catch (e) {
+          debugPrint('❌ Error handling launch notification payload: $e');
+        }
       }
     }
 
-    // when application is running and active
+    await FirebaseMessaging.instance.subscribeToTopic("yumprides_driver");
+
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      await handleMessage(initialMessage, navigatorKey.currentContext!);
+    }
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      if (message.notification != null) {
-        debugPrint('Foreground Message: ${message.data}');
-        await displayMd(message); // Show local notification
-        await handleMessage(message, context); // Handle any immediate actions
-      }
+      await displayMd(message);
     });
 
-    // when application is in background
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      if (message.notification != null) {
-        await handleMessage(message, context);
-      }
+      await handleMessage(message, context);
     });
   }
 
@@ -80,16 +93,22 @@ class NotificationService {
           await Get.to(DashBoard());
         }
 
-        // Handle 'click_action' parsing
+        // Enhanced click_action handling
         if (message.data.containsKey('click_action')) {
           final clickActionStr = message.data['click_action'];
-          if (clickActionStr != null && clickActionStr.startsWith('{')) {
-            final clickActionMap = json.decode(clickActionStr);
-            if (clickActionMap['type'] == 'driver_availability') {
-              final rideRequest = RideRequestNotificationModel.fromMap(clickActionMap);
+          try {
+            final decoded = json.decode(clickActionStr);
+            debugPrint("Decoded click_action: $decoded");
+
+            if (decoded['type'] == 'driver_availability') {
+              final rideRequest = RideRequestNotificationModel.fromMap(decoded);
               await Get.offAll(() => DriverAvailabilityScreen(), arguments: rideRequest);
               return;
+            } else if(decoded['type'] == 'new_request'){
+              Get.offAll(()=>NewRideScreen());
             }
+          } catch (e) {
+            debugPrint("JSON decode error: $e");
           }
         }
 
@@ -105,21 +124,21 @@ class NotificationService {
     if (_initialized) return;
     _initialized = true;
     AndroidNotificationChannel channel = const AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
-      importance: Importance.high,
-      enableVibration: true
+        'high_importance_channel', // id
+        'High Importance Notifications', // title
+        importance: Importance.high,
+        enableVibration: true
     );
 
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    AndroidInitializationSettings('@mipmap/ic_launcher');
     var iosInitializationSettings = const DarwinInitializationSettings();
     final InitializationSettings initializationSettings =
-        InitializationSettings(
-            android: initializationSettingsAndroid,
-            iOS: iosInitializationSettings);
+    InitializationSettings(
+        android: initializationSettingsAndroid,
+        iOS: iosInitializationSettings);
     await FlutterLocalNotificationsPlugin().initialize(initializationSettings,
-        onDidReceiveNotificationResponse: (NotificationResponse response) async {
+        /* onDidReceiveNotificationResponse: (NotificationResponse response) async {
           if (response.payload != null) {
             try {
               final messageData = jsonDecode(response.payload!);
@@ -135,40 +154,44 @@ class NotificationService {
               debugPrint('Payload parsing error: $e');
             }
           }
+        }*/
+        onDidReceiveNotificationResponse: (NotificationResponse response) async {
+          if (response.payload != null) {
+            try {
+              final messageData = jsonDecode(response.payload!);
+
+              // Enhanced message simulation
+              RemoteMessage fakeMessage = RemoteMessage(
+                data: Map<String, dynamic>.from(messageData),
+                notification: RemoteNotification(
+                  title: messageData['title']?.toString(),
+                  body: messageData['body']?.toString(),
+                ),
+              );
+
+              await handleMessage(fakeMessage, context);
+            } catch (e) {
+              debugPrint('❌ Payload parsing error: $e');
+            }
+          }
         }
+
+      /*    onDidReceiveNotificationResponse: (NotificationResponse response) async {
+          if (response.payload != null) {
+            final Map<String, dynamic> payloadData = jsonDecode(response.payload!);
+            await handleMessage(RemoteMessage(data: payloadData), navigatorKey.currentContext!);
+          }
+        }*/
+
+
     );
 
     await FlutterLocalNotificationsPlugin()
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+        AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
   }
-/*
 
-// display the notification
-  static Future<void> display(RemoteMessage message) async {
-    try {
-      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-      const NotificationDetails notificationDetails = NotificationDetails(
-          android: AndroidNotificationDetails(
-        "01",
-        "yumprides-driver",
-        importance: Importance.max,
-        priority: Priority.high,
-      ));
-
-      await FlutterLocalNotificationsPlugin().show(
-        id,
-        message.notification!.title,
-        message.notification!.body,
-        notificationDetails,
-        payload: jsonEncode(message.data),
-      );
-    } on Exception catch(e){
-      debugPrint("Notification display error: $e");
-    }
-  }
-*/
 
 
   static Future<void> displayMd(RemoteMessage message) async {
@@ -197,9 +220,9 @@ class NotificationService {
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
-    /*    sound: isDriverAvailability
-            ? 'driver_availability.wav'
-            : 'default',*/
+        sound: 'default',
+        categoryIdentifier: 'driver.category', // Add category for actionable notifications
+        threadIdentifier: 'yumprides_driver',
       );
 
       final notificationDetails = NotificationDetails(

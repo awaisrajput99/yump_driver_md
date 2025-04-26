@@ -381,7 +381,7 @@ class DashBoardController extends GetxController {
       Map<String, dynamic> responseBodyPhone = json.decode(response.body);
       if (response.statusCode == 200 &&
           responseBodyPhone['success'] == "success") {
-        ShowToastDialog.closeLoader();
+        // ShowToastDialog.closeLoader();
         UserModel? value = UserModel.fromJson(responseBodyPhone);
         Preferences.setString(Preferences.user, jsonEncode(value));
         userModel.value = value;
@@ -600,10 +600,11 @@ class DashBoardController extends GetxController {
     }
     return null;
   }
+  RxBool isLoadingChangeStatus = false.obs;
 
   Future<dynamic> changeOnlineStatus(bodyParams) async {
     try {
-      ShowToastDialog.showLoader("Please wait");
+      isLoadingChangeStatus.value = true;
       final response = await http.post(Uri.parse(API.changeStatus),
           headers: API.header, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.changeStatus} ");
@@ -614,22 +615,27 @@ class DashBoardController extends GetxController {
       Map<String, dynamic> responseBody = json.decode(response.body);
 
       if (response.statusCode == 200) {
-        ShowToastDialog.closeLoader();
+        isLoadingChangeStatus.value = false;
         updateCurrentLocation();
         return responseBody;
       } else {
+        isLoadingChangeStatus.value = false;
         ShowToastDialog.closeLoader();
       }
     } on TimeoutException catch (e) {
+      isLoadingChangeStatus.value = false;
       ShowToastDialog.closeLoader();
       ShowToastDialog.showToast(e.message.toString());
     } on SocketException catch (e) {
+      isLoadingChangeStatus.value = false;
       ShowToastDialog.closeLoader();
       ShowToastDialog.showToast(e.message.toString());
     } on Error catch (e) {
+      isLoadingChangeStatus.value = false;
       ShowToastDialog.closeLoader();
       ShowToastDialog.showToast(e.toString());
     } catch (e) {
+      isLoadingChangeStatus.value = false;
       ShowToastDialog.closeLoader();
       ShowToastDialog.showToast(e.toString());
     }

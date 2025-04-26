@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class ShowToastDialog {
@@ -11,6 +13,13 @@ class ShowToastDialog {
       status: message.tr,
       dismissOnTap: false,
       maskType: EasyLoadingMaskType.clear,
+    );
+  }
+
+  static showLoaderMd( double? size){
+    return SpinKitFadingCircle( // Beautiful animated loader
+      color: Colors.black,
+      size: size ?? 50,
     );
   }
 

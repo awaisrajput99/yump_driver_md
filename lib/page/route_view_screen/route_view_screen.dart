@@ -447,7 +447,7 @@ class _RouteViewScreenState extends State<RouteViewScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
-                      Visibility(
+                    /*  Visibility(
                         visible: rideData!.statut == "new" ||
                                 rideData!.statut == "confirmed"
                             ? true
@@ -470,7 +470,7 @@ class _RouteViewScreenState extends State<RouteViewScreen> {
                             ),
                           ),
                         ),
-                      ),
+                      ),*/
                       Visibility(
                         visible: rideData!.statut == "confirmed" ? true : false,
                         child: Expanded(

@@ -42,6 +42,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../constant/custom_toast.dart';
+import '../chats_screen/conversation_screen.dart';
 
 class NewRideScreen extends StatelessWidget {
   NewRideScreen({super.key});
@@ -471,6 +472,37 @@ class NewRideScreen extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      Visibility(
+                        visible:
+                        data.statut == "confirmed" &&
+                            data.existingUserId
+                                .toString() !=
+                                "null"
+                            ? true
+                            : false,
+                        child: InkWell(
+                            onTap: () {
+                              Get.to(ConversationScreen(),
+                                  arguments: {
+                                    'receiverId': int.parse(
+                                        data.idUserApp
+                                            .toString()),
+                                    'orderId': int.parse(
+                                        data.id
+                                            .toString()),
+                                    'receiverName':
+                                    '${data.prenom} ${data.nom}',
+                                    'receiverPhoto':
+                                    data.photoPath
+                                  });
+                            },
+                            child: Image.asset(
+                              'assets/icons/chat_icon.png',
+                              height: 30,
+                              width: 30,
+                              fit: BoxFit.cover,
+                            )),
+                      ),
                     ],
                   ),
                 ),
@@ -576,7 +608,9 @@ class NewRideScreen extends StatelessWidget {
                                     fontFamily: AppThemeData.regular)),
                           ],
                         ),
-                      )
+                      ),
+
+
                     ],
                   ),
                 ),
@@ -766,7 +800,7 @@ class NewRideScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Visibility(
+                          /*Visibility(
                             visible: data.statut == "new" ||
                                     data.statut == "confirmed"
                                 ? true
@@ -791,7 +825,8 @@ class NewRideScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
+
                           Visibility(
                             visible: data.statut == "confirmed" ? true : false,
                             child: Expanded(
