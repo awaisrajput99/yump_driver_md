@@ -18,9 +18,12 @@ import 'package:http/http.dart' as http;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginController extends GetxController {
+
+  RxBool isLoggingIn = false.obs;
   Future<UserModel?> loginAPI(Map<String, String> bodyParams) async {
     try {
-      ShowToastDialog.showLoader("Please wait");
+      // ShowToastDialog.showLoader("Please wait");
+      isLoggingIn.value = true;
       final response = await http.post(Uri.parse(API.userLogin),
           headers: API.authheader, body: jsonEncode(bodyParams));
       showLog("API :: URL :: ${API.userLogin}");
@@ -34,6 +37,7 @@ class LoginController extends GetxController {
           responseBody['success'].toString() == 'success') {
         ShowToastDialog.closeLoader();
 
+        isLoggingIn.value = false;
         Preferences.setString(Preferences.accesstoken,
             responseBody['data']['accesstoken'].toString());
         Preferences.setString(Preferences.admincommissiontype,
@@ -54,19 +58,29 @@ class LoginController extends GetxController {
         return UserModel.fromJson(responseBody);
       } else {
         ShowToastDialog.closeLoader();
+        isLoggingIn.value = false;
+
         ShowToastDialog.showToast(responseBody['error'].toString());
       }
     } on TimeoutException catch (e) {
       ShowToastDialog.closeLoader();
+      isLoggingIn.value = false;
+
       ShowToastDialog.showToast(e.message.toString());
     } on SocketException catch (e) {
       ShowToastDialog.closeLoader();
+      isLoggingIn.value = false;
+
       ShowToastDialog.showToast(e.message.toString());
     } on Error catch (e) {
       ShowToastDialog.closeLoader();
+      isLoggingIn.value = false;
+
       ShowToastDialog.showToast(e.toString());
     }
     ShowToastDialog.closeLoader();
+    isLoggingIn.value = false;
+
     return null;
   }
 

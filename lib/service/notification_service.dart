@@ -19,7 +19,7 @@ import '../page/my_profile/my_profile_screen.dart';
 class NotificationService {
   static bool _initialized = false;
   static Future<void> setupInteractedMessage(BuildContext context) async {
-    initialize(context);
+    initialize(navigatorKey.currentContext!);
 
     final NotificationAppLaunchDetails? details =
     await FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails();
@@ -37,7 +37,7 @@ class NotificationService {
             ),
           );
 
-          await handleMessage(fakeMessage, context);
+          await handleMessage(fakeMessage, navigatorKey.currentContext!);
         } catch (e) {
           debugPrint('❌ Error handling launch notification payload: $e');
         }
@@ -56,7 +56,7 @@ class NotificationService {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      await handleMessage(message, context);
+      await handleMessage(message,navigatorKey.currentContext!);
     });
   }
 
@@ -111,6 +111,12 @@ class NotificationService {
             debugPrint("JSON decode error: $e");
           }
         }
+   /*     if (message.data['type'] == 'driver_availability') {
+          final rideRequest = RideRequestNotificationModel.fromMap(message.data);
+          await Get.offAll(() => DriverAvailabilityScreen(), arguments: rideRequest);
+        } else if (message.data['type'] == 'new_request') {
+          Get.offAll(() => NewRideScreen());
+        }*/
 
       }  catch (e) {
         debugPrint("❌ Error parsing click_action JSON: $e");
@@ -169,7 +175,7 @@ class NotificationService {
                 ),
               );
 
-              await handleMessage(fakeMessage, context);
+              await handleMessage(fakeMessage, navigatorKey.currentContext!);
             } catch (e) {
               debugPrint('❌ Payload parsing error: $e');
             }

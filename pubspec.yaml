@@ -33,6 +33,7 @@ dependencies:
   bottom_picker: ^2.8.0
   cached_network_image: ^3.4.1
   cloud_firestore: ^5.4.4
+  connectivity_plus: ^6.1.4
   cupertino_icons: ^1.0.8
   device_info_plus: ^11.3.0
   dropdown_search: ^5.0.6

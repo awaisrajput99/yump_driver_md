@@ -14,6 +14,7 @@ import 'package:yumprides_driver/page/auth_screens/mobile_number_screen.dart';
 import 'package:yumprides_driver/page/auth_screens/signup_screen.dart';
 import 'package:yumprides_driver/page/dash_board.dart';
 import 'package:yumprides_driver/service/api.dart';
+import 'package:yumprides_driver/service/network_status_service.dart';
 import 'package:yumprides_driver/service/notification_service.dart';
 import 'package:yumprides_driver/themes/md_app_theme.dart';
 import 'package:yumprides_driver/themes/styles.dart';
@@ -109,6 +110,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  final _networkStatusService = NetworkStatusService();
+
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -125,8 +128,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           Preferences.getString(Preferences.accesstoken);
     });
     super.initState();
+    // 👇 Start listening to connectivity
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _networkStatusService.listenToInternetChanges(context);
+    });
   }
 
+  @override
+  void dispose() {
+    // 👇 Dispose listener when app shuts down
+    _networkStatusService.dispose();
+    super.dispose();
+  }
   ThemeProvider themeChangeProvider = ThemeProvider();
 
   @override

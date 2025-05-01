@@ -274,16 +274,26 @@ class NewRideScreen extends StatelessWidget {
                           : controller.rideList.isEmpty
                               ? Constant.emptyView(
                                   "Your don't have any ride booked.")
-                              : ListView.builder(
-                                  itemCount: controller.rideList.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return newRideWidgets(
-                                        context,
-                                        controller.rideList[index],
-                                        controller,
-                                        themeChange.getThem(), walletController);
-                                  }),
+                              :ListView.separated(
+                        itemCount: controller.rideList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return newRideWidgets(
+                            context,
+                            controller.rideList[index],
+                            controller,
+                            themeChange.getThem(),
+                            walletController,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            color: Colors.grey, // Divider color
+                            thickness: 2,                // Divider thickness
+                            // height: 20,                  // Space between items
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -347,7 +357,8 @@ class NewRideScreen extends StatelessWidget {
             color: themeChange.getThem()
                 ? AppThemeData.surface50Dark
                 : AppThemeData.surface50,
-            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+
+            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -498,8 +509,8 @@ class NewRideScreen extends StatelessWidget {
                             },
                             child: Image.asset(
                               'assets/icons/chat_icon.png',
-                              height: 30,
-                              width: 30,
+                              height: 38,
+                              width: 38,
                               fit: BoxFit.cover,
                             )),
                       ),

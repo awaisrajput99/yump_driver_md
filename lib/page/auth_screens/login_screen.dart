@@ -222,7 +222,7 @@ class LoginScreen extends StatelessWidget {
                                     padding: const EdgeInsets.only(top: 50),
                                     child: ButtonThem.buildButton(
                                       context,
-                                      title: 'Log in'.tr,
+                                      title: controller.isLoggingIn.value ? 'Please wait ...':'Log in'.tr,
                                       btnHeight: 50,
                                       btnColor: AppThemeData.primary200,
                                       // txtColor: AppThemeData.surface50,
