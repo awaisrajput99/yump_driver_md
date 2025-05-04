@@ -80,6 +80,12 @@ void main() async {
     sound: true,
   );
 
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    debugPrint(navigatorKey.currentContext != null
+        ? "✅ Navigator key attached"
+        : "❌ Navigator key missing");
+  });
+
   if (!Platform.isIOS) {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -238,7 +244,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     } on Exception {}
   }
 
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  // GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   // This widget is the root of your application.
 /*  @override
@@ -331,7 +337,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       },
       child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
         return GetMaterialApp(
-          // navigatorKey: navigatorKey,
+          navigatorKey: navigatorKey,
           title: 'Yump Rides Driver'.tr,
           debugShowCheckedModeBanner: false,
           themeMode: themeProvider.darkTheme == 2
@@ -345,7 +351,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           fallbackLocale: LocalizationService.locale,
           translations: LocalizationService(),
           builder: EasyLoading.init(),
-          navigatorKey: callNavigatorKey,
+          // navigatorKey: callNavigatorKey,
 
           home: GetBuilder(
             init: SettingsController(),

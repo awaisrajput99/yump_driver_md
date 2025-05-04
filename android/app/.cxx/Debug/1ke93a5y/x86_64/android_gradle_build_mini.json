@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/awaisraja/development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/awaisraja/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/awaisraja/StudioProjects/tax-driver-app/android/app/.cxx/Debug/1ke93a5y/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/awaisraja/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/awaisraja/StudioProjects/tax-driver-app/android/app/.cxx/Debug/1ke93a5y/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

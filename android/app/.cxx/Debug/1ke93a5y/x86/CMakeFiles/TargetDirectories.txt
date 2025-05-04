@@ -1,0 +1,2 @@
+/Users/awaisraja/StudioProjects/tax-driver-app/android/app/.cxx/Debug/1ke93a5y/x86/CMakeFiles/edit_cache.dir
+/Users/awaisraja/StudioProjects/tax-driver-app/android/app/.cxx/Debug/1ke93a5y/x86/CMakeFiles/rebuild_cache.dir

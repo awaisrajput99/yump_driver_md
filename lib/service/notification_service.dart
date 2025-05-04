@@ -19,8 +19,7 @@ import '../page/my_profile/my_profile_screen.dart';
 class NotificationService {
   static bool _initialized = false;
   static Future<void> setupInteractedMessage(BuildContext context) async {
-    initialize(navigatorKey.currentContext!);
-
+    initialize(context);
     final NotificationAppLaunchDetails? details =
     await FlutterLocalNotificationsPlugin().getNotificationAppLaunchDetails();
 
@@ -37,7 +36,14 @@ class NotificationService {
             ),
           );
 
-          await handleMessage(fakeMessage, navigatorKey.currentContext!);
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            final context = navigatorKey.currentContext;
+            if (context != null) {
+              await handleMessage(fakeMessage, context);
+            } else {
+              debugPrint("❌ navigatorKey.currentContext still null after frame.");
+            }
+          });
         } catch (e) {
           debugPrint('❌ Error handling launch notification payload: $e');
         }
@@ -46,18 +52,44 @@ class NotificationService {
 
     await FirebaseMessaging.instance.subscribeToTopic("yumprides_driver");
 
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+ /*   RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
       await handleMessage(initialMessage, navigatorKey.currentContext!);
+    }*/
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          await handleNotificationWithContextCheck(initialMessage!);
+        });
+      });
     }
 
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      debugPrint("🚨 onMessage: ${message.data}");
       await displayMd(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      await handleMessage(message,navigatorKey.currentContext!);
+      await handleNotificationWithContextCheck(message);
     });
+  }
+
+  // In NotificationService class
+  static Future<void> handleNotificationWithContextCheck(RemoteMessage message) async {
+    const maxRetries = 5;
+    const retryDelay = Duration(milliseconds: 200);
+
+    for (var i = 0; i < maxRetries; i++) {
+      final context = navigatorKey.currentContext;
+      if (context != null) {
+        await handleMessage(message, context);
+        return;
+      }
+      await Future.delayed(retryDelay);
+    }
+    debugPrint("❌ Failed to get context after $maxRetries attempts");
   }
 
   static Future<void> handleMessage(RemoteMessage message, BuildContext context) async {
@@ -95,20 +127,32 @@ class NotificationService {
 
         // Enhanced click_action handling
         if (message.data.containsKey('click_action')) {
-          final clickActionStr = message.data['click_action'];
-          try {
-            final decoded = json.decode(clickActionStr);
-            debugPrint("Decoded click_action: $decoded");
+          dynamic clickActionData = message.data['click_action'];
 
-            if (decoded['type'] == 'driver_availability') {
-              final rideRequest = RideRequestNotificationModel.fromMap(decoded);
+          // If it's a string, decode it. If it's already a map, use it directly.
+          if (clickActionData is String) {
+            try {
+              clickActionData = json.decode(clickActionData);
+            } catch (e) {
+              debugPrint("❌ Failed to decode click_action string: $e");
+              return;
+            }
+          }
+
+          if (clickActionData is Map && clickActionData['type'] == 'driver_availability') {
+            try {
+              final rideRequest = RideRequestNotificationModel.fromMap(
+                Map<String, dynamic>.from(clickActionData),
+              );
               await Get.offAll(() => DriverAvailabilityScreen(), arguments: rideRequest);
               return;
-            } else if(decoded['type'] == 'new_request'){
-              Get.offAll(()=>NewRideScreen());
+            } catch (e) {
+              debugPrint('❌ Error parsing RideRequestNotificationModel: $e');
+              return;
             }
-          } catch (e) {
-            debugPrint("JSON decode error: $e");
+          } else if (clickActionData['type'] == 'new_request') {
+            await Get.offAll(() => NewRideScreen());
+            return;
           }
         }
    /*     if (message.data['type'] == 'driver_availability') {
@@ -133,6 +177,7 @@ class NotificationService {
         'high_importance_channel', // id
         'High Importance Notifications', // title
         importance: Importance.high,
+        sound: RawResourceAndroidNotificationSound('driver_availability'), // ✅ set sound
         enableVibration: true
     );
 
@@ -144,24 +189,28 @@ class NotificationService {
         android: initializationSettingsAndroid,
         iOS: iosInitializationSettings);
     await FlutterLocalNotificationsPlugin().initialize(initializationSettings,
-        /* onDidReceiveNotificationResponse: (NotificationResponse response) async {
+        onDidReceiveNotificationResponse: (NotificationResponse response) async {
           if (response.payload != null) {
             try {
               final messageData = jsonDecode(response.payload!);
-              await NotificationService.handleMessage(RemoteMessage.fromMap({
-                'data': messageData,
-                'notification': {
-                  'title': 'Notification',
-                  'body': '',
-                },
-              }), context);
-              debugPrint("📩 Payload data after decoding: $messageData");
+
+              RemoteMessage fakeMessage = RemoteMessage(
+                data: Map<String, dynamic>.from(messageData),
+                notification: RemoteNotification(
+                  title: messageData['title']?.toString(),
+                  body: messageData['body']?.toString(),
+                ),
+              );
+
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
+                await handleNotificationWithContextCheck(fakeMessage);
+              });
             } catch (e) {
-              debugPrint('Payload parsing error: $e');
+              debugPrint('❌ Payload parsing error: $e');
             }
           }
-        }*/
-        onDidReceiveNotificationResponse: (NotificationResponse response) async {
+        }
+/*        onDidReceiveNotificationResponse: (NotificationResponse response) async {
           if (response.payload != null) {
             try {
               final messageData = jsonDecode(response.payload!);
@@ -180,7 +229,7 @@ class NotificationService {
               debugPrint('❌ Payload parsing error: $e');
             }
           }
-        }
+        }*/
 
       /*    onDidReceiveNotificationResponse: (NotificationResponse response) async {
           if (response.payload != null) {
@@ -217,9 +266,9 @@ class NotificationService {
         priority: Priority.high,
         playSound: true,
         enableVibration: true,
-        sound: isDriverAvailability
+       /* sound: isDriverAvailability
             ? RawResourceAndroidNotificationSound('driver_availability')
-            : null,
+            : null,*/
       );
 
       final DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
@@ -227,7 +276,7 @@ class NotificationService {
         presentBadge: true,
         presentSound: true,
         sound: 'default',
-        categoryIdentifier: 'driver.category', // Add category for actionable notifications
+        categoryIdentifier: 'driver_availability', // Add category for actionable notifications
         threadIdentifier: 'yumprides_driver',
       );
 
