@@ -1,3 +1,4 @@
+/*
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -57,4 +58,4 @@ class NetworkStatusService {
       fontSize: 16.0,
     );
   }
-}
+}*/

@@ -79,12 +79,12 @@ void main() async {
     provisional: false,
     sound: true,
   );
-
+/*
   WidgetsBinding.instance.addPostFrameCallback((_) {
     debugPrint(navigatorKey.currentContext != null
         ? "✅ Navigator key attached"
         : "❌ Navigator key missing");
-  });
+  });*/
 
   if (!Platform.isIOS) {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -116,7 +116,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  final _networkStatusService = NetworkStatusService();
+  // final _networkStatusService = NetworkStatusService();
 
   @override
   void initState() {
@@ -135,15 +135,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
     super.initState();
     // 👇 Start listening to connectivity
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+   /* WidgetsBinding.instance.addPostFrameCallback((_) {
       _networkStatusService.listenToInternetChanges(context);
-    });
+    });*/
   }
 
   @override
   void dispose() {
     // 👇 Dispose listener when app shuts down
-    _networkStatusService.dispose();
+    // _networkStatusService.dispose();
     super.dispose();
   }
   ThemeProvider themeChangeProvider = ThemeProvider();

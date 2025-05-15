@@ -126,7 +126,7 @@ class NotificationService {
         }
 
         // Enhanced click_action handling
-        if (message.data.containsKey('click_action')) {
+        if (message.data.containsKey('driver_availability')) {
           dynamic clickActionData = message.data['click_action'];
 
           // If it's a string, decode it. If it's already a map, use it directly.
