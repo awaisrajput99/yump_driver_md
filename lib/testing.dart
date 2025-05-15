@@ -69,7 +69,7 @@ class PaymentService {
         body: body,
         headers: {
           'Authorization':
-              'Bearer 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',
+              'key has been removed due to github policy',
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       );

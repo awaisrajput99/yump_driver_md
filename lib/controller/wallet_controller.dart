@@ -60,8 +60,7 @@ class WalletController extends GetxController
     selectedRadioTile = "".obs;
     paymentSettingModel.value = Constant.getPaymentSetting();
 
-    stripePrefix.Stripe.publishableKey =
-        'pk_live_51QT6NuFCZA829IV4efUVvxXyEBw6Ugx0UpnsA72trVbiHwOT5LS3V9ukp5jgk9GawAXbE1ZHIUHc4cl1cvfk0qF300qEAmMSKT';
+    stripePrefix.Stripe.publishableKey = 'key has been removed due to github policy';
     stripePrefix.Stripe.merchantIdentifier = "Cabme";
     // await stripePrefix.Stripe.instance.applySettings();
 
