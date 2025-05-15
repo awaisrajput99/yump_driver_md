@@ -118,6 +118,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // final _networkStatusService = NetworkStatusService();
 
+
+
+
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
